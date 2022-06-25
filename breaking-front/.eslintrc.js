@@ -5,10 +5,14 @@ module.exports = {
     node: true,
   },
   extends: [
+    'react-app',
+    'react-app/jest',
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:prettier/recommended',
     'plugin:storybook/recommended',
+    'plugin:testing-library/react',
+    'plugin:jest-dom/recommended',
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -20,4 +24,12 @@ module.exports = {
   plugins: ['react'],
   rules: {},
   ignorePatterns: ['*.config.js', 'node_modules'],
+  overrides: [
+    {
+      files: ['**/*.stories.*'],
+      rules: {
+        'import/no-anonymous-default-export': 'off',
+      },
+    },
+  ],
 };
