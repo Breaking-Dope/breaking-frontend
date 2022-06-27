@@ -14,7 +14,6 @@ export const Icon = styled.div`
 `;
 
 export const Input = styled.input`
-  position: absolute;
   width: 100%;
   height: 40px;
   padding: 0px 40px 0px 10px;
