@@ -17,6 +17,9 @@ function Template(args) {
   return <Input {...args} />;
 }
 
+export const Default = Template.bind({});
+Default.args = {};
+
 export const Search = Template.bind({});
 Search.args = {
   placeholder: '검색',
