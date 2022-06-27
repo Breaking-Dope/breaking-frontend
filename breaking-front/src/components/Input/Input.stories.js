@@ -3,7 +3,7 @@ import { Input } from './Input';
 import { ReactComponent as SearchIcon } from 'assets/svg/search.svg';
 
 export default {
-  title: 'components/Input/Input',
+  title: 'components/Input',
   component: Input,
   argTypes: {
     status: {
