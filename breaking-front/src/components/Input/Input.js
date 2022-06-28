@@ -4,10 +4,10 @@ import * as Style from './Input.styles';
 
 export function Input({ status = 'default', icon, ...props }) {
   return (
-    <Style.InputWrapper>
+    <Style.InputContainer>
       {icon && <Style.Icon>{icon}</Style.Icon>}
       <Style.Input {...props} />
-    </Style.InputWrapper>
+    </Style.InputContainer>
   );
 }
 
