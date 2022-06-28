@@ -2,24 +2,29 @@ import { Button } from 'components/Button/Button';
 import { Input } from 'components/Input/Input';
 import styled from 'styled-components';
 
-export const Header = styled.div`
+export const HeaderContainer = styled.header`
   position: sticky;
   top: 0;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
   height: 65px;
   background-color: #014d91;
 `;
 
-export const LeftContainer = styled.div`
+export const HeaderContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+  max-width: 950px;
+  height: 100%;
+  padding: 0px 13px;
+  margin: 0 auto;
+`;
+
+export const SearchContent = styled.div`
   display: flex;
   align-items: center;
 `;
-export const RightContainer = styled.div`
+export const UserContent = styled.div`
   display: flex;
   align-items: center;
-  width: 120px;
 `;
 
 // 추후에 Link 태그로 바꾸고 클릭 시 홈으로 이동하도록 수정

@@ -7,28 +7,30 @@ import { ReactComponent as DownArrowIcon } from 'assets/svg/down-arrow.svg';
 
 export function Header({ isLogin, ...props }) {
   return (
-    <Style.Header isLogin={isLogin} {...props}>
-      <Style.LeftContainer>
-        <Style.LogoContainer>
-          <LogoIcon width="100%" height="100%" />
-        </Style.LogoContainer>
-        <Style.Form>
-          <Style.SearchInput icon={<SearchIcon />} />
-        </Style.Form>
-      </Style.LeftContainer>
-      <Style.RightContainer>
-        {isLogin ? (
-          <>
-            <Style.UserImage />
-            <Style.UserDetailToggle>
-              <DownArrowIcon />
-            </Style.UserDetailToggle>
-          </>
-        ) : (
-          <Style.LoginButton round="rounder">로그인</Style.LoginButton>
-        )}
-      </Style.RightContainer>
-    </Style.Header>
+    <Style.HeaderContainer isLogin={isLogin} {...props}>
+      <Style.HeaderContent>
+        <Style.SearchContent>
+          <Style.LogoContainer>
+            <LogoIcon width="100%" height="100%" />
+          </Style.LogoContainer>
+          <Style.Form>
+            <Style.SearchInput icon={<SearchIcon />} />
+          </Style.Form>
+        </Style.SearchContent>
+        <Style.UserContent>
+          {isLogin ? (
+            <>
+              <Style.UserImage />
+              <Style.UserDetailToggle>
+                <DownArrowIcon />
+              </Style.UserDetailToggle>
+            </>
+          ) : (
+            <Style.LoginButton round="rounder">로그인</Style.LoginButton>
+          )}
+        </Style.UserContent>
+      </Style.HeaderContent>
+    </Style.HeaderContainer>
   );
 }
 
