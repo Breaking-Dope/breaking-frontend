@@ -1,7 +1,6 @@
-import PALETTE from 'constants/palette'
+import PALETTE from 'constants/palette';
 
 const theme = {
-  primary: PALETTE.BLUE,
   red: PALETTE.RED,
   yellow: PALETTE.YELLOW,
   green: PALETTE.GREEN,
