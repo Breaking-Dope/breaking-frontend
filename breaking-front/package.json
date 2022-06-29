@@ -47,6 +47,7 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "babel-plugin-named-exports-order": "^0.0.2",
+    "chromatic": "^6.6.4",
     "eslint": "^8.18.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest-dom": "^4.0.2",
