@@ -6,7 +6,7 @@ export const InputContainer = styled.div`
 export const Icon = styled.div`
   position: absolute;
   top: 11px;
-  right: -34px;
+  right: 14px;
   z-index: 1;
   width: 16px;
   height: 100%;
