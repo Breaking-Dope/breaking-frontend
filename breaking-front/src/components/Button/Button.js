@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as Style from './Button.styles';
 
-export function Button({ children, color, size, round, ...props }) {
+export default function Button({ children, color, size, round, ...props }) {
   return (
     <Style.Button color={color} size={size} round={round} {...props}>
       {children}
