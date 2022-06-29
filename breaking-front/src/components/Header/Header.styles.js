@@ -6,7 +6,7 @@ export const HeaderContainer = styled.header`
   position: sticky;
   top: 0;
   height: 65px;
-  background-color: #014d91;
+  background-color: ${({ theme }) => theme.blue[900]};
 `;
 
 export const HeaderContent = styled.div`
@@ -49,7 +49,7 @@ export const UserImage = styled.div`
   height: 40px;
   margin-right: 10px;
   border-radius: 50%;
-  background-color: #eee;
+  background-color: ${({ theme }) => theme.gray[300]};
 `;
 
 // 추후 토글 컴포넌트 구현시 수정

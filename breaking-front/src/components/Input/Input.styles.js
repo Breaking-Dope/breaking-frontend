@@ -19,7 +19,7 @@ export const Input = styled.input`
   padding: 0px 40px 0px 10px;
   border: none;
   border-radius: 10px;
-  background-color: #f4f4f4;
+  background-color: ${({ theme }) => theme.gray[100]};
   font-size: 12px;
   &:focus {
     outline: none;
