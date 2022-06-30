@@ -1,6 +1,6 @@
-import GlobalStyle from 'styles/GlobalStyle';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import GlobalStyle from 'styles/GlobalStyle';
 import theme from 'styles/theme';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SocialLogin from 'Pages/SocialLogin/SocialLogin';
