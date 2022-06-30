@@ -3,14 +3,14 @@ import styled, { css } from 'styled-components';
 const colorCss = {
   primary: css`
     color: #014d91;
-    background-color: #cdddea;
+    background-color: ${({ theme }) => theme.blue[300]};
     &:active {
-      background-color: #b0ddff;
+      background-color: ${({ theme }) => theme.blue[400]};
     }
   `,
   secondary: css`
-    color: #ffffff;
-    background-color: #bababa;
+    color: ${({ theme }) => theme.white};
+    background-color: ${({ theme }) => theme.gray[500]};
   `,
 };
 
