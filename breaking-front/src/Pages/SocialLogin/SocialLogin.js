@@ -1,11 +1,14 @@
+import { KAKAO_PATH } from 'constants/path';
 import React from 'react';
 
 const SocialLogin = () => {
-  const KAKAO_REDIRECT_URL = 'http://localhost:3000/login/kakao';
   const { Kakao } = window;
+  if (!window.Kakao.isInitialized()) {
+    window.Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
+  }
   const KakaoLoginOnClick = () => {
     Kakao.Auth.authorize({
-      redirectUri: KAKAO_REDIRECT_URL,
+      redirectUri: KAKAO_PATH.REDIRECT_URL,
     });
   };
   return (

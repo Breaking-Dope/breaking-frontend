@@ -7,6 +7,7 @@ import SocialLogin from 'Pages/SocialLogin/SocialLogin';
 import KakaoRedirect from 'Pages/SocialLogin/KakaoRedirect';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { PATH } from 'constants/path';
 
 function App() {
   const queryClient = new QueryClient();
@@ -16,8 +17,8 @@ function App() {
         <GlobalStyle />
         <BrowserRouter>
           <Routes>
-            <Route path="login" element={<SocialLogin />}></Route>
-            <Route path="login/kakao" element={<KakaoRedirect />}></Route>
+            <Route path={PATH.LOGIN} element={<SocialLogin />}></Route>
+            <Route path={PATH.KAKAO_LOGIN} element={<KakaoRedirect />}></Route>
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
