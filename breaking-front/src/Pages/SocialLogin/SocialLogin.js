@@ -3,8 +3,8 @@ import React from 'react';
 
 const SocialLogin = () => {
   const { Kakao } = window;
-  if (!window.Kakao.isInitialized()) {
-    window.Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
+  if (!Kakao.isInitialized()) {
+    Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
   }
   const KakaoLoginOnClick = () => {
     Kakao.Auth.authorize({
