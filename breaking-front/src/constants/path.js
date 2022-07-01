@@ -1,6 +1,11 @@
 export const PATH = {
   LOGIN: '/login',
   KAKAO_LOGIN: 'login/kakao',
+  SIGNUP: '/signup',
+  OAUTH2_SIGNUP: '/oauth2/sign-up',
+  OAUTH2_SIGNUP_VALIDATE_PHONE_NUMBER: '/oauth2/sign-up/validate-phone-number',
+  OAUTH2_SIGNUP_VALIDATE_NICKNAME: '/oauth2/sign-up/validate-nickname',
+  OAUTH2_SIGNUP_VALIDATE_EMAIL: '/oauth2/sign-up/validate-email',
 };
 
 export const KAKAO_PATH = {
