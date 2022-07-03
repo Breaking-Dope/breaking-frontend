@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Style from 'components/Line/Line.style';
+import * as Style from 'components/Line/Line.styles';
 
 export default function Line({ width, height, ...props }) {
-  return <Style.Line height={height} width={width} />;
+  return <Style.Line height={height} width={width} {...props} />;
 }
 
 Line.propTypes = {
