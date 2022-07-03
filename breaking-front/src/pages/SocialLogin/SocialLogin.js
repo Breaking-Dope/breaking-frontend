@@ -3,6 +3,9 @@ import React from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import Header from 'components/Header/Header';
 import SocialLoginButton from 'components/SocialLoginButton/SocialLoginButton';
+import * as Style from 'pages/SocialLogin/SocialLogin.style';
+import Line from 'components/Line/Line';
+import MobileDownloadButton from 'components/MobileDownloadButton/MobileDownloadButton';
 
 const SocialLogin = () => {
   const googleLoginClick = useGoogleLogin({
@@ -24,10 +27,27 @@ const SocialLogin = () => {
   return (
     <>
       <Header />
-      <div>
-        <SocialLoginButton social="kakao" onClick={KakaoLoginOnClick} />
-        <SocialLoginButton social="google" onClick={googleLoginClick} />
-      </div>
+      <Style.Body>
+        <Style.LeftContent>
+          <Style.BreakingLogo />
+        </Style.LeftContent>
+        <Style.RightContent>
+          <Style.LoginTitle>
+            Breaking을 통해
+            <br />
+            지금 바로 제보하세요
+          </Style.LoginTitle>
+          <div>
+            <SocialLoginButton social="kakao" onClick={KakaoLoginOnClick} />
+            <SocialLoginButton social="google" onClick={googleLoginClick} />
+          </div>
+          <Line />
+          <div>
+            <MobileDownloadButton social="appstore" />
+            <MobileDownloadButton social="playstore" />
+          </div>
+        </Style.RightContent>
+      </Style.Body>
     </>
   );
 };
