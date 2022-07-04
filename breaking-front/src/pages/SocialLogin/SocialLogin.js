@@ -1,7 +1,6 @@
 import { KAKAO_PATH } from 'constants/path';
 import React from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
-import Header from 'components/Header/Header';
 import SocialLoginButton from 'components/SocialLoginButton/SocialLoginButton';
 import * as Style from 'pages/SocialLogin/SocialLogin.style';
 import Line from 'components/Line/Line';
@@ -25,28 +24,23 @@ const SocialLogin = () => {
   };
 
   return (
-    <>
-      <Header />
-      <Style.Body>
-        <Style.LeftContent>
-          <Style.BreakingLogo />
-        </Style.LeftContent>
-        <Style.RightContent>
-          <Style.LoginTitle>
-            Breaking을 통해
-            <br />
-            지금 바로 제보하세요
-          </Style.LoginTitle>
-          <SocialLoginButton social="kakao" onClick={KakaoLoginOnClick} />
-          <SocialLoginButton social="google" onClick={googleLoginClick} />
-          <Line />
-          <div>
-            <MobileDownloadButton social="appstore" />
-            <MobileDownloadButton social="playstore" />
-          </div>
-        </Style.RightContent>
-      </Style.Body>
-    </>
+    <Style.Body>
+      <Style.BreakingLogo />
+      <Style.RightContent>
+        <Style.LoginTitle>
+          Breaking을 통해
+          <br />
+          지금 바로 제보하세요
+        </Style.LoginTitle>
+        <SocialLoginButton social="kakao" onClick={KakaoLoginOnClick} />
+        <SocialLoginButton social="google" onClick={googleLoginClick} />
+        <Line />
+        <div>
+          <MobileDownloadButton social="appstore" />
+          <MobileDownloadButton social="playstore" />
+        </div>
+      </Style.RightContent>
+    </Style.Body>
   );
 };
 
