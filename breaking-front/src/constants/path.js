@@ -7,7 +7,7 @@ export const PATH = {
   OAUTH2_SIGNUP_VALIDATE_NICKNAME: '/oauth2/sign-up/validate-nickname',
   OAUTH2_SIGNUP_VALIDATE_EMAIL: '/oauth2/sign-up/validate-email',
   OAUTH2_SIGNIN_KAKAO: '/oauth2/sign-in/kakao',
-  OAUTH2_SIGNUP_GOOGLE: '/oauth2/sign-in/google',
+  OAUTH2_SIGNIN_GOOGLE: '/oauth2/sign-in/google',
 };
 
 export const KAKAO_PATH = {
