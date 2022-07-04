@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { PATH } from 'constants/path';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import Layout from 'components/Layout/Layout';
 
 function App() {
   const queryClient = new QueryClient();
@@ -19,14 +20,16 @@ function App() {
         <ThemeProvider theme={theme}>
           <GlobalStyle />
           <BrowserRouter>
-            <Routes>
-              <Route path={PATH.LOGIN} element={<SocialLogin />} />
-              <Route
-                path={PATH.KAKAO_LOGIN}
-                element={<KakaoRedirect />}
-              ></Route>
-              <Route path={PATH.SIGNUP} element={<SignUp />} />
-            </Routes>
+            <Layout>
+              <Routes>
+                <Route path={PATH.LOGIN} element={<SocialLogin />} />
+                <Route
+                  path={PATH.KAKAO_LOGIN}
+                  element={<KakaoRedirect />}
+                ></Route>
+                <Route path={PATH.SIGNUP} element={<SignUp />} />
+              </Routes>
+            </Layout>
           </BrowserRouter>
         </ThemeProvider>
         <ReactQueryDevtools initialIsOpen={false} />
