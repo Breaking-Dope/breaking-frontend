@@ -4,6 +4,8 @@ import breakingImage from 'assets/img/breaking-logo.png';
 export const LoginTitle = styled.h2`
   font-size: 26px;
   font-weight: bold;
+  padding: 15px;
+  line-height: 45px;
 `;
 
 export const BreakingLogo = styled.img.attrs({ src: `${breakingImage}` })`
@@ -13,12 +15,16 @@ export const BreakingLogo = styled.img.attrs({ src: `${breakingImage}` })`
 
 export const Body = styled.div`
   display: flex;
-  position: absolute;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: calc(100% - 65px);
 `;
 
-export const RightContent = styled.div``;
+export const RightContent = styled.div`
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  padding: 30px;
+`;
 
 export const LeftContent = styled.div``;

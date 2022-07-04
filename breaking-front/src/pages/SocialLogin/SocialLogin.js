@@ -37,10 +37,8 @@ const SocialLogin = () => {
             <br />
             지금 바로 제보하세요
           </Style.LoginTitle>
-          <div>
-            <SocialLoginButton social="kakao" onClick={KakaoLoginOnClick} />
-            <SocialLoginButton social="google" onClick={googleLoginClick} />
-          </div>
+          <SocialLoginButton social="kakao" onClick={KakaoLoginOnClick} />
+          <SocialLoginButton social="google" onClick={googleLoginClick} />
           <Line />
           <div>
             <MobileDownloadButton social="appstore" />
