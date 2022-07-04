@@ -79,7 +79,8 @@ const SignUp = () => {
     },
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     const formData = new FormData();
 
     for (const [key, value] of Object.entries(isValid)) {
@@ -99,11 +100,7 @@ const SignUp = () => {
 
   return (
     <>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <p>프로필 사진</p>
         <UserImageContainer>
           <UserImage src={imageSrc} alt="미리보기" />
@@ -117,7 +114,9 @@ const SignUp = () => {
           <Button type="button" onClick={() => imageInput.current.click()}>
             이미지 추가
           </Button>
-          <Button onClick={imageDeleteClick}>기본 이미지로 변경</Button>
+          <Button type="button" onClick={imageDeleteClick}>
+            기본 이미지로 변경
+          </Button>
         </UserImageContainer>
         <p>닉네임</p>
         <Input
@@ -179,9 +178,7 @@ const SignUp = () => {
           </>
         ) : null}
         <br />
-        <Button type="button" onClick={handleSubmit}>
-          회원가입
-        </Button>
+        <Button type="submit">회원가입</Button>
       </form>
     </>
   );
