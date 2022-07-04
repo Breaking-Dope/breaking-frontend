@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import * as Style from './Header.styles';
+import * as Style from 'components/Header/Header.styles';
 import { ReactComponent as LogoIcon } from 'assets/svg/small-logo.svg';
 import { ReactComponent as SearchIcon } from 'assets/svg/search.svg';
 import { ReactComponent as DownArrowIcon } from 'assets/svg/down-arrow.svg';

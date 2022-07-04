@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Style from './Button.styles';
+import * as Style from 'components/Button/Button.styles';
 
 export default function Button({ children, color, size, round, ...props }) {
   return (
