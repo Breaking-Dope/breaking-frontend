@@ -1,5 +1,5 @@
 import React from 'react';
-import SocialLoginButton from './SocialLoginButton';
+import SocialLoginButton from 'components/SocialLoginButton/SocialLoginButton';
 
 export default {
   title: 'components/SocialLoginButton',

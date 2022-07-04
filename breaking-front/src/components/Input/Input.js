@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Style from './Input.styles';
+import * as Style from 'components/Input/Input.styles';
 
 export default function Input({ status = 'default', icon, ...props }) {
   return (
