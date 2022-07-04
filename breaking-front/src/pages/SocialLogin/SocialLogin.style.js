@@ -17,14 +17,16 @@ export const Body = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100% - 65px);
+  height: calc(100vh - 65px);
 `;
 
 export const RightContent = styled.div`
   display: flex;
   text-align: center;
+  align-items: center;
   flex-direction: column;
   padding: 30px;
+  > * {
+    margin-bottom: 20px;
+  }
 `;
-
-export const LeftContent = styled.div``;
