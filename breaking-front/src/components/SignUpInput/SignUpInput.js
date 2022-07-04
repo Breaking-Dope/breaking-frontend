@@ -4,10 +4,10 @@ import * as Style from 'components/SignUpInput/SignUpInput.styles';
 
 export default function SignUpInput({ label, errorMessage, ...props }) {
   return (
-    <Style.Label hasErrorMessage={!!errorMessage}>
+    <Style.Label>
       <Style.LabelText>{label}</Style.LabelText>
       <Style.SignUpInput {...props} />
-      {!!errorMessage && <Style.Message>{errorMessage}</Style.Message>}
+      {errorMessage && <Style.Message>{errorMessage}</Style.Message>}
     </Style.Label>
   );
 }
