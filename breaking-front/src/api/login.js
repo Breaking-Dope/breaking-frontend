@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { KAKAO_PATH, PATH } from 'constants/path';
-import api from './api';
+import api from 'api/api';
 
 export const postAccessCode = (data) => {
   const headers = {
