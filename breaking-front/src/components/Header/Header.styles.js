@@ -5,6 +5,7 @@ import styled from 'styled-components';
 export const HeaderContainer = styled.header`
   position: sticky;
   top: 0;
+  z-index: 100;
   height: 65px;
   background-color: ${({ theme }) => theme.blue[900]};
 `;
