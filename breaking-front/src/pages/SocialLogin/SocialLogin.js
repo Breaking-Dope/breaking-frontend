@@ -17,7 +17,7 @@ const SocialLogin = () => {
   if (!Kakao.isInitialized()) {
     Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
   }
-  const KakaoLoginOnClick = () => {
+  const kakaoLoginClick = () => {
     Kakao.Auth.authorize({
       redirectUri: KAKAO_PATH.REDIRECT_URL,
     });
@@ -26,20 +26,20 @@ const SocialLogin = () => {
   return (
     <Style.Body>
       <Style.BreakingLogo />
-      <Style.RightContent>
+      <Style.LoginContent>
         <Style.LoginTitle>
           Breaking을 통해
           <br />
           지금 바로 제보하세요
         </Style.LoginTitle>
-        <SocialLoginButton social="kakao" onClick={KakaoLoginOnClick} />
+        <SocialLoginButton social="kakao" onClick={kakaoLoginClick} />
         <SocialLoginButton social="google" onClick={googleLoginClick} />
         <Line />
         <div>
           <MobileDownloadButton social="appstore" />
           <MobileDownloadButton social="playstore" />
         </div>
-      </Style.RightContent>
+      </Style.LoginContent>
     </Style.Body>
   );
 };

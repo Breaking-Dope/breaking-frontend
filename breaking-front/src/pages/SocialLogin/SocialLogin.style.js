@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import breakingImage from 'assets/img/breaking-logo.png';
 
 export const LoginTitle = styled.h2`
+  padding: 15px;
   font-size: 26px;
   font-weight: bold;
-  padding: 15px;
   line-height: 45px;
 `;
 
@@ -20,12 +20,12 @@ export const Body = styled.div`
   height: calc(100vh - 65px);
 `;
 
-export const RightContent = styled.div`
+export const LoginContent = styled.div`
   display: flex;
+  padding: 30px;
   text-align: center;
   align-items: center;
   flex-direction: column;
-  padding: 30px;
   > * {
     margin-bottom: 20px;
   }
