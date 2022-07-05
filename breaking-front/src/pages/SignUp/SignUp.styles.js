@@ -9,10 +9,11 @@ export const Form = styled.form`
 export const UserImageContainer = styled.div`
   position: relative;
   display: flex;
+  height: 250px;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  height: 250px;
+  text-align: center;
 `;
 
 export const UserImage = styled.img`

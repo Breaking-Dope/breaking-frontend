@@ -108,7 +108,6 @@ const SignUp = () => {
     <>
       <Style.Form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
         <Style.UserImageContainer>
-          <Style.UserImage src={imageSrc} alt="미리보기" />
           <Style.UserImageLabel>
             <Style.UserImageInput
               type="file"
@@ -117,6 +116,7 @@ const SignUp = () => {
               accept="image/*"
               onChange={handleImageUploadPreview}
             />
+            <Style.UserImage src={imageSrc} alt="미리보기" />
             프로필 추가
           </Style.UserImageLabel>
 
