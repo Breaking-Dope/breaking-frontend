@@ -16,10 +16,6 @@ export const KAKAO_PATH = {
   OAUTH_TOKEN: 'https://kauth.kakao.com/oauth/token',
 };
 
-export const LOGIN_PATH = {
-  KAKAO_URL: '',
-};
-
 export const DEVELOPMENT_BASE_URL = 'http://localhost:3000/';
 
 export const PRODUCTION_BASE_URL = 'https://team-dope.link:8443/';
