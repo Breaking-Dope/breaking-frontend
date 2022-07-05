@@ -1,22 +1,30 @@
+import React, { useRef, useState } from 'react';
+import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { postSignUp } from 'api/signUp';
 import Button from 'components/Button/Button';
-import Input from 'components/Input/Input';
+import SignUpInput from 'components/SignUpInput/SignUpInput';
 import useIsValidEmail from 'hooks/useIsValidEmail';
 import useIsValidNickname from 'hooks/useIsValidNickname';
 import useIsValidPhoneNumber from 'hooks/useIsValidPhoneNumber';
-import React, { useRef, useState } from 'react';
-import { useMutation } from 'react-query';
-import {
-  UserImage,
-  UserImageContainer,
-  UserImageInput,
-} from 'pages/SignUp/SignUp.styles';
-import defaultProfileImage from 'assets/svg/default-profile-image.svg';
+import useInputs from 'hooks/useInputs';
+import MESSAGE from 'constants/message';
+import REGEXP from 'constants/regexp';
 import fileToBase64 from 'utils/fileToBase64';
+import * as Style from 'pages/SignUp/SignUp.styles';
+import defaultProfileImage from 'assets/svg/default-profile-image.svg';
+import { ReactComponent as XMark } from 'assets/svg/x-mark.svg';
+import { PATH } from 'constants/path';
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [profileImg, setProfileImg] = useState('');
-  const [inputs, setInputs] = useState({
+  const [
+    { realname, nickname, phoneNumber, statusMessage, email, role },
+    handleChange,
+    setForm,
+  ] = useInputs({
+    realname: '',
     nickname: '',
     phoneNumber: '',
     statusMessage: '',
@@ -24,21 +32,19 @@ const SignUp = () => {
     role: 'USER',
   });
 
-  const [isValid, setIsValid] = useState({
-    nickname: false,
-    phoneNumber: false,
-    email: false,
+  const [isValidMessage, setIsValidMessage] = useState({
+    nickname: '',
+    phoneNumber: '',
+    email: '',
   });
 
   const [imageSrc, setImageSrc] = useState(defaultProfileImage);
 
   const imageInput = useRef();
 
-  const { nickname, phoneNumber, statusMessage, email, role } = inputs;
-
-  const IsValidNickname = useIsValidNickname(setIsValid);
-  const IsValidPhoneNumber = useIsValidPhoneNumber(setIsValid);
-  const IsValidEmail = useIsValidEmail(setIsValid);
+  const IsValidNickname = useIsValidNickname(setIsValidMessage);
+  const IsValidPhoneNumber = useIsValidPhoneNumber(setIsValidMessage);
+  const IsValidEmail = useIsValidEmail(setIsValidMessage);
 
   const handleImageUploadPreview = async (event) => {
     const imageFile = event.target.files[0];
@@ -55,131 +61,161 @@ const SignUp = () => {
     }
   };
 
-  const handleChange = (event) => {
-    let { name, value } = event.target;
-    if (name in isValid) setIsValid({ ...isValid, [name]: false });
-
-    //전화번호는 숫자만 입력 가능하도록 설정
-    if (name === 'phoneNumber') {
-      value = value.replace(/[^0-9]/g, '');
-    }
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
-  };
-
   const SignUp = useMutation(postSignUp, {
     onSuccess: (res) => {
-      console.log('가입 성공');
-      //메인 페이지 이동
+      alert(`환영합니다. ${nickname}님`);
+      navigate(PATH.HOME);
     },
     onError: () => {
       //에러 페이지 이동
     },
   });
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      event.target.blur();
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
 
-    for (const [key, value] of Object.entries(isValid)) {
-      if (value === false) {
-        if (key === 'email' && role === 'USER') continue;
-
-        console.log(`${key} 중복 확인 해주시기 바랍니다.`);
-        return;
-      }
+    for (const value of Object.values(isValidMessage)) {
+      if (value !== '') return alert('정확하게 기입해주시기 바랍니다.');
     }
 
     if (profileImg !== '') formData.append('profileImg', profileImg);
-    formData.append('signUpRequest', JSON.stringify(inputs));
+    formData.append(
+      'signUpRequest',
+      JSON.stringify({
+        realname,
+        nickname,
+        phoneNumber,
+        statusMessage,
+        email,
+        role,
+      })
+    );
 
     SignUp.mutate(formData);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <p>프로필 사진</p>
-        <UserImageContainer>
-          <UserImage src={imageSrc} alt="미리보기" />
-          <UserImageInput
-            ref={imageInput}
-            type="file"
-            name="profileImg"
-            accept="image/*"
-            onChange={handleImageUploadPreview}
-          />
-          <Button type="button" onClick={() => imageInput.current.click()}>
-            이미지 추가
-          </Button>
-          <Button type="button" onClick={imageDeleteClick}>
-            기본 이미지로 변경
-          </Button>
-        </UserImageContainer>
-        <p>닉네임</p>
-        <Input
+      <Style.Form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
+        <Style.UserImageContainer>
+          <Style.UserImage src={imageSrc} alt="미리보기" />
+          <Style.UserImageLabel>
+            <Style.UserImageInput
+              type="file"
+              ref={imageInput}
+              name="profileImg"
+              accept="image/*"
+              onChange={handleImageUploadPreview}
+            />
+            프로필 추가
+          </Style.UserImageLabel>
+
+          <Style.XMarkIcon>
+            <XMark onClick={imageDeleteClick} />
+          </Style.XMarkIcon>
+        </Style.UserImageContainer>
+        <SignUpInput
           type="text"
+          label="성명"
+          name="realname"
+          value={realname}
+          onChange={handleChange}
+          autoFocus
+          required
+        />
+        <SignUpInput
+          type="text"
+          label="닉네임"
+          errorMessage={isValidMessage.nickname}
           name="nickname"
           value={nickname}
           onChange={handleChange}
           onBlur={() => {
-            IsValidNickname.mutate({ nickname });
+            REGEXP.NICKNAME.test(nickname)
+              ? IsValidNickname.mutate({ nickname })
+              : setIsValidMessage((message) => ({
+                  ...message,
+                  nickname: MESSAGE.SIGNUP.INVALID_NICKNAME,
+                }));
           }}
-          maxLength="8"
+          required
         />
-        <br />
-        <p>전화번호</p>
-        <Input
+        <SignUpInput
           type="text"
+          label="전화번호"
+          errorMessage={isValidMessage.phoneNumber}
           name="phoneNumber"
           value={phoneNumber}
           onChange={handleChange}
           onBlur={() => {
-            IsValidPhoneNumber.mutate({ phoneNumber });
+            REGEXP.PHONENUMBER.test(phoneNumber)
+              ? IsValidPhoneNumber.mutate({ phoneNumber })
+              : setIsValidMessage((message) => ({
+                  ...message,
+                  phoneNumber: MESSAGE.SIGNUP.INVALID_PHONENUMBER,
+                }));
           }}
+          maxLength="11"
+          required
         />
-        <br />
-        <p>상태메시지</p>
-        <Input
+        <SignUpInput
           type="text"
+          label="상태메시지(선택)"
           name="statusMessage"
           value={statusMessage}
           onChange={handleChange}
-          maxLength="30"
+          maxLength="60"
         />
-        <br />
+        <SignUpInput
+          type="email"
+          label="이메일"
+          errorMessage={isValidMessage.email}
+          name="email"
+          value={email}
+          onChange={handleChange}
+          onBlur={() => {
+            REGEXP.EMAIL.test(email)
+              ? IsValidEmail.mutate({ email })
+              : setIsValidMessage((message) => ({
+                  ...message,
+                  email: MESSAGE.SIGNUP.INVALID_EMAIL,
+                }));
+          }}
+          required
+        />
         <p>회원 유형</p>
-        <Button
-          type="button"
-          onClick={() => setInputs({ ...inputs, role: 'USER' })}
-        >
-          일반인
-        </Button>
-        <Button
-          type="button"
-          onClick={() => setInputs({ ...inputs, role: 'PRESS' })}
-        >
-          언론인
-        </Button>
-        {role === 'PRESS' ? (
-          <>
-            <p>이메일</p>
-            <Input
-              type="email"
-              name="email"
-              value={email}
-              onChange={handleChange}
-              onBlur={() => {
-                IsValidEmail.mutate({ email });
-              }}
-            />
-          </>
-        ) : null}
-        <br />
-        <Button type="submit">회원가입</Button>
-      </form>
+        <Style.Role>
+          <Button
+            type="button"
+            name="USER"
+            isSelected={role === 'USER'}
+            onClick={() => {
+              setForm((form) => ({ ...form, role: 'USER' }));
+            }}
+          >
+            일반인
+          </Button>
+          <Button
+            type="button"
+            name="PRESS"
+            isSelected={role === 'PRESS'}
+            onClick={() => setForm((form) => ({ ...form, role: 'PRESS' }))}
+          >
+            언론인
+          </Button>
+        </Style.Role>
+        <Style.SubmitButton type="submit" size="large">
+          회원가입
+        </Style.SubmitButton>
+      </Style.Form>
     </>
   );
 };
