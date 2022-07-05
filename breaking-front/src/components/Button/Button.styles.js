@@ -3,7 +3,8 @@ import styled, { css } from 'styled-components';
 const colorCss = {
   primary: css`
     color: #014d91;
-    background-color: ${({ theme }) => theme.blue[300]};
+    background-color: ${({ isSelected, theme }) =>
+      isSelected ? theme.blue[400] : theme.blue[300]};
     &:active {
       background-color: ${({ theme }) => theme.blue[400]};
     }
@@ -45,7 +46,12 @@ export const Button = styled.button`
   border: none;
   font-weight: 700;
   cursor: pointer;
+
   ${({ color }) => colorCss[color]}
   ${({ size }) => sizeCss[size]}
   ${({ round }) => roundCss[round]}
+
+  &:disabled {
+    cursor: default;
+  }
 `;
