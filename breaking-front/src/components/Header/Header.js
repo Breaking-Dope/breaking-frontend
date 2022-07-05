@@ -5,7 +5,7 @@ import { ReactComponent as LogoIcon } from 'assets/svg/small-logo.svg';
 import { ReactComponent as SearchIcon } from 'assets/svg/search.svg';
 import { ReactComponent as DownArrowIcon } from 'assets/svg/down-arrow.svg';
 
-export default function Header({ isLogin, ...props }) {
+export default function Header({ isLogin, loginButtonClick, ...props }) {
   const [searchText, setSearchText] = useState('');
 
   const onChange = (event) => {
@@ -40,7 +40,9 @@ export default function Header({ isLogin, ...props }) {
               </Style.UserDetailToggle>
             </>
           ) : (
-            <Style.LoginButton round="rounder">로그인</Style.LoginButton>
+            <Style.LoginButton round="rounder" onClick={loginButtonClick}>
+              로그인
+            </Style.LoginButton>
           )}
         </Style.UserContent>
       </Style.HeaderContent>
@@ -50,4 +52,5 @@ export default function Header({ isLogin, ...props }) {
 
 Header.propTypes = {
   isLogin: PropTypes.bool,
+  loginButtonClick: PropTypes.func,
 };
