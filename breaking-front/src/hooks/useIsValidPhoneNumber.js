@@ -1,19 +1,19 @@
 import { postPhoneNumberValidation } from 'api/signUp';
+import MESSAGE from 'constants/message';
 import { useMutation } from 'react-query';
 
-const useIsValidPhoneNumber = (setIsValid) =>
+const useIsValidPhoneNumber = (setIsValidMessage) =>
   useMutation(postPhoneNumberValidation, {
     onSuccess: () => {
       console.log('사용가능한 전화번호입니다.');
-      setIsValid((prevState) => ({ ...prevState, phoneNumber: true }));
+      setIsValidMessage((prevState) => ({ ...prevState, phoneNumber: '' }));
     },
     onError: (error) => {
-      const { message } = error.response.data;
-      console.log(message);
-
-      if (message) console.log('이미 등록된 전화번호입니다.');
-      else console.log('전화번호 형식이 아닙니다.');
-      setIsValid((prevState) => ({ ...prevState, phoneNumber: false }));
+      console.log('사용 중인 전화번호입니다.');
+      setIsValidMessage((prevState) => ({
+        ...prevState,
+        phoneNumber: MESSAGE.SIGNUP.USED_PHONENUMBER,
+      }));
     },
   });
 
