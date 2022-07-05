@@ -1,7 +1,10 @@
 import Button from 'components/Button/Button';
 import styled from 'styled-components';
 
-export const Form = styled.form``;
+export const Form = styled.form`
+  width: 600px;
+  margin: 0 auto;
+`;
 
 export const UserImageContainer = styled.div`
   position: relative;
@@ -33,7 +36,7 @@ export const UserImageInput = styled.input`
 export const XMarkIcon = styled.span`
   position: absolute;
   top: 20px;
-  right: 40%;
+  right: 35%;
   cursor: pointer;
 `;
 

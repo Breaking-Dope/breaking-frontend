@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useMutation } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { postSignUp } from 'api/signUp';
 import Button from 'components/Button/Button';
 import SignUpInput from 'components/SignUpInput/SignUpInput';
@@ -18,17 +18,19 @@ import { PATH } from 'constants/path';
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [profileImg, setProfileImg] = useState('');
   const [
-    { realname, nickname, phoneNumber, statusMessage, email, role },
+    { realname, nickname, phoneNumber, statusMsg, email, role },
     handleChange,
     setForm,
   ] = useInputs({
+    username: location.state,
     realname: '',
     nickname: '',
     phoneNumber: '',
-    statusMessage: '',
     email: '',
+    statusMsg: '',
     role: 'USER',
   });
 
@@ -93,7 +95,7 @@ const SignUp = () => {
         realname,
         nickname,
         phoneNumber,
-        statusMessage,
+        statusMsg,
         email,
         role,
       })
@@ -124,7 +126,8 @@ const SignUp = () => {
         </Style.UserImageContainer>
         <SignUpInput
           type="text"
-          label="성명"
+          label="이름"
+          placeholder="이름"
           name="realname"
           value={realname}
           onChange={handleChange}
@@ -134,6 +137,7 @@ const SignUp = () => {
         <SignUpInput
           type="text"
           label="닉네임"
+          placeholder="닉네임"
           errorMessage={isValidMessage.nickname}
           name="nickname"
           value={nickname}
@@ -151,6 +155,7 @@ const SignUp = () => {
         <SignUpInput
           type="text"
           label="전화번호"
+          placeholder="전화번호"
           errorMessage={isValidMessage.phoneNumber}
           name="phoneNumber"
           value={phoneNumber}
@@ -167,16 +172,9 @@ const SignUp = () => {
           required
         />
         <SignUpInput
-          type="text"
-          label="상태메시지(선택)"
-          name="statusMessage"
-          value={statusMessage}
-          onChange={handleChange}
-          maxLength="60"
-        />
-        <SignUpInput
           type="email"
           label="이메일"
+          placeholder="이메일"
           errorMessage={isValidMessage.email}
           name="email"
           value={email}
@@ -190,6 +188,15 @@ const SignUp = () => {
                 }));
           }}
           required
+        />
+        <SignUpInput
+          type="text"
+          label="상태메시지(선택)"
+          placeholder="상태메시지"
+          name="statusMsg"
+          value={statusMsg}
+          onChange={handleChange}
+          maxLength="60"
         />
         <p>회원 유형</p>
         <Style.Role>
