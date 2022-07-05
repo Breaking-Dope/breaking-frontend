@@ -1,14 +1,25 @@
 import { postAccessCode } from 'api/login';
-import { KAKAO_PATH } from 'constants/path';
+import { KAKAO_PATH, PATH } from 'constants/path';
 import React, { useEffect } from 'react';
 import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 
 const KakaoRedirect = () => {
+  const navigate = useNavigate();
   const accessCode = new URL(window.location.href).searchParams.get('code');
   const getKakaoToken = useMutation(postAccessCode, {
     onSuccess: (res) => {
-      console.log(res.data);
-      // 백엔드에 토큰을 던져주는 API를 실행
+      console.log(res);
+      const jwtToken = res.headers.authorization;
+      if (jwtToken) {
+        localStorage.setItem({
+          key: 'access_token',
+          value: res.headers.authorization,
+        });
+        navigate(PATH.HOME);
+      } else {
+        navigate(PATH.SIGNUP, { state: res.data });
+      }
     },
     onError: () => {
       //에러 페이지 이동

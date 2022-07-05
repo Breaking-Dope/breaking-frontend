@@ -1,4 +1,5 @@
 export const PATH = {
+  HOME: '/',
   LOGIN: '/login',
   KAKAO_LOGIN: 'login/kakao',
   SIGNUP: '/signup',
