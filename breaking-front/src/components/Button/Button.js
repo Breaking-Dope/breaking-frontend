@@ -2,9 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as Style from 'components/Button/Button.styles';
 
-export default function Button({ children, color, size, round, ...props }) {
+export default function Button({
+  children,
+  color,
+  size,
+  round,
+  isSelected,
+  ...props
+}) {
   return (
-    <Style.Button color={color} size={size} round={round} {...props}>
+    <Style.Button
+      color={color}
+      size={size}
+      round={round}
+      isSelected={isSelected}
+      {...props}
+    >
       {children}
     </Style.Button>
   );
@@ -15,12 +28,12 @@ Button.propTypes = {
   color: PropTypes.oneOf(['primary', 'secondary']),
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   round: PropTypes.oneOf(['none', 'round', 'rounder']),
-  onclick: PropTypes.func,
+  isSelected: PropTypes.bool,
 };
 
 Button.defaultProps = {
   color: 'primary',
   size: 'medium',
   round: 'round',
-  onClick: undefined,
+  isSelected: false,
 };

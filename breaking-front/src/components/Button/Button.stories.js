@@ -17,6 +17,9 @@ export default {
       options: ['none', 'round', 'rounder'],
       control: { type: 'radio' },
     },
+    isSelected: {
+      control: { type: 'boolean' },
+    },
   },
 };
 
@@ -54,4 +57,10 @@ export const Rounder = Template.bind({});
 Rounder.args = {
   children: '버튼',
   round: 'rounder',
+};
+
+export const Selected = Template.bind({});
+Selected.args = {
+  children: '버튼',
+  isSelected: true,
 };
