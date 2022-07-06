@@ -7,6 +7,7 @@ const theme = {
   blue: PALETTE.BLUE,
   gray: PALETTE.GRAY,
   white: PALETTE.WHITE,
+  black: PALETTE.BLACK,
 };
 
 export default theme;
