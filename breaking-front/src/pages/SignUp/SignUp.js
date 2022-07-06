@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { postSignUp } from 'api/signUp';
@@ -10,11 +10,11 @@ import useIsValidPhoneNumber from 'hooks/useIsValidPhoneNumber';
 import useInputs from 'hooks/useInputs';
 import MESSAGE from 'constants/message';
 import REGEXP from 'constants/regexp';
+import { PATH } from 'constants/path';
 import fileToBase64 from 'utils/fileToBase64';
 import * as Style from 'pages/SignUp/SignUp.styles';
 import defaultProfileImage from 'assets/svg/default-profile-image.svg';
 import { ReactComponent as XMark } from 'assets/svg/x-mark.svg';
-import { PATH } from 'constants/path';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -25,7 +25,6 @@ const SignUp = () => {
     handleChange,
     setForm,
   ] = useInputs({
-    username: location.state,
     realname: '',
     nickname: '',
     phoneNumber: '',
@@ -33,20 +32,18 @@ const SignUp = () => {
     statusMsg: '',
     role: 'USER',
   });
-
-  const [isValidMessage, setIsValidMessage] = useState({
+  const [errorMessage, setErrorMessage] = useState({
     nickname: '',
     phoneNumber: '',
     email: '',
   });
-
   const [imageSrc, setImageSrc] = useState(defaultProfileImage);
 
-  const imageInput = useRef();
-
-  const IsValidNickname = useIsValidNickname(setIsValidMessage);
-  const IsValidPhoneNumber = useIsValidPhoneNumber(setIsValidMessage);
-  const IsValidEmail = useIsValidEmail(setIsValidMessage);
+  const { mutate: IsValidNickname, isError: NicknameError } =
+    useIsValidNickname();
+  const { mutate: IsValidPhoneNumber, isError: PhoneNumberError } =
+    useIsValidPhoneNumber();
+  const { mutate: IsValidEmail, isError: EmailError } = useIsValidEmail();
 
   const handleImageUploadPreview = async (event) => {
     const imageFile = event.target.files[0];
@@ -56,7 +53,6 @@ const SignUp = () => {
   };
 
   const imageDeleteClick = () => {
-    //기본 이미지가 아닐 때에만 실행
     if (imageSrc !== defaultProfileImage) {
       setImageSrc(defaultProfileImage);
       setProfileImg('');
@@ -76,33 +72,68 @@ const SignUp = () => {
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
+      const form = event.target.form;
+      const index = [...form].indexOf(event.target);
+
       event.target.blur();
+      form.elements[index].focus();
     }
+  };
+
+  const inputOnBlur = (regexp, isValidApi, name, value, invalidMessage) => {
+    let message = '';
+
+    regexp ? isValidApi({ [name]: value }) : (message = invalidMessage);
+
+    setErrorMessage((data) => ({ ...data, [name]: message }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
 
-    for (const value of Object.values(isValidMessage)) {
+    for (const value of Object.values(errorMessage)) {
       if (value !== '') return alert('정확하게 기입해주시기 바랍니다.');
     }
 
-    if (profileImg !== '') formData.append('profileImg', profileImg);
-    formData.append(
-      'signUpRequest',
-      JSON.stringify({
-        realname,
-        nickname,
-        phoneNumber,
-        statusMsg,
-        email,
-        role,
-      })
-    );
+    const userData = {
+      username: location.state,
+      realname,
+      nickname,
+      phoneNumber,
+      email,
+      statusMsg,
+      role,
+    };
 
+    if (profileImg !== '') formData.append('profileImg', profileImg);
+    formData.append('signUpRequest', JSON.stringify({ userData }));
     SignUp.mutate(formData);
   };
+
+  useEffect(() => {
+    NicknameError &&
+      setErrorMessage((data) => ({
+        ...data,
+        nickname: MESSAGE.SIGNUP.USED_NICKNAME,
+      }));
+  }, [NicknameError]);
+
+  useEffect(() => {
+    PhoneNumberError &&
+      setErrorMessage((data) => ({
+        ...data,
+        phoneNumber: MESSAGE.SIGNUP.USED_PHONENUMBER,
+      }));
+  }, [PhoneNumberError]);
+
+  useEffect(() => {
+    EmailError &&
+      setErrorMessage((data) => ({
+        ...data,
+        email: MESSAGE.SIGNUP.USED_EMAIL,
+      }));
+  }, [EmailError]);
 
   return (
     <>
@@ -111,7 +142,6 @@ const SignUp = () => {
           <Style.UserImageLabel>
             <Style.UserImageInput
               type="file"
-              ref={imageInput}
               name="profileImg"
               accept="image/*"
               onChange={handleImageUploadPreview}
@@ -119,10 +149,11 @@ const SignUp = () => {
             <Style.UserImage src={imageSrc} alt="미리보기" />
             프로필 추가
           </Style.UserImageLabel>
-
-          <Style.XMarkIcon>
-            <XMark onClick={imageDeleteClick} />
-          </Style.XMarkIcon>
+          {profileImg && (
+            <Style.XMarkIcon>
+              <XMark onClick={imageDeleteClick} />
+            </Style.XMarkIcon>
+          )}
         </Style.UserImageContainer>
         <SignUpInput
           type="text"
@@ -137,56 +168,59 @@ const SignUp = () => {
         <SignUpInput
           type="text"
           label="닉네임"
+          errorMessage={errorMessage.nickname}
           placeholder="닉네임"
-          errorMessage={isValidMessage.nickname}
           name="nickname"
           value={nickname}
           onChange={handleChange}
-          onBlur={() => {
-            REGEXP.NICKNAME.test(nickname)
-              ? IsValidNickname.mutate({ nickname })
-              : setIsValidMessage((message) => ({
-                  ...message,
-                  nickname: MESSAGE.SIGNUP.INVALID_NICKNAME,
-                }));
-          }}
+          onBlur={() =>
+            inputOnBlur(
+              REGEXP.NICKNAME.test(nickname),
+              IsValidNickname,
+              'nickname',
+              nickname,
+              MESSAGE.SIGNUP.INVALID_NICKNAME
+            )
+          }
           required
         />
         <SignUpInput
           type="text"
           label="전화번호"
+          errorMessage={errorMessage.phoneNumber}
           placeholder="전화번호"
-          errorMessage={isValidMessage.phoneNumber}
           name="phoneNumber"
           value={phoneNumber}
           onChange={handleChange}
-          onBlur={() => {
-            REGEXP.PHONENUMBER.test(phoneNumber)
-              ? IsValidPhoneNumber.mutate({ phoneNumber })
-              : setIsValidMessage((message) => ({
-                  ...message,
-                  phoneNumber: MESSAGE.SIGNUP.INVALID_PHONENUMBER,
-                }));
-          }}
+          onBlur={() =>
+            inputOnBlur(
+              REGEXP.PHONENUMBER.test(phoneNumber),
+              IsValidPhoneNumber,
+              'phoneNumber',
+              phoneNumber,
+              MESSAGE.SIGNUP.INVALID_PHONENUMBER
+            )
+          }
           maxLength="11"
           required
         />
         <SignUpInput
           type="email"
           label="이메일"
+          errorMessage={errorMessage.email}
           placeholder="이메일"
-          errorMessage={isValidMessage.email}
           name="email"
           value={email}
           onChange={handleChange}
-          onBlur={() => {
-            REGEXP.EMAIL.test(email)
-              ? IsValidEmail.mutate({ email })
-              : setIsValidMessage((message) => ({
-                  ...message,
-                  email: MESSAGE.SIGNUP.INVALID_EMAIL,
-                }));
-          }}
+          onBlur={() =>
+            inputOnBlur(
+              REGEXP.EMAIL.test(email),
+              IsValidEmail,
+              'email',
+              email,
+              MESSAGE.SIGNUP.INVALID_EMAIL
+            )
+          }
           required
         />
         <SignUpInput
