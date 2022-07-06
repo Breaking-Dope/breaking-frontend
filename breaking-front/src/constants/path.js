@@ -9,6 +9,10 @@ export const PATH = {
   OAUTH2_SIGNUP_VALIDATE_EMAIL: '/oauth2/sign-up/validate-email',
   OAUTH2_SIGNIN_KAKAO: '/oauth2/sign-in/kakao',
   OAUTH2_SIGNIN_GOOGLE: '/oauth2/sign-in/google',
+  OAUTH2_SIGNOUT: '/oauth2/sign-out',
+  TRANSACTION: '/transaction',
+  MYPAGE: '/profile/0',
+  PROFILE_EDIT: '/profile/edit',
 };
 
 export const KAKAO_PATH = {
