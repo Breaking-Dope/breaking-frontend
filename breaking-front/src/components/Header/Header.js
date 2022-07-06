@@ -4,6 +4,7 @@ import * as Style from 'components/Header/Header.styles';
 import { ReactComponent as LogoIcon } from 'assets/svg/small-logo.svg';
 import { ReactComponent as SearchIcon } from 'assets/svg/search.svg';
 import { ReactComponent as DownArrowIcon } from 'assets/svg/down-arrow.svg';
+import UserImage from 'components/UserImage/UserImage';
 
 export default function Header({ isLogin, loginButtonClick, ...props }) {
   const [searchText, setSearchText] = useState('');
@@ -34,7 +35,7 @@ export default function Header({ isLogin, loginButtonClick, ...props }) {
         <Style.UserContent>
           {isLogin ? (
             <>
-              <Style.UserImage />
+              <UserImage size="small" style={{ marginRight: '10px' }} />
               <Style.UserDetailToggle>
                 <DownArrowIcon />
               </Style.UserDetailToggle>

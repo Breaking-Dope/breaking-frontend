@@ -44,14 +44,5 @@ export const LoginButton = styled(Button)`
   padding: 10px 30px;
 `;
 
-// 임의로 프로필 사진을 동그란 회색 div로 표시함
-export const UserImage = styled.div`
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.gray[300]};
-`;
-
 // 추후 토글 컴포넌트 구현시 수정
 export const UserDetailToggle = styled.div``;
