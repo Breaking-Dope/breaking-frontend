@@ -6,7 +6,7 @@ export default {
   component: Button,
   argTypes: {
     color: {
-      options: ['primary', 'secondary'],
+      options: ['primary', 'secondary', 'dark', 'danger'],
       control: { type: 'radio' },
     },
     size: {
@@ -63,4 +63,28 @@ export const Selected = Template.bind({});
 Selected.args = {
   children: '버튼',
   isSelected: true,
+};
+
+export const SoldOut = Template.bind({});
+SoldOut.args = {
+  children: '판매완료',
+  size: 'small',
+  color: 'danger',
+  disabled: 'true',
+};
+
+export const Exclusive = Template.bind({});
+Exclusive.args = {
+  children: '단독',
+  size: 'small',
+  color: 'dark',
+  disabled: 'true',
+};
+
+export const Sale = Template.bind({});
+Sale.args = {
+  children: '판매중',
+  size: 'small',
+  color: 'primary',
+  disabled: 'true',
 };

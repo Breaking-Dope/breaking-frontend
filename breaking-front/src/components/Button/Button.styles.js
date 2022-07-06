@@ -2,16 +2,24 @@ import styled, { css } from 'styled-components';
 
 const colorCss = {
   primary: css`
-    color: #014d91;
+    color: ${({ theme }) => theme.blue[900]};
     background-color: ${({ isSelected, theme }) =>
       isSelected ? theme.blue[400] : theme.blue[300]};
-    &:active {
+    &:active :enabled {
       background-color: ${({ theme }) => theme.blue[400]};
     }
   `,
   secondary: css`
     color: ${({ theme }) => theme.white};
     background-color: ${({ theme }) => theme.gray[500]};
+  `,
+  dark: css`
+    color: ${({ theme }) => theme.white};
+    background-color: ${({ theme }) => theme.gray[700]};
+  `,
+  danger: css`
+    color: ${({ theme }) => theme.white};
+    background-color: ${({ theme }) => theme.red[300]};
   `,
 };
 
