@@ -1,15 +1,55 @@
+import Button from 'components/Button/Button';
 import styled from 'styled-components';
 
-export const UserImageContainer = styled.div``;
+export const Form = styled.form`
+  width: 600px;
+  margin: 0 auto;
+`;
+
+export const UserImageContainer = styled.div`
+  position: relative;
+  display: flex;
+  height: 250px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+export const UserImage = styled.img`
+  display: block;
+  width: 160px;
+  height: 160px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.gray[100]};
+  object-fit: cover;
+`;
+
+export const UserImageLabel = styled.label`
+  cursor: pointer;
+`;
 
 export const UserImageInput = styled.input`
   display: none;
 `;
 
-export const UserImage = styled.img`
-  width: 200px;
-  height: 200px;
-  background-color: ${({ theme }) => theme.gray[100]};
-  border-radius: 50%;
-  object-fit: cover;
+export const XMarkIcon = styled.span`
+  position: absolute;
+  top: 20px;
+  right: 35%;
+  cursor: pointer;
+`;
+
+export const Role = styled.div`
+  margin: 15px 0px 30px;
+  > * {
+    margin-right: 30px;
+  }
+`;
+
+export const SubmitButton = styled(Button)`
+  display: block;
+  margin: 0 auto;
+  color: ${({ theme }) => theme.white};
 `;

@@ -1,16 +1,17 @@
 import { postNicknameValidation } from 'api/signUp';
 import { useMutation } from 'react-query';
 
-const useIsValidNickname = (setIsValid) =>
-  useMutation(postNicknameValidation, {
+const useIsValidNickname = () => {
+  const Mutation = useMutation(postNicknameValidation, {
     onSuccess: () => {
       console.log('사용가능한 닉네임입니다.');
-      setIsValid((prevState) => ({ ...prevState, nickname: true }));
     },
     onError: (error) => {
-      console.log('이미 사용하고 있는 닉네임입니다.');
-      setIsValid((prevState) => ({ ...prevState, nickname: false }));
+      console.log('사용 중인 닉네임입니다.');
     },
   });
+
+  return Mutation;
+};
 
 export default useIsValidNickname;

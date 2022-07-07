@@ -1,17 +1,17 @@
-import axios from 'axios';
 import { PATH } from 'constants/path';
+import api from 'api/api';
 
 export const postSignUp = (userData) => {
-  return axios({
+  return api({
     method: 'post',
     url: PATH.OAUTH2_SIGNUP,
-    headers: { 'Content-Type': 'multipart/form-data' },
+    'Content-Type': 'multipart/form-data',
     data: userData,
   });
 };
 
 export const postNicknameValidation = (nickname) => {
-  return axios({
+  return api({
     method: 'post',
     url: PATH.OAUTH2_SIGNUP_VALIDATE_NICKNAME,
     data: nickname,
@@ -19,7 +19,7 @@ export const postNicknameValidation = (nickname) => {
 };
 
 export const postPhoneNumberValidation = (phoneNumber) => {
-  return axios({
+  return api({
     method: 'post',
     url: PATH.OAUTH2_SIGNUP_VALIDATE_PHONE_NUMBER,
     data: phoneNumber,
@@ -27,7 +27,7 @@ export const postPhoneNumberValidation = (phoneNumber) => {
 };
 
 export const postEmailValidation = (email) => {
-  return axios({
+  return api({
     method: 'post',
     url: PATH.OAUTH2_SIGNUP_VALIDATE_EMAIL,
     data: email,

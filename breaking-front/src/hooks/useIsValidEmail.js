@@ -1,20 +1,17 @@
 import { postEmailValidation } from 'api/signUp';
 import { useMutation } from 'react-query';
 
-const useIsValidEmail = (setIsValid) =>
-  useMutation(postEmailValidation, {
+const useIsValidEmail = () => {
+  const Mutation = useMutation(postEmailValidation, {
     onSuccess: (res) => {
       console.log('사용가능한 이메일입니다.');
-      setIsValid((prevState) => ({ ...prevState, email: true }));
     },
     onError: (error) => {
-      const { message } = error.response.data;
-      console.log(message);
-
-      if (message) console.log('사용가능한 이메일이 아닙니다.');
-      else console.log('이메일 형식이 아닙니다.');
-      setIsValid((prevState) => ({ ...prevState, email: false }));
+      console.log('사용 중인 이메일입니다.');
     },
   });
+
+  return Mutation;
+};
 
 export default useIsValidEmail;
