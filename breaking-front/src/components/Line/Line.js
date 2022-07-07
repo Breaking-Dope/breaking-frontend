@@ -7,8 +7,8 @@ export default function Line({ width, height, ...props }) {
 }
 
 Line.propTypes = {
-  width: PropTypes.number,
-  height: PropTypes.number,
+  width: PropTypes.string,
+  height: PropTypes.string,
 };
 
 Line.defaultProps = {
