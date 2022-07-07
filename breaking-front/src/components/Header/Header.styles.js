@@ -1,5 +1,5 @@
 import Button from 'components/Button/Button';
-import Input from 'components/Input/Input';
+import UserImage from 'components/UserImage/UserImage';
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.header`
@@ -12,6 +12,7 @@ export const HeaderContainer = styled.header`
 
 export const HeaderContent = styled.div`
   display: flex;
+  position: relative;
   justify-content: space-between;
   max-width: 950px;
   height: 100%;
@@ -23,9 +24,10 @@ export const SearchContent = styled.div`
   display: flex;
   align-items: center;
 `;
-export const UserContent = styled.div`
+export const ProfileContent = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 // 추후에 Link 태그로 바꾸고 클릭 시 홈으로 이동하도록 수정
@@ -38,11 +40,22 @@ export const Form = styled.form`
   width: 280px;
 `;
 
-export const SearchInput = styled(Input)``;
-
 export const LoginButton = styled(Button)`
   padding: 10px 30px;
 `;
 
-// 추후 토글 컴포넌트 구현시 수정
-export const UserDetailToggle = styled.div``;
+export const ProfileImage = styled(UserImage)`
+  margin-right: 10px;
+`;
+
+export const ProfileToggle = styled.div`
+  position: absolute;
+  top: 80px;
+  right: -20px;
+`;
+
+export const Logout = styled.p`
+  text-align: center;
+  margin: 10px;
+  cursor: pointer;
+`;
