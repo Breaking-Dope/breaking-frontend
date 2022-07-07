@@ -25,8 +25,8 @@ const colorCss = {
 
 const sizeCss = {
   small: css`
-    padding: 5px 10px;
-    font-size: 12px;
+    padding: 4px 8px;
+    font-size: 8px;
   `,
   medium: css`
     padding: 15px;
