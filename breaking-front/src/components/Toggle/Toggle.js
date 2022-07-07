@@ -18,7 +18,7 @@ Toggle.LabelText = Style.LabelText;
 Toggle.propTypes = {
   isArrowMark: PropTypes.bool,
   width: PropTypes.string,
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
 };
 
 Toggle.defaultProps = {

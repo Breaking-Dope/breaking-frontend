@@ -27,9 +27,6 @@ function Template(args) {
   );
 }
 
-export const DefaultToggle = Template.bind({});
-DefaultToggle.args = {};
-
 export const ProfileToggle = Template.bind({});
 ProfileToggle.args = {
   isArrowMark: true,
