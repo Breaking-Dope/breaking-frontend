@@ -59,7 +59,7 @@ export default function Header({ isLogin, loginButtonClick, ...props }) {
             </Style.LoginButton>
           )}
         </Style.ProfileContent>
-        <Style.ProfileToggle>
+        <Style.ProfileToggle onMouseDown={(event) => event.preventDefault()}>
           {isOpenToggle && (
             <Toggle width="220px" isArrowMark={true}>
               <Toggle.LabelLink to={PATH.TRANSACTION}>
