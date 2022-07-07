@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const ProfileToggleContainer = styled.div`
+export const ToggleContainer = styled.div`
   position: relative;
   display: inline-block;
   z-index: 99;
@@ -22,10 +22,10 @@ export const ArrowMark = styled.div`
   transform: rotate(45deg);
 `;
 
-export const ProfileToggle = styled.div`
+export const Toggle = styled.div`
   position: relative;
-  width: 220px;
-  padding: 15px 10px;
+  width: ${({ width }) => width};
+  padding: 15px 10px 5px;
   border: 1px solid ${({ theme }) => theme.black};
   border-radius: 10px;
 `;
@@ -41,17 +41,11 @@ export const LabelText = styled.label`
   cursor: pointer;
 `;
 
-export const Transaction = styled.span`
+export const BlueLabelLink = styled.span`
   position: absolute;
   right: 20px;
   font-size: 12px;
   color: ${({ theme }) => theme.blue[900]};
   font-weight: 600;
-  cursor: pointer;
-`;
-
-export const Logout = styled.p`
-  margin-top: 10px;
-  text-align: center;
   cursor: pointer;
 `;
