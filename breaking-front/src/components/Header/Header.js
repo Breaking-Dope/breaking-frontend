@@ -43,22 +43,23 @@ export default function Header({ isLogin, loginButtonClick, ...props }) {
             />
           </Style.Form>
         </Style.SearchContent>
-        <Style.ProfileContent
-          onClick={handleToggle}
-          onBlur={handleToggle}
-          tabIndex="0"
-        >
-          {isLogin ? (
-            <>
-              <Style.ProfileImage size="small" src="" />
-              <DownArrowIcon />
-            </>
-          ) : (
+        {isLogin ? (
+          <Style.ProfileContent
+            onClick={handleToggle}
+            onBlur={handleToggle}
+            tabIndex="0"
+          >
+            <Style.ProfileImage size="small" src="" />
+            <DownArrowIcon />
+          </Style.ProfileContent>
+        ) : (
+          <Style.ProfileContent>
             <Style.LoginButton round="rounder" onClick={loginButtonClick}>
               로그인
             </Style.LoginButton>
-          )}
-        </Style.ProfileContent>
+          </Style.ProfileContent>
+        )}
+
         <Style.ProfileToggle onMouseDown={(event) => event.preventDefault()}>
           {isOpenToggle && (
             <Toggle width="220px" isArrowMark={true}>
