@@ -28,6 +28,7 @@ export const Toggle = styled.div`
   padding: 15px 10px 5px;
   border: 1px solid ${({ theme }) => theme.black};
   border-radius: 10px;
+  background-color: ${({ theme }) => theme.white};
 `;
 
 export const LabelLink = styled(Link)`
