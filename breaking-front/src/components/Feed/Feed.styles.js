@@ -77,3 +77,7 @@ export const Icons = styled.div`
   align-items: center;
   margin-right: 5px;
 `;
+
+export const Count = styled.span`
+  margin-left: 5px;
+`;

@@ -79,8 +79,8 @@ function Icons({ likeCount, isLiked, isBookmarked }) {
     <Style.Icons>
       <Style.IconContainer onClick={toogleLiked}>
         {liked ? <LikedIcon /> : <LikeIcon />}
+        <Style.Count>{count}</Style.Count>
       </Style.IconContainer>
-      <Style.IconContainer onClick={toogleLiked}>{count}</Style.IconContainer>
       <Style.IconContainer onClick={toogleBookmarked}>
         {bookmarked ? <BookMarkedIcon /> : <BookMarkIcon />}
       </Style.IconContainer>
