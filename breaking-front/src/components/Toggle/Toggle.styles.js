@@ -42,7 +42,7 @@ export const LabelText = styled.label`
   cursor: pointer;
 `;
 
-export const BlueLabelLink = styled.span`
+export const BlueLabel = styled.span`
   position: absolute;
   right: 20px;
   font-size: 12px;
