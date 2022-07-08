@@ -30,7 +30,7 @@ ExampleFeed.args = {
           time="12분전"
           isSold={true}
           postType="EXCLUSIVE"
-          cost={1000}
+          price={1000}
           title="일이삼사오육칠팔구십일이삼사오육칠"
         ></Feed.Context>
         <Feed.Icons

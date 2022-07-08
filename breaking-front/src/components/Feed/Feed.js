@@ -16,7 +16,7 @@ export function Feed({ children, ...props }) {
   return <Style.Feed {...props}>{children}</Style.Feed>;
 }
 
-export function FeedImage({ src, ...props }) {
+function FeedImage({ src, ...props }) {
   return src ? (
     <Style.FeedImage src={src} {...props} />
   ) : (
@@ -26,21 +26,21 @@ export function FeedImage({ src, ...props }) {
 
 Feed.FeedImage = FeedImage;
 
-export function ProfileImage({ src, ...props }) {
+function ProfileImage({ src, ...props }) {
   return src ? (
-    <Style.ProfileWrapper>
+    <Style.ProfileContainer>
       <UserImage src={src} {...props} size="medium" />
-    </Style.ProfileWrapper>
+    </Style.ProfileContainer>
   ) : (
-    <Style.ProfileWrapper>
+    <Style.ProfileContainer>
       <UserImage {...props} size="medium" />
-    </Style.ProfileWrapper>
+    </Style.ProfileContainer>
   );
 }
 
 Feed.ProfileImage = ProfileImage;
 
-export function Context({ title, time, location, isSold, postType, cost }) {
+function Context({ title, time, location, isSold, postType, price }) {
   return (
     <Style.Context>
       <Style.Title>{title}</Style.Title>
@@ -63,7 +63,7 @@ export function Context({ title, time, location, isSold, postType, cost }) {
           판매중
         </Button>
       )}
-      <Style.Cost>{cost} 원</Style.Cost>
+      <Style.Price>{price.toLocaleString('ko-KR')} 원</Style.Price>
     </Style.Context>
   );
 }
@@ -71,7 +71,7 @@ Feed.Context = Context;
 
 Feed.Content = Style.Content;
 
-export function Icons({ likeCount, isLiked, isBookmarked }) {
+function Icons({ likeCount, isLiked, isBookmarked }) {
   const [liked, setLiked] = useState(isLiked);
   const [bookmarked, setBookmarked] = useState(isBookmarked);
   const [count, setCount] = useState(likeCount);
@@ -84,23 +84,23 @@ export function Icons({ likeCount, isLiked, isBookmarked }) {
   };
   return (
     <Style.Icons>
-      <Style.IconWrapper onClick={toogleLiked}>
+      <Style.IconContainer onClick={toogleLiked}>
         {liked ? <LikedIcon /> : <LikeIcon />}
-      </Style.IconWrapper>
-      <Style.IconWrapper onClick={toogleLiked}>{count}</Style.IconWrapper>
-      <Style.IconWrapper onClick={toogleBookmarked}>
+      </Style.IconContainer>
+      <Style.IconContainer onClick={toogleLiked}>{count}</Style.IconContainer>
+      <Style.IconContainer onClick={toogleBookmarked}>
         {bookmarked ? <BookMarkedIcon /> : <BookMarkIcon />}
-      </Style.IconWrapper>
-      <Style.IconWrapper>
+      </Style.IconContainer>
+      <Style.IconContainer>
         <ETCIcon />
-      </Style.IconWrapper>
+      </Style.IconContainer>
     </Style.Icons>
   );
 }
 Feed.Icons = Icons;
 
 Feed.propTypes = {
-  children: PropTypes.object,
+  children: PropTypes.node,
 };
 
 FeedImage.propTypes = {
@@ -117,7 +117,7 @@ Context.propTypes = {
   location: PropTypes.string,
   isSold: PropTypes.bool,
   postType: PropTypes.string,
-  cost: PropTypes.number,
+  price: PropTypes.number,
 };
 
 Icons.propTypes = {
