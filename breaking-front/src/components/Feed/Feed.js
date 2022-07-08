@@ -12,7 +12,7 @@ import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
 
 import Button from 'components/Button/Button';
 
-export function Feed({ children, ...props }) {
+export default function Feed({ children, ...props }) {
   return <Style.Feed {...props}>{children}</Style.Feed>;
 }
 
@@ -23,8 +23,6 @@ function FeedImage({ src, ...props }) {
     <Style.FeedDefaultImage {...props} />
   );
 }
-
-Feed.FeedImage = FeedImage;
 
 function ProfileImage({ src, ...props }) {
   return src ? (
@@ -37,8 +35,6 @@ function ProfileImage({ src, ...props }) {
     </Style.ProfileContainer>
   );
 }
-
-Feed.ProfileImage = ProfileImage;
 
 function Context({ title, time, location, isSold, postType, price }) {
   return (
@@ -67,9 +63,6 @@ function Context({ title, time, location, isSold, postType, price }) {
     </Style.Context>
   );
 }
-Feed.Context = Context;
-
-Feed.Content = Style.Content;
 
 function Icons({ likeCount, isLiked, isBookmarked }) {
   const [liked, setLiked] = useState(isLiked);
@@ -97,7 +90,12 @@ function Icons({ likeCount, isLiked, isBookmarked }) {
     </Style.Icons>
   );
 }
+
 Feed.Icons = Icons;
+Feed.FeedImage = FeedImage;
+Feed.ProfileImage = ProfileImage;
+Feed.Context = Context;
+Feed.Content = Style.Content;
 
 Feed.propTypes = {
   children: PropTypes.node,
@@ -115,8 +113,8 @@ Context.propTypes = {
   title: PropTypes.string,
   time: PropTypes.string, // 타입 확실하지 않음
   location: PropTypes.string,
-  isSold: PropTypes.bool,
-  postType: PropTypes.string,
+  isSold: PropTypes.bool.isRequired,
+  postType: PropTypes.string.isRequired,
   price: PropTypes.number,
 };
 
