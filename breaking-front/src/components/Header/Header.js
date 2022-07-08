@@ -32,7 +32,7 @@ export default function Header({ isLogin, loginButtonClick, ...props }) {
     <Style.HeaderContainer isLogin={isLogin} {...props}>
       <Style.HeaderContent>
         <Style.SearchContent>
-          <Style.LogoContainer>
+          <Style.LogoContainer to={PATH.HOME}>
             <LogoIcon width="100%" height="100%" />
           </Style.LogoContainer>
           <Style.Form onSubmit={handleSubmit}>

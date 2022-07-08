@@ -1,5 +1,6 @@
 import Button from 'components/Button/Button';
 import UserImage from 'components/UserImage/UserImage';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.header`
@@ -30,8 +31,7 @@ export const ProfileContent = styled.div`
   cursor: pointer;
 `;
 
-// 추후에 Link 태그로 바꾸고 클릭 시 홈으로 이동하도록 수정
-export const LogoContainer = styled.div`
+export const LogoContainer = styled(Link)`
   width: 55px;
   margin-right: 70px;
 `;
