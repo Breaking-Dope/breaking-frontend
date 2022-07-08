@@ -63,19 +63,22 @@ export default function Header({ isLogin, loginButtonClick, ...props }) {
         <Style.ProfileToggle onMouseDown={(event) => event.preventDefault()}>
           {isOpenToggle && (
             <Toggle width="220px" isArrowMark={true}>
-              <Toggle.LabelLink to={PATH.TRANSACTION}>
-                <MoneyIcon />
-                <Toggle.LabelText>10,000 원</Toggle.LabelText>
-                <Toggle.BlueLabelLink>입출금 내역</Toggle.BlueLabelLink>
-              </Toggle.LabelLink>
-              <Toggle.LabelLink to={PATH.MYPAGE}>
-                <MyPageIcon />
-                <Toggle.LabelText>마이페이지</Toggle.LabelText>
-              </Toggle.LabelLink>
-              <Toggle.LabelLink to={PATH.PROFILE_EDIT}>
-                <SettingIcon />
-                <Toggle.LabelText>프로필 수정</Toggle.LabelText>
-              </Toggle.LabelLink>
+              <Toggle.LabelLink
+                path={PATH.TRANSACTION}
+                icon={<MoneyIcon />}
+                label="10,000원"
+                blueLabel="입출금내역"
+              />
+              <Toggle.LabelLink
+                path={PATH.MYPAGE}
+                icon={<MyPageIcon />}
+                label="마이페이지"
+              />
+              <Toggle.LabelLink
+                path={PATH.PROFILE_EDIT}
+                icon={<SettingIcon />}
+                label="프로필 수정"
+              />
               <Line width="200" />
               <Style.Logout>로그아웃</Style.Logout>
             </Toggle>
