@@ -61,6 +61,7 @@
     "msw": "^0.42.3",
     "prettier": "^2.7.1",
     "prop-types": "^15.8.1",
+    "storybook-addon-state": "^1.0.3",
     "webpack": "^5.73.0"
   },
   "msw": {
