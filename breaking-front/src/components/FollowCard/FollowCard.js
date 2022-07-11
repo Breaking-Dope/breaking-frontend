@@ -3,12 +3,23 @@ import PropTypes from 'prop-types';
 import * as Style from 'components/FollowCard/FollowCard.styles';
 import UserImage from 'components/UserImage/UserImage';
 
-export default function FollowCard({ profileData, isMyPage, deleteClick }) {
+export default function FollowCard({
+  profileData,
+  isMyPage,
+  cardClick,
+  deleteClick,
+}) {
   return (
     <Style.FollowCard>
-      <UserImage src={profileData.profileImgURL} size="medium" />
+      <UserImage
+        src={profileData.profileImgURL}
+        size="medium"
+        onClick={cardClick}
+      />
       <Style.Container>
-        <Style.Nickname>{profileData.nickname}</Style.Nickname>
+        <Style.Nickname onClick={cardClick}>
+          {profileData.nickname}
+        </Style.Nickname>
         <Style.StatusMessage>{profileData.statusMsg}</Style.StatusMessage>
       </Style.Container>
       {isMyPage && (
@@ -23,5 +34,6 @@ export default function FollowCard({ profileData, isMyPage, deleteClick }) {
 FollowCard.propTypes = {
   profileData: PropTypes.object,
   isMyPage: PropTypes.bool,
+  cardClick: PropTypes.func,
   deleteClick: PropTypes.func,
 };

@@ -19,6 +19,7 @@ export const Container = styled.div`
 export const Nickname = styled.p`
   font-size: 12px;
   margin-bottom: 5px;
+  cursor: pointer;
 `;
 export const StatusMessage = styled.p`
   font-size: 8px;
