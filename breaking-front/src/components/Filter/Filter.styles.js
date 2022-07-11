@@ -6,6 +6,7 @@ export const FilterContainer = styled.div`
   width: ${({ width }) => width};
   padding: 5px;
   border: 1px solid ${({ theme }) => theme.gray[500]};
+  background-color: ${({ theme }) => theme.white};
   cursor: pointer;
   z-index: 5;
 `;

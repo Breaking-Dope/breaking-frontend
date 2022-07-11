@@ -15,8 +15,6 @@ export const DefaultFilter = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [index, setIndex] = useState(0);
 
-  console.log(index);
-
   return (
     <Filter
       selectedFilter={label[index].label}
