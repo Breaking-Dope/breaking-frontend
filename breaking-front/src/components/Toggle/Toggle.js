@@ -11,9 +11,17 @@ export default function Toggle({ isArrowMark, width, children }) {
   );
 }
 
-Toggle.LabelLink = Style.LabelLink;
-Toggle.BlueLabelLink = Style.BlueLabelLink;
-Toggle.LabelText = Style.LabelText;
+function LabelLink({ path, label, blueLabel, icon }) {
+  return (
+    <Style.LabelLink to={path}>
+      {icon}
+      <Style.LabelText>{label}</Style.LabelText>
+      {blueLabel && <Style.BlueLabel>{blueLabel}</Style.BlueLabel>}
+    </Style.LabelLink>
+  );
+}
+
+Toggle.LabelLink = LabelLink;
 
 Toggle.propTypes = {
   isArrowMark: PropTypes.bool,
@@ -24,4 +32,11 @@ Toggle.propTypes = {
 Toggle.defaultProps = {
   isArrowMark: false,
   width: '120px',
+};
+
+LabelLink.propTypes = {
+  path: PropTypes.string,
+  icon: PropTypes.node,
+  label: PropTypes.string,
+  blueLabel: PropTypes.string,
 };
