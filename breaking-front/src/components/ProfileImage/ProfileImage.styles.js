@@ -20,22 +20,11 @@ const sizeCss = {
   `,
 };
 
-const paddingCss = {
-  small: css`
-    padding: 8px;
-  `,
-  medium: css`
-    padding: 12px;
-  `,
-  large: css`
-    padding: 24px;
-  `,
-  xlarge: css`
-    padding: 40px;
-  `,
-};
+export const ProfileImageContainer = styled.div`
+  cursor: pointer;
+`;
 
-export const UserImage = styled.img`
+export const ProfileImage = styled.img`
   ${({ size }) => sizeCss[size]};
   border-radius: 50%;
 `;
@@ -44,7 +33,6 @@ export const DefaultImage = styled.img.attrs({
   src: `${defaultImage}`,
 })`
   ${({ size }) => sizeCss[size]};
-  ${({ size }) => paddingCss[size]};
   background-color: ${({ theme }) => theme.gray[300]};
   border-radius: 50%;
 `;
