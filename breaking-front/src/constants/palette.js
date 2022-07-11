@@ -1,5 +1,6 @@
 const PALETTE = {
   BLUE: {
+    50: '#F3F7FA',
     300: '#CCDDEA',
     400: '#B0DDFF',
     500: '#93C7F6',
