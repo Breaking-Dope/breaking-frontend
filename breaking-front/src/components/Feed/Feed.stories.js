@@ -6,7 +6,7 @@ export default {
   component: Feed,
   subcomponent: {
     'Feed.Context': Feed.Context,
-    'Feed.ProfileImage': Feed.ProfileImage,
+    'Feed.WriterProfileImage': Feed.WriterProfileImage,
     'Feed.FeedImage': Feed.FeedImage,
     'Feed.Content': Feed.Content,
     'Feed.Icons': Feed.Icons,
@@ -24,7 +24,7 @@ ExampleFeed.args = {
     <>
       <Feed.FeedImage />
       <Feed.Content>
-        <Feed.ProfileImage />
+        <Feed.WriterProfileImage />
         <Feed.Context
           location="중구"
           time="12분전"

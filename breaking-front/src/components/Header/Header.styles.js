@@ -1,5 +1,5 @@
 import Button from 'components/Button/Button';
-import UserImage from 'components/UserImage/UserImage';
+import ProfileImage from 'components/ProfileImage/ProfileImage';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -44,7 +44,7 @@ export const LoginButton = styled(Button)`
   padding: 10px 30px;
 `;
 
-export const ProfileImage = styled(UserImage)`
+export const MyProfileImage = styled(ProfileImage)`
   margin-right: 10px;
 `;
 

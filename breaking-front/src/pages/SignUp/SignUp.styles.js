@@ -6,7 +6,7 @@ export const Form = styled.form`
   margin: 0 auto;
 `;
 
-export const UserImageContainer = styled.div`
+export const ProfileImageContainer = styled.div`
   position: relative;
   display: flex;
   height: 250px;
@@ -16,7 +16,7 @@ export const UserImageContainer = styled.div`
   text-align: center;
 `;
 
-export const UserImage = styled.img`
+export const ProfileImage = styled.img`
   display: block;
   width: 160px;
   height: 160px;
@@ -26,11 +26,11 @@ export const UserImage = styled.img`
   object-fit: cover;
 `;
 
-export const UserImageLabel = styled.label`
+export const ProfileImageLabel = styled.label`
   cursor: pointer;
 `;
 
-export const UserImageInput = styled.input`
+export const ProfileImageInput = styled.input`
   display: none;
 `;
 

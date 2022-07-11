@@ -49,7 +49,7 @@ export default function Header({ isLogin, loginButtonClick, ...props }) {
             onBlur={handleToggle}
             tabIndex="0"
           >
-            <Style.ProfileImage size="small" src="" />
+            <Style.MyProfileImage size="small" src="" />
             <DownArrowIcon />
           </Style.ProfileContent>
         ) : (
