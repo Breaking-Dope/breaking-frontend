@@ -12,6 +12,9 @@ function Template(args) {
 
 export const DefaultFollowCard = Template.bind({});
 DefaultFollowCard.args = {
-  profileData: { nickname: '주기', statusMsg: '안녕하세요~!' },
+  profileData: {
+    nickname: '주기',
+    statusMsg: '안녕하세요~!',
+  },
   isMyPage: true,
 };

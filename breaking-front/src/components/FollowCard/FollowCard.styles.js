@@ -16,7 +16,7 @@ export const Container = styled.div`
   margin-left: 20px;
 `;
 
-export const Nickname = styled.p`
+export const Nickname = styled.span`
   font-size: 12px;
   margin-bottom: 5px;
   cursor: pointer;
