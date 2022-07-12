@@ -138,23 +138,23 @@ const SignUp = () => {
   return (
     <>
       <Style.Form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
-        <Style.UserImageContainer>
-          <Style.UserImageLabel>
-            <Style.UserImageInput
+        <Style.ProfileImageContainer>
+          <Style.ProfileImageLabel>
+            <Style.ProfileImageInput
               type="file"
               name="profileImg"
               accept="image/*"
               onChange={handleImageUploadPreview}
             />
-            <Style.UserImage src={imageSrc} alt="미리보기" />
+            <Style.ProfileImage src={imageSrc} alt="미리보기" />
             프로필 추가
-          </Style.UserImageLabel>
+          </Style.ProfileImageLabel>
           {profileImg && (
             <Style.XMarkIcon>
               <XMark onClick={imageDeleteClick} />
             </Style.XMarkIcon>
           )}
-        </Style.UserImageContainer>
+        </Style.ProfileImageContainer>
         <SignUpInput
           type="text"
           label="이름"

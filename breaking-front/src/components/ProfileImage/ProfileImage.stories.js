@@ -1,10 +1,10 @@
 import React from 'react';
-import UserImage from 'components/UserImage/UserImage';
+import ProfileImage from 'components/ProfileImage/ProfileImage';
 import User1 from 'assets/img/breaking-logo.png';
 
 export default {
-  title: 'components/UserImage',
-  component: UserImage,
+  title: 'components/ProfileImage',
+  component: ProfileImage,
   argTypes: {
     size: {
       options: ['small', 'medium', 'large', 'xlarge'],
@@ -14,7 +14,7 @@ export default {
 };
 
 function Template(args) {
-  return <UserImage {...args} />;
+  return <ProfileImage {...args} />;
 }
 
 export const SmallImage = Template.bind({});
