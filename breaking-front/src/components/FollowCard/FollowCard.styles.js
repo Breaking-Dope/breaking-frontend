@@ -17,11 +17,11 @@ export const Container = styled.div`
 `;
 
 export const Nickname = styled.span`
-  margin-bottom: 5px;
   font-size: 12px;
   cursor: pointer;
 `;
 export const StatusMessage = styled.p`
+  margin-top: 5px;
   font-size: 8px;
   color: ${({ theme }) => theme.gray[700]};
 `;

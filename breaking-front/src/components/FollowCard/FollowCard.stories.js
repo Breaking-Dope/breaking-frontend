@@ -16,5 +16,5 @@ DefaultFollowCard.args = {
     nickname: '주기',
     statusMsg: '안녕하세요~!',
   },
-  isMyPage: true,
+  isPermission: true,
 };

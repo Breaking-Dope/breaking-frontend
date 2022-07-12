@@ -5,7 +5,7 @@ import ProfileImage from 'components/ProfileImage/ProfileImage';
 
 export default function FollowCard({
   profileData,
-  isMyPage,
+  isPermission,
   cardClick,
   deleteClick,
 }) {
@@ -22,7 +22,7 @@ export default function FollowCard({
         </Style.Nickname>
         <Style.StatusMessage>{profileData.statusMsg}</Style.StatusMessage>
       </Style.Container>
-      {isMyPage && (
+      {isPermission && (
         <Style.DeleteButton size="small" onClick={deleteClick}>
           삭제
         </Style.DeleteButton>
@@ -33,7 +33,7 @@ export default function FollowCard({
 
 FollowCard.propTypes = {
   profileData: PropTypes.object,
-  isMyPage: PropTypes.bool,
+  isPermission: PropTypes.bool,
   cardClick: PropTypes.func,
   deleteClick: PropTypes.func,
 };
