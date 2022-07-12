@@ -24,6 +24,7 @@ const PALETTE = {
   GREEN: '#45BF6F',
   WHITE: '#FFFFFF',
   BLACK: '#000000',
+  OPACITY_BLACK: 'rgba(0, 0, 0, 0.4)',
 };
 
 export default PALETTE;

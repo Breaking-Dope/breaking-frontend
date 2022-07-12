@@ -8,6 +8,7 @@ const theme = {
   gray: PALETTE.GRAY,
   white: PALETTE.WHITE,
   black: PALETTE.BLACK,
+  opacityBlack: PALETTE.OPACITY_BLACK,
 };
 
 export default theme;
