@@ -17,8 +17,8 @@ export const Container = styled.div`
 `;
 
 export const Nickname = styled.span`
-  font-size: 12px;
   margin-bottom: 5px;
+  font-size: 12px;
   cursor: pointer;
 `;
 export const StatusMessage = styled.p`
@@ -27,7 +27,7 @@ export const StatusMessage = styled.p`
 `;
 
 export const DeleteButton = styled(Button)`
+  padding: 5px 10px;
   color: ${({ theme }) => theme.black};
   background-color: ${({ theme }) => theme.white};
-  padding: 5px 10px;
 `;
