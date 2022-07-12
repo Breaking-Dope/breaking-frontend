@@ -27,6 +27,7 @@ export const StatusMessage = styled.p`
 `;
 
 export const DeleteButton = styled(Button)`
+  color: ${({ theme }) => theme.black};
   background-color: ${({ theme }) => theme.white};
   padding: 5px 10px;
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as Style from 'components/FollowCard/FollowCard.styles';
-import UserImage from 'components/UserImage/UserImage';
+import ProfileImage from 'components/ProfileImage/ProfileImage';
 
 export default function FollowCard({
   profileData,
@@ -11,7 +11,7 @@ export default function FollowCard({
 }) {
   return (
     <Style.FollowCard>
-      <UserImage
+      <ProfileImage
         src={profileData.profileImgURL}
         size="medium"
         onClick={cardClick}
