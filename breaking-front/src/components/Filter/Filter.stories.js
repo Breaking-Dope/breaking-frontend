@@ -8,7 +8,7 @@ export default {
 
 export const DefaultFilter = () => {
   return (
-    <Filter initalize="최신순">
+    <Filter>
       <Filter.FilterDetail>최신순</Filter.FilterDetail>
       <Filter.FilterDetail>좋아요</Filter.FilterDetail>
       <Filter.FilterDetail>조회수</Filter.FilterDetail>

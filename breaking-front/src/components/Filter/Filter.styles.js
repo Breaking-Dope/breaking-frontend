@@ -27,7 +27,7 @@ export const IconContainer = styled.span`
 `;
 
 export const Label = styled.label`
-  display: inline-block;
+  display: ${({ hidden }) => (hidden ? 'none' : 'inline-block')};
   padding: 6px 0px;
   font-size: 12px;
   cursor: pointer;
