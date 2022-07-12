@@ -9,7 +9,7 @@ const KakaoRedirect = () => {
 
   const accessCode = new URL(window.location.href).searchParams.get('code');
 
-  const SignUpKakao = useMutation(postSignInWithKakao, {
+  const SignInKakao = useMutation(postSignInWithKakao, {
     onSuccess: (res) => {
       console.log(res);
       const jwtToken = res.headers.authorization;
@@ -25,7 +25,7 @@ const KakaoRedirect = () => {
   const GetKakaoToken = useMutation(postAccessCode, {
     onSuccess: (res) => {
       console.log(res);
-      SignUpKakao.mutate({
+      SignInKakao.mutate({
         accessToken: res.data.access_token,
       });
     },

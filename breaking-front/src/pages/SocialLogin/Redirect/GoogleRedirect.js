@@ -9,7 +9,7 @@ const GoogleRedirect = () => {
 
   const accessCode = new URL(window.location.href).searchParams.get('code');
 
-  const SignUpGoogle = useMutation(postSignInWithGoogle, {
+  const SignInGoogle = useMutation(postSignInWithGoogle, {
     onSuccess: (res) => {
       console.log(res);
       const jwtToken = res.headers.authorization;
@@ -25,7 +25,7 @@ const GoogleRedirect = () => {
   const GetGoogleToken = useMutation(postAccessCode, {
     onSuccess: (res) => {
       console.log(res.data);
-      SignUpGoogle.mutate({
+      SignInGoogle.mutate({
         accessToken: res.data.access_token,
         idToken: res.data.id_token,
       });
