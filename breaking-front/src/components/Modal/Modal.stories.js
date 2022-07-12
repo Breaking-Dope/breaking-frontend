@@ -19,8 +19,8 @@ function Template(args) {
   );
 }
 
-export const Default = Template.bind({});
-Default.args = {
+export const DefaultModal = Template.bind({});
+DefaultModal.args = {
   title: '팔로워',
   children: (
     <>

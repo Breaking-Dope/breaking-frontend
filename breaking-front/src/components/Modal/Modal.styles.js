@@ -42,6 +42,7 @@ export const Title = styled.h3`
 export const Content = styled(ScrollBarY)`
   display: grid;
   height: 400px;
+  margin-top: 20px;
   grid-template-columns: 1fr 1fr;
   grid-gap: 40px 20px;
   align-content: start;
