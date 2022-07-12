@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import * as Style from 'components/Feed/Feed.styles';
-import UserImage from 'components/UserImage/UserImage';
+import ProfileImage from 'components/ProfileImage/ProfileImage';
 
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
@@ -24,14 +24,14 @@ function FeedImage({ src, ...props }) {
   );
 }
 
-function ProfileImage({ src, ...props }) {
+function WriterProfileImage({ src, ...props }) {
   return src ? (
     <Style.ProfileContainer>
-      <UserImage src={src} {...props} size="medium" />
+      <ProfileImage src={src} {...props} size="medium" />
     </Style.ProfileContainer>
   ) : (
     <Style.ProfileContainer>
-      <UserImage {...props} size="medium" />
+      <ProfileImage {...props} size="medium" />
     </Style.ProfileContainer>
   );
 }
@@ -93,7 +93,7 @@ function Icons({ likeCount, isLiked, isBookmarked }) {
 
 Feed.Icons = Icons;
 Feed.FeedImage = FeedImage;
-Feed.ProfileImage = ProfileImage;
+Feed.WriterProfileImage = WriterProfileImage;
 Feed.Context = Context;
 Feed.Content = Style.Content;
 
@@ -105,7 +105,7 @@ FeedImage.propTypes = {
   src: PropTypes.string,
 };
 
-ProfileImage.propTypes = {
+WriterProfileImage.propTypes = {
   src: PropTypes.string,
 };
 
