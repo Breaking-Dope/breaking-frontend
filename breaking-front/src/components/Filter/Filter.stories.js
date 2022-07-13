@@ -4,6 +4,9 @@ import Filter from 'components/Filter/Filter';
 export default {
   title: 'components/Filter',
   component: Filter,
+  subComponent:{
+    "Filter.FilterDetail":Filter.FilterDetail
+  }
 };
 
 export const DefaultFilter = () => {
