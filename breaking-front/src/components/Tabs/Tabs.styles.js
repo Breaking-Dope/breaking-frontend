@@ -14,12 +14,9 @@ export const Tab = styled.li`
   padding: 10px;
   margin-right: 25px;
   text-align: center;
+  border-bottom: ${({ isActiveTabItem, theme }) =>
+    isActiveTabItem ? `1px solid ${theme.blue[900]}` : 'none'};
   cursor: pointer;
-`;
-
-// TabItem 컴포넌트
-export const ActiveTab = styled(Tab)`
-  border-bottom: 1px solid ${({ theme }) => theme.blue[900]};
 `;
 
 export const TabLabel = styled.p`
@@ -27,6 +24,6 @@ export const TabLabel = styled.p`
 `;
 
 export const TabPanel = styled.div`
-  display: ${({ isActive }) => (isActive ? 'block' : 'none')};
+  display: ${({ isActiveTabPanel }) => (isActiveTabPanel ? 'block' : 'none')};
   margin-top: 20px;
 `;
