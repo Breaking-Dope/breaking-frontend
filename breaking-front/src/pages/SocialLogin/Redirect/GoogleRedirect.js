@@ -41,7 +41,7 @@ const GoogleRedirect = () => {
       data: {
         grant_type: 'authorization_code',
         client_id: process.env.REACT_APP_GOOGLE_CLIENT_KEY,
-        client_secret: process.env.REACT_APP_GOOGLE_CLIENT_SECRIT,
+        client_secret: process.env.REACT_APP_GOOGLE_CLIENT_SECRET,
         redirect_uri: GOOGLE_PATH.REDIRECT_URL,
         code: accessCode,
       },
