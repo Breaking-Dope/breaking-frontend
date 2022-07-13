@@ -15,11 +15,6 @@ export const Filter = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 35px;
-  > * {
-    &:hover {
-      font-weight: ${({ isOpen }) => (isOpen ? 700 : 500)};
-    }
-  }
 `;
 
 export const IconContainer = styled.span`
@@ -31,4 +26,7 @@ export const Label = styled.label`
   padding: 6px 0px;
   font-size: 12px;
   cursor: pointer;
+  &:hover {
+    font-weight: 700;
+  }
 `;
