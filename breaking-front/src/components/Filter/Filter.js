@@ -43,7 +43,7 @@ function FilterDetail({
   selectedLabel,
   onClick,
 }) {
-  const ishidden = () =>
+  const isHidden = () =>
     !isOpen && selectedLabel !== `${index}-Label` ? true : false;
   // 지금 컴포넌트가 보여줘야하는지 판단하는 함수
   return (
@@ -53,7 +53,7 @@ function FilterDetail({
         filterClick(event);
         onClick && onClick();
       }}
-      hidden={ishidden()}
+      hidden={isHidden()}
     >
       {children}
     </Style.Label>
@@ -64,7 +64,6 @@ Filter.FilterDetail = FilterDetail;
 
 Filter.propTypes = {
   width: PropTypes.string,
-  initalize: PropTypes.string,
   children: PropTypes.node,
 };
 
