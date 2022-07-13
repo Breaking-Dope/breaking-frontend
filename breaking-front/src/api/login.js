@@ -1,17 +1,17 @@
 import axios from 'axios';
-import { KAKAO_PATH, PATH } from 'constants/path';
+import { PATH } from 'constants/path';
 import api from 'api/api';
 
 export const postAccessCode = (data) => {
   const headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
   };
-  const queryStringBody = Object.keys(data)
-    .map((k) => encodeURIComponent(k) + '=' + encodeURI(data[k]))
+  const queryStringBody = Object.keys(data.data)
+    .map((k) => encodeURIComponent(k) + '=' + encodeURI(data.data[k]))
     .join('&');
   return axios({
     method: 'post',
-    url: KAKAO_PATH.OAUTH_TOKEN,
+    url: data.url,
     headers: headers,
     data: queryStringBody,
   });

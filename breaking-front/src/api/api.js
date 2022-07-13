@@ -3,7 +3,7 @@ const { DEVELOPMENT_BASE_URL, PRODUCTION_BASE_URL } = require('constants/path');
 
 const api = axios.create({
   baseURL:
-    process.env.DEPLOY_ENV !== 'production'
+    process.env.NODE_ENV !== 'production'
       ? DEVELOPMENT_BASE_URL
       : PRODUCTION_BASE_URL,
   headers: {

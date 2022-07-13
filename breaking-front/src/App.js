@@ -4,13 +4,14 @@ import GlobalStyle from 'styles/GlobalStyle';
 import theme from 'styles/theme';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SocialLogin from 'pages/SocialLogin/SocialLogin';
-import KakaoRedirect from 'pages/SocialLogin/KakaoRedirect';
+import KakaoRedirect from 'pages/SocialLogin/Redirect/KakaoRedirect';
 import SignUp from 'pages/SignUp/SignUp';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { PATH } from 'constants/path';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Layout from 'components/Layout/Layout';
+import GoogleRedirect from 'pages/SocialLogin/Redirect/GoogleRedirect';
 
 function App() {
   const queryClient = new QueryClient();
@@ -26,6 +27,10 @@ function App() {
                 <Route
                   path={PATH.KAKAO_LOGIN}
                   element={<KakaoRedirect />}
+                ></Route>
+                <Route
+                  path={PATH.GOOGLE_LOGIN}
+                  element={<GoogleRedirect />}
                 ></Route>
                 <Route path={PATH.SIGNUP} element={<SignUp />} />
               </Routes>

@@ -2,6 +2,7 @@ export const PATH = {
   HOME: '/',
   LOGIN: '/login',
   KAKAO_LOGIN: 'login/kakao',
+  GOOGLE_LOGIN: 'login/google',
   SIGNUP: '/signup',
   OAUTH2_SIGNUP: '/oauth2/sign-up',
   OAUTH2_SIGNUP_VALIDATE_PHONE_NUMBER: '/oauth2/sign-up/validate-phone-number',
@@ -18,6 +19,11 @@ export const PATH = {
 export const KAKAO_PATH = {
   REDIRECT_URL: 'http://localhost:3000/login/kakao',
   OAUTH_TOKEN: 'https://kauth.kakao.com/oauth/token',
+};
+
+export const GOOGLE_PATH = {
+  REDIRECT_URL: 'http://localhost:3000/login/google',
+  OAUTH_TOKEN: 'https://oauth2.googleapis.com/token',
 };
 
 export const DEVELOPMENT_BASE_URL = 'http://localhost:3000/';
