@@ -1,5 +1,3 @@
-const MESSAGE = {
-  SIGNUP: {},
-};
+const MESSAGE = {};
 
 export default MESSAGE;
