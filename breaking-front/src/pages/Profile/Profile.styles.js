@@ -37,3 +37,12 @@ export const WritedPost = styled.div``;
 export const Follower = styled.div``;
 
 export const Following = styled.div``;
+
+export const PostInformation = styled.div``;
+
+export const FeedContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  margin-top: 60px;
+`;
