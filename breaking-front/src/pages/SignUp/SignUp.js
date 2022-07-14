@@ -51,11 +51,11 @@ const SignUp = () => {
     setEmailErrorMessage
   );
 
-  const handleImageUploadPreview = async (event) => {
+  const handleImageUploadPreview = (event) => {
     const imageFile = event.target.files[0];
     setProfileImg(imageFile);
 
-    await fileToBase64(imageFile).then((data) => setImageSrc(data));
+    fileToBase64(imageFile, setImageSrc);
   };
 
   const imageDeleteClick = () => {
