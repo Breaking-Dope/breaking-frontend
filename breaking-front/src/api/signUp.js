@@ -10,26 +10,11 @@ export const postSignUp = (userData) => {
   });
 };
 
-export const postNicknameValidation = (nickname) => {
-  return api({
-    method: 'post',
-    url: PATH.OAUTH2_SIGNUP_VALIDATE_NICKNAME,
-    data: nickname,
-  });
-};
+export const getProfileValidation = ({ queryKey }) => {
+  const [, query] = queryKey;
 
-export const postPhoneNumberValidation = (phoneNumber) => {
   return api({
-    method: 'post',
-    url: PATH.OAUTH2_SIGNUP_VALIDATE_PHONE_NUMBER,
-    data: phoneNumber,
-  });
-};
-
-export const postEmailValidation = (email) => {
-  return api({
-    method: 'post',
-    url: PATH.OAUTH2_SIGNUP_VALIDATE_EMAIL,
-    data: email,
+    method: 'get',
+    url: `${PATH.OAUTH2_SIGNUP}/validate-${query.validType}/${query.profileData}`,
   });
 };
