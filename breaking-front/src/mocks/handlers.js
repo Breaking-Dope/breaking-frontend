@@ -11,31 +11,58 @@ export const handlers = [
     return res(ctx.status(200));
   }),
 
-  rest.post(PATH.OAUTH2_SIGNUP_VALIDATE_NICKNAME, (req, res, ctx) => {
+  rest.get(PATH.OAUTH2_SIGNUP_VALIDATE_NICKNAME + '/:id', (req, res, ctx) => {
     //중복체크
-    if (req.body.nickname === '주기') return res(ctx.status(400));
-    //올바른 형식 체크
-    else return res(ctx.status(200));
-  }),
-
-  rest.post(PATH.OAUTH2_SIGNUP_VALIDATE_PHONE_NUMBER, (req, res, ctx) => {
-    //중복체크
-    if (req.body.phoneNumber === '01012345678')
+    if (req.params.id === '주기')
       return res(
         ctx.status(400),
-        ctx.json({ message: 'invalid phone number' })
+        ctx.json({ message: '사용중인 닉네임입니다.' })
       );
+
     //올바른 형식 체크
-    else if (req.body.phoneNumber === '010') return res(ctx.status(400));
-    else return res(ctx.status(200));
+    if (req.params.id === '주')
+      return res(
+        ctx.status(400),
+        ctx.json({ message: '닉네임 형식이 잘못되었습니다.' })
+      );
+
+    return res(ctx.status(200));
   }),
 
-  rest.post(PATH.OAUTH2_SIGNUP_VALIDATE_EMAIL, (req, res, ctx) => {
+  rest.get(
+    PATH.OAUTH2_SIGNUP_VALIDATE_PHONE_NUMBER + '/:id',
+    (req, res, ctx) => {
+      //중복체크
+      if (req.params.id === '01012345678')
+        return res(
+          ctx.status(400),
+          ctx.json({ message: '사용중인 휴대폰번호입니다.' })
+        );
+
+      //올바른 형식 체크
+      if (req.params.id === '010')
+        return res(
+          ctx.status(400),
+          ctx.json({ message: '휴대폰번호 형식이 잘못되었습니다.' })
+        );
+
+      return res(ctx.status(200));
+    }
+  ),
+
+  rest.get(PATH.OAUTH2_SIGNUP_VALIDATE_EMAIL + '/:id', (req, res, ctx) => {
     //중복체크
-    if (req.body.email === 'kangju2000@naver.com')
-      return res(ctx.status(400), ctx.json({ message: 'invalid email' }));
+    if (req.params.id === 'kangju2000@naver.com')
+      return res(
+        ctx.status(400),
+        ctx.json({ message: '사용중인 이메일입니다.' })
+      );
     //올바른 형식 체크
-    else if (req.body.email === 'kangju2000') return res(ctx.status(400));
+    else if (req.params.id === 'kangju2000')
+      return res(
+        ctx.status(400),
+        ctx.json({ message: '이메일 형식이 잘못되었습니다.' })
+      );
     else return res(ctx.status(200));
   }),
 
