@@ -118,7 +118,7 @@ const SignUp = () => {
 
   useEffect(() => {
     //유저가 sns 로그인하지않고 회원가입 페이지로 들어왔을 때 처리
-    if (location.state?.username === undefined) {
+    if (!location.state) {
       alert('SNS 로그인 후 회원가입이 가능함니다.');
       navigate(PATH.LOGIN);
     }
