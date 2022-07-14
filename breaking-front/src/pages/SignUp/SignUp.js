@@ -4,46 +4,52 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { postSignUp } from 'api/signUp';
 import Button from 'components/Button/Button';
 import SignUpInput from 'components/SignUpInput/SignUpInput';
-import useIsValidEmail from 'hooks/useIsValidEmail';
-import useIsValidNickname from 'hooks/useIsValidNickname';
-import useIsValidPhoneNumber from 'hooks/useIsValidPhoneNumber';
+import useIsValidProfile from 'hooks/queries/useIsValidProfile';
 import useInputs from 'hooks/useInputs';
-import MESSAGE from 'constants/message';
-import REGEXP from 'constants/regexp';
 import { PATH } from 'constants/path';
 import fileToBase64 from 'utils/fileToBase64';
-import * as Style from 'pages/SignUp/SignUp.styles';
-import defaultProfileImage from 'assets/svg/default-profile-image.svg';
 import { ReactComponent as XMark } from 'assets/svg/x-mark.svg';
+import defaultProfileImage from 'assets/svg/default-profile-image.svg';
+import * as Style from 'pages/SignUp/SignUp.styles';
 
 const SignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [imageSrc, setImageSrc] = useState(defaultProfileImage);
   const [profileImg, setProfileImg] = useState('');
   const [
-    { realname, nickname, phoneNumber, statusMsg, email, role },
+    { realName, nickname, phoneNumber, statusMsg, email, role },
     handleChange,
     setForm,
   ] = useInputs({
-    realname: '',
+    realName: '',
     nickname: '',
     phoneNumber: '',
     email: '',
     statusMsg: '',
     role: 'USER',
   });
-  const [errorMessage, setErrorMessage] = useState({
-    nickname: '',
-    phoneNumber: '',
-    email: '',
-  });
-  const [imageSrc, setImageSrc] = useState(defaultProfileImage);
 
-  const { mutate: IsValidNickname, isError: NicknameError } =
-    useIsValidNickname();
-  const { mutate: IsValidPhoneNumber, isError: PhoneNumberError } =
-    useIsValidPhoneNumber();
-  const { mutate: IsValidEmail, isError: EmailError } = useIsValidEmail();
+  const [nicknameErrorMessage, setNicknameErrorMessage] = useState('');
+  const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState('');
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+
+  const { refetch: NicknameReFetch } = useIsValidProfile(
+    'nickname',
+    nickname,
+    setNicknameErrorMessage
+  );
+  const { refetch: PhoneNumberReFetch } = useIsValidProfile(
+    'phone-number',
+    phoneNumber,
+    setPhoneNumberErrorMessage
+  );
+  const { refetch: EmailReFetch } = useIsValidProfile(
+    'email',
+    email,
+    setEmailErrorMessage
+  );
 
   const handleImageUploadPreview = async (event) => {
     const imageFile = event.target.files[0];
@@ -61,6 +67,8 @@ const SignUp = () => {
 
   const SignUp = useMutation(postSignUp, {
     onSuccess: (res) => {
+      const jwtToken = res.headers.authorization;
+      localStorage.setItem('access_token', jwtToken);
       alert(`환영합니다. ${nickname}님`);
       navigate(PATH.HOME);
     },
@@ -80,25 +88,21 @@ const SignUp = () => {
     }
   };
 
-  const inputOnBlur = (regexp, isValidApi, name, value, invalidMessage) => {
-    let message = '';
-
-    regexp ? isValidApi({ [name]: value }) : (message = invalidMessage);
-
-    setErrorMessage((data) => ({ ...data, [name]: message }));
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (nicknameErrorMessage)
+      return alert('닉네임을 올바르게 기입해주시기바랍니다.');
+    else if (phoneNumberErrorMessage)
+      return alert('전화번호를 올바르게 기입해주시기 바랍니다.');
+    else if (emailErrorMessage)
+      return alert('이메일을 올바르게 기입해주시기 바랍니다.');
+
     const formData = new FormData();
 
-    for (const value of Object.values(errorMessage)) {
-      if (value !== '') return alert('정확하게 기입해주시기 바랍니다.');
-    }
-
     const userData = {
-      username: location.state,
-      realname,
+      username: location.state.username,
+      realName,
       nickname,
       phoneNumber,
       email,
@@ -107,33 +111,18 @@ const SignUp = () => {
     };
 
     if (profileImg !== '') formData.append('profileImg', profileImg);
-    formData.append('signUpRequest', JSON.stringify({ userData }));
+    formData.append('signUpRequest', JSON.stringify(userData));
+
     SignUp.mutate(formData);
   };
 
   useEffect(() => {
-    NicknameError &&
-      setErrorMessage((data) => ({
-        ...data,
-        nickname: MESSAGE.SIGNUP.USED_NICKNAME,
-      }));
-  }, [NicknameError]);
-
-  useEffect(() => {
-    PhoneNumberError &&
-      setErrorMessage((data) => ({
-        ...data,
-        phoneNumber: MESSAGE.SIGNUP.USED_PHONENUMBER,
-      }));
-  }, [PhoneNumberError]);
-
-  useEffect(() => {
-    EmailError &&
-      setErrorMessage((data) => ({
-        ...data,
-        email: MESSAGE.SIGNUP.USED_EMAIL,
-      }));
-  }, [EmailError]);
+    //유저가 sns 로그인하지않고 회원가입 페이지로 들어왔을 때 처리
+    if (location.state?.username === undefined) {
+      alert('SNS 로그인 후 회원가입이 가능함니다.');
+      navigate(PATH.LOGIN);
+    }
+  }, []);
 
   return (
     <>
@@ -157,70 +146,52 @@ const SignUp = () => {
         </Style.ProfileImageContainer>
         <SignUpInput
           type="text"
-          label="이름"
+          name="realName"
           placeholder="이름"
-          name="realname"
-          value={realname}
+          label="이름"
+          value={realName}
           onChange={handleChange}
           autoFocus
           required
         />
         <SignUpInput
           type="text"
-          label="닉네임"
-          errorMessage={errorMessage.nickname}
-          placeholder="닉네임"
           name="nickname"
+          placeholder="닉네임"
+          label="닉네임"
+          errorMessage={nicknameErrorMessage}
           value={nickname}
           onChange={handleChange}
-          onBlur={() =>
-            inputOnBlur(
-              REGEXP.NICKNAME.test(nickname),
-              IsValidNickname,
-              'nickname',
-              nickname,
-              MESSAGE.SIGNUP.INVALID_NICKNAME
-            )
-          }
+          onBlur={() => {
+            NicknameReFetch();
+          }}
           required
         />
         <SignUpInput
           type="text"
-          label="전화번호"
-          errorMessage={errorMessage.phoneNumber}
-          placeholder="전화번호"
           name="phoneNumber"
+          placeholder="전화번호"
+          label="전화번호"
+          errorMessage={phoneNumberErrorMessage}
           value={phoneNumber}
           onChange={handleChange}
-          onBlur={() =>
-            inputOnBlur(
-              REGEXP.PHONENUMBER.test(phoneNumber),
-              IsValidPhoneNumber,
-              'phoneNumber',
-              phoneNumber,
-              MESSAGE.SIGNUP.INVALID_PHONENUMBER
-            )
-          }
           maxLength="11"
+          onBlur={() => {
+            PhoneNumberReFetch();
+          }}
           required
         />
         <SignUpInput
           type="email"
-          label="이메일"
-          errorMessage={errorMessage.email}
-          placeholder="이메일"
           name="email"
+          label="이메일"
+          placeholder="이메일"
+          errorMessage={emailErrorMessage}
           value={email}
           onChange={handleChange}
-          onBlur={() =>
-            inputOnBlur(
-              REGEXP.EMAIL.test(email),
-              IsValidEmail,
-              'email',
-              email,
-              MESSAGE.SIGNUP.INVALID_EMAIL
-            )
-          }
+          onBlur={() => {
+            EmailReFetch();
+          }}
           required
         />
         <SignUpInput

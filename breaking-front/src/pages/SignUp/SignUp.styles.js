@@ -42,7 +42,7 @@ export const XMarkIcon = styled.span`
 `;
 
 export const Role = styled.div`
-  margin: 15px 0px 30px;
+  margin: 15px 0px 60px;
   > * {
     margin-right: 30px;
   }
@@ -51,5 +51,6 @@ export const Role = styled.div`
 export const SubmitButton = styled(Button)`
   display: block;
   margin: 0 auto;
+  margin-bottom: 60px;
   color: ${({ theme }) => theme.white};
 `;
