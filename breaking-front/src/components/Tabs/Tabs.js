@@ -7,12 +7,21 @@ export default function Tabs({ children, ...props }) {
   let index = -1;
   return (
     <Style.TabsContainer {...props}>
-      {children.map((child) => {
+      {children.map((child, key) => {
         if (child.type.name === 'TabPanel') {
           index++;
-          return React.cloneElement(child, { active, setActive, index });
+          return React.cloneElement(child, {
+            active,
+            setActive,
+            index,
+            key: `${key}-TabPanel`,
+          });
         } else {
-          return React.cloneElement(child, { active, setActive });
+          return React.cloneElement(child, {
+            active,
+            setActive,
+            key: `${key}-TabList`,
+          });
         }
       })}
     </Style.TabsContainer>
@@ -35,11 +44,10 @@ function TabList({ active, setActive, children }) {
 }
 
 function TabItem({ active, setActive, index, children, ...props }) {
-  const isActive = active === index ? true : false;
   return (
     <Style.Tab
       id={`${index}-Tab`}
-      isActiveTabItem={isActive}
+      isActiveTabItem={active === index}
       onClick={() => setActive(index)}
       {...props}
     >
@@ -49,12 +57,11 @@ function TabItem({ active, setActive, index, children, ...props }) {
 }
 
 function TabPanel({ active, index, children, ...props }) {
-  const isActive = active === index ? true : false;
   return (
     <Style.TabPanel
       role="tab"
       id={`${index}-TabPanel`}
-      isActiveTabPanel={isActive}
+      isActiveTabPanel={active === index}
       {...props}
     >
       {children}
