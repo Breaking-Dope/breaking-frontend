@@ -12,6 +12,7 @@ import { PATH } from 'constants/path';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Layout from 'components/Layout/Layout';
 import GoogleRedirect from 'pages/SocialLogin/Redirect/GoogleRedirect';
+import Profile from 'pages/Profile/Profile';
 
 function App() {
   const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ function App() {
                   element={<GoogleRedirect />}
                 ></Route>
                 <Route path={PATH.SIGNUP} element={<SignUp />} />
+                <Route path={PATH.PROFILE} element={<Profile />} />
               </Routes>
             </Layout>
           </BrowserRouter>
