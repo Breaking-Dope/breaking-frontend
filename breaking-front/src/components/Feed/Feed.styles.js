@@ -14,13 +14,10 @@ export const FeedImage = styled.img`
   cursor: pointer;
 `;
 
-export const FeedDefaultImage = styled.img.attrs({
+export const FeedDefaultImage = styled(FeedImage).attrs({
   src: `${logo}`,
 })`
-  width: 100%;
-  height: 300px;
   background-color: ${({ theme }) => theme.gray[100]};
-  cursor: pointer;
 `;
 
 export const Content = styled.div`
@@ -31,14 +28,10 @@ export const Content = styled.div`
   align-items: center;
 `;
 
-export const ProfileContainer = styled.div`
-  cursor: pointer;
-`;
-
 export const Context = styled.div`
-  flex-direction: column;
   margin-left: 12px;
   font-size: 12px;
+  flex-grow: 1;
   > * {
     margin: 4px;
   }
@@ -55,7 +48,7 @@ export const Detail = styled.div`
   color: ${({ theme }) => theme.gray[800]};
 `;
 
-export const Price = styled.p`
+export const Balance = styled.p`
   display: inline;
   font-size: 12px;
   font-weight: bold;
@@ -66,18 +59,21 @@ export const IconContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 8px;
+  margin-left: 8px;
   cursor: pointer;
 `;
 
 export const Icons = styled.div`
   display: flex;
-  position: absolute;
-  right: 0;
   align-items: center;
-  margin-right: 5px;
 `;
 
 export const Count = styled.span`
   margin-left: 5px;
+`;
+
+export const FeedToggle = styled.div`
+  position: absolute;
+  right: -45px;
+  bottom: 60px;
 `;

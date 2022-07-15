@@ -4,41 +4,35 @@ import Feed from 'components/Feed/Feed';
 export default {
   title: 'components/Feed',
   component: Feed,
-  subcomponent: {
-    'Feed.Context': Feed.Context,
-    'Feed.WriterProfileImage': Feed.WriterProfileImage,
-    'Feed.FeedImage': Feed.FeedImage,
-    'Feed.Content': Feed.Content,
-    'Feed.Icons': Feed.Icons,
-  },
 };
 
-function Template(args) {
-  return <Feed {...args} />;
-}
+const Template = (args) => {
+  const feedData = {
+    postId: '1',
+    title: '~~~사건',
+    region: '중구',
+    thumbnailImgURL: '',
+    likeCount: 999,
+    postType: 'EXCLUSIVE',
+    isSold: false,
+    balance: 10000,
+    viewCount: 1000,
+    userId: 123,
+    profileImgURL: '',
+    realName: '가나다',
+    isLiked: false,
+    isBookmarked: false,
+  };
 
-export const ExampleFeed = Template.bind({});
+  return <Feed feedData={feedData} {...args} />;
+};
 
-ExampleFeed.args = {
-  children: (
-    <>
-      <Feed.FeedImage />
-      <Feed.Content>
-        <Feed.WriterProfileImage />
-        <Feed.Context
-          location="중구"
-          time="12분전"
-          isSold={true}
-          postType="EXCLUSIVE"
-          price={1000}
-          title="일이삼사오육칠팔구십일이삼사오육칠"
-        ></Feed.Context>
-        <Feed.Icons
-          likeCount={27}
-          isLiked={true}
-          isBookmarked={true}
-        ></Feed.Icons>
-      </Feed.Content>
-    </>
-  ),
+export const ItIsMyFeed = Template.bind({});
+ItIsMyFeed.args = {
+  userId: 123,
+};
+
+export const ItIsNotMyFeed = Template.bind({});
+ItIsNotMyFeed.args = {
+  userId: 124,
 };
