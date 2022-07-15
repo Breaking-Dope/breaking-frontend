@@ -1,9 +1,10 @@
-const fileToBase64 = (imageFile) =>
+const fileToBase64 = (imageFile, setImageSrc) =>
   new Promise((resolve) => {
     const reader = new FileReader();
     reader.readAsDataURL(imageFile);
     reader.onload = () => {
-      resolve(reader.result);
+      setImageSrc(reader.result);
+      resolve();
     };
   });
 

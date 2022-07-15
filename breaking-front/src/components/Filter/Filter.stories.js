@@ -9,12 +9,16 @@ export default {
   },
 };
 
-export const DefaultFilter = () => {
+export const DefaultFilter = (args) => {
   return (
-    <Filter>
-      <Filter.FilterDetail>최신순</Filter.FilterDetail>
-      <Filter.FilterDetail>좋아요</Filter.FilterDetail>
-      <Filter.FilterDetail>조회수</Filter.FilterDetail>
-    </Filter>
+    <>
+      <div>대충 위의 컨텐츠</div>
+      <Filter width="160px" {...args}>
+        <Filter.FilterDetail>모든 제보글</Filter.FilterDetail>
+        <Filter.FilterDetail>판매되지 않은 제보글</Filter.FilterDetail>
+        <Filter.FilterDetail>판매된 제보글</Filter.FilterDetail>
+      </Filter>
+      <div>대충 밑의 컨텐츠</div>
+    </>
   );
 };
