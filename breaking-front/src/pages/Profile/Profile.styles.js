@@ -13,9 +13,9 @@ export const UserContainer = styled.div`
 
 export const UserInformation = styled.div`
   display: flex;
+  margin-left: 30px;
   flex-direction: column;
   justify-content: space-evenly;
-  margin-left: 30px;
 `;
 export const NickName = styled.h1`
   font-size: 36px;
@@ -23,31 +23,24 @@ export const NickName = styled.h1`
 `;
 
 export const StatusMessage = styled.h5`
-  font-size: 18px;
   margin-bottom: 30px;
+  font-size: 18px;
 `;
 
 export const Information = styled.div`
   display: flex;
-  font-size: 12px;
   margin-top: 10px;
+  font-size: 12px;
   > * {
     margin-right: 20px;
     cursor: pointer;
   }
 `;
-
-export const WritedPost = styled.div``;
-
-export const Follower = styled.div``;
-
-export const Following = styled.div``;
-
 export const PostInformation = styled.div``;
 
 export const FeedContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  justify-items: center;
   row-gap: 60px;
+  justify-items: center;
 `;
