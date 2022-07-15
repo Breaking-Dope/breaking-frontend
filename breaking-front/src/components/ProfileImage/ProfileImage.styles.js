@@ -33,7 +33,6 @@ export const DefaultImage = styled.img.attrs({
   src: `${defaultImage}`,
 })`
   ${({ size }) => sizeCss[size]};
-  background-color: ${({ theme }) => theme.gray[200]};
   border-radius: 50%;
   cursor: pointer;
 `;
