@@ -20,7 +20,7 @@ const SignUp = () => {
     role: 'PRESS',
   };
 
-  const SignUp = useMutation(postSignUp, {
+  const SignUpMutation = useMutation(postSignUp, {
     onSuccess: (res) => {
       const jwtToken = res.headers.authorization;
       localStorage.setItem('access_token', jwtToken);
@@ -45,7 +45,7 @@ const SignUp = () => {
       <SignUpForm
         username={location.state?.username}
         userDefaultData={userDefaultData}
-        mutation={SignUp}
+        mutation={SignUpMutation}
       />
     </>
   );
