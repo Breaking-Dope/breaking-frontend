@@ -7,6 +7,22 @@ import * as Style from 'pages/Profile/Profile.styles';
 import React from 'react';
 
 const Profile = () => {
+  const feedData = {
+    postId: '1',
+    title: '~~~사건',
+    region: '중구',
+    thumbnailImgURL: '',
+    likeCount: 999,
+    postType: 'EXCLUSIVE',
+    isSold: false,
+    balance: 10000,
+    viewCount: 1000,
+    userId: 123,
+    profileImgURL: '',
+    realName: '가나다',
+    isLiked: false,
+    isBookmarked: false,
+  };
   return (
     <>
       <Style.UserContainer>
@@ -36,44 +52,8 @@ const Profile = () => {
           </Filter>
           <Tabs.TabPanel>
             <Style.FeedContainer>
-              <Feed>
-                <Feed.FeedImage />
-                <Feed.Content>
-                  <Feed.WriterProfileImage />
-                  <Feed.Context
-                    location="중구"
-                    time="12분전"
-                    isSold={true}
-                    postType="EXCLUSIVE"
-                    price={1000}
-                    title="일이삼사오육칠팔구십일이삼사오육칠"
-                  ></Feed.Context>
-                  <Feed.Icons
-                    likeCount={27}
-                    isLiked={true}
-                    isBookmarked={true}
-                  ></Feed.Icons>
-                </Feed.Content>
-              </Feed>
-              <Feed>
-                <Feed.FeedImage />
-                <Feed.Content>
-                  <Feed.WriterProfileImage />
-                  <Feed.Context
-                    location="중구"
-                    time="12분전"
-                    isSold={true}
-                    postType="EXCLUSIVE"
-                    price={1000}
-                    title="일이삼사오육칠팔구십일이삼사오육칠"
-                  ></Feed.Context>
-                  <Feed.Icons
-                    likeCount={27}
-                    isLiked={true}
-                    isBookmarked={true}
-                  ></Feed.Icons>
-                </Feed.Content>
-              </Feed>
+              <Feed feedData={feedData} />
+              <Feed feedData={feedData} />
             </Style.FeedContainer>
           </Tabs.TabPanel>
           <Tabs.TabPanel>2번</Tabs.TabPanel>

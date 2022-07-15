@@ -44,5 +44,4 @@ export const FeedContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-items: center;
-  margin-top: 60px;
 `;
