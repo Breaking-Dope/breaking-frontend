@@ -13,7 +13,6 @@ export default function Filter({ width, children, ...props }) {
   // open이 활성화되면 모든 라벨을 보일수 있게 한다.
 
   const childProps = {
-    isOpen,
     setSelectedLabel,
   };
 

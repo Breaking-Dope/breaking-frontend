@@ -4,7 +4,6 @@ export const FilterContainer = styled.div`
   display: flex;
   z-index: 5;
   width: ${({ width }) => width};
-  box-sizing: border-box;
   cursor: pointer;
 `;
 
