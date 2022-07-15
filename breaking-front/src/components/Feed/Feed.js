@@ -14,18 +14,23 @@ import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
 import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as HideIcon } from 'assets/svg/hide.svg';
+import { useNavigate } from 'react-router-dom';
 
-export default function Feed({
-  feedData,
-  userId,
-  profileClick,
-  feedClick,
-  ...props
-}) {
+export default function Feed({ feedData, userId, ...props }) {
+  const navigate = useNavigate();
+
   const [isLiked, setIsLiked] = useState(feedData.isLiked);
   const [isBookmarked, setIsBookmarked] = useState(feedData.isBookmarked);
   const [likeCount, setLikeCount] = useState(feedData.likeCount);
   const [isOpenToggle, setIsOpenToggle] = useState(false);
+
+  const handleFeedClick = () => {
+    navigate(`/post/${feedData.postId}`);
+  };
+
+  const handleProfileClick = () => {
+    navigate(`/profile/${feedData.userId}`);
+  };
 
   const toggleLiked = () => {
     // 추후 좋아요 로직 작성
@@ -44,19 +49,22 @@ export default function Feed({
   return (
     <Style.Feed {...props}>
       {feedData?.thumbnailImgURL ? (
-        <Style.FeedImage src={feedData.thumbnailImgURL} onClick={feedClick} />
+        <Style.FeedImage
+          src={feedData.thumbnailImgURL}
+          onClick={handleFeedClick}
+        />
       ) : (
-        <Style.FeedDefaultImage onClick={feedClick} />
+        <Style.FeedDefaultImage onClick={handleFeedClick} />
       )}
       <Style.Content>
         <ProfileImage
           src={feedData?.profileImgURL}
           size="medium"
-          profileClick={profileClick}
+          profileClick={handleProfileClick}
         />
 
         <Style.Context>
-          <Style.Title onClick={feedClick}>{feedData.title}</Style.Title>
+          <Style.Title onClick={handleFeedClick}>{feedData.title}</Style.Title>
           <Style.Detail>
             <LocationIcon />
             {feedData.region}
@@ -119,6 +127,4 @@ export default function Feed({
 Feed.propTypes = {
   feedData: PropTypes.object.isRequired,
   userId: PropTypes.number.isRequired,
-  profileClick: PropTypes.func.isRequired,
-  feedClick: PropTypes.func.isRequired,
 };

@@ -29,21 +29,7 @@ const Template = (args) => {
     isBookmarked: false,
   };
 
-  const handleProfileClick = () => {
-    console.log('유저페이지로 이동');
-  };
-
-  const handleFeedClick = () => {
-    console.log('피드페이지로 이동');
-  };
-  return (
-    <Feed
-      feedData={feedData}
-      profileClick={handleProfileClick}
-      feedClick={handleFeedClick}
-      {...args}
-    />
-  );
+  return <Feed feedData={feedData} {...args} />;
 };
 
 export const ItIsMyFeed = Template.bind({});
