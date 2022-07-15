@@ -4,41 +4,54 @@ import Feed from 'components/Feed/Feed';
 export default {
   title: 'components/Feed',
   component: Feed,
-  subcomponent: {
-    'Feed.Context': Feed.Context,
-    'Feed.WriterProfileImage': Feed.WriterProfileImage,
-    'Feed.FeedImage': Feed.FeedImage,
-    'Feed.Content': Feed.Content,
-    'Feed.Icons': Feed.Icons,
+  argTypes: {
+    userId: {
+      control: { type: 'number' },
+    },
   },
 };
 
-function Template(args) {
-  return <Feed {...args} />;
-}
+const Template = (args) => {
+  const feedData = {
+    postId: '1',
+    title: '~~~사건',
+    region: '중구',
+    thumbnailImgURL: '',
+    likeCount: 999,
+    postType: 'EXCLUSIVE',
+    isSold: false,
+    price: 10000,
+    viewCount: 1000,
+    userId: 123,
+    profileImgURL: '',
+    realName: '가나다',
+    isLiked: false,
+    isBookmarked: false,
+  };
 
-export const ExampleFeed = Template.bind({});
+  const handleProfileClick = () => {
+    console.log('유저페이지로 이동');
+  };
 
-ExampleFeed.args = {
-  children: (
-    <>
-      <Feed.FeedImage />
-      <Feed.Content>
-        <Feed.WriterProfileImage />
-        <Feed.Context
-          location="중구"
-          time="12분전"
-          isSold={true}
-          postType="EXCLUSIVE"
-          price={1000}
-          title="일이삼사오육칠팔구십일이삼사오육칠"
-        ></Feed.Context>
-        <Feed.Icons
-          likeCount={27}
-          isLiked={true}
-          isBookmarked={true}
-        ></Feed.Icons>
-      </Feed.Content>
-    </>
-  ),
+  const handleFeedClick = () => {
+    console.log('피드페이지로 이동');
+  };
+  return (
+    <Feed
+      feedData={feedData}
+      profileClick={handleProfileClick}
+      feedClick={handleFeedClick}
+      {...args}
+    />
+  );
+};
+
+export const ItIsMyFeed = Template.bind({});
+ItIsMyFeed.args = {
+  userId: 123,
+};
+
+export const ItIsNotMyFeed = Template.bind({});
+ItIsNotMyFeed.args = {
+  userId: 124,
 };

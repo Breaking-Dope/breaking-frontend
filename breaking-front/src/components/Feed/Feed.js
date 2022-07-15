@@ -2,124 +2,123 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import * as Style from 'components/Feed/Feed.styles';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-
+import Button from 'components/Button/Button';
+import Toggle from 'components/Toggle/Toggle';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
 import { ReactComponent as LikedIcon } from 'assets/svg/liked.svg';
 import { ReactComponent as BookMarkIcon } from 'assets/svg/bookmark.svg';
 import { ReactComponent as BookMarkedIcon } from 'assets/svg/bookmarked.svg';
 import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
+import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
+import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
+import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
+import { ReactComponent as HideIcon } from 'assets/svg/hide.svg';
 
-import Button from 'components/Button/Button';
+export default function Feed({
+  feedData,
+  userId,
+  profileClick,
+  feedClick,
+  ...props
+}) {
+  const [isLiked, setIsLiked] = useState(feedData.isLiked);
+  const [isBookmarked, setIsBookmarked] = useState(feedData.isBookmarked);
+  const [likeCount, setLikeCount] = useState(feedData.likeCount);
+  const [isOpenToggle, setIsOpenToggle] = useState(false);
 
-export default function Feed({ children, ...props }) {
-  return <Style.Feed {...props}>{children}</Style.Feed>;
-}
+  const toggleLiked = () => {
+    // 추후 좋아요 로직 작성
+    isLiked ? setLikeCount((pre) => pre - 1) : setLikeCount((pre) => pre + 1);
+    setIsLiked((pre) => !pre);
+  };
+  const toggleBookmarked = () => {
+    // 추후 북마크 로직 작성
+    setIsBookmarked((pre) => !pre);
+  };
 
-function FeedImage({ src, ...props }) {
-  return src ? (
-    <Style.FeedImage src={src} {...props} />
-  ) : (
-    <Style.FeedDefaultImage {...props} />
-  );
-}
+  const toggleETC = () => {
+    setIsOpenToggle((pre) => !pre);
+  };
 
-function WriterProfileImage({ src, ...props }) {
-  return src ? (
-    <Style.ProfileContainer>
-      <ProfileImage src={src} {...props} size="medium" />
-    </Style.ProfileContainer>
-  ) : (
-    <Style.ProfileContainer>
-      <ProfileImage {...props} size="medium" />
-    </Style.ProfileContainer>
-  );
-}
-
-function Context({ title, time, location, isSold, postType, price }) {
   return (
-    <Style.Context>
-      <Style.Title>{title}</Style.Title>
-      <Style.Detail>
-        <LocationIcon />
-        {location}
-      </Style.Detail>
-      <Style.Detail>{time}</Style.Detail>
-      {postType === 'EXCLUSIVE' && (
-        <Button color="dark" size="small">
-          단독
-        </Button>
-      )}
-      {isSold ? (
-        <Button color="danger" size="small">
-          판매 완료
-        </Button>
+    <Style.Feed {...props}>
+      {feedData?.thumbnailImgURL ? (
+        <Style.FeedImage src={feedData.thumbnailImgURL} onClick={feedClick} />
       ) : (
-        <Button color="primary" size="small">
-          판매중
-        </Button>
+        <Style.FeedDefaultImage onClick={feedClick} />
       )}
-      <Style.Price>{price.toLocaleString('ko-KR')} 원</Style.Price>
-    </Style.Context>
+      <Style.Content>
+        <ProfileImage
+          src={feedData?.profileImgURL}
+          size="medium"
+          profileClick={profileClick}
+        />
+
+        <Style.Context>
+          <Style.Title onClick={feedClick}>{feedData.title}</Style.Title>
+          <Style.Detail>
+            <LocationIcon />
+            {feedData.region}
+          </Style.Detail>
+          <Style.Detail>{feedData.createdDate}</Style.Detail>
+          {feedData.postType === 'EXCLUSIVE' && (
+            <Button color="dark" size="small" disabled>
+              단독
+            </Button>
+          )}
+          {feedData.isSold ? (
+            <Button color="danger" size="small" disabled>
+              판매 완료
+            </Button>
+          ) : (
+            <Button color="primary" size="small" disabled>
+              판매중
+            </Button>
+          )}
+          <Style.Price>{feedData.price.toLocaleString('ko-KR')} 원</Style.Price>
+        </Style.Context>
+
+        <Style.Icons>
+          <Style.IconContainer onClick={toggleLiked}>
+            {isLiked ? <LikedIcon /> : <LikeIcon />}
+            <Style.Count>{likeCount.toLocaleString('ko-KR')}</Style.Count>
+          </Style.IconContainer>
+          <Style.IconContainer onClick={toggleBookmarked}>
+            {isBookmarked ? <BookMarkedIcon /> : <BookMarkIcon />}
+          </Style.IconContainer>
+          <Style.IconContainer
+            onClick={toggleETC}
+            tabIndex="0"
+            onBlur={() => setIsOpenToggle(false)}
+          >
+            <ETCIcon />
+          </Style.IconContainer>
+        </Style.Icons>
+        <Style.FeedToggle onMouseDown={(event) => event.preventDefault()}>
+          {isOpenToggle &&
+            (userId === feedData.userId ? (
+              // 추후 로직 작성
+              <Toggle width="80px">
+                <Toggle.LabelLink path="/" icon={<EditIcon />} label="수정" />
+                <Toggle.LabelLink path="/" icon={<RemoveIcon />} label="삭제" />
+                <Toggle.LabelLink path="/" icon={<ShareIcon />} label="공유" />
+              </Toggle>
+            ) : (
+              <Toggle width="80px">
+                <Toggle.LabelLink path="/" icon={<HideIcon />} label="숨김" />
+                <Toggle.LabelLink path="/" icon={<ShareIcon />} label="공유" />
+              </Toggle>
+            ))}
+        </Style.FeedToggle>
+      </Style.Content>
+    </Style.Feed>
   );
 }
-
-function Icons({ likeCount, isLiked, isBookmarked }) {
-  const [liked, setLiked] = useState(isLiked);
-  const [bookmarked, setBookmarked] = useState(isBookmarked);
-  const [count, setCount] = useState(likeCount);
-  const toogleLiked = () => {
-    liked ? setCount((pre) => pre - 1) : setCount((pre) => pre + 1);
-    setLiked((pre) => !pre);
-  };
-  const toogleBookmarked = () => {
-    setBookmarked((pre) => !pre);
-  };
-  return (
-    <Style.Icons>
-      <Style.IconContainer onClick={toogleLiked}>
-        {liked ? <LikedIcon /> : <LikeIcon />}
-        <Style.Count>{count}</Style.Count>
-      </Style.IconContainer>
-      <Style.IconContainer onClick={toogleBookmarked}>
-        {bookmarked ? <BookMarkedIcon /> : <BookMarkIcon />}
-      </Style.IconContainer>
-      <Style.IconContainer>
-        <ETCIcon />
-      </Style.IconContainer>
-    </Style.Icons>
-  );
-}
-
-Feed.Icons = Icons;
-Feed.FeedImage = FeedImage;
-Feed.WriterProfileImage = WriterProfileImage;
-Feed.Context = Context;
-Feed.Content = Style.Content;
 
 Feed.propTypes = {
-  children: PropTypes.node,
-};
-
-FeedImage.propTypes = {
-  src: PropTypes.string,
-};
-
-WriterProfileImage.propTypes = {
-  src: PropTypes.string,
-};
-
-Context.propTypes = {
-  title: PropTypes.string,
-  time: PropTypes.string, // 타입 확실하지 않음
-  location: PropTypes.string,
-  isSold: PropTypes.bool.isRequired,
-  postType: PropTypes.string.isRequired,
-  price: PropTypes.number,
-};
-
-Icons.propTypes = {
-  likeCount: PropTypes.number,
-  isLiked: PropTypes.bool,
-  isBookmarked: PropTypes.bool,
+  feedData: PropTypes.object.isRequired,
+  userId: PropTypes.number.isRequired,
+  profileClick: PropTypes.func.isRequired,
+  feedClick: PropTypes.func.isRequired,
 };
