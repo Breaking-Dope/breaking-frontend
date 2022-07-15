@@ -148,9 +148,13 @@ export default function SignUpForm({ username, userDefaultData, mutation }) {
           value={nickname}
           onChange={handleChange}
           onBlur={() => {
-            nickname === ''
-              ? setNicknameErrorMessage(MESSAGE.SIGNUP.BLANK)
-              : NicknameReFetch();
+            if (username && userDefaultData.nickname === nickname)
+              setNicknameErrorMessage('');
+            else {
+              nickname === ''
+                ? setNicknameErrorMessage(MESSAGE.SIGNUP.BLANK)
+                : NicknameReFetch();
+            }
           }}
           required
         />
@@ -164,9 +168,13 @@ export default function SignUpForm({ username, userDefaultData, mutation }) {
           onChange={handleChange}
           maxLength="11"
           onBlur={() => {
-            phoneNumber === ''
-              ? setPhoneNumberErrorMessage(MESSAGE.SIGNUP.BLANK)
-              : PhoneNumberReFetch();
+            if (username && userDefaultData.phoneNumber === phoneNumber)
+              setPhoneNumberErrorMessage('');
+            else {
+              phoneNumber === ''
+                ? setPhoneNumberErrorMessage(MESSAGE.SIGNUP.BLANK)
+                : PhoneNumberReFetch();
+            }
           }}
           required
         />
@@ -179,9 +187,13 @@ export default function SignUpForm({ username, userDefaultData, mutation }) {
           value={email}
           onChange={handleChange}
           onBlur={() => {
-            email === ''
-              ? setEmailErrorMessage(MESSAGE.SIGNUP.BLANK)
-              : EmailReFetch();
+            if (username && userDefaultData.email === email)
+              setEmailErrorMessage('');
+            else {
+              email === ''
+                ? setEmailErrorMessage(MESSAGE.SIGNUP.BLANK)
+                : EmailReFetch();
+            }
           }}
           required
         />
