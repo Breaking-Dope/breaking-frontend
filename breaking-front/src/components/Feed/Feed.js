@@ -84,7 +84,9 @@ export default function Feed({ feedData, userId, ...props }) {
               판매중
             </Button>
           )}
-          <Style.Price>{feedData.price.toLocaleString('ko-KR')} 원</Style.Price>
+          <Style.Balance>
+            {feedData.balance.toLocaleString('ko-KR')} 원
+          </Style.Balance>
         </Style.Context>
 
         <Style.Icons>

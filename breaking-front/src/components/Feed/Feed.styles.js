@@ -48,7 +48,7 @@ export const Detail = styled.div`
   color: ${({ theme }) => theme.gray[800]};
 `;
 
-export const Price = styled.p`
+export const Balance = styled.p`
   display: inline;
   font-size: 12px;
   font-weight: bold;
