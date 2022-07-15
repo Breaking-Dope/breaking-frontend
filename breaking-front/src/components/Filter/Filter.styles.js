@@ -1,32 +1,37 @@
 import styled from 'styled-components';
 
 export const FilterContainer = styled.div`
-  position: absolute;
-  display: inline-block;
-  width: ${({ width }) => width};
-  padding: 5px;
-  border: 1px solid ${({ theme }) => theme.gray[500]};
-  background-color: ${({ theme }) => theme.white};
-  cursor: pointer;
-  z-index: 5;
-`;
-
-export const Filter = styled.div`
   display: flex;
-  flex-direction: column;
-  margin-left: 35px;
-`;
-
-export const IconContainer = styled.span`
-  position: absolute;
+  z-index: 5;
+  width: ${({ width }) => width};
+  cursor: pointer;
 `;
 
 export const Label = styled.label`
-  display: ${({ hidden }) => (hidden ? 'none' : 'inline-block')};
-  padding: 6px 0px;
+  margin-left: 24px;
+  padding: 5px;
   font-size: 12px;
   cursor: pointer;
   &:hover {
     font-weight: 700;
   }
+`;
+
+export const IconContainer = styled.div`
+  position: absolute;
+`;
+
+export const ClosedFilter = styled.div`
+  display: flex;
+  padding: 3px;
+  width: ${({ width }) => width};
+  border: 1px solid ${({ theme }) => theme.gray[500]};
+  background-color: ${({ theme }) => theme.white};
+`;
+
+export const OpenedFilter = styled(ClosedFilter)`
+  display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
+  position: absolute;
+  z-index: 6;
+  flex-direction: column;
 `;
