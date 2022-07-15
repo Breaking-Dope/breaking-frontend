@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+export const FilterContainer = styled.div`
+  margin-top: 20px;
+  margin-left: 40px;
+`;
+
 export const UserContainer = styled.div`
   display: flex;
   padding: 20px;

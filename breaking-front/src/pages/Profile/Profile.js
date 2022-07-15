@@ -69,11 +69,13 @@ const Profile = () => {
             <Tabs.TabItem>구매한 제보(10)</Tabs.TabItem>
             <Tabs.TabItem>북마크한 제보(5)</Tabs.TabItem>
           </Tabs.TabList>
-          <Filter width="180px">
-            <Filter.FilterDetail>모든 제보글</Filter.FilterDetail>
-            <Filter.FilterDetail>판매되지 않은 제보글</Filter.FilterDetail>
-            <Filter.FilterDetail>판매된 제보글</Filter.FilterDetail>
-          </Filter>
+          <Style.FilterContainer>
+            <Filter width="180px">
+              <Filter.FilterDetail>모든 제보글</Filter.FilterDetail>
+              <Filter.FilterDetail>판매되지 않은 제보글</Filter.FilterDetail>
+              <Filter.FilterDetail>판매된 제보글</Filter.FilterDetail>
+            </Filter>
+          </Style.FilterContainer>
           <Tabs.TabPanel>
             <Style.FeedContainer>
               <Feed feedData={feedData} />
