@@ -4,14 +4,6 @@ import Feed from 'components/Feed/Feed';
 export default {
   title: 'components/Feed',
   component: Feed,
-  argTypes: {
-    feedData: {
-      control: { type: 'object' },
-    },
-    userId: {
-      control: { type: 'number' },
-    },
-  },
 };
 
 const Template = (args) => {
