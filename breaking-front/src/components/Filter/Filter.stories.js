@@ -9,11 +9,11 @@ export default {
   },
 };
 
-export const DefaultFilter = () => {
+export const DefaultFilter = (args) => {
   return (
     <>
       <div>대충 위의 컨텐츠</div>
-      <Filter width="160px">
+      <Filter width="160px" {...args}>
         <Filter.FilterDetail>모든 제보글</Filter.FilterDetail>
         <Filter.FilterDetail>판매되지 않은 제보글</Filter.FilterDetail>
         <Filter.FilterDetail>판매된 제보글</Filter.FilterDetail>
