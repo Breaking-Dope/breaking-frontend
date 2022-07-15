@@ -7,6 +7,7 @@ import SignUpInput from 'components/SignUpInput/SignUpInput';
 import useIsValidProfile from 'hooks/queries/useIsValidProfile';
 import useInputs from 'hooks/useInputs';
 import { PATH } from 'constants/path';
+import MESSAGE from 'constants/message';
 import fileToBase64 from 'utils/fileToBase64';
 import { ReactComponent as XMark } from 'assets/svg/x-mark.svg';
 import defaultProfileImage from 'assets/svg/default-profile-image.svg';
@@ -31,6 +32,7 @@ const SignUp = () => {
     role: 'USER',
   });
 
+  const [realNameErrorMessage, setRealNameErrorMessage] = useState('');
   const [nicknameErrorMessage, setNicknameErrorMessage] = useState('');
   const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState('');
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
@@ -92,11 +94,11 @@ const SignUp = () => {
     event.preventDefault();
 
     if (nicknameErrorMessage)
-      return alert('닉네임을 올바르게 기입해주시기바랍니다.');
+      return alert(MESSAGE.SIGNUP.SUBMIT_INVALID_NICKNAME);
     else if (phoneNumberErrorMessage)
-      return alert('전화번호를 올바르게 기입해주시기 바랍니다.');
+      return alert(MESSAGE.SIGNUP.SUBMIT_INVALID_PHONENUMBER);
     else if (emailErrorMessage)
-      return alert('이메일을 올바르게 기입해주시기 바랍니다.');
+      return alert(MESSAGE.SIGNUP.SUBMIT_INVALID_EMAIL);
 
     const formData = new FormData();
 
@@ -119,7 +121,7 @@ const SignUp = () => {
   useEffect(() => {
     //유저가 sns 로그인하지않고 회원가입 페이지로 들어왔을 때 처리
     if (!location.state) {
-      alert('SNS 로그인 후 회원가입이 가능함니다.');
+      alert(MESSAGE.SIGNUP.WRONG_ACCESS);
       navigate(PATH.LOGIN);
     }
   }, []);
@@ -149,8 +151,14 @@ const SignUp = () => {
           name="realName"
           placeholder="이름"
           label="이름"
+          errorMessage={realNameErrorMessage}
           value={realName}
           onChange={handleChange}
+          onBlur={() => {
+            realName === ''
+              ? setRealNameErrorMessage(MESSAGE.SIGNUP.BLANK)
+              : setRealNameErrorMessage('');
+          }}
           autoFocus
           required
         />
@@ -163,7 +171,9 @@ const SignUp = () => {
           value={nickname}
           onChange={handleChange}
           onBlur={() => {
-            NicknameReFetch();
+            nickname === ''
+              ? setNicknameErrorMessage(MESSAGE.SIGNUP.BLANK)
+              : NicknameReFetch();
           }}
           required
         />
@@ -177,7 +187,9 @@ const SignUp = () => {
           onChange={handleChange}
           maxLength="11"
           onBlur={() => {
-            PhoneNumberReFetch();
+            phoneNumber === ''
+              ? setPhoneNumberErrorMessage(MESSAGE.SIGNUP.BLANK)
+              : PhoneNumberReFetch();
           }}
           required
         />
@@ -190,7 +202,9 @@ const SignUp = () => {
           value={email}
           onChange={handleChange}
           onBlur={() => {
-            EmailReFetch();
+            email === ''
+              ? setEmailErrorMessage(MESSAGE.SIGNUP.BLANK)
+              : EmailReFetch();
           }}
           required
         />
