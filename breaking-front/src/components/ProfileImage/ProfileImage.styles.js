@@ -15,24 +15,24 @@ const sizeCss = {
     height: 100px;
   `,
   xlarge: css`
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
   `,
 };
 
-export const ProfileImageContainer = styled.div`
-  cursor: pointer;
-`;
+export const ProfileImageContainer = styled.div``;
 
 export const ProfileImage = styled.img`
   ${({ size }) => sizeCss[size]};
   border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
 `;
 
 export const DefaultImage = styled.img.attrs({
   src: `${defaultImage}`,
 })`
   ${({ size }) => sizeCss[size]};
-  background-color: ${({ theme }) => theme.gray[300]};
   border-radius: 50%;
+  cursor: pointer;
 `;
