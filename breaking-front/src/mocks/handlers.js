@@ -12,7 +12,7 @@ export const handlers = [
   }),
 
   rest.get(
-    API_PATH.OAUTH2_SIGNUP_VALIDATE_NICKNAME + '/:id',
+    API_PATH.OAUTH2_SIGNUP_VALIDATE('nickname', ':id'),
     (req, res, ctx) => {
       //중복체크
       if (req.params.id === '주기')
@@ -33,7 +33,7 @@ export const handlers = [
   ),
 
   rest.get(
-    API_PATH.OAUTH2_SIGNUP_VALIDATE_PHONE_NUMBER + '/:id',
+    API_PATH.OAUTH2_SIGNUP_VALIDATE('phone-number', ':id'),
     (req, res, ctx) => {
       //중복체크
       if (req.params.id === '01012345678')
@@ -53,7 +53,7 @@ export const handlers = [
     }
   ),
 
-  rest.get(API_PATH.OAUTH2_SIGNUP_VALIDATE_EMAIL + '/:id', (req, res, ctx) => {
+  rest.get(API_PATH.OAUTH2_SIGNUP_VALIDATE('email', ':id'), (req, res, ctx) => {
     //중복체크
     if (req.params.id === 'kangju2000@naver.com')
       return res(
