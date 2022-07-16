@@ -228,7 +228,7 @@ export default function SignUpForm({ username, userDefaultData, mutate }) {
           </Button>
         </Style.Role>
         <Style.SubmitButton type="submit" size="large">
-          회원가입
+          {username ? '회원가입' : '프로필 수정'}
         </Style.SubmitButton>
       </Style.Form>
     </>
