@@ -13,14 +13,14 @@ const SignUp = () => {
   const userDefaultData = {
     profileImgURL: '',
     realName: '',
-    nickname: '주기',
-    phoneNumber: '01012345678',
-    email: 'kangju2000@naver.com',
+    nickname: '',
+    phoneNumber: '',
+    email: '',
     statusMsg: '',
-    role: 'PRESS',
+    role: 'USER',
   };
 
-  const SignUpMutation = useMutation(postSignUp, {
+  const { mutate } = useMutation(postSignUp, {
     onSuccess: (res) => {
       const jwtToken = res.headers.authorization;
       localStorage.setItem('access_token', jwtToken);
@@ -45,7 +45,7 @@ const SignUp = () => {
       <SignUpForm
         username={location.state?.username}
         userDefaultData={userDefaultData}
-        mutation={SignUpMutation}
+        mutate={mutate}
       />
     </>
   );

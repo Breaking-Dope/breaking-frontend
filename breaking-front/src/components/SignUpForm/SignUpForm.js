@@ -10,7 +10,7 @@ import * as Style from 'components/SignUpForm/SignUpForm.styles';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import PropTypes from 'prop-types';
 
-export default function SignUpForm({ username, userDefaultData, mutation }) {
+export default function SignUpForm({ username, userDefaultData, mutate }) {
   const imageRef = useRef();
 
   const [
@@ -94,7 +94,7 @@ export default function SignUpForm({ username, userDefaultData, mutation }) {
     if (profileImgURL !== '') formData.append('profileImg', profileImgURL);
     formData.append('signUpRequest', JSON.stringify(userData));
 
-    mutation.mutate(formData);
+    mutate(formData);
   };
 
   return (
@@ -238,5 +238,5 @@ export default function SignUpForm({ username, userDefaultData, mutation }) {
 SignUpForm.propTypes = {
   username: PropTypes.string,
   userDefaultData: PropTypes.object.isRequired,
-  mutation: PropTypes.func.isRequired,
+  mutate: PropTypes.func.isRequired,
 };
