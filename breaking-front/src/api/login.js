@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PATH } from 'constants/path';
+import { API_PATH } from 'constants/path';
 import api from 'api/api';
 
 export const postAccessCode = (data) => {
@@ -20,7 +20,7 @@ export const postAccessCode = (data) => {
 export const postSignInWithKakao = (token) => {
   return api({
     method: 'post',
-    url: PATH.OAUTH2_SIGNIN_KAKAO,
+    url: API_PATH.OAUTH2_SIGNIN_KAKAO,
     data: token,
   });
 };
@@ -28,7 +28,7 @@ export const postSignInWithKakao = (token) => {
 export const postSignInWithGoogle = (token) => {
   return api({
     method: 'post',
-    url: PATH.OAUTH2_SIGNIN_GOOGLE,
+    url: API_PATH.OAUTH2_SIGNIN_GOOGLE,
     data: token,
   });
 };

@@ -6,7 +6,7 @@ import Button from 'components/Button/Button';
 import SignUpInput from 'components/SignUpInput/SignUpInput';
 import useIsValidProfile from 'hooks/queries/useIsValidProfile';
 import useInputs from 'hooks/useInputs';
-import { PATH } from 'constants/path';
+import { PAGE_PATH } from 'constants/path';
 import MESSAGE from 'constants/message';
 import fileToBase64 from 'utils/fileToBase64';
 import { ReactComponent as XMark } from 'assets/svg/x-mark.svg';
@@ -72,7 +72,7 @@ const SignUp = () => {
       const jwtToken = res.headers.authorization;
       localStorage.setItem('access_token', jwtToken);
       alert(`환영합니다. ${nickname}님`);
-      navigate(PATH.HOME);
+      navigate(PAGE_PATH.HOME);
     },
     onError: () => {
       //에러 페이지 이동
@@ -122,7 +122,7 @@ const SignUp = () => {
     //유저가 sns 로그인하지않고 회원가입 페이지로 들어왔을 때 처리
     if (!location.state) {
       alert(MESSAGE.SIGNUP.WRONG_ACCESS);
-      navigate(PATH.LOGIN);
+      navigate(PAGE_PATH.LOGIN);
     }
   }, []);
 
