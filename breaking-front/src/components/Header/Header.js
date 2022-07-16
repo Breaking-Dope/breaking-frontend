@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Input from 'components/Input/Input';
 import Line from 'components/Line/Line';
 import Toggle from 'components/Toggle/Toggle';
-import { PATH } from 'constants/path';
+import { PAGE_PATH } from 'constants/path';
 import * as Style from 'components/Header/Header.styles';
 import { ReactComponent as LogoIcon } from 'assets/svg/small-logo.svg';
 import { ReactComponent as SearchIcon } from 'assets/svg/search.svg';
@@ -32,7 +32,7 @@ export default function Header({ isLogin, loginButtonClick, ...props }) {
     <Style.HeaderContainer isLogin={isLogin} {...props}>
       <Style.HeaderContent>
         <Style.SearchContent>
-          <Style.LogoContainer to={PATH.HOME}>
+          <Style.LogoContainer to={PAGE_PATH.HOME}>
             <LogoIcon width="100%" height="100%" />
           </Style.LogoContainer>
           <Style.Form onSubmit={handleSubmit}>
@@ -64,18 +64,18 @@ export default function Header({ isLogin, loginButtonClick, ...props }) {
           {isOpenToggle && (
             <Toggle width="220px" isArrowMark={true}>
               <Toggle.LabelLink
-                path={PATH.TRANSACTION}
+                path={PAGE_PATH.TRANSACTION}
                 icon={<MoneyIcon />}
                 label="10,000원"
                 blueLabel="입출금내역"
               />
               <Toggle.LabelLink
-                path={PATH.MYPAGE}
+                path={PAGE_PATH.MYPAGE}
                 icon={<MyPageIcon />}
                 label="마이페이지"
               />
               <Toggle.LabelLink
-                path={PATH.PROFILE_EDIT}
+                path={PAGE_PATH.PROFILE_EDIT}
                 icon={<SettingIcon />}
                 label="프로필 수정"
               />

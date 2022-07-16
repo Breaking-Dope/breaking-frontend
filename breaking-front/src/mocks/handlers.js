@@ -1,4 +1,4 @@
-import { PATH } from 'constants/path';
+import { API_PATH } from 'constants/path';
 import { rest } from 'msw';
 
 export const handlers = [
@@ -6,31 +6,34 @@ export const handlers = [
     return res(ctx.status(200));
   }),
 
-  rest.post(PATH.OAUTH2_SIGNUP, (req, res, ctx) => {
+  rest.post(API_PATH.OAUTH2_SIGNUP, (req, res, ctx) => {
     console.log(req.body);
     return res(ctx.status(200));
   }),
 
-  rest.get(PATH.OAUTH2_SIGNUP_VALIDATE_NICKNAME + '/:id', (req, res, ctx) => {
-    //중복체크
-    if (req.params.id === '주기')
-      return res(
-        ctx.status(400),
-        ctx.json({ message: '사용중인 닉네임입니다.' })
-      );
+  rest.get(
+    API_PATH.OAUTH2_SIGNUP_VALIDATE_NICKNAME + '/:id',
+    (req, res, ctx) => {
+      //중복체크
+      if (req.params.id === '주기')
+        return res(
+          ctx.status(400),
+          ctx.json({ message: '사용중인 닉네임입니다.' })
+        );
 
-    //올바른 형식 체크
-    if (req.params.id === '주')
-      return res(
-        ctx.status(400),
-        ctx.json({ message: '닉네임 형식이 잘못되었습니다.' })
-      );
+      //올바른 형식 체크
+      if (req.params.id === '주')
+        return res(
+          ctx.status(400),
+          ctx.json({ message: '닉네임 형식이 잘못되었습니다.' })
+        );
 
-    return res(ctx.status(200));
-  }),
+      return res(ctx.status(200));
+    }
+  ),
 
   rest.get(
-    PATH.OAUTH2_SIGNUP_VALIDATE_PHONE_NUMBER + '/:id',
+    API_PATH.OAUTH2_SIGNUP_VALIDATE_PHONE_NUMBER + '/:id',
     (req, res, ctx) => {
       //중복체크
       if (req.params.id === '01012345678')
@@ -50,7 +53,7 @@ export const handlers = [
     }
   ),
 
-  rest.get(PATH.OAUTH2_SIGNUP_VALIDATE_EMAIL + '/:id', (req, res, ctx) => {
+  rest.get(API_PATH.OAUTH2_SIGNUP_VALIDATE_EMAIL + '/:id', (req, res, ctx) => {
     //중복체크
     if (req.params.id === 'kangju2000@naver.com')
       return res(
@@ -66,7 +69,7 @@ export const handlers = [
     else return res(ctx.status(200));
   }),
 
-  rest.post(PATH.OAUTH2_SIGNIN_KAKAO, (req, res, ctx) => {
+  rest.post(API_PATH.OAUTH2_SIGNIN_KAKAO, (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -81,7 +84,7 @@ export const handlers = [
     );
   }),
 
-  rest.post(PATH.OAUTH2_SIGNIN_GOOGLE, (req, res, ctx) => {
+  rest.post(API_PATH.OAUTH2_SIGNIN_GOOGLE, (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.set('Authorization', 'Bearer abcdefghijklmnop'),

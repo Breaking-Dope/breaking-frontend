@@ -1,5 +1,5 @@
 import { postAccessCode, postSignInWithGoogle } from 'api/login';
-import { GOOGLE_PATH, PATH } from 'constants/path';
+import { GOOGLE_PATH, PAGE_PATH } from 'constants/path';
 import React, { useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -15,9 +15,9 @@ const GoogleRedirect = () => {
       const jwtToken = res.headers.authorization;
       if (jwtToken) {
         localStorage.setItem('access_token', res.headers.authorization);
-        navigate(PATH.HOME);
+        navigate(PAGE_PATH.HOME);
       } else {
-        navigate(PATH.SIGNUP, { state: res.data });
+        navigate(PAGE_PATH.SIGNUP, { state: res.data });
       }
     },
   });
