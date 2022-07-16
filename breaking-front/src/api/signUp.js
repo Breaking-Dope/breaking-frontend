@@ -15,6 +15,6 @@ export const getProfileValidation = ({ queryKey }) => {
 
   return api({
     method: 'get',
-    url: `${API_PATH.OAUTH2_SIGNUP}/validate-${query.validType}/${query.profileData}`,
+    url: API_PATH.OAUTH2_SIGNUP_VALIDATE(query.validType, query.profileData),
   });
 };

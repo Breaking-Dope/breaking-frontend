@@ -11,9 +11,8 @@ export const PAGE_PATH = {
 
 export const API_PATH = {
   OAUTH2_SIGNUP: '/oauth2/sign-up',
-  OAUTH2_SIGNUP_VALIDATE_PHONE_NUMBER: '/oauth2/sign-up/validate-phone-number',
-  OAUTH2_SIGNUP_VALIDATE_NICKNAME: '/oauth2/sign-up/validate-nickname',
-  OAUTH2_SIGNUP_VALIDATE_EMAIL: '/oauth2/sign-up/validate-email',
+  OAUTH2_SIGNUP_VALIDATE: (validType, profileData) =>
+    `/oauth2/sign-up/validate-${validType}/${profileData}`,
   OAUTH2_SIGNIN_KAKAO: '/oauth2/sign-in/kakao',
   OAUTH2_SIGNIN_GOOGLE: '/oauth2/sign-in/google',
   OAUTH2_SIGNOUT: '/oauth2/sign-out',
