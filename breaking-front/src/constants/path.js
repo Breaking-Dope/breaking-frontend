@@ -21,35 +21,32 @@ export const API_PATH = {
   FOLLOW: (userId) => `/follow/${userId}`,
   UNFOLLOW: (userId) => `/follow/${userId}`,
   PROFILE_DATA: (userId) => `/profile/${userId}`,
-  PROFILE_WRITE_POST: (userId) => `/profile/${userId}/write`,
-  PROFILE_BUY_POST: (userId) => `/profile/${userId}/buy`,
-  PROFILE_BOOKMARK_POST: (userId) => `/profile/${userId}/bookmark`,
+  PROFILE_WRITTEN: (userId, option) =>
+    `/profile/${userId}/write?my-page-sold-option=${option}`,
+  PROFILE_BOUGHT: (userId, option) =>
+    `/profile/${userId}/buy?my-page-sold-option=${option}`,
+  PROFILE_BOOKMARKED: (userId, option) =>
+    `/profile/${userId}/bookmark?my-page-sold-option=${option}`,
   PROFILE_FOLLOWINGS: (userId) => `/follow/following/${userId}`,
   PROFILE_FOLLOWERS: (userId) => `/follow/follower/${userId}`,
   PROFILE_TRANSACTION: (userId) => `/profile/${userId}/transaction`,
   PROFILE_WITHDRAWAL: (userId) => `/profile/${userId}`,
-  FILTER_PROFILE_POST_ALL: (userId) =>
-    `/profile/${userId}?my-page-sold-option=all`,
-  FILTER_PROFILE_POST_SOLD: (userId) =>
-    `/profile/${userId}?my-page-sold-option=sold`,
-  FILTER_PROFILE_POST_UNSOLD: (userId) =>
-    `/profile/${userId}?my-page-sold-option=unsold`,
   FEEDS: (page, size) => `/feeds?page=${page}&size=${size}`,
-  FEEDS_SEARCH: (page, size, search) =>
-    `/feeds?page=${page}&size=${size}&search=${search}`,
-  FEEDS_HASHTAG: (page, size, hashtag) =>
-    `/feeds?page=${page}&size=${size}&hashtag=${hashtag}`,
+  FEEDS_SEARCH: (page, size, search, sort = 'like') =>
+    `/feeds?page=${page}&size=${size}&search=${search}&sort-strategy=${sort}`,
+  FEEDS_HASHTAG: (page, size, hashtag, sort = 'like') =>
+    `/feeds?page=${page}&size=${size}&hashtag=${hashtag}&sort-strategy=${sort}`,
   ADD_POST: '/post',
   EDIT_POST: (postId) => `/post/${postId}`,
   DELETE_POST: (postId) => `/post/${postId}`,
   POST_LIKE: (postId) => `/post/like/${postId}`,
   POST_BOOKMARK: (postId) => `/post/${postId}/bookmark`,
   POST_LIKE_LIST: (postId) => `/post/likelist/${postId}`,
-  POST_BUY_LIST: (postId) => `/post/buylist/${postId}`,
+  POST_BOUGHT_LIST: (postId) => `/post/buylist/${postId}`,
   POST_BUY: (postId, userId) => `/post/${postId}/purchase/${userId}`,
   POST_COMMENT: (postId, userId) => `/post/${postId}/comment/${userId}`,
   POST_COMMENT_LIKE: (commentId) => `/post/comment/${commentId}/like`,
-  POST_COMMENT_LIKE_LIST: (commentId) => `/post/comment/likelist/${commentId}`,
+  POST_COMMENT_LIKED_LIST: (commentId) => `/post/comment/likelist/${commentId}`,
   POST_COMMENT_EDIT: (commentId) => `/post/comment/${commentId}`,
   POST_COMMENT_DELETE: (commentId) => `/post/comment/${commentId}`,
   GET_PROFILE_IMAGE: (userId) => `/resource/profile-img/${userId}`,
