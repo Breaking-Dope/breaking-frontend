@@ -4,6 +4,7 @@ export const PATH = {
   KAKAO_LOGIN: 'login/kakao',
   GOOGLE_LOGIN: 'login/google',
   SIGNUP: '/signup',
+  PROFILE: '/profile',
   OAUTH2_SIGNUP: '/oauth2/sign-up',
   OAUTH2_SIGNUP_VALIDATE_PHONE_NUMBER: '/oauth2/sign-up/validate-phone-number',
   OAUTH2_SIGNUP_VALIDATE_NICKNAME: '/oauth2/sign-up/validate-nickname',
