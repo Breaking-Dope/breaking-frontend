@@ -94,4 +94,23 @@ export const handlers = [
       })
     );
   }),
+
+  rest.get(API_PATH.PROFILE_DATA(0), (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        userId: 0,
+        profileImgURL: '',
+        nickname: '만두피',
+        email: '',
+        realName: '',
+        role: '',
+        statusMsg: '안녕하세요',
+        followerCount: 30,
+        followingCount: 30,
+        postCount: 5,
+        isFollowing: false,
+      })
+    );
+  }),
 ];
