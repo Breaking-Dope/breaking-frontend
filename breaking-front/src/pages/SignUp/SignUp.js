@@ -1,10 +1,10 @@
-import { postSignUp } from 'api/signUp';
-import SignUpForm from 'components/SignUpForm/SignUpForm';
-import MESSAGE from 'constants/message';
-import { PATH } from 'constants/path';
 import React, { useEffect } from 'react';
-import { useMutation } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
+import { postSignUp } from 'api/signUp';
+import { PAGE_PATH } from 'constants/path';
+import MESSAGE from 'constants/message';
+import SignUpForm from 'components/SignUpForm/SignUpForm';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const SignUp = () => {
       const jwtToken = res.headers.authorization;
       localStorage.setItem('access_token', jwtToken);
       alert('환영합니다.');
-      navigate(PATH.HOME);
+      navigate(PAGE_PATH.HOME);
     },
     onError: () => {
       //에러 페이지 이동
@@ -36,7 +36,7 @@ const SignUp = () => {
     //유저가 sns 로그인하지않고 회원가입 페이지로 들어왔을 때 처리
     if (!location.state) {
       alert(MESSAGE.SIGNUP.WRONG_ACCESS);
-      navigate(PATH.LOGIN);
+      navigate(PAGE_PATH.LOGIN);
     }
   }, []);
 
