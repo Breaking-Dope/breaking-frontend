@@ -135,6 +135,118 @@ export const handlers = [
     );
   }),
 
+  rest.get(API_PATH.PROFILE_BOUGHT(0, 'all'), (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json([
+        {
+          postId: '3',
+          title: '제목이다',
+          region: '중구',
+          thumbnailImgURL: '',
+          likeCount: 999,
+          postType: 'EXCLUSIVE',
+          isSold: false,
+          balance: 10000,
+          viewCount: 1000,
+          userId: 123,
+          profileImgURL: '',
+          realName: '가나다',
+          isLiked: false,
+          isBookmarked: false,
+        },
+        {
+          postId: '4',
+          title: '~~~다른제목',
+          region: '중구',
+          thumbnailImgURL: '',
+          likeCount: 999,
+          postType: 'EXCLUSIVE',
+          isSold: false,
+          balance: 10000,
+          viewCount: 1000,
+          userId: 123,
+          profileImgURL: '',
+          realName: '가나다',
+          isLiked: false,
+          isBookmarked: false,
+        },
+      ])
+    );
+  }),
+
+  rest.get(API_PATH.PROFILE_BOOKMARKED(0, 'all'), (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json([
+        {
+          postId: '6',
+          title: '~~~사건',
+          region: '중구',
+          thumbnailImgURL: '',
+          likeCount: 999,
+          postType: 'EXCLUSIVE',
+          isSold: false,
+          balance: 10000,
+          viewCount: 1000,
+          userId: 123,
+          profileImgURL: '',
+          realName: '가나다',
+          isLiked: false,
+          isBookmarked: false,
+        },
+        {
+          postId: '7',
+          title: '~~~사건',
+          region: '중구',
+          thumbnailImgURL: '',
+          likeCount: 999,
+          postType: 'EXCLUSIVE',
+          isSold: false,
+          balance: 10000,
+          viewCount: 1000,
+          userId: 123,
+          profileImgURL: '',
+          realName: '가나다',
+          isLiked: false,
+          isBookmarked: false,
+        },
+        {
+          postId: '8',
+          title: '~~~사건',
+          region: '중구',
+          thumbnailImgURL: '',
+          likeCount: 999,
+          postType: 'EXCLUSIVE',
+          isSold: false,
+          balance: 10000,
+          viewCount: 1000,
+          userId: 123,
+          profileImgURL: '',
+          realName: '가나다',
+          isLiked: false,
+          isBookmarked: false,
+        },
+        {
+          postId: '9',
+          title: '~~~사건',
+          region: '중구',
+          thumbnailImgURL: '',
+          likeCount: 999,
+          postType: 'EXCLUSIVE',
+          isSold: false,
+          balance: 10000,
+          viewCount: 1000,
+          userId: 123,
+          profileImgURL: '',
+          realName: '가나다',
+          isLiked: false,
+          isBookmarked: false,
+        },
+      ])
+    );
+  }),
+
   rest.get(API_PATH.PROFILE_DATA(0), (req, res, ctx) => {
     return res(
       ctx.status(200),
