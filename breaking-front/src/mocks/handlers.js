@@ -95,6 +95,46 @@ export const handlers = [
     );
   }),
 
+  rest.get(API_PATH.PROFILE_WRITTEN(0, 'all'), (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json([
+        {
+          postId: '1',
+          title: '~~~사건',
+          region: '중구',
+          thumbnailImgURL: '',
+          likeCount: 999,
+          postType: 'EXCLUSIVE',
+          isSold: false,
+          balance: 10000,
+          viewCount: 1000,
+          userId: 123,
+          profileImgURL: '',
+          realName: '가나다',
+          isLiked: false,
+          isBookmarked: false,
+        },
+        {
+          postId: '2',
+          title: '~~~사건',
+          region: '중구',
+          thumbnailImgURL: '',
+          likeCount: 999,
+          postType: 'EXCLUSIVE',
+          isSold: false,
+          balance: 10000,
+          viewCount: 1000,
+          userId: 123,
+          profileImgURL: '',
+          realName: '가나다',
+          isLiked: false,
+          isBookmarked: false,
+        },
+      ])
+    );
+  }),
+
   rest.get(API_PATH.PROFILE_DATA(0), (req, res, ctx) => {
     return res(
       ctx.status(200),
