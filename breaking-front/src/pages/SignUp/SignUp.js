@@ -4,7 +4,7 @@ import { useMutation } from 'react-query';
 import { postSignUp } from 'api/signUp';
 import { PAGE_PATH } from 'constants/path';
 import MESSAGE from 'constants/message';
-import SignUpForm from 'components/SignUpForm/SignUpForm';
+import ProfileSettingForm from 'components/ProfileSettingForm/ProfileSettingForm';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const SignUp = () => {
 
   return (
     <>
-      <SignUpForm
+      <ProfileSettingForm
         username={location.state?.username}
         userDefaultData={userDefaultData}
         mutate={mutate}

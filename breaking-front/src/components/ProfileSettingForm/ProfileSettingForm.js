@@ -1,16 +1,20 @@
 import React, { useRef, useState } from 'react';
 import Button from 'components/Button/Button';
-import SignUpInput from 'components/SignUpInput/SignUpInput';
+import ProfileSettingInput from 'components/ProfileSettingForm/ProfileSettingInput';
 import useIsValidProfile from 'hooks/queries/useIsValidProfile';
 import useInputs from 'hooks/useInputs';
 import MESSAGE from 'constants/message';
 import fileToBase64 from 'utils/fileToBase64';
 import { ReactComponent as XMark } from 'assets/svg/x-mark.svg';
-import * as Style from 'components/SignUpForm/SignUpForm.styles';
+import * as Style from 'components/ProfileSettingForm/ProfileSettingForm.styles';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import PropTypes from 'prop-types';
 
-export default function SignUpForm({ username, userDefaultData, mutate }) {
+export default function ProfileSettingForm({
+  username,
+  userDefaultData,
+  mutate,
+}) {
   const imageRef = useRef();
 
   const [
@@ -123,7 +127,7 @@ export default function SignUpForm({ username, userDefaultData, mutate }) {
             </Style.XMarkIcon>
           )}
         </Style.ProfileImageContainer>
-        <SignUpInput
+        <ProfileSettingInput
           type="text"
           name="realName"
           placeholder="이름"
@@ -139,7 +143,7 @@ export default function SignUpForm({ username, userDefaultData, mutate }) {
           autoFocus
           required
         />
-        <SignUpInput
+        <ProfileSettingInput
           type="text"
           name="nickname"
           placeholder="닉네임"
@@ -158,7 +162,7 @@ export default function SignUpForm({ username, userDefaultData, mutate }) {
           }}
           required
         />
-        <SignUpInput
+        <ProfileSettingInput
           type="text"
           name="phoneNumber"
           placeholder="전화번호"
@@ -178,7 +182,7 @@ export default function SignUpForm({ username, userDefaultData, mutate }) {
           }}
           required
         />
-        <SignUpInput
+        <ProfileSettingInput
           type="email"
           name="email"
           label="이메일"
@@ -197,7 +201,7 @@ export default function SignUpForm({ username, userDefaultData, mutate }) {
           }}
           required
         />
-        <SignUpInput
+        <ProfileSettingInput
           type="text"
           label="상태메시지(선택)"
           placeholder="상태메시지"
@@ -235,7 +239,7 @@ export default function SignUpForm({ username, userDefaultData, mutate }) {
   );
 }
 
-SignUpForm.propTypes = {
+ProfileSettingForm.propTypes = {
   username: PropTypes.string,
   userDefaultData: PropTypes.object.isRequired,
   mutate: PropTypes.func.isRequired,
