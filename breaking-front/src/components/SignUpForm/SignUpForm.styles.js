@@ -9,24 +9,15 @@ export const Form = styled.form`
 export const ProfileImageContainer = styled.div`
   position: relative;
   display: flex;
-  height: 250px;
+  height: 300px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
 `;
 
-export const ProfileImage = styled.img`
-  display: block;
-  width: 160px;
-  height: 160px;
-  margin-bottom: 20px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.gray[100]};
-  object-fit: cover;
-`;
-
-export const ProfileImageLabel = styled.label`
+export const LabelText = styled.p`
+  margin-top: 20px;
   cursor: pointer;
 `;
 
@@ -36,8 +27,8 @@ export const ProfileImageInput = styled.input`
 
 export const XMarkIcon = styled.span`
   position: absolute;
-  top: 20px;
-  right: 35%;
+  top: 30px;
+  right: 30%;
   cursor: pointer;
 `;
 
