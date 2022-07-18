@@ -34,6 +34,7 @@ export const OneTabs = () => {
     <Tabs>
       <Tabs.TabList>
         <Tabs.TabItem>작성한 제보(3)</Tabs.TabItem>
+        {false}
       </Tabs.TabList>
       <Tabs.TabPanel>
         <Button>컴포넌트도 잘들어가요</Button>

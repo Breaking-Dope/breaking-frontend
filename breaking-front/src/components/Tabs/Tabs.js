@@ -23,7 +23,7 @@ export default function Tabs({ children, ...props }) {
             key: `${key}-TabList`,
           });
         } else {
-          return <></>;
+          return child;
         }
       })}
     </Style.TabsContainer>
