@@ -31,10 +31,10 @@ export default function Tabs({ children, ...props }) {
 }
 
 function TabList({ active, setActive, children }) {
-  children = React.Children.toArray(children);
+  const childOfArray = React.Children.toArray(children);
   return (
     <Style.TabList>
-      {children.map((child, index) => {
+      {childOfArray.map((child, index) => {
         return React.cloneElement(child, {
           active,
           setActive,
