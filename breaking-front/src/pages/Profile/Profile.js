@@ -7,6 +7,7 @@ import Line from 'components/Line/Line';
 import Modal from 'components/Modal/Modal';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import Tabs from 'components/Tabs/Tabs';
+import useFollow from 'hooks/queries/useFollow';
 import useProfile from 'hooks/queries/useProfile';
 import useProfilePost from 'hooks/queries/useProfilePost';
 import * as Style from 'pages/Profile/Profile.styles';
@@ -19,8 +20,6 @@ const Profile = () => {
   const isMyPage = true;
   // 추후에 전역 state와 비교해서 내프로필 페이지인지 확인할 예정
   const { id: userId } = useParams();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
 
   const { profileData, isLoading } = useProfile(userId);
 
@@ -49,10 +48,17 @@ const Profile = () => {
     bookmarkedOption
   );
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('followings');
+  const { data: followData, isLoading: followLoading } = useFollow(
+    modalTitle,
+    userId
+  );
   const toggleModal = () => {
     setIsModalOpen((pre) => !pre);
   };
-  const followClick = () => {
+
+  const followingClick = () => {
     toggleModal();
     setModalTitle('팔로잉');
   };
@@ -63,12 +69,15 @@ const Profile = () => {
 
   return (
     <>
-      {/* <Modal isOpen={isModalOpen} closeClick={toggleModal} title={modalTitle}>
-        <FollowCard
-          isPermission={true}
-          profileData={profileData?.data}
-        ></FollowCard>
-      </Modal> */}
+      <Modal isOpen={isModalOpen} closeClick={toggleModal} title={modalTitle}>
+        {followData?.data.map((item) => (
+          <FollowCard
+            isPermission={true}
+            profileData={item}
+            key={item.key}
+          ></FollowCard>
+        ))}
+      </Modal>
       <Style.UserContainer>
         <ProfileImage size="xlarge" src={profileData?.data.profileImgURL} />
         <Style.UserInformation>
@@ -81,7 +90,7 @@ const Profile = () => {
             <div onClick={followerClick}>
               팔로워 {profileData?.data.followerCount}
             </div>
-            <div onClick={followClick}>
+            <div onClick={followingClick}>
               팔로잉 {profileData?.data.followingCount}
             </div>
           </Style.Information>
