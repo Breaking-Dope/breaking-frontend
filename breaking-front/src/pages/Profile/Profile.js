@@ -13,6 +13,7 @@ import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import ProfileTabPanel from './units/ProfileTabPanel';
 
 const Profile = () => {
   const isMyPage = true;
@@ -33,12 +34,14 @@ const Profile = () => {
     'written',
     writtenOption
   );
+
   const { data: boughtData, isLoading: boughtLoading } = useProfilePost(
     userId,
     isMyPage,
     'bought',
     boughtOption
   );
+
   const { data: bookmarkedData, isLoading: bookmarkedLoading } = useProfilePost(
     userId,
     isMyPage,
@@ -90,86 +93,33 @@ const Profile = () => {
       <Style.PostInformation>
         <Tabs>
           <Tabs.TabList>
-            <Tabs.TabItem>
-              작성한 제보({profileData?.data.postCount})
-            </Tabs.TabItem>
-            {isMyPage && <Tabs.TabItem>구매한 제보(10)</Tabs.TabItem>}
-            {isMyPage && <Tabs.TabItem>북마크한 제보(5)</Tabs.TabItem>}
-            {/* 일단 이거에대한 api가 없음 */}
+            <Tabs.TabItem>작성한 제보</Tabs.TabItem>
+            {isMyPage && <Tabs.TabItem>구매한 제보</Tabs.TabItem>}
+            {isMyPage && <Tabs.TabItem>북마크한 제보</Tabs.TabItem>}
           </Tabs.TabList>
 
           <Tabs.TabPanel>
-            <Style.FilterContainer>
-              <Filter width="180px">
-                <Filter.FilterDetail onClick={() => setWrittenOption('all')}>
-                  모든 제보글
-                </Filter.FilterDetail>
-                <Filter.FilterDetail onClick={() => setWrittenOption('unsold')}>
-                  판매되지 않은 제보글
-                </Filter.FilterDetail>
-                <Filter.FilterDetail onClick={() => setWrittenOption('sold')}>
-                  판매된 제보글
-                </Filter.FilterDetail>
-              </Filter>
-            </Style.FilterContainer>
-            <Style.FeedContainer>
-              {writtenData?.data.map((feed) => (
-                <Feed feedData={feed} key={feed.postId} />
-              ))}
-            </Style.FeedContainer>
+            <ProfileTabPanel
+              data={writtenData?.data}
+              setOption={setWrittenOption}
+            />
           </Tabs.TabPanel>
 
           {isMyPage && (
             <Tabs.TabPanel>
-              <Style.FilterContainer>
-                <Filter width="180px">
-                  <Filter.FilterDetail onClick={() => setBoughtOption('all')}>
-                    모든 제보글
-                  </Filter.FilterDetail>
-                  <Filter.FilterDetail
-                    onClick={() => setBoughtOption('unsold')}
-                  >
-                    판매되지 않은 제보글
-                  </Filter.FilterDetail>
-                  <Filter.FilterDetail onClick={() => setBoughtOption('sold')}>
-                    판매된 제보글
-                  </Filter.FilterDetail>
-                </Filter>
-              </Style.FilterContainer>
-              <Style.FeedContainer>
-                {boughtData?.data.map((feed) => (
-                  <Feed feedData={feed} key={feed.postId} />
-                ))}
-              </Style.FeedContainer>
+              <ProfileTabPanel
+                data={boughtData?.data}
+                setOption={setBoughtOption}
+              />
             </Tabs.TabPanel>
           )}
 
           {isMyPage && (
             <Tabs.TabPanel>
-              <Style.FilterContainer>
-                <Filter width="180px">
-                  <Filter.FilterDetail
-                    onClick={() => setBookmarkedOption('all')}
-                  >
-                    모든 제보글
-                  </Filter.FilterDetail>
-                  <Filter.FilterDetail
-                    onClick={() => setBookmarkedOption('unsold')}
-                  >
-                    판매되지 않은 제보글
-                  </Filter.FilterDetail>
-                  <Filter.FilterDetail
-                    onClick={() => setBookmarkedOption('sold')}
-                  >
-                    판매된 제보글
-                  </Filter.FilterDetail>
-                </Filter>
-              </Style.FilterContainer>
-              <Style.FeedContainer>
-                {bookmarkedData?.data.map((feed) => (
-                  <Feed feedData={feed} key={feed.postId} />
-                ))}
-              </Style.FeedContainer>
+              <ProfileTabPanel
+                data={bookmarkedData?.data}
+                setOption={setBookmarkedOption}
+              />
             </Tabs.TabPanel>
           )}
         </Tabs>
