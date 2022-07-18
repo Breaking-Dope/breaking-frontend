@@ -27,18 +27,22 @@ const Profile = () => {
   const [boughtOption, setBoughtOption] = useState('all');
   const [bookmarkedOption, setBookmarkedOption] = useState('all');
 
-  const {
-    writtenData,
-    writtenLoading,
-    boughtData,
-    boughtLoading,
-    bookmarkedData,
-    bookmarkedLoading,
-  } = useProfilePost(
+  const { data: writtenData, isLoading: writtenLoading } = useProfilePost(
     userId,
     isMyPage,
-    writtenOption,
-    boughtOption,
+    'written',
+    writtenOption
+  );
+  const { data: boughtData, isLoading: boughtLoading } = useProfilePost(
+    userId,
+    isMyPage,
+    'bought',
+    boughtOption
+  );
+  const { data: bookmarkedData, isLoading: bookmarkedLoading } = useProfilePost(
+    userId,
+    isMyPage,
+    'bookmarked',
     bookmarkedOption
   );
 

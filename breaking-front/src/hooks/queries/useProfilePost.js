@@ -6,40 +6,33 @@ import {
 
 const { useQuery } = require('react-query');
 
-const useProfilePost = (
-  userId,
-  isMyPage,
-  writtenOption,
-  boughtOption,
-  bookmarkedOption
-) => {
-  const { data: writtenData, isLoading: writtenLoading } = useQuery(
-    ['wrriten', { userId, option: writtenOption }],
-    getProfileWrriten
-  );
-  const { data: boughtData, isLoading: boughtLoading } = useQuery(
-    ['bought', { userId, option: boughtOption }],
-    getProfileBought,
-    {
-      enabled: isMyPage,
-    }
-  );
+const useProfilePost = (userId, isMyPage, target, option) => {
+  let targetApi = null;
+  let enabled = isMyPage;
+  switch (target) {
+    case 'written':
+      targetApi = getProfileWrriten;
+      enabled = true;
+      break;
+    case 'bought':
+      targetApi = getProfileBought;
+      break;
+    case 'bookmarked':
+      targetApi = getProfileBookmarked;
+      break;
+    default:
+      targetApi = null;
+  }
 
-  const { data: bookmarkedData, isLoading: bookmarkedLoading } = useQuery(
-    ['bookmarked', { userId, option: bookmarkedOption }],
-    getProfileBookmarked,
-    {
-      enabled: isMyPage,
-    }
+  const { data, isLoading } = useQuery(
+    [target, { userId, option }],
+    targetApi,
+    { enabled: enabled }
   );
 
   return {
-    writtenData,
-    writtenLoading,
-    boughtData,
-    boughtLoading,
-    bookmarkedData,
-    bookmarkedLoading,
+    data,
+    isLoading,
   };
 };
 
