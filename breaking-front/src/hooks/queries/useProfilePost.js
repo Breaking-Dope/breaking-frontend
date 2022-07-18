@@ -6,13 +6,19 @@ import {
 
 const { useQuery } = require('react-query');
 
-const useProfilePost = (userId, isMyPage) => {
+const useProfilePost = (
+  userId,
+  isMyPage,
+  writtenOption,
+  boughtOption,
+  bookmarkedOption
+) => {
   const { data: writtenData, isLoading: writtenLoading } = useQuery(
-    ['wrriten', { userId, option: 'all' }],
+    ['wrriten', { userId, option: writtenOption }],
     getProfileWrriten
   );
   const { data: boughtData, isLoading: boughtLoading } = useQuery(
-    ['bought', { userId, option: 'all' }],
+    ['bought', { userId, option: boughtOption }],
     getProfileBought,
     {
       enabled: isMyPage,
@@ -20,7 +26,7 @@ const useProfilePost = (userId, isMyPage) => {
   );
 
   const { data: bookmarkedData, isLoading: bookmarkedLoading } = useQuery(
-    ['bookmarked', { userId, option: 'all' }],
+    ['bookmarked', { userId, option: bookmarkedOption }],
     getProfileBookmarked,
     {
       enabled: isMyPage,
