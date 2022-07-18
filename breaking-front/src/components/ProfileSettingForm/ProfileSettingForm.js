@@ -1,14 +1,15 @@
 import React, { useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import Button from 'components/Button/Button';
 import ProfileSettingInput from 'components/ProfileSettingForm/ProfileSettingInput';
+import ProfileImage from 'components/ProfileImage/ProfileImage';
 import useIsValidProfile from 'hooks/queries/useIsValidProfile';
 import useInputs from 'hooks/useInputs';
 import MESSAGE from 'constants/message';
 import fileToBase64 from 'utils/fileToBase64';
+import urlToFile from 'utils/urlToFile';
 import { ReactComponent as XMark } from 'assets/svg/x-mark.svg';
 import * as Style from 'components/ProfileSettingForm/ProfileSettingForm.styles';
-import ProfileImage from 'components/ProfileImage/ProfileImage';
-import PropTypes from 'prop-types';
 
 export default function ProfileSettingForm({
   username,
@@ -59,7 +60,7 @@ export default function ProfileSettingForm({
 
   const imageDeleteClick = () => {
     setImageSrc('');
-    setForm((form) => ({ ...form, profileImg: '' }));
+    setForm((form) => ({ ...form, profileImgURL: '' }));
   };
 
   const handleKeyDown = (event) => {
@@ -73,7 +74,7 @@ export default function ProfileSettingForm({
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (nicknameErrorMessage)
@@ -95,7 +96,15 @@ export default function ProfileSettingForm({
     };
 
     if (username) userData.username = username;
-    if (profileImgURL !== '') formData.append('profileImg', profileImgURL);
+
+    if (profileImgURL !== '') {
+      //프로필 수정 페이지에서 유저가 프로필 이미지를 변경하지 않은 경우 기존 이미지 파일 전송
+      if (!username && profileImgURL === userDefaultData.profileImgURL) {
+        const imageFile = await urlToFile(profileImgURL);
+        formData.append('profileImg', imageFile);
+      } else formData.append('profileImg', profileImgURL);
+    }
+
     formData.append('signUpRequest', JSON.stringify(userData));
 
     mutate(formData);
