@@ -12,15 +12,15 @@ export default function FollowCard({
   return (
     <Style.FollowCard>
       <ProfileImage
-        src={profileData.profileImgURL}
+        src={profileData?.profileImgURL}
         size="medium"
         onClick={cardClick}
       />
       <Style.Container>
         <Style.Nickname onClick={cardClick}>
-          {profileData.nickname}
+          {profileData?.nickname}
         </Style.Nickname>
-        <Style.StatusMessage>{profileData.statusMsg}</Style.StatusMessage>
+        <Style.StatusMessage>{profileData?.statusMsg}</Style.StatusMessage>
       </Style.Container>
       {isPermission && (
         <Style.DeleteButton size="small" onClick={deleteClick}>
