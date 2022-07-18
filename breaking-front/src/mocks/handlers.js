@@ -265,4 +265,55 @@ export const handlers = [
       })
     );
   }),
+
+  rest.get(API_PATH.PROFILE_FOLLOWERS(0), (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json([
+        {
+          userId: '32',
+          nickname: '주기',
+          statusMsg: '안녕하세요',
+          profileImgURL: '',
+        },
+        {
+          userId: '23',
+          nickname: '자기',
+          statusMsg: '안녕하세요',
+          profileImgURL: '',
+        },
+        {
+          userId: '65',
+          nickname: '저기',
+          statusMsg: '안녕하세요',
+          profileImgURL: '',
+        },
+      ])
+    );
+  }),
+  rest.get(API_PATH.PROFILE_FOLLOWINGS(0), (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json([
+        {
+          userId: '32',
+          nickname: '만두피',
+          statusMsg: '안녕하세요',
+          profileImgURL: '',
+        },
+        {
+          userId: '23',
+          nickname: '천두피',
+          statusMsg: '안녕하세요',
+          profileImgURL: '',
+        },
+        {
+          userId: '65',
+          nickname: '백두피',
+          statusMsg: '안녕하세요',
+          profileImgURL: '',
+        },
+      ])
+    );
+  }),
 ];
