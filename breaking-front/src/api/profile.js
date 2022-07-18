@@ -31,3 +31,19 @@ export const getProfileBookmarked = ({ queryKey }) => {
     url: API_PATH.PROFILE_BOOKMARKED(userId, option),
   });
 };
+
+export const getFollowers = ({ queryKey }) => {
+  const [, userId] = queryKey;
+  return api({
+    method: 'get',
+    url: API_PATH.PROFILE_FOLLOWERS(userId),
+  });
+};
+
+export const getFollowings = ({ queryKey }) => {
+  const [, userId] = queryKey;
+  return api({
+    method: 'get',
+    url: API_PATH.PROFILE_FOLLOWINGS(userId),
+  });
+};
