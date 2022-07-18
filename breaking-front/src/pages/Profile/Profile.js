@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { getProfile } from 'api/profile';
+import Button from 'components/Button/Button';
 import Feed from 'components/Feed/Feed';
 import Filter from 'components/Filter/Filter';
 import FollowCard from 'components/FollowCard/FollowCard';
@@ -17,16 +18,18 @@ import { useParams } from 'react-router-dom';
 import ProfileTabPanel from './units/ProfileTabPanel';
 
 const Profile = () => {
-  const isMyPage = true;
+  let isMyPage = false;
   // 추후에 전역 state와 비교해서 내프로필 페이지인지 확인할 예정
   const { id: userId } = useParams();
+  if (userId === '0') {
+    isMyPage = true;
+  }
 
   const { profileData, isLoading } = useProfile(userId);
 
   const [writtenOption, setWrittenOption] = useState('all');
   const [boughtOption, setBoughtOption] = useState('all');
   const [bookmarkedOption, setBookmarkedOption] = useState('all');
-
   const { data: writtenData, isLoading: writtenLoading } = useProfilePost(
     userId,
     isMyPage,
@@ -81,7 +84,14 @@ const Profile = () => {
       <Style.UserContainer>
         <ProfileImage size="xlarge" src={profileData?.data.profileImgURL} />
         <Style.UserInformation>
-          <Style.NickName>{profileData?.data.nickname}</Style.NickName>
+          <Style.Title>
+            <Style.NickName>{profileData?.data.nickname}</Style.NickName>
+            {!profileData?.data.isFollowing && (
+              <Style.FollowButton>
+                <Button>팔로우</Button>
+              </Style.FollowButton>
+            )}
+          </Style.Title>
           <Style.StatusMessage>
             {profileData?.data.statusMsg}
           </Style.StatusMessage>

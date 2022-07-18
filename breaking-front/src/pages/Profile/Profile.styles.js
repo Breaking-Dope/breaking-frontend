@@ -12,9 +12,17 @@ export const UserInformation = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
 `;
+
+export const Title = styled.div`
+  display: flex;
+  align-items: center;
+`;
 export const NickName = styled.h1`
   font-size: 36px;
   font-weight: bold;
+`;
+export const FollowButton = styled.div`
+  margin-left: 20px;
 `;
 
 export const StatusMessage = styled.h5`
