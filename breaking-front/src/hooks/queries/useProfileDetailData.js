@@ -1,4 +1,4 @@
-import { getProfileDetailData } from 'api/profile';
+import { getProfileDetailData } from 'api/profileEdit';
 import { useQuery } from 'react-query';
 
 const useProfileDetailData = () =>

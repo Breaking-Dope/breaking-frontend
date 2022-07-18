@@ -3,7 +3,7 @@ import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import ProfileSettingForm from 'components/ProfileSettingForm/ProfileSettingForm';
 import useProfileDetailData from 'hooks/queries/useProfileDetailData';
-import { putProfileEdit } from 'api/profile';
+import { putProfileEdit } from 'api/profileEdit';
 import { PAGE_PATH } from 'constants/path';
 
 const ProfileEdit = () => {
