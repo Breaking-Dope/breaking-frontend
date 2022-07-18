@@ -1,13 +1,13 @@
 import React from 'react';
-import SignUpInput from 'components/SignUpInput/SignUpInput';
+import ProfileSettingInput from 'components/ProfileSettingInput/ProfileSettingInput';
 
 export default {
-  title: 'components/SignupInput',
-  component: SignUpInput,
+  title: 'components/ProfileSettingInput',
+  component: ProfileSettingInput,
 };
 
 function Template(args) {
-  return <SignUpInput {...args} />;
+  return <ProfileSettingInput {...args} />;
 }
 
 export const Default = Template.bind({});

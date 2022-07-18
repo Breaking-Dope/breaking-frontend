@@ -10,7 +10,7 @@ export const LabelText = styled.span`
   font-size: 16px;
 `;
 
-export const SignUpInput = styled.input`
+export const ProfileSettingInput = styled.input`
   width: 100%;
   height: 56px;
   margin-top: 15px;
