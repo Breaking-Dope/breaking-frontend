@@ -28,3 +28,16 @@ export const DefaultTabs = () => {
     </Tabs>
   );
 };
+
+export const OneTabs = () => {
+  return (
+    <Tabs>
+      <Tabs.TabList>
+        <Tabs.TabItem>작성한 제보(3)</Tabs.TabItem>
+      </Tabs.TabList>
+      <Tabs.TabPanel>
+        <Button>컴포넌트도 잘들어가요</Button>
+      </Tabs.TabPanel>
+    </Tabs>
+  );
+};

@@ -29,6 +29,7 @@ export default function Tabs({ children, ...props }) {
 }
 
 function TabList({ active, setActive, children }) {
+  children = React.Children.toArray(children);
   return (
     <Style.TabList>
       {children.map((child, index) => {
