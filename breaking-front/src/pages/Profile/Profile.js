@@ -1,8 +1,4 @@
 /* eslint-disable no-unused-vars */
-import { getProfile, postFollow } from 'api/profile';
-import Button from 'components/Button/Button';
-import Feed from 'components/Feed/Feed';
-import Filter from 'components/Filter/Filter';
 import FollowCard from 'components/FollowCard/FollowCard';
 import Line from 'components/Line/Line';
 import Modal from 'components/Modal/Modal';
@@ -13,8 +9,6 @@ import useProfile from 'hooks/queries/useProfile';
 import useProfilePost from 'hooks/queries/useProfilePost';
 import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { QueryClient, useMutation } from 'react-query';
 import { useParams } from 'react-router-dom';
 import ProfileFollowButton from './units/ProfileFollowButton';
 import ProfileTabPanel from './units/ProfileTabPanel';
@@ -58,7 +52,7 @@ const Profile = () => {
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('followings');
+  const [modalTitle, setModalTitle] = useState('팔로잉');
   const { data: followListData, isLoading: followListLoading } = useFollowList(
     modalTitle,
     userId
@@ -69,12 +63,12 @@ const Profile = () => {
   };
 
   const followingClick = () => {
-    toggleModal();
     setModalTitle('팔로잉');
+    toggleModal();
   };
   const followerClick = () => {
-    toggleModal();
     setModalTitle('팔로워');
+    toggleModal();
   };
 
   return (

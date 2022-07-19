@@ -49,7 +49,6 @@ export const getFollowings = ({ queryKey }) => {
 };
 
 export const postFollow = (userId) => {
-  console.log(userId);
   return api({
     method: 'post',
     url: API_PATH.FOLLOW(userId),
