@@ -47,3 +47,18 @@ export const getFollowings = ({ queryKey }) => {
     url: API_PATH.PROFILE_FOLLOWINGS(userId),
   });
 };
+
+export const postFollow = (userId) => {
+  console.log(userId);
+  return api({
+    method: 'post',
+    url: API_PATH.FOLLOW(userId),
+  });
+};
+
+export const postUnFollow = (userId) => {
+  return api({
+    method: 'post',
+    url: API_PATH.UNFOLLOW(userId),
+  });
+};
