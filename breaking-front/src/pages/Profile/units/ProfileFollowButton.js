@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import * as Style from 'pages/Profile/Profile.styles';
+import * as Style from 'pages/Profile/units/ProfileFollowButton.styles';
 import Button from 'components/Button/Button';
 import PropTypes from 'prop-types';
 import { useMutation, useQueryClient } from 'react-query';
@@ -24,13 +24,13 @@ const ProfileFollowButton = ({ userId, isFollowing, isMyPage }) => {
   } else if (isFollowing) {
     return (
       <Style.FollowButton onClick={() => UnFollow(userId)}>
-        <Button>언팔로우</Button>
+        언팔로우
       </Style.FollowButton>
     );
   } else {
     return (
       <Style.FollowButton onClick={() => Follow(userId)}>
-        <Button>팔로우</Button>
+        팔로우
       </Style.FollowButton>
     );
   }
