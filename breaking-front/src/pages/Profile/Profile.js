@@ -76,7 +76,7 @@ const Profile = () => {
       <Modal isOpen={isModalOpen} closeClick={toggleModal} title={modalTitle}>
         {followListData?.data.map((item) => (
           <FollowCard
-            isPermission={true}
+            isPermission={isMyPage}
             profileData={item}
             key={item.key}
           ></FollowCard>
