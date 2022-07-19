@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button/Button';
 import ProfileSettingInput from 'components/ProfileSettingForm/ProfileSettingInput';
@@ -10,14 +10,17 @@ import fileToBase64 from 'utils/fileToBase64';
 import urlToFile from 'utils/urlToFile';
 import { ReactComponent as XMark } from 'assets/svg/x-mark.svg';
 import * as Style from 'components/ProfileSettingForm/ProfileSettingForm.styles';
+import { useTheme } from 'styled-components';
+import { PRODUCTION_BASE_URL } from 'constants/path';
 
 export default function ProfileSettingForm({
   username,
+  isLoading,
   userDefaultData,
   mutate,
 }) {
   const imageRef = useRef();
-
+  const theme = useTheme();
   const [
     { profileImgURL, realName, nickname, phoneNumber, statusMsg, email, role },
     handleChange,
@@ -105,10 +108,19 @@ export default function ProfileSettingForm({
       } else formData.append('profileImg', profileImgURL);
     }
 
-    formData.append('signUpRequest', JSON.stringify(userData));
+    if (username) formData.append('signUpRequest', JSON.stringify(userData));
+    else formData.append('updateRequest', JSON.stringify(userData));
 
     mutate(formData);
   };
+
+  useEffect(() => {
+    setForm(userDefaultData);
+    userDefaultData.profileImgURL &&
+      setImageSrc(
+        PRODUCTION_BASE_URL + 'static' + userDefaultData.profileImgURL
+      );
+  }, [setForm, userDefaultData]);
 
   return (
     <>
@@ -121,20 +133,28 @@ export default function ProfileSettingForm({
             accept="image/*"
             onChange={handleImageUploadPreview}
           />
-          <ProfileImage
-            size="xlarge"
-            src={imageSrc}
-            alt="미리보기"
-            onClick={imageUploadClick}
-          />
+          <Style.ProfileImage>
+            {isLoading ? (
+              <Style.Loading type="bars" color={theme.blue[900]} />
+            ) : (
+              <ProfileImage
+                size="xlarge"
+                src={imageSrc}
+                alt="미리보기"
+                onClick={imageUploadClick}
+              />
+            )}
+
+            {profileImgURL && (
+              <Style.XMarkIcon>
+                <XMark onClick={imageDeleteClick} />
+              </Style.XMarkIcon>
+            )}
+          </Style.ProfileImage>
+
           <Style.LabelText onClick={imageUploadClick}>
             프로필 추가
           </Style.LabelText>
-          {profileImgURL && (
-            <Style.XMarkIcon>
-              <XMark onClick={imageDeleteClick} />
-            </Style.XMarkIcon>
-          )}
         </Style.ProfileImageContainer>
         <ProfileSettingInput
           type="text"
@@ -161,13 +181,9 @@ export default function ProfileSettingForm({
           value={nickname}
           onChange={handleChange}
           onBlur={() => {
-            if (username && userDefaultData.nickname === nickname)
-              setNicknameErrorMessage('');
-            else {
-              nickname === ''
-                ? setNicknameErrorMessage(MESSAGE.SIGNUP.BLANK)
-                : NicknameReFetch();
-            }
+            nickname === ''
+              ? setNicknameErrorMessage(MESSAGE.SIGNUP.BLANK)
+              : NicknameReFetch();
           }}
           required
         />
@@ -181,13 +197,9 @@ export default function ProfileSettingForm({
           onChange={handleChange}
           maxLength="11"
           onBlur={() => {
-            if (username && userDefaultData.phoneNumber === phoneNumber)
-              setPhoneNumberErrorMessage('');
-            else {
-              phoneNumber === ''
-                ? setPhoneNumberErrorMessage(MESSAGE.SIGNUP.BLANK)
-                : PhoneNumberReFetch();
-            }
+            phoneNumber === ''
+              ? setPhoneNumberErrorMessage(MESSAGE.SIGNUP.BLANK)
+              : PhoneNumberReFetch();
           }}
           required
         />
@@ -200,13 +212,9 @@ export default function ProfileSettingForm({
           value={email}
           onChange={handleChange}
           onBlur={() => {
-            if (username && userDefaultData.email === email)
-              setEmailErrorMessage('');
-            else {
-              email === ''
-                ? setEmailErrorMessage(MESSAGE.SIGNUP.BLANK)
-                : EmailReFetch();
-            }
+            email === ''
+              ? setEmailErrorMessage(MESSAGE.SIGNUP.BLANK)
+              : EmailReFetch();
           }}
           required
         />
@@ -250,6 +258,20 @@ export default function ProfileSettingForm({
 
 ProfileSettingForm.propTypes = {
   username: PropTypes.string,
-  userDefaultData: PropTypes.object.isRequired,
+  userDefaultData: PropTypes.object,
   mutate: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+};
+
+ProfileSettingForm.defaultProps = {
+  userDefaultData: {
+    profileImgURL: '',
+    realName: '',
+    nickname: '',
+    phoneNumber: '',
+    email: '',
+    statusMsg: '',
+    role: 'USER',
+  },
+  isLoading: false,
 };
