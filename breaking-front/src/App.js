@@ -13,6 +13,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import Layout from 'components/Layout/Layout';
 import GoogleRedirect from 'pages/SocialLogin/Redirect/GoogleRedirect';
 import Profile from 'pages/Profile/Profile';
+import UserInformationProvider from 'providers/UserInformationProvider';
 
 function App() {
   const queryClient = new QueryClient();
@@ -22,21 +23,23 @@ function App() {
         <ThemeProvider theme={theme}>
           <GlobalStyle />
           <BrowserRouter>
-            <Layout>
-              <Routes>
-                <Route path={PAGE_PATH.LOGIN} element={<SocialLogin />} />
-                <Route
-                  path={PAGE_PATH.KAKAO_LOGIN}
-                  element={<KakaoRedirect />}
-                ></Route>
-                <Route
-                  path={PAGE_PATH.GOOGLE_LOGIN}
-                  element={<GoogleRedirect />}
-                ></Route>
-                <Route path={PAGE_PATH.SIGNUP} element={<SignUp />} />
-                <Route path={PAGE_PATH.PROFILE} element={<Profile />} />
-              </Routes>
-            </Layout>
+            <UserInformationProvider>
+              <Layout>
+                <Routes>
+                  <Route path={PAGE_PATH.LOGIN} element={<SocialLogin />} />
+                  <Route
+                    path={PAGE_PATH.KAKAO_LOGIN}
+                    element={<KakaoRedirect />}
+                  ></Route>
+                  <Route
+                    path={PAGE_PATH.GOOGLE_LOGIN}
+                    element={<GoogleRedirect />}
+                  ></Route>
+                  <Route path={PAGE_PATH.SIGNUP} element={<SignUp />} />
+                  <Route path={PAGE_PATH.PROFILE} element={<Profile />} />
+                </Routes>
+              </Layout>
+            </UserInformationProvider>
           </BrowserRouter>
         </ThemeProvider>
         <ReactQueryDevtools initialIsOpen={false} />
