@@ -24,6 +24,7 @@ const ProfileEdit = () => {
   return (
     <>
       <ProfileSettingForm
+        pageType="profileEdit"
         isLoading={isLoading}
         userDefaultData={data?.data}
         mutate={ProfileEditMutate}

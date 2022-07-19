@@ -14,6 +14,7 @@ import { useTheme } from 'styled-components';
 import { PRODUCTION_BASE_URL } from 'constants/path';
 
 export default function ProfileSettingForm({
+  pageType,
   username,
   isLoading,
   userDefaultData,
@@ -98,29 +99,36 @@ export default function ProfileSettingForm({
       role,
     };
 
-    if (username) userData.username = username;
+    if (pageType === 'profileEdit') {
+      if (profileImgURL !== '') {
+        if (profileImgURL === userDefaultData.profileImgURL) {
+          const imageFile = await urlToFile(profileImgURL);
 
-    if (profileImgURL !== '') {
-      //프로필 수정 페이지에서 유저가 프로필 이미지를 변경하지 않은 경우 기존 이미지 파일 전송
-      if (!username && profileImgURL === userDefaultData.profileImgURL) {
-        const imageFile = await urlToFile(profileImgURL);
-        formData.append('profileImg', imageFile);
-      } else formData.append('profileImg', profileImgURL);
+          formData.append('profileImg', imageFile);
+        } else formData.append('profileImg', profileImgURL);
+      }
+
+      formData.append('updateRequest', JSON.stringify(userData));
+    } else if (pageType === 'signUp') {
+      userData.username = username;
+
+      formData.append('profileImg', profileImgURL);
+      formData.append('signUpRequest', JSON.stringify(userData));
     }
-
-    if (username) formData.append('signUpRequest', JSON.stringify(userData));
-    else formData.append('updateRequest', JSON.stringify(userData));
 
     mutate(formData);
   };
 
   useEffect(() => {
-    setForm(userDefaultData);
-    userDefaultData.profileImgURL &&
-      setImageSrc(
-        PRODUCTION_BASE_URL + 'static' + userDefaultData.profileImgURL
-      );
-  }, [setForm, userDefaultData]);
+    if (pageType === 'profileEdit') {
+      setForm(userDefaultData);
+
+      if (userDefaultData.profileImgURL)
+        setImageSrc(
+          PRODUCTION_BASE_URL + 'static' + userDefaultData.profileImgURL
+        );
+    }
+  }, [userDefaultData, pageType, setForm]);
 
   return (
     <>
@@ -249,7 +257,7 @@ export default function ProfileSettingForm({
           </Button>
         </Style.Role>
         <Style.SubmitButton type="submit" size="large">
-          {username ? '회원가입' : '프로필 수정'}
+          {pageType === 'signUp' ? '회원가입' : '프로필 수정'}
         </Style.SubmitButton>
       </Style.Form>
     </>
@@ -257,6 +265,7 @@ export default function ProfileSettingForm({
 }
 
 ProfileSettingForm.propTypes = {
+  pageType: PropTypes.oneOf(['signUp', 'profileEdit']).isRequired,
   username: PropTypes.string,
   userDefaultData: PropTypes.object,
   mutate: PropTypes.func.isRequired,

@@ -6,8 +6,7 @@ export const profileHandlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        profileImgURL:
-          'https://cdn.pixabay.com/photo/2021/09/26/09/55/seal-6656983_960_720.jpg',
+        profileImgURL: '',
         realName: '강주혁',
         nickname: '주기',
         phoneNumber: '01012345678',
