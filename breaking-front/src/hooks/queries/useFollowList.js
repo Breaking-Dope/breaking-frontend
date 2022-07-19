@@ -8,9 +8,7 @@ const useFollowList = (target, userId) => {
   } else if (target === '팔로워') {
     targetApi = getFollowers;
   }
-  const { data, isLoading } = useQuery([target, userId], targetApi, {
-    enabled: false,
-  });
+  const { data, isLoading } = useQuery([target, userId], targetApi);
   return { data, isLoading };
 };
 
