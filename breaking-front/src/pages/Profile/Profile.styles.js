@@ -16,6 +16,7 @@ export const UserInformation = styled.div`
 export const Title = styled.div`
   display: flex;
   align-items: center;
+  height: 30px;
 `;
 export const NickName = styled.h1`
   font-size: 32px;
