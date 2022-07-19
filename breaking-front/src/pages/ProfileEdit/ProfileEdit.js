@@ -8,8 +8,7 @@ import { PAGE_PATH } from 'constants/path';
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
-
-  const { data } = useProfileDetailData();
+  const { data, isLoading } = useProfileDetailData();
 
   const { mutate: ProfileEditMutate } = useMutation(putProfileEdit, {
     onSuccess: (res) => {
@@ -24,12 +23,12 @@ const ProfileEdit = () => {
 
   return (
     <>
-      {data && (
-        <ProfileSettingForm
-          userDefaultData={data.data}
-          mutate={ProfileEditMutate}
-        />
-      )}
+      <ProfileSettingForm
+        isLoading={isLoading}
+        userDefaultData={data?.data}
+        mutate={ProfileEditMutate}
+      />
+      {/* 추후 탈퇴 기능 구현 */}
     </>
   );
 };
