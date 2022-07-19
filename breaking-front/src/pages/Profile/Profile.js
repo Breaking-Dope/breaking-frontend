@@ -15,12 +15,16 @@ import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import ProfileFollowButton from './units/ProfileFollowButton';
 import ProfileTabPanel from './units/ProfileTabPanel';
 
 const Profile = () => {
   let isMyPage = false;
   // 추후에 전역 state와 비교해서 내프로필 페이지인지 확인할 예정
   const { id: userId } = useParams();
+  // 팔로우 언팔로우 버튼교체 기능추가
+  // 팔로우 리스트에서 삭제버튼 눌렀을때 api 실행 되어야함
+  // msw search params를 이용해서 filter 결과물에 맞춰서 반환해주어야함
   if (userId === '0') {
     isMyPage = true;
   }
@@ -86,11 +90,10 @@ const Profile = () => {
         <Style.UserInformation>
           <Style.Title>
             <Style.NickName>{profileData?.data.nickname}</Style.NickName>
-            {!profileData?.data.isFollowing && (
-              <Style.FollowButton>
-                <Button>팔로우</Button>
-              </Style.FollowButton>
-            )}
+            <ProfileFollowButton
+              isFollowing={profileData?.data.isFollowing}
+              isMyPage={isMyPage}
+            />
           </Style.Title>
           <Style.StatusMessage>
             {profileData?.data.statusMsg}
