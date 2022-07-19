@@ -3,19 +3,20 @@ import React from 'react';
 import * as Style from 'pages/Profile/Profile.styles';
 import Button from 'components/Button/Button';
 import PropTypes from 'prop-types';
-import { QueryClient, useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { postFollow, postUnFollow } from 'api/profile';
 
 const ProfileFollowButton = ({ userId, isFollowing, isMyPage }) => {
+  const queryClient = useQueryClient();
   const { mutate: Follow } = useMutation(postFollow, {
     onSuccess: () => {
-      QueryClient.invalidateQueries('profile');
+      queryClient.invalidateQueries('profile');
     },
   });
 
   const { mutate: UnFollow } = useMutation(postUnFollow, {
     onSuccess: () => {
-      QueryClient.invalidateQueries('profile');
+      queryClient.invalidateQueries('profile');
     },
   });
   if (isMyPage) {
@@ -23,7 +24,7 @@ const ProfileFollowButton = ({ userId, isFollowing, isMyPage }) => {
   } else if (isFollowing) {
     return (
       <Style.FollowButton onClick={() => Follow(userId)}>
-        <Button>팔로우</Button>
+        <Button>언팔로우</Button>
       </Style.FollowButton>
     );
   } else {

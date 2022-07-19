@@ -465,4 +465,11 @@ export const handlers = [
       ])
     );
   }),
+
+  rest.post(API_PATH.FOLLOW(1), (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
+  rest.post(API_PATH.UNFOLLOW(1), (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
 ];
