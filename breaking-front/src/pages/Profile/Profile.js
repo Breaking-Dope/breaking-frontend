@@ -52,7 +52,7 @@ const Profile = () => {
   );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('팔로잉');
+  const [modalTitle, setModalTitle] = useState('');
   const { data: followListData, isLoading: followListLoading } = useFollowList(
     modalTitle,
     userId
@@ -122,6 +122,7 @@ const Profile = () => {
             <ProfileTabPanel
               data={writtenData?.data}
               setOption={setWrittenOption}
+              userId={userId}
             />
           </Tabs.TabPanel>
 
@@ -130,6 +131,7 @@ const Profile = () => {
               <ProfileTabPanel
                 data={boughtData?.data}
                 setOption={setBoughtOption}
+                userId={userId}
               />
             </Tabs.TabPanel>
           )}
@@ -139,6 +141,7 @@ const Profile = () => {
               <ProfileTabPanel
                 data={bookmarkedData?.data}
                 setOption={setBookmarkedOption}
+                userId={userId}
               />
             </Tabs.TabPanel>
           )}

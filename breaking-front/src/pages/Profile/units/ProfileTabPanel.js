@@ -4,7 +4,7 @@ import * as Style from 'pages/Profile/units/ProfileTabPanel.styles';
 import Feed from 'components/Feed/Feed';
 import PropTypes from 'prop-types';
 
-const ProfileTabPanel = ({ data, setOption }) => {
+const ProfileTabPanel = ({ data, setOption, userId }) => {
   return (
     <>
       <Style.FilterContainer>
@@ -22,7 +22,7 @@ const ProfileTabPanel = ({ data, setOption }) => {
       </Style.FilterContainer>
       <Style.FeedContainer>
         {data?.map((feed) => (
-          <Feed feedData={feed} key={feed.postId} />
+          <Feed feedData={feed} key={feed.postId} userId={userId} />
         ))}
       </Style.FeedContainer>
     </>
@@ -32,6 +32,7 @@ const ProfileTabPanel = ({ data, setOption }) => {
 ProfileTabPanel.propTypes = {
   data: PropTypes.array,
   setOption: PropTypes.func,
+  userId: PropTypes.string,
 };
 
 export default ProfileTabPanel;
