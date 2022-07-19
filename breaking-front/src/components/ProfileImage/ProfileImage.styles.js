@@ -27,6 +27,7 @@ export const ProfileImage = styled.img`
   border-radius: 50%;
   object-fit: cover;
   cursor: pointer;
+  background-color: ${({ theme }) => theme.gray[200]};
 `;
 
 export const DefaultImage = styled.img.attrs({
@@ -35,4 +36,5 @@ export const DefaultImage = styled.img.attrs({
   ${({ size }) => sizeCss[size]};
   border-radius: 50%;
   cursor: pointer;
+  background-color: ${({ theme }) => theme.gray[200]};
 `;
