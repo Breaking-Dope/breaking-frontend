@@ -26,7 +26,7 @@ export default function Button({
 Button.propTypes = {
   children: PropTypes.node.isRequired,
   color: PropTypes.oneOf(['primary', 'secondary', 'dark', 'danger']),
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  size: PropTypes.oneOf(['small', 'medium', 'large', 'follow']),
   round: PropTypes.oneOf(['none', 'round', 'rounder']),
   isSelected: PropTypes.bool,
 };
