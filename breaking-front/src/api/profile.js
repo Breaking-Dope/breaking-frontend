@@ -1,5 +1,5 @@
 import { API_PATH } from 'constants/path';
-import api from './api';
+import api from 'api/api';
 
 export const getProfile = ({ queryKey }) => {
   const [, userId] = queryKey;

@@ -1,6 +1,5 @@
 import { getProfile } from 'api/profile';
-
-const { useQuery } = require('react-query');
+import { useQuery } from 'react-query';
 
 const useProfile = (userId) => {
   const { data: profileData, isLoading } = useQuery(

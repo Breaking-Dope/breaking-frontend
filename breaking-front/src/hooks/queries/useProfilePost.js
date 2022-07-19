@@ -3,8 +3,7 @@ import {
   getProfileBought,
   getProfileWrriten,
 } from 'api/profile';
-
-const { useQuery } = require('react-query');
+import { useQuery } from 'react-query';
 
 const useProfilePost = (userId, isMyPage, target, option) => {
   let targetApi = null;

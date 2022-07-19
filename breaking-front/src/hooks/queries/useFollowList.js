@@ -1,7 +1,7 @@
 import { getFollowers, getFollowings } from 'api/profile';
 import { useQuery } from 'react-query';
 
-const useFollow = (target, userId) => {
+const useFollowList = (target, userId) => {
   let targetApi = null;
   if (target === '팔로잉') {
     targetApi = getFollowings;
@@ -12,4 +12,4 @@ const useFollow = (target, userId) => {
   return { data, isLoading };
 };
 
-export default useFollow;
+export default useFollowList;
