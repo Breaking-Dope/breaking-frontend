@@ -24,13 +24,13 @@ const ProfileFollowButton = ({ userId, isFollowing, isMyPage }) => {
   } else if (isFollowing) {
     return (
       <Style.FollowButton onClick={() => UnFollow(userId)}>
-        <Button size="follow">언팔로우</Button>
+        <Button>언팔로우</Button>
       </Style.FollowButton>
     );
   } else {
     return (
       <Style.FollowButton onClick={() => Follow(userId)}>
-        <Button size="follow">팔로우</Button>
+        <Button>팔로우</Button>
       </Style.FollowButton>
     );
   }

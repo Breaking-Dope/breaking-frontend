@@ -36,10 +36,6 @@ const sizeCss = {
     padding: 20px 50px;
     font-size: 18px;
   `,
-  follow: css`
-    padding: 10px 15px;
-    font-size: 18px;
-  `,
 };
 
 const roundCss = {
