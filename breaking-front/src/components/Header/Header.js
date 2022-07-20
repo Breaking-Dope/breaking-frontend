@@ -21,7 +21,7 @@ export default function Header({ isLogin, loginButtonClick, ...props }) {
   };
 
   const handleToggle = () => {
-    setIsOpenToggle((prev) => !prev);
+    setIsOpenToggle((pre) => !pre);
   };
 
   const handleSubmit = (event) => {
