@@ -16,8 +16,7 @@ import { UserInformationContext } from 'providers/UserInformationProvider';
 export default function Header({ loginButtonClick, ...props }) {
   const [searchText, setSearchText] = useState('');
   const [isOpenToggle, setIsOpenToggle] = useState(false);
-  const { isLogin, profileImgURL } = useContext(UserInformationContext);
-
+  const { isLogin, profileImgURL, userId } = useContext(UserInformationContext);
   const onChange = (event) => {
     setSearchText(event.target.value);
   };
@@ -72,7 +71,7 @@ export default function Header({ loginButtonClick, ...props }) {
                 blueLabel="입출금내역"
               />
               <Toggle.LabelLink
-                path={PAGE_PATH.MYPAGE}
+                path={PAGE_PATH.PROFILE + `/${userId}`}
                 icon={<MyPageIcon />}
                 label="마이페이지"
               />

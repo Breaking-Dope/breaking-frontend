@@ -9,7 +9,7 @@ const UserInformationProvider = ({ children }) => {
     profileImgURL: '',
     nickname: '',
     balance: null,
-    isLogin: true,
+    isLogin: false,
   });
 
   return (
