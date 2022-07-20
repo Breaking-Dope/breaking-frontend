@@ -10,16 +10,6 @@ const SignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const userDefaultData = {
-    profileImgURL: '',
-    realName: '',
-    nickname: '',
-    phoneNumber: '',
-    email: '',
-    statusMsg: '',
-    role: 'USER',
-  };
-
   const { mutate } = useMutation(postSignUp, {
     onSuccess: (res) => {
       const jwtToken = res.headers.authorization;
@@ -43,8 +33,8 @@ const SignUp = () => {
   return (
     <>
       <ProfileSettingForm
+        pageType="signUp"
         username={location.state?.username}
-        userDefaultData={userDefaultData}
         mutate={mutate}
       />
     </>

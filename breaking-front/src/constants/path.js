@@ -18,6 +18,7 @@ export const API_PATH = {
   OAUTH2_SIGNOUT: '/oauth2/sign-out',
   OAUTH2_VALIDATE_JWT: '/oauth2/validate-jwt',
   PROFILE_EDIT: '/profile',
+  PROFILE_DETAIL_DATA: '/profile/detail',
   FOLLOW: (userId) => `/follow/${userId}`,
   UNFOLLOW: (userId) => `/follow/${userId}`,
   PROFILE_DATA: (userId) => `/profile/${userId}`,
