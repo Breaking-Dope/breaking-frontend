@@ -1,14 +1,14 @@
 import {
   getProfileBookmarked,
   getProfileBought,
-  getProfileWrriten,
+  getProfileWritten,
 } from 'api/profile';
 import { useQuery } from 'react-query';
 
 const useProfilePost = (userId, isMyPage, target, option) => {
   const { data: writtenData, isLoading: isWrittenLoading } = useQuery(
     ['written', { userId, option }],
-    getProfileWrriten,
+    getProfileWritten,
     { enabled: target === 'written' }
   );
 

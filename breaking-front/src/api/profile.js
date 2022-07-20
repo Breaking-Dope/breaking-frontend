@@ -9,7 +9,7 @@ export const getProfile = ({ queryKey }) => {
   });
 };
 
-export const getProfileWrriten = ({ queryKey }) => {
+export const getProfileWritten = ({ queryKey }) => {
   const [, { userId, option = 'all' }] = queryKey;
   return api({
     method: 'get',
