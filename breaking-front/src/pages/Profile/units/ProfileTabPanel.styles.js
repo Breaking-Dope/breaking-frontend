@@ -1,13 +1,16 @@
 import styled from 'styled-components';
 
+export const PanelContainer = styled.div`
+  padding: 0 30px 60px 30px;
+`;
+
 export const FilterContainer = styled.div`
-  margin-bottom: 20px;
-  margin-left: 40px;
+  margin-bottom: 30px;
 `;
 
 export const FeedContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 400px 400px;
   row-gap: 60px;
-  justify-items: center;
+  justify-content: space-between;
 `;
