@@ -30,6 +30,7 @@ const Profile = () => {
   const [writtenOption, setWrittenOption] = useState('all');
   const [boughtOption, setBoughtOption] = useState('all');
   const [bookmarkedOption, setBookmarkedOption] = useState('all');
+
   const { data: writtenData, isLoading: writtenLoading } = useProfilePost(
     userId,
     isMyPage,
@@ -70,7 +71,8 @@ const Profile = () => {
     setModalTitle('팔로워');
     toggleModal();
   };
-
+  console.log(followListLoading);
+  console.log(writtenLoading, boughtLoading, bookmarkedLoading);
   return (
     <>
       <Modal isOpen={isModalOpen} closeClick={toggleModal} title={modalTitle}>
@@ -78,7 +80,7 @@ const Profile = () => {
           <FollowCard
             isPermission={isMyPage}
             profileData={item}
-            key={item.key}
+            key={item.userId}
           ></FollowCard>
         ))}
       </Modal>
