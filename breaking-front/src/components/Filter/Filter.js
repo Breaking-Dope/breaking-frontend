@@ -70,7 +70,7 @@ Filter.defaultProps = {
 
 FilterDetail.propTypes = {
   children: PropTypes.string,
-  setSelectedLabel: PropTypes.func.isRequired,
+  setSelectedLabel: PropTypes.func,
   onClick: PropTypes.func,
 };
 //onClick 함수를 이용해 filter가 클릭되었을때 API나 다른 일을 수행하도록 한다.
