@@ -2,7 +2,7 @@ import { GOOGLE_PATH, KAKAO_PATH } from 'constants/path';
 import React from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import SocialLoginButton from 'components/SocialLoginButton/SocialLoginButton';
-import * as Style from 'pages/SocialLogin/SocialLogin.style';
+import * as Style from 'pages/SocialLogin/SocialLogin.styles';
 import Line from 'components/Line/Line';
 import MobileDownloadButton from 'components/MobileDownloadButton/MobileDownloadButton';
 
