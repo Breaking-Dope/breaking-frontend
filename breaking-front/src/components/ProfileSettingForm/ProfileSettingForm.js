@@ -4,14 +4,14 @@ import Button from 'components/Button/Button';
 import ProfileSettingInput from 'components/ProfileSettingForm/ProfileSettingInput';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import useIsValidProfile from 'hooks/queries/useIsValidProfile';
-import useInputs from 'hooks/useInputs';
+import { useTheme } from 'styled-components';
+import { PRODUCTION_BASE_URL } from 'constants/path';
 import MESSAGE from 'constants/message';
+import useInputs from 'hooks/useInputs';
 import fileToBase64 from 'utils/fileToBase64';
 import urlToFile from 'utils/urlToFile';
 import { ReactComponent as XMark } from 'assets/svg/x-mark.svg';
 import * as Style from 'components/ProfileSettingForm/ProfileSettingForm.styles';
-import { useTheme } from 'styled-components';
-import { PRODUCTION_BASE_URL } from 'constants/path';
 
 export default function ProfileSettingForm({
   pageType,
@@ -23,11 +23,19 @@ export default function ProfileSettingForm({
   const imageRef = useRef();
   const theme = useTheme();
   const [
-    { profileImgURL, realName, nickname, phoneNumber, statusMsg, email, role },
+    {
+      profileImgURL: profileImg,
+      realName,
+      nickname,
+      phoneNumber,
+      statusMsg,
+      email,
+      role,
+    },
     handleChange,
     setForm,
   ] = useInputs(userDefaultData);
-  const [imageSrc, setImageSrc] = useState(profileImgURL);
+  const [imageSrc, setImageSrc] = useState(userDefaultData.profileImgURL);
   const [realNameErrorMessage, setRealNameErrorMessage] = useState('');
   const [nicknameErrorMessage, setNicknameErrorMessage] = useState('');
   const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState('');
@@ -99,35 +107,48 @@ export default function ProfileSettingForm({
       role,
     };
 
-    if (pageType === 'profileEdit') {
-      if (profileImgURL !== '') {
-        if (profileImgURL === userDefaultData.profileImgURL) {
-          const imageFile = await urlToFile(profileImgURL);
+    // if (pageType === 'profileEdit') {
+    //   if (profileImg !== '') {
+    //     if (profileImg === userDefaultData.profileImgURL) {
+    //       const imageFile = await urlToFile(profileImg);
+    //       formData.append('profileImg', imageFile);
+    //     } else formData.append('profileImg', profileImg);
+    //   } else formData.append('profileImg', '');
 
-          formData.append('profileImg', imageFile);
-        } else formData.append('profileImg', profileImgURL);
-      }
-
+    //   formData.append('updateRequest', JSON.stringify(userData));
+    // } else if (pageType === 'signUp') {
+    //   userData.username = username;
+    //   formData.append('profileImg', profileImg);
+    //   formData.append('signUpRequest', JSON.stringify(userData));
+    // }
+    if (
+      pageType === 'profileEdit' &&
+      profileImg === userDefaultData.profileImgURL
+    ) {
+      const imageFile = await urlToFile(profileImg);
+      formData.append('profileImg', imageFile);
+      formData.append('updateRequest', JSON.stringify(userData));
+    } else if (pageType === 'profileEdit') {
+      formData.append('profileImg', profileImg);
       formData.append('updateRequest', JSON.stringify(userData));
     } else if (pageType === 'signUp') {
       userData.username = username;
-
-      formData.append('profileImg', profileImgURL);
+      formData.append('profileImg', profileImg);
       formData.append('signUpRequest', JSON.stringify(userData));
     }
+    console.log('profileImg: ', profileImg);
+    console.log('userData: ', userData);
 
     mutate(formData);
   };
 
   useEffect(() => {
-    if (pageType === 'profileEdit') {
-      setForm(userDefaultData);
+    setForm(userDefaultData);
 
-      if (userDefaultData.profileImgURL)
-        setImageSrc(
-          PRODUCTION_BASE_URL + 'static' + userDefaultData.profileImgURL
-        );
-    }
+    userDefaultData.profileImgURL &&
+      setImageSrc(
+        PRODUCTION_BASE_URL + 'static' + userDefaultData.profileImgURL
+      );
   }, [userDefaultData, pageType, setForm]);
 
   return (
@@ -153,7 +174,7 @@ export default function ProfileSettingForm({
               />
             )}
 
-            {profileImgURL && (
+            {profileImg && (
               <Style.XMarkIcon>
                 <XMark onClick={imageDeleteClick} />
               </Style.XMarkIcon>
