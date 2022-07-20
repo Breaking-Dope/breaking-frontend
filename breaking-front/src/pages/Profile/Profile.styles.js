@@ -1,10 +1,5 @@
 import styled from 'styled-components';
 
-export const FilterContainer = styled.div`
-  margin-top: 20px;
-  margin-left: 40px;
-`;
-
 export const UserContainer = styled.div`
   display: flex;
   padding: 20px;
@@ -17,9 +12,18 @@ export const UserInformation = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
 `;
+
+export const Title = styled.div`
+  display: flex;
+  align-items: center;
+  height: 30px;
+`;
 export const NickName = styled.h1`
-  font-size: 36px;
+  font-size: 32px;
   font-weight: bold;
+`;
+export const FollowButton = styled.div`
+  margin-left: 20px;
 `;
 
 export const StatusMessage = styled.h5`
@@ -37,10 +41,3 @@ export const Information = styled.div`
   }
 `;
 export const PostInformation = styled.div``;
-
-export const FeedContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  row-gap: 60px;
-  justify-items: center;
-`;

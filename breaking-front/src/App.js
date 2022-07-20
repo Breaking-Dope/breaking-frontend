@@ -15,7 +15,11 @@ import GoogleRedirect from 'pages/SocialLogin/Redirect/GoogleRedirect';
 import Profile from 'pages/Profile/Profile';
 
 function App() {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: { refetchOnWindowFocus: false },
+    },
+  });
   return (
     <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_KEY}>
       <QueryClientProvider client={queryClient}>
