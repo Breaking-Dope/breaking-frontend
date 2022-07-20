@@ -8,7 +8,8 @@ import { useQuery } from 'react-query';
 const useProfilePost = (userId, isMyPage, target, option) => {
   const { data: writtenData, isLoading: isWrittenLoading } = useQuery(
     ['written', { userId, option }],
-    getProfileWrriten
+    getProfileWrriten,
+    { enabled: target === 'written' }
   );
 
   const { data: boughtData, isLoading: isBoughtLoading } = useQuery(
