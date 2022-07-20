@@ -49,12 +49,12 @@ export default function Feed({ feedData, userId, ...props }) {
   return (
     <Style.Feed {...props}>
       {feedData.thumbnailImgURL ? (
-        <Style.FeedImage
+        <Style.ThumbNailImage
           src={feedData.thumbnailImgURL}
           onClick={handleFeedClick}
         />
       ) : (
-        <Style.FeedDefaultImage onClick={handleFeedClick} />
+        <Style.ThumbnailDefaultImage onClick={handleFeedClick} />
       )}
       <Style.Content>
         <ProfileImage
