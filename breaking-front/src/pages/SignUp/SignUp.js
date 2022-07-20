@@ -1,14 +1,24 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
-import { postSignUp } from 'api/signUp';
+import { postJWTvalidation, postSignUp } from 'api/signUp';
 import { PAGE_PATH } from 'constants/path';
 import MESSAGE from 'constants/message';
 import ProfileSettingForm from 'components/ProfileSettingForm/ProfileSettingForm';
+import { useContext } from 'react';
+import { UserInformationContext } from 'providers/UserInformationProvider';
 
 const SignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { setUserInfomation } = useContext(UserInformationContext);
+
+  const { mutate: JWTValidate } = useMutation(postJWTvalidation, {
+    onSuccess: (data) => {
+      console.log(data);
+      setUserInfomation({ ...data.data, isLogin: true });
+    },
+  });
 
   const userDefaultData = {
     profileImgURL: '',
@@ -23,7 +33,9 @@ const SignUp = () => {
   const { mutate } = useMutation(postSignUp, {
     onSuccess: (res) => {
       const jwtToken = res.headers.authorization;
+      console.log(res);
       localStorage.setItem('access_token', jwtToken);
+      JWTValidate();
       alert('환영합니다.');
       navigate(PAGE_PATH.HOME);
     },

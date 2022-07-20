@@ -18,3 +18,10 @@ export const getProfileValidation = ({ queryKey }) => {
     url: API_PATH.OAUTH2_SIGNUP_VALIDATE(query.validType, query.profileData),
   });
 };
+
+export const postJWTvalidation = () => {
+  return api({
+    method: 'post',
+    url: API_PATH.OAUTH2_VALIDATE_JWT,
+  });
+};
