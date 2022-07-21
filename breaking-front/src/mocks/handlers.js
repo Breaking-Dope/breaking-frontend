@@ -1,7 +1,7 @@
-import { profileHandlers } from './profileHandlers';
-import { profileSettingHandlers } from './profileSettingHandlers';
-import { signInHandler } from './signInHandlers';
-import { signUpHandlers } from './signUpHandlers';
+import { profileHandlers } from 'mocks/profileHandlers';
+import { profileSettingHandlers } from 'mocks/profileSettingHandlers';
+import { signInHandler } from 'mocks/signInHandlers';
+import { signUpHandlers } from 'mocks/signUpHandlers';
 
 export const handlers = [
   ...profileSettingHandlers,
