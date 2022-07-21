@@ -40,7 +40,10 @@ function App() {
                     element={<GoogleRedirect />}
                   ></Route>
                   <Route path={PAGE_PATH.SIGNUP} element={<SignUp />} />
-                  <Route path={PAGE_PATH.PROFILE} element={<Profile />} />
+                  <Route
+                    path={PAGE_PATH.PROFILE(':id')}
+                    element={<Profile />}
+                  />
                 </Routes>
               </Layout>
             </UserInformationProvider>

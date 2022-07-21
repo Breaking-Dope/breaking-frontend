@@ -71,7 +71,7 @@ export default function Header({ loginButtonClick, ...props }) {
                 blueLabel="입출금내역"
               />
               <Toggle.LabelLink
-                path={PAGE_PATH.PROFILE + `/${userId}`}
+                path={PAGE_PATH.PROFILE(userId)}
                 icon={<MyPageIcon />}
                 label="마이페이지"
               />

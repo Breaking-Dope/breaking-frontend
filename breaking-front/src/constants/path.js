@@ -4,7 +4,7 @@ export const PAGE_PATH = {
   KAKAO_LOGIN: 'login/kakao',
   GOOGLE_LOGIN: 'login/google',
   SIGNUP: '/signup',
-  PROFILE: '/profile/:id',
+  PROFILE: (userId) => `/profile/${userId}`,
   TRANSACTION: '/transaction',
   PROFILE_EDIT: '/profile/edit',
 };
