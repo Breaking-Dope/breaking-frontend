@@ -1,28 +1,41 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import Button from 'components/Button/Button';
 import ProfileSettingInput from 'components/ProfileSettingForm/ProfileSettingInput';
+import ProfileImage from 'components/ProfileImage/ProfileImage';
 import useIsValidProfile from 'hooks/queries/useIsValidProfile';
-import useInputs from 'hooks/useInputs';
+import { useTheme } from 'styled-components';
+import { PRODUCTION_BASE_URL } from 'constants/path';
 import MESSAGE from 'constants/message';
+import useInputs from 'hooks/useInputs';
 import fileToBase64 from 'utils/fileToBase64';
+import urlToFile from 'utils/urlToFile';
 import { ReactComponent as XMark } from 'assets/svg/x-mark.svg';
 import * as Style from 'components/ProfileSettingForm/ProfileSettingForm.styles';
-import ProfileImage from 'components/ProfileImage/ProfileImage';
-import PropTypes from 'prop-types';
 
 export default function ProfileSettingForm({
+  pageType,
   username,
+  isLoading,
   userDefaultData,
   mutate,
 }) {
   const imageRef = useRef();
-
+  const theme = useTheme();
   const [
-    { profileImgURL, realName, nickname, phoneNumber, statusMsg, email, role },
+    {
+      profileImgURL: profileImg,
+      realName,
+      nickname,
+      phoneNumber,
+      statusMsg,
+      email,
+      role,
+    },
     handleChange,
     setForm,
   ] = useInputs(userDefaultData);
-  const [imageSrc, setImageSrc] = useState(profileImgURL);
+  const [imageSrc, setImageSrc] = useState(userDefaultData.profileImgURL);
   const [realNameErrorMessage, setRealNameErrorMessage] = useState('');
   const [nicknameErrorMessage, setNicknameErrorMessage] = useState('');
   const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState('');
@@ -59,7 +72,7 @@ export default function ProfileSettingForm({
 
   const imageDeleteClick = () => {
     setImageSrc('');
-    setForm((form) => ({ ...form, profileImg: '' }));
+    setForm((form) => ({ ...form, profileImgURL: '' }));
   };
 
   const handleKeyDown = (event) => {
@@ -73,7 +86,7 @@ export default function ProfileSettingForm({
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (nicknameErrorMessage)
@@ -94,12 +107,49 @@ export default function ProfileSettingForm({
       role,
     };
 
-    if (username) userData.username = username;
-    if (profileImgURL !== '') formData.append('profileImg', profileImgURL);
-    formData.append('signUpRequest', JSON.stringify(userData));
+    // if (pageType === 'profileEdit') {
+    //   if (profileImg !== '') {
+    //     if (profileImg === userDefaultData.profileImgURL) {
+    //       const imageFile = await urlToFile(profileImg);
+    //       formData.append('profileImg', imageFile);
+    //     } else formData.append('profileImg', profileImg);
+    //   } else formData.append('profileImg', '');
+
+    //   formData.append('updateRequest', JSON.stringify(userData));
+    // } else if (pageType === 'signUp') {
+    //   userData.username = username;
+    //   formData.append('profileImg', profileImg);
+    //   formData.append('signUpRequest', JSON.stringify(userData));
+    // }
+    if (
+      pageType === 'profileEdit' &&
+      profileImg === userDefaultData.profileImgURL
+    ) {
+      const imageFile = await urlToFile(profileImg);
+      formData.append('profileImg', imageFile);
+      formData.append('updateRequest', JSON.stringify(userData));
+    } else if (pageType === 'profileEdit') {
+      formData.append('profileImg', profileImg);
+      formData.append('updateRequest', JSON.stringify(userData));
+    } else if (pageType === 'signUp') {
+      userData.username = username;
+      formData.append('profileImg', profileImg);
+      formData.append('signUpRequest', JSON.stringify(userData));
+    }
+    console.log('profileImg: ', profileImg);
+    console.log('userData: ', userData);
 
     mutate(formData);
   };
+
+  useEffect(() => {
+    setForm(userDefaultData);
+
+    userDefaultData.profileImgURL &&
+      setImageSrc(
+        PRODUCTION_BASE_URL + 'static' + userDefaultData.profileImgURL
+      );
+  }, [userDefaultData, pageType, setForm]);
 
   return (
     <>
@@ -112,20 +162,28 @@ export default function ProfileSettingForm({
             accept="image/*"
             onChange={handleImageUploadPreview}
           />
-          <ProfileImage
-            size="xlarge"
-            src={imageSrc}
-            alt="미리보기"
-            onClick={imageUploadClick}
-          />
+          <Style.ProfileImage>
+            {isLoading ? (
+              <Style.Loading type="bars" color={theme.blue[900]} />
+            ) : (
+              <ProfileImage
+                size="xlarge"
+                src={imageSrc}
+                alt="미리보기"
+                onClick={imageUploadClick}
+              />
+            )}
+
+            {profileImg && (
+              <Style.XMarkIcon>
+                <XMark onClick={imageDeleteClick} />
+              </Style.XMarkIcon>
+            )}
+          </Style.ProfileImage>
+
           <Style.LabelText onClick={imageUploadClick}>
             프로필 추가
           </Style.LabelText>
-          {profileImgURL && (
-            <Style.XMarkIcon>
-              <XMark onClick={imageDeleteClick} />
-            </Style.XMarkIcon>
-          )}
         </Style.ProfileImageContainer>
         <ProfileSettingInput
           type="text"
@@ -152,13 +210,9 @@ export default function ProfileSettingForm({
           value={nickname}
           onChange={handleChange}
           onBlur={() => {
-            if (username && userDefaultData.nickname === nickname)
-              setNicknameErrorMessage('');
-            else {
-              nickname === ''
-                ? setNicknameErrorMessage(MESSAGE.SIGNUP.BLANK)
-                : NicknameReFetch();
-            }
+            nickname === ''
+              ? setNicknameErrorMessage(MESSAGE.SIGNUP.BLANK)
+              : NicknameReFetch();
           }}
           required
         />
@@ -172,13 +226,9 @@ export default function ProfileSettingForm({
           onChange={handleChange}
           maxLength="11"
           onBlur={() => {
-            if (username && userDefaultData.phoneNumber === phoneNumber)
-              setPhoneNumberErrorMessage('');
-            else {
-              phoneNumber === ''
-                ? setPhoneNumberErrorMessage(MESSAGE.SIGNUP.BLANK)
-                : PhoneNumberReFetch();
-            }
+            phoneNumber === ''
+              ? setPhoneNumberErrorMessage(MESSAGE.SIGNUP.BLANK)
+              : PhoneNumberReFetch();
           }}
           required
         />
@@ -191,13 +241,9 @@ export default function ProfileSettingForm({
           value={email}
           onChange={handleChange}
           onBlur={() => {
-            if (username && userDefaultData.email === email)
-              setEmailErrorMessage('');
-            else {
-              email === ''
-                ? setEmailErrorMessage(MESSAGE.SIGNUP.BLANK)
-                : EmailReFetch();
-            }
+            email === ''
+              ? setEmailErrorMessage(MESSAGE.SIGNUP.BLANK)
+              : EmailReFetch();
           }}
           required
         />
@@ -232,7 +278,7 @@ export default function ProfileSettingForm({
           </Button>
         </Style.Role>
         <Style.SubmitButton type="submit" size="large">
-          {username ? '회원가입' : '프로필 수정'}
+          {pageType === 'signUp' ? '회원가입' : '프로필 수정'}
         </Style.SubmitButton>
       </Style.Form>
     </>
@@ -240,7 +286,22 @@ export default function ProfileSettingForm({
 }
 
 ProfileSettingForm.propTypes = {
+  pageType: PropTypes.oneOf(['signUp', 'profileEdit']).isRequired,
   username: PropTypes.string,
-  userDefaultData: PropTypes.object.isRequired,
+  userDefaultData: PropTypes.object,
   mutate: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+};
+
+ProfileSettingForm.defaultProps = {
+  userDefaultData: {
+    profileImgURL: '',
+    realName: '',
+    nickname: '',
+    phoneNumber: '',
+    email: '',
+    statusMsg: '',
+    role: 'USER',
+  },
+  isLoading: false,
 };

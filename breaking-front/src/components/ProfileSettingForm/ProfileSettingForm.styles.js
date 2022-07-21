@@ -1,5 +1,6 @@
-import Button from 'components/Button/Button';
 import styled from 'styled-components';
+import Button from 'components/Button/Button';
+import ReactLoading from 'react-loading';
 
 export const Form = styled.form`
   width: 600px;
@@ -7,13 +8,26 @@ export const Form = styled.form`
 `;
 
 export const ProfileImageContainer = styled.div`
-  position: relative;
   display: flex;
   height: 300px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
+`;
+
+export const ProfileImage = styled.div`
+  position: relative;
+  width: 200px;
+  height: 200px;
+`;
+
+export const Loading = styled(ReactLoading)`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 50;
 `;
 
 export const LabelText = styled.p`
@@ -27,8 +41,8 @@ export const ProfileImageInput = styled.input`
 
 export const XMarkIcon = styled.span`
   position: absolute;
-  top: 30px;
-  right: 30%;
+  top: 0;
+  right: 0;
   cursor: pointer;
 `;
 

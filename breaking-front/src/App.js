@@ -14,6 +14,7 @@ import Layout from 'components/Layout/Layout';
 import GoogleRedirect from 'pages/SocialLogin/Redirect/GoogleRedirect';
 import Profile from 'pages/Profile/Profile';
 import UserInformationProvider from 'providers/UserInformationProvider';
+import ProfileEdit from 'pages/ProfileEdit/ProfileEdit';
 
 function App() {
   const queryClient = new QueryClient({
@@ -43,6 +44,10 @@ function App() {
                   <Route
                     path={PAGE_PATH.PROFILE(':id')}
                     element={<Profile />}
+                  />
+                  <Route
+                    path={PAGE_PATH.PROFILE_EDIT}
+                    element={<ProfileEdit />}
                   />
                 </Routes>
               </Layout>

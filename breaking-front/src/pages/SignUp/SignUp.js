@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { postSignUp } from 'api/signUp';
 import { PAGE_PATH } from 'constants/path';
-// import MESSAGE from 'constants/message';
 import ProfileSettingForm from 'components/ProfileSettingForm/ProfileSettingForm';
 import useJWTValidate from 'hooks/queries/useJWTValidate';
 
