@@ -1,13 +1,13 @@
 import { postAccessCode, postSignInWithGoogle } from 'api/login';
 import { GOOGLE_PATH, PAGE_PATH } from 'constants/path';
-import { UserInformationContext } from 'providers/UserInformationProvider';
-import React, { useContext, useEffect } from 'react';
+import useJWTValidate from 'hooks/queries/useJWTValidate';
+import React, { useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 
 const GoogleRedirect = () => {
   const navigate = useNavigate();
-  const { setUserInfomation } = useContext(UserInformationContext);
+  const { refetch: JWTValidateRefetch } = useJWTValidate();
   const accessCode = new URL(window.location.href).searchParams.get('code');
 
   const SignInGoogle = useMutation(postSignInWithGoogle, {
@@ -16,7 +16,7 @@ const GoogleRedirect = () => {
       const jwtToken = res.headers.authorization;
       if (jwtToken) {
         localStorage.setItem('access_token', res.headers.authorization);
-        setUserInfomation(() => ({ ...res.data, isLogin: true }));
+        JWTValidateRefetch();
         navigate(PAGE_PATH.HOME);
       } else {
         navigate(PAGE_PATH.SIGNUP, { state: res.data });

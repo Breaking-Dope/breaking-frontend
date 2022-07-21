@@ -19,9 +19,9 @@ export const getProfileValidation = ({ queryKey }) => {
   });
 };
 
-export const postJWTvalidation = () => {
+export const getJWTvalidation = () => {
   return api({
-    method: 'post',
+    method: 'get',
     url: API_PATH.OAUTH2_VALIDATE_JWT,
   });
 };

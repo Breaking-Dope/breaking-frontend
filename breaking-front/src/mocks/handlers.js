@@ -65,7 +65,7 @@ export const handlers = [
     else return res(ctx.status(200));
   }),
 
-  rest.post(API_PATH.OAUTH2_VALIDATE_JWT, (req, res, ctx) => {
+  rest.get(API_PATH.OAUTH2_VALIDATE_JWT, (req, res, ctx) => {
     return res(
       ctx.json({
         userId: 123454,
