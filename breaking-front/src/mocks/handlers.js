@@ -2,13 +2,9 @@ import { API_PATH } from 'constants/path';
 import { rest } from 'msw';
 
 export const handlers = [
-  rest.get('https://test.api.com/test', (req, res, ctx) => {
-    return res(ctx.status(200));
-  }),
-
   rest.post(API_PATH.OAUTH2_SIGNUP, (req, res, ctx) => {
     console.log(req.body);
-    return res(ctx.status(200));
+    return res(ctx.set('Authorization', 'abcdefghijklmnop'), ctx.status(200));
   }),
 
   rest.get(
@@ -67,6 +63,18 @@ export const handlers = [
         ctx.json({ message: '이메일 형식이 잘못되었습니다.' })
       );
     else return res(ctx.status(200));
+  }),
+
+  rest.get(API_PATH.OAUTH2_VALIDATE_JWT, (req, res, ctx) => {
+    return res(
+      ctx.json({
+        userId: 123454,
+        profileImgURL: '',
+        nickname: '주기',
+        balance: 9999999999,
+      }),
+      ctx.status(200)
+    );
   }),
 
   rest.post(API_PATH.OAUTH2_SIGNIN_KAKAO, (req, res, ctx) => {

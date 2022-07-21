@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Input/Input';
 import Line from 'components/Line/Line';
@@ -11,17 +11,18 @@ import { ReactComponent as DownArrowIcon } from 'assets/svg/down-arrow.svg';
 import { ReactComponent as MoneyIcon } from 'assets/svg/money.svg';
 import { ReactComponent as SettingIcon } from 'assets/svg/setting.svg';
 import { ReactComponent as MyPageIcon } from 'assets/svg/mypage.svg';
+import { UserInformationContext } from 'providers/UserInformationProvider';
 
-export default function Header({ isLogin, loginButtonClick, ...props }) {
+export default function Header({ loginButtonClick, ...props }) {
   const [searchText, setSearchText] = useState('');
   const [isOpenToggle, setIsOpenToggle] = useState(false);
-
+  const { isLogin, profileImgURL, userId } = useContext(UserInformationContext);
   const onChange = (event) => {
     setSearchText(event.target.value);
   };
 
   const handleToggle = () => {
-    setIsOpenToggle((prev) => !prev);
+    setIsOpenToggle((pre) => !pre);
   };
 
   const handleSubmit = (event) => {
@@ -49,7 +50,7 @@ export default function Header({ isLogin, loginButtonClick, ...props }) {
             onBlur={handleToggle}
             tabIndex="0"
           >
-            <Style.MyProfileImage size="small" src="" />
+            <Style.MyProfileImage size="small" src={profileImgURL} />
             <DownArrowIcon />
           </Style.ProfileContent>
         ) : (
@@ -70,7 +71,7 @@ export default function Header({ isLogin, loginButtonClick, ...props }) {
                 blueLabel="입출금내역"
               />
               <Toggle.LabelLink
-                path={PAGE_PATH.MYPAGE}
+                path={PAGE_PATH.PROFILE(userId)}
                 icon={<MyPageIcon />}
                 label="마이페이지"
               />

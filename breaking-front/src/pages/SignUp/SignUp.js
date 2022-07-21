@@ -3,17 +3,22 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { postSignUp } from 'api/signUp';
 import { PAGE_PATH } from 'constants/path';
-import MESSAGE from 'constants/message';
 import ProfileSettingForm from 'components/ProfileSettingForm/ProfileSettingForm';
+import useJWTValidate from 'hooks/queries/useJWTValidate';
+import MESSAGE from 'constants/message';
 
 const SignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { refetch: JWTValidateRefetch } = useJWTValidate();
+  console.log(JWTValidateRefetch);
 
   const { mutate } = useMutation(postSignUp, {
     onSuccess: (res) => {
       const jwtToken = res.headers.authorization;
+      console.log(res);
       localStorage.setItem('access_token', jwtToken);
+      JWTValidateRefetch();
       alert('환영합니다.');
       navigate(PAGE_PATH.HOME);
     },
@@ -33,7 +38,7 @@ const SignUp = () => {
   return (
     <>
       <ProfileSettingForm
-        pageType="signUp"
+        pageType="signup"
         username={location.state?.username}
         mutate={mutate}
       />
