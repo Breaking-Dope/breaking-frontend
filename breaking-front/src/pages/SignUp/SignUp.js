@@ -37,7 +37,11 @@ const SignUp = () => {
 
   return (
     <>
-      <ProfileSettingForm username={location.state?.username} mutate={mutate} />
+      <ProfileSettingForm
+        pageType="signup"
+        username={location.state?.username}
+        mutate={mutate}
+      />
     </>
   );
 };
