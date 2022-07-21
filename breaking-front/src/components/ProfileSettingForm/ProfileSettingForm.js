@@ -132,9 +132,7 @@ export default function ProfileSettingForm({
     setForm(userDefaultData);
 
     userDefaultData.profileImgURL &&
-      setImageSrc(
-        PRODUCTION_BASE_URL + 'static' + userDefaultData.profileImgURL
-      );
+      setImageSrc(PRODUCTION_BASE_URL + userDefaultData.profileImgURL);
   }, [userDefaultData, pageType, setForm]);
 
   return (
