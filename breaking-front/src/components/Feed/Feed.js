@@ -48,17 +48,17 @@ export default function Feed({ feedData, userId, ...props }) {
 
   return (
     <Style.Feed {...props}>
-      {feedData?.thumbnailImgURL ? (
-        <Style.FeedImage
+      {feedData.thumbnailImgURL ? (
+        <Style.ThumbNailImage
           src={feedData.thumbnailImgURL}
           onClick={handleFeedClick}
         />
       ) : (
-        <Style.FeedDefaultImage onClick={handleFeedClick} />
+        <Style.ThumbnailDefaultImage onClick={handleFeedClick} />
       )}
       <Style.Content>
         <ProfileImage
-          src={feedData?.profileImgURL}
+          src={feedData.profileImgURL}
           size="medium"
           profileClick={handleProfileClick}
         />
@@ -69,7 +69,7 @@ export default function Feed({ feedData, userId, ...props }) {
             <LocationIcon />
             {feedData.region}
           </Style.Detail>
-          <Style.Detail>{feedData.createdDate}</Style.Detail>
+          <Style.Detail>{feedData.createdTime}</Style.Detail>
           {feedData.postType === 'EXCLUSIVE' && (
             <Button color="dark" size="small" disabled>
               단독
@@ -84,9 +84,7 @@ export default function Feed({ feedData, userId, ...props }) {
               판매중
             </Button>
           )}
-          <Style.Balance>
-            {feedData.balance.toLocaleString('ko-KR')} 원
-          </Style.Balance>
+          <Style.Price>{feedData.price.toLocaleString('ko-KR')} 원</Style.Price>
         </Style.Context>
 
         <Style.Icons>
@@ -128,5 +126,5 @@ export default function Feed({ feedData, userId, ...props }) {
 
 Feed.propTypes = {
   feedData: PropTypes.object.isRequired,
-  userId: PropTypes.number.isRequired,
+  userId: PropTypes.string.isRequired,
 };

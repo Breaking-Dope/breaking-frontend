@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfileSettingInput from 'components/ProfileSettingInput/ProfileSettingInput';
+import ProfileSettingInput from 'components/ProfileSettingForm/ProfileSettingInput';
 
 export default {
   title: 'components/ProfileSettingInput',

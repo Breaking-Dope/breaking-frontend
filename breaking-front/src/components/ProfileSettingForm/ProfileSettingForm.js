@@ -107,20 +107,6 @@ export default function ProfileSettingForm({
       role,
     };
 
-    // if (pageType === 'profileEdit') {
-    //   if (profileImg !== '') {
-    //     if (profileImg === userDefaultData.profileImgURL) {
-    //       const imageFile = await urlToFile(profileImg);
-    //       formData.append('profileImg', imageFile);
-    //     } else formData.append('profileImg', profileImg);
-    //   } else formData.append('profileImg', '');
-
-    //   formData.append('updateRequest', JSON.stringify(userData));
-    // } else if (pageType === 'signUp') {
-    //   userData.username = username;
-    //   formData.append('profileImg', profileImg);
-    //   formData.append('signUpRequest', JSON.stringify(userData));
-    // }
     if (
       pageType === 'profileEdit' &&
       profileImg === userDefaultData.profileImgURL
@@ -146,9 +132,7 @@ export default function ProfileSettingForm({
     setForm(userDefaultData);
 
     userDefaultData.profileImgURL &&
-      setImageSrc(
-        PRODUCTION_BASE_URL + 'static' + userDefaultData.profileImgURL
-      );
+      setImageSrc(PRODUCTION_BASE_URL + userDefaultData.profileImgURL);
   }, [userDefaultData, pageType, setForm]);
 
   return (

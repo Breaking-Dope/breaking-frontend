@@ -8,16 +8,17 @@ export const Feed = styled.div`
   filter: drop-shadow(2px 2px 2px ${({ theme }) => theme.gray[300]});
 `;
 
-export const FeedImage = styled.img`
+export const ThumbNailImage = styled.img`
   width: 100%;
   height: 300px;
+  background-color: ${({ theme }) => theme.gray[200]};
   cursor: pointer;
 `;
 
-export const FeedDefaultImage = styled(FeedImage).attrs({
+export const ThumbnailDefaultImage = styled(ThumbNailImage).attrs({
   src: `${logo}`,
 })`
-  background-color: ${({ theme }) => theme.gray[100]};
+  background-color: ${({ theme }) => theme.gray[200]};
 `;
 
 export const Content = styled.div`
@@ -48,7 +49,7 @@ export const Detail = styled.div`
   color: ${({ theme }) => theme.gray[800]};
 `;
 
-export const Balance = styled.p`
+export const Price = styled.p`
   display: inline;
   font-size: 12px;
   font-weight: bold;
