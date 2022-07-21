@@ -37,7 +37,7 @@ const ProfileFollowButton = ({ userId, isFollowing, isMyPage }) => {
 };
 
 ProfileFollowButton.propTypes = {
-  userId: PropTypes.string,
+  userId: PropTypes.number,
   isFollowing: PropTypes.bool,
   isMyPage: PropTypes.bool,
 };

@@ -15,7 +15,7 @@ const Template = (args) => {
     likeCount: 999,
     postType: 'EXCLUSIVE',
     isSold: false,
-    balance: 10000,
+    price: 10000,
     viewCount: 1000,
     userId: 123,
     profileImgURL: '',
