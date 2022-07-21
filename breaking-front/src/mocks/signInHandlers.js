@@ -1,7 +1,7 @@
 import { API_PATH } from 'constants/path';
 import { rest } from 'msw';
 
-export const signInHandler = [
+export const signInHandlers = [
   rest.get(API_PATH.OAUTH2_VALIDATE_JWT, (req, res, ctx) => {
     return res(
       ctx.json({
