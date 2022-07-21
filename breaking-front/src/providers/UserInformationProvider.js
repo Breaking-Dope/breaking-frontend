@@ -4,7 +4,7 @@ import PorpTypes from 'prop-types';
 export const UserInformationContext = React.createContext();
 
 const UserInformationProvider = ({ children }) => {
-  const [userInfomation, setUserInfomation] = useState({
+  const [userInformation, setUserInformation] = useState({
     userId: null,
     profileImgURL: '',
     nickname: '',
@@ -14,7 +14,7 @@ const UserInformationProvider = ({ children }) => {
 
   return (
     <UserInformationContext.Provider
-      value={{ ...userInfomation, setUserInfomation }}
+      value={{ ...userInformation, setUserInformation }}
     >
       {children}
     </UserInformationContext.Provider>

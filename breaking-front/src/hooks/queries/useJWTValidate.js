@@ -4,11 +4,11 @@ import { useContext } from 'react';
 import { useQuery } from 'react-query';
 
 const useJWTValidate = () => {
-  const { setUserInfomation } = useContext(UserInformationContext);
+  const { setUserInformation } = useContext(UserInformationContext);
   const { refetch } = useQuery(['jwtvalidate'], getJWTvalidation, {
     enabled: false,
     select: (data) => {
-      setUserInfomation({ ...data.data, isLogin: true });
+      setUserInformation({ ...data.data, isLogin: true });
     },
   });
   return { refetch };
