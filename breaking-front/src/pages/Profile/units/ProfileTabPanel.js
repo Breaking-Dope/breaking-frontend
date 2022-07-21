@@ -34,7 +34,7 @@ const ProfileTabPanel = ({ data, setOption, userId }) => {
 ProfileTabPanel.propTypes = {
   data: PropTypes.array,
   setOption: PropTypes.func,
-  userId: PropTypes.string,
+  userId: PropTypes.number,
 };
 
 export default ProfileTabPanel;

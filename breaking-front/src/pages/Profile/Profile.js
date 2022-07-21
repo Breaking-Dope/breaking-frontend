@@ -14,10 +14,12 @@ import ProfileFollowButton from './units/ProfileFollowButton';
 import ProfileTabPanel from './units/ProfileTabPanel';
 
 const Profile = () => {
-  const { id: userId } = useParams();
+  let { id: userId } = useParams();
+  userId = Number(userId);
+  // 숫자가 아니면 NaN으로 표시됨 예외처리 필요
 
   let isMyPage = false;
-  if (userId === '0') {
+  if (userId === 0) {
     isMyPage = true;
   }
   // 추후에 전역 state와 비교해서 내프로필 페이지인지 확인할 예정
