@@ -15,6 +15,7 @@ import GoogleRedirect from 'pages/SocialLogin/Redirect/GoogleRedirect';
 import Profile from 'pages/Profile/Profile';
 import UserInformationProvider from 'providers/UserInformationProvider';
 import ProfileEdit from 'pages/ProfileEdit/ProfileEdit';
+import MainFeed from 'pages/MainFeed/MainFeed';
 
 function App() {
   const queryClient = new QueryClient({
@@ -31,6 +32,7 @@ function App() {
             <UserInformationProvider>
               <Layout>
                 <Routes>
+                  <Route path={PAGE_PATH.HOME} element={<MainFeed />} />
                   <Route path={PAGE_PATH.LOGIN} element={<SocialLogin />} />
                   <Route
                     path={PAGE_PATH.KAKAO_LOGIN}
