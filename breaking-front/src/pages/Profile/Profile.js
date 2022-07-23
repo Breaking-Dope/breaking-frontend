@@ -95,7 +95,7 @@ const Profile = () => {
             deleteClick={() =>
               UnFollow(item.userId, {
                 onSuccess: () => {
-                  queryClient.invalidateQueries(`${modalTitle}`, `${userId}`);
+                  queryClient.invalidateQueries(modalTitle, userId);
                 },
               })
             }
