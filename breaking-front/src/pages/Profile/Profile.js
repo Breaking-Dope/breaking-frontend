@@ -5,18 +5,20 @@ import Line from 'components/Line/Line';
 import Modal from 'components/Modal/Modal';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import Tabs from 'components/Tabs/Tabs';
+import { PAGE_PATH } from 'constants/path';
 import useFollowList from 'hooks/queries/useFollowList';
 import useProfile from 'hooks/queries/useProfile';
 import useProfilePost from 'hooks/queries/useProfilePost';
 import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ProfileFollowButton from './units/ProfileFollowButton';
 import ProfileTabPanel from './units/ProfileTabPanel';
 
 const Profile = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   let { id: userId } = useParams();
   userId = Number(userId);
   // 숫자가 아니면 NaN으로 표시됨 예외처리 필요
@@ -86,6 +88,7 @@ const Profile = () => {
       <Modal isOpen={isModalOpen} closeClick={toggleModal} title={modalTitle}>
         {followListData?.data.map((item) => (
           <FollowCard
+            cardClick={() => navigate(PAGE_PATH.PROFILE(item.userId))}
             isPermission={isMyPage}
             profileData={item}
             key={item.userId}
