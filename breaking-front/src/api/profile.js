@@ -57,7 +57,7 @@ export const postFollow = (userId) => {
 
 export const postUnFollow = (userId) => {
   return api({
-    method: 'post',
+    method: 'delete',
     url: API_PATH.UNFOLLOW(userId),
   });
 };
