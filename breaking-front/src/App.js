@@ -15,6 +15,7 @@ import GoogleRedirect from 'pages/SocialLogin/Redirect/GoogleRedirect';
 import Profile from 'pages/Profile/Profile';
 import UserInformationProvider from 'providers/UserInformationProvider';
 import ProfileEdit from 'pages/ProfileEdit/ProfileEdit';
+import FeedDetail from 'pages/FeedDetail/FeedDetail';
 
 function App() {
   const queryClient = new QueryClient({
@@ -48,6 +49,10 @@ function App() {
                   <Route
                     path={PAGE_PATH.PROFILE_EDIT}
                     element={<ProfileEdit />}
+                  />
+                  <Route
+                    path={PAGE_PATH.FEED_DETAIL(':id')}
+                    element={<FeedDetail />}
                   />
                 </Routes>
               </Layout>
