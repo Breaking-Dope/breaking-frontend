@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import * as Style from 'components/Feed/Feed.styles';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import Button from 'components/Button/Button';
 import Toggle from 'components/Toggle/Toggle';
+import * as Style from 'components/Feed/Feed.styles';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
 import { ReactComponent as LikedIcon } from 'assets/svg/liked.svg';
@@ -14,7 +15,6 @@ import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
 import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as HideIcon } from 'assets/svg/hide.svg';
-import { useNavigate } from 'react-router-dom';
 
 export default function Feed({ feedData, userId, ...props }) {
   const navigate = useNavigate();
@@ -45,6 +45,12 @@ export default function Feed({ feedData, userId, ...props }) {
   const toggleETC = () => {
     setIsOpenToggle((pre) => !pre);
   };
+
+  useEffect(() => {
+    setLikeCount(feedData.likeCount);
+    setIsLiked(feedData.isLiked);
+    setIsBookmarked(feedData.isBookmarked);
+  }, [feedData]);
 
   return (
     <Style.Feed {...props}>
@@ -126,5 +132,5 @@ export default function Feed({ feedData, userId, ...props }) {
 
 Feed.propTypes = {
   feedData: PropTypes.object.isRequired,
-  userId: PropTypes.number.isRequired,
+  userId: PropTypes.number,
 };
