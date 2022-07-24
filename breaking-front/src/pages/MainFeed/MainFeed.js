@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import useMainFeedOption from 'hooks/queries/useMainFeedOption';
@@ -16,7 +16,7 @@ const MainFeed = () => {
   const [feedList, setFeedList] = useState([]);
   const [sort, setSort] = useState('chronological');
   const [option, setOption] = useState('all');
-  const { isLoading } = useMainFeedOption(5, 5, sort, option, setFeedList);
+  const { data, isLoading } = useMainFeedOption(5, 5, sort, option);
 
   const handleFilter = (sortType) => {
     if (sort !== sortType) {
@@ -33,6 +33,10 @@ const MainFeed = () => {
   const handleUploadClick = () => {
     navigate(PAGE_PATH.UPLOAD);
   };
+
+  useEffect(() => {
+    data && setFeedList((pre) => pre.concat(data?.data));
+  }, [data]);
 
   return (
     <Style.MainFeed>
