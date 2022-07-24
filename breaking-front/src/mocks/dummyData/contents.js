@@ -13,7 +13,7 @@ export const NORMAL_CONTENT = {
   thumbnailImgURL:
     'https://cdn.pixabay.com/photo/2022/04/19/09/08/flowers-7142409_960_720.jpg',
   likeCount: 3,
-  postType: 'charge',
+  postType: 'charged',
   isSold: false,
   price: 10000,
   viewCount: 1000,
@@ -50,7 +50,7 @@ export const EMPTY_PICTURE_CONTENT = {
   region: '서울시',
   thumbnailImgURL: '',
   likeCount: 0,
-  postType: 'charge',
+  postType: 'charged',
   isSold: false,
   price: 10000,
   viewCount: 1000,
