@@ -1,19 +1,24 @@
 /* eslint-disable no-unused-vars */
+import { postFollow, postUnFollow } from 'api/profile';
 import FollowCard from 'components/FollowCard/FollowCard';
 import Line from 'components/Line/Line';
 import Modal from 'components/Modal/Modal';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import Tabs from 'components/Tabs/Tabs';
+import { PAGE_PATH } from 'constants/path';
 import useFollowList from 'hooks/queries/useFollowList';
 import useProfile from 'hooks/queries/useProfile';
 import useProfilePost from 'hooks/queries/useProfilePost';
 import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
+import { useNavigate, useParams } from 'react-router-dom';
 import ProfileFollowButton from './units/ProfileFollowButton';
 import ProfileTabPanel from './units/ProfileTabPanel';
 
 const Profile = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   let { id: userId } = useParams();
   userId = Number(userId);
   // 숫자가 아니면 NaN으로 표시됨 예외처리 필요
@@ -32,6 +37,9 @@ const Profile = () => {
   const [writtenOption, setWrittenOption] = useState('all');
   const [boughtOption, setBoughtOption] = useState('all');
   const [bookmarkedOption, setBookmarkedOption] = useState('all');
+
+  const { mutate: UnFollow } = useMutation(postUnFollow);
+  const { mutate: Follow } = useMutation(postFollow);
 
   const { data: writtenData, isLoading: writtenLoading } = useProfilePost(
     userId,
@@ -80,9 +88,17 @@ const Profile = () => {
       <Modal isOpen={isModalOpen} closeClick={toggleModal} title={modalTitle}>
         {followListData?.data.map((item) => (
           <FollowCard
+            cardClick={() => navigate(PAGE_PATH.PROFILE(item.userId))}
             isPermission={isMyPage}
             profileData={item}
             key={item.userId}
+            deleteClick={() =>
+              UnFollow(item.userId, {
+                onSuccess: () => {
+                  queryClient.invalidateQueries(modalTitle, userId);
+                },
+              })
+            }
           ></FollowCard>
         ))}
       </Modal>
@@ -95,6 +111,8 @@ const Profile = () => {
               userId={userId}
               isFollowing={profileData?.data.isFollowing}
               isMyPage={isMyPage}
+              UnFollow={UnFollow}
+              Follow={Follow}
             />
           </Style.Title>
           <Style.StatusMessage>
