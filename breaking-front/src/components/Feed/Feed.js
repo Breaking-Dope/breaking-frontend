@@ -132,5 +132,5 @@ export default function Feed({ feedData, userId, ...props }) {
 
 Feed.propTypes = {
   feedData: PropTypes.object.isRequired,
-  userId: PropTypes.number.isRequired,
+  userId: PropTypes.number,
 };
