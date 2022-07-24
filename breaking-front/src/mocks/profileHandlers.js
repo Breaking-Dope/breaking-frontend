@@ -1,389 +1,130 @@
 import { API_PATH } from 'constants/path';
 import { rest } from 'msw';
+import {
+  EMPTY_PICTURE_CONTENT,
+  EXCLUSIVE_CONTENT,
+  NORMAL_CONTENT,
+  SOLDOUT_CONTENT,
+} from 'mocks/dummyData/contents';
+import {
+  FOLLWOING_USER,
+  NORMAL_USER,
+  NO_FOLLOW_USER,
+  NO_POSTCOUNT_USER,
+  NO_PROFILEIMGURL_USER,
+  NO_STATUSMSG_USER,
+} from 'mocks/dummyData/users';
+
+const writtenContents = [
+  NORMAL_CONTENT,
+  EXCLUSIVE_CONTENT,
+  NORMAL_CONTENT,
+  EMPTY_PICTURE_CONTENT,
+  NORMAL_CONTENT,
+  SOLDOUT_CONTENT,
+  SOLDOUT_CONTENT,
+];
+
+const boughtContents = [
+  EXCLUSIVE_CONTENT,
+  SOLDOUT_CONTENT,
+  SOLDOUT_CONTENT,
+  SOLDOUT_CONTENT,
+  SOLDOUT_CONTENT,
+];
+
+const bookmarkedContents = [
+  NORMAL_CONTENT,
+  NORMAL_CONTENT,
+  EMPTY_PICTURE_CONTENT,
+  NORMAL_CONTENT,
+  NORMAL_CONTENT,
+  NORMAL_CONTENT,
+];
+
+const followerList = [
+  NORMAL_USER,
+  NO_STATUSMSG_USER,
+  NO_PROFILEIMGURL_USER,
+  NO_POSTCOUNT_USER,
+  NO_FOLLOW_USER,
+  FOLLWOING_USER,
+];
+
+const followingList = [
+  NORMAL_USER,
+  NO_STATUSMSG_USER,
+  NO_PROFILEIMGURL_USER,
+  NO_POSTCOUNT_USER,
+  NO_FOLLOW_USER,
+  FOLLWOING_USER,
+  NORMAL_USER,
+  NORMAL_USER,
+  NORMAL_USER,
+  NORMAL_USER,
+  NORMAL_USER,
+  NORMAL_USER,
+  NORMAL_USER,
+  NORMAL_USER,
+  NORMAL_USER,
+  NORMAL_USER,
+];
+
+const userList = [
+  NORMAL_USER,
+  NO_STATUSMSG_USER,
+  NO_PROFILEIMGURL_USER,
+  NO_POSTCOUNT_USER,
+  NO_FOLLOW_USER,
+  FOLLWOING_USER,
+];
 
 export const profileHandlers = [
-  rest.get(API_PATH.PROFILE_WRITTEN(0, 'all'), (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json([
-        {
-          postId: '1',
-          title: '~~~사건',
-          region: '중구',
-          thumbnailImgURL:
-            'https://cdn.pixabay.com/photo/2022/04/29/17/48/lofoten-7164179_960_720.jpg',
-          likeCount: 999,
-          postType: 'EXCLUSIVE',
-          isSold: false,
-          price: 10000,
-          viewCount: 1000,
-          userId: 123,
-          profileImgURL: '',
-          realName: '가나다',
-          isLiked: false,
-          isBookmarked: false,
-          createdTime: new Date(),
-        },
-        {
-          postId: '2',
-          title: '~~~사건',
-          region: '중구',
-          thumbnailImgURL: '',
-          likeCount: 999,
-          postType: 'EXCLUSIVE',
-          isSold: false,
-          price: 10000,
-          viewCount: 1000,
-          userId: 123,
-          profileImgURL: '',
-          realName: '가나다',
-          isLiked: false,
-          isBookmarked: false,
-          createdTime: new Date(),
-        },
-      ])
-    );
+  rest.get(API_PATH.PROFILE_WRITTEN('*', 'all'), (req, res, ctx) => {
+    const soldOption = req.url.searchParams.get('sold-option');
+    const data = writtenContents.filter((item) => {
+      if (soldOption === 'unsold') return !item.isSold;
+      else if (soldOption === 'sold') return item.isSold;
+      else return item;
+    });
+    return res(ctx.status(200), ctx.json(data));
   }),
 
-  rest.get(API_PATH.PROFILE_BOUGHT(0, 'all'), (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json([
-        {
-          postId: '3',
-          title: '제목이다',
-          region: '중구',
-          thumbnailImgURL: '',
-          likeCount: 999,
-          postType: 'EXCLUSIVE',
-          isSold: false,
-          price: 10000,
-          viewCount: 1000,
-          userId: 123,
-          profileImgURL: '',
-          realName: '가나다',
-          isLiked: false,
-          isBookmarked: false,
-          createdTime: new Date(),
-        },
-        {
-          postId: '4',
-          title: '~~~다른제목',
-          region: '중구',
-          thumbnailImgURL: '',
-          likeCount: 999,
-          postType: 'EXCLUSIVE',
-          isSold: false,
-          price: 10000,
-          viewCount: 1000,
-          userId: 123,
-          profileImgURL: '',
-          realName: '가나다',
-          isLiked: false,
-          isBookmarked: false,
-          createdTime: new Date(),
-        },
-      ])
-    );
+  rest.get(API_PATH.PROFILE_BOUGHT('*', 'all'), (req, res, ctx) => {
+    const soldOption = req.url.searchParams.get('sold-option');
+    const data = boughtContents.filter((item) => {
+      if (soldOption === 'unsold') return !item.isSold;
+      else if (soldOption === 'sold') return item.isSold;
+      else return item;
+    });
+    return res(ctx.status(200), ctx.json(data));
   }),
 
-  rest.get(API_PATH.PROFILE_BOOKMARKED(0, 'all'), (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json([
-        {
-          postId: '6',
-          title: '~~~사건',
-          region: '중구',
-          thumbnailImgURL: '',
-          likeCount: 999,
-          postType: 'EXCLUSIVE',
-          isSold: false,
-          price: 10000,
-          viewCount: 1000,
-          userId: 123,
-          profileImgURL: '',
-          realName: '가나다',
-          isLiked: false,
-          isBookmarked: false,
-          createdTime: new Date(),
-        },
-        {
-          postId: '7',
-          title: '~~~사건',
-          region: '중구',
-          thumbnailImgURL: '',
-          likeCount: 999,
-          postType: 'EXCLUSIVE',
-          isSold: false,
-          price: 10000,
-          viewCount: 1000,
-          userId: 123,
-          profileImgURL: '',
-          realName: '가나다',
-          isLiked: false,
-          isBookmarked: false,
-          createdTime: new Date(),
-        },
-        {
-          postId: '8',
-          title: '~~~사건',
-          region: '중구',
-          thumbnailImgURL: '',
-          likeCount: 999,
-          postType: 'EXCLUSIVE',
-          isSold: false,
-          price: 10000,
-          viewCount: 1000,
-          userId: 123,
-          profileImgURL: '',
-          realName: '가나다',
-          isLiked: false,
-          isBookmarked: false,
-          createdTime: new Date(),
-        },
-        {
-          postId: '9',
-          title: '~~~사건',
-          region: '중구',
-          thumbnailImgURL: '',
-          likeCount: 999,
-          postType: 'EXCLUSIVE',
-          isSold: false,
-          price: 10000,
-          viewCount: 1000,
-          userId: 123,
-          profileImgURL: '',
-          realName: '가나다',
-          isLiked: false,
-          isBookmarked: false,
-          createdTime: new Date(),
-        },
-      ])
-    );
+  rest.get(API_PATH.PROFILE_BOOKMARKED('*', 'all'), (req, res, ctx) => {
+    const soldOption = req.url.searchParams.get('sold-option');
+    const data = bookmarkedContents.filter((item) => {
+      if (soldOption === 'unsold') return !item.isSold;
+      else if (soldOption === 'sold') return item.isSold;
+      else return item;
+    });
+    return res(ctx.status(200), ctx.json(data));
   }),
 
   rest.get(API_PATH.PROFILE_DATA(0), (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json({
-        userId: 0,
-        profileImgURL: '',
-        nickname: '만두피',
-        email: '',
-        realName: '',
-        role: '',
-        statusMsg: '안녕하세요',
-        followerCount: 30,
-        followingCount: 30,
-        postCount: 5,
-        isFollowing: false,
-      })
-    );
+    return res(ctx.status(200), ctx.json(NORMAL_USER));
   }),
 
-  rest.get(API_PATH.PROFILE_FOLLOWERS(0), (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json([
-        {
-          userId: '32',
-          nickname: '주기',
-          statusMsg: '안녕하세요',
-          profileImgURL: '',
-        },
-        {
-          userId: '23',
-          nickname: '자기',
-          statusMsg: '안녕하세요',
-          profileImgURL: '',
-        },
-        {
-          userId: '65',
-          nickname: '저기',
-          statusMsg: '안녕하세요',
-          profileImgURL: '',
-        },
-      ])
-    );
+  rest.get(API_PATH.PROFILE_FOLLOWERS('*'), (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(followerList));
   }),
-  rest.get(API_PATH.PROFILE_FOLLOWINGS(0), (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json([
-        {
-          userId: '32',
-          nickname: '만두피',
-          statusMsg: '안녕하세요',
-          profileImgURL: '',
-        },
-        {
-          userId: '23',
-          nickname: '천두피',
-          statusMsg: '안녕하세요',
-          profileImgURL: '',
-        },
-        {
-          userId: '65',
-          nickname: '백두피',
-          statusMsg: '안녕하세요',
-          profileImgURL: '',
-        },
-      ])
-    );
+  rest.get(API_PATH.PROFILE_FOLLOWINGS('*'), (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(followingList));
   }),
 
-  rest.get(API_PATH.PROFILE_WRITTEN(1, 'all'), (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json([
-        {
-          postId: '1',
-          title: '~~~사건',
-          region: '중구',
-          thumbnailImgURL: '',
-          likeCount: 999,
-          postType: 'EXCLUSIVE',
-          isSold: false,
-          price: 10000,
-          viewCount: 1000,
-          userId: 123,
-          profileImgURL: '',
-          realName: '가나다',
-          isLiked: false,
-          isBookmarked: false,
-          createdTime: new Date(),
-        },
-        {
-          postId: '2',
-          title: '~~~사건',
-          region: '중구',
-          thumbnailImgURL: '',
-          likeCount: 999,
-          postType: 'EXCLUSIVE',
-          isSold: false,
-          price: 10000,
-          viewCount: 1000,
-          userId: 123,
-          profileImgURL: '',
-          realName: '가나다',
-          isLiked: false,
-          isBookmarked: false,
-          createdTime: new Date(),
-        },
-      ])
-    );
-  }),
-  rest.get(API_PATH.PROFILE_WRITTEN(1, 'sold'), (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json([
-        {
-          postId: '1',
-          title: '팔린글',
-          region: '중구',
-          thumbnailImgURL: '',
-          likeCount: 999,
-          postType: 'EXCLUSIVE',
-          isSold: false,
-          price: 10000,
-          viewCount: 1000,
-          userId: 123,
-          profileImgURL: '',
-          realName: '가나다',
-          isLiked: false,
-          isBookmarked: false,
-          createdTime: new Date(),
-        },
-        {
-          postId: '2',
-          title: '~~~팔렸어요',
-          region: '중구',
-          thumbnailImgURL: '',
-          likeCount: 999,
-          postType: 'EXCLUSIVE',
-          isSold: false,
-          price: 10000,
-          viewCount: 1000,
-          userId: 123,
-          profileImgURL: '',
-          realName: '가나다',
-          isLiked: false,
-          isBookmarked: false,
-          createdTime: new Date(),
-        },
-      ])
-    );
-  }),
-
-  rest.get(API_PATH.PROFILE_DATA(1), (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json({
-        userId: 0,
-        profileImgURL: '',
-        nickname: '만두피',
-        email: '',
-        realName: '',
-        role: '',
-        statusMsg: '안녕하세요',
-        followerCount: 30,
-        followingCount: 30,
-        postCount: 5,
-        isFollowing: false,
-      })
-    );
-  }),
-
-  rest.get(API_PATH.PROFILE_FOLLOWERS(1), (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json([
-        {
-          userId: '32',
-          nickname: '주기',
-          statusMsg: '안녕하세요',
-          profileImgURL: '',
-        },
-        {
-          userId: '23',
-          nickname: '자기',
-          statusMsg: '안녕하세요',
-          profileImgURL: '',
-        },
-        {
-          userId: '65',
-          nickname: '저기',
-          statusMsg: '안녕하세요',
-          profileImgURL: '',
-        },
-      ])
-    );
-  }),
-  rest.get(API_PATH.PROFILE_FOLLOWINGS(1), (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json([
-        {
-          userId: '32',
-          nickname: '만두피',
-          statusMsg: '안녕하세요',
-          profileImgURL: '',
-        },
-        {
-          userId: '23',
-          nickname: '천두피',
-          statusMsg: '안녕하세요',
-          profileImgURL: '',
-        },
-        {
-          userId: '65',
-          nickname: '백두피',
-          statusMsg: '안녕하세요',
-          profileImgURL: '',
-        },
-      ])
-    );
+  rest.get(API_PATH.PROFILE_DATA(':userId'), (req, res, ctx) => {
+    const { userId } = req.params;
+    const user = userList.filter((item) => item.userId === Number(userId));
+    return res(ctx.status(200), ctx.json(...user));
   }),
 
   rest.post(API_PATH.FOLLOW(1), (req, res, ctx) => {

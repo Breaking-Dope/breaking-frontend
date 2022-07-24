@@ -1,17 +1,10 @@
 import { API_PATH } from 'constants/path';
 import { rest } from 'msw';
+import { NORMAL_USER } from 'mocks/dummyData/users';
 
 export const signInHandlers = [
   rest.get(API_PATH.OAUTH2_VALIDATE_JWT, (req, res, ctx) => {
-    return res(
-      ctx.json({
-        userId: 123454,
-        profileImgURL: '',
-        nickname: '주기',
-        balance: 9999999999,
-      }),
-      ctx.status(200)
-    );
+    return res(ctx.json(NORMAL_USER), ctx.status(200));
   }),
 
   rest.post(API_PATH.OAUTH2_SIGNIN_KAKAO, (req, res, ctx) => {
@@ -32,11 +25,8 @@ export const signInHandlers = [
   rest.post(API_PATH.OAUTH2_SIGNIN_GOOGLE, (req, res, ctx) => {
     return res(
       ctx.status(200),
-      ctx.set('Authorization', 'Bearer abcdefghijklmnop'),
-      ctx.json({
-        profileImgURL: 'URL',
-        nickname: '만두피',
-      })
+      ctx.set('Authorization', 'a2bcd412ed1!n32op'),
+      ctx.json(NORMAL_USER)
     );
   }),
 ];
