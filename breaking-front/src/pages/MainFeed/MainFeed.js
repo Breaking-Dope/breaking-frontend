@@ -35,7 +35,7 @@ const MainFeed = () => {
   };
 
   useEffect(() => {
-    data && setFeedList((pre) => pre.concat(data?.data));
+    data && setFeedList((pre) => [...pre, ...data.data]);
   }, [data]);
 
   return (
