@@ -23,10 +23,6 @@ const Profile = () => {
   let { id: userId } = useParams();
 
   const isMyPage = useCheckMyPage(userId);
-
-  // 팔로우 리스트에서 삭제버튼 눌렀을때 api 실행 되어야함
-  // msw search params를 이용해서 filter 결과물에 맞춰서 반환해주어야함
-
   const { profileData, isLoading } = useProfile(userId);
 
   const [writtenOption, setWrittenOption] = useState('all');
@@ -72,12 +68,12 @@ const Profile = () => {
     setModalTitle('팔로잉');
     toggleModal();
   };
+
   const followerClick = () => {
     setModalTitle('팔로워');
     toggleModal();
   };
-  console.log(followListLoading);
-  console.log(writtenLoading, boughtLoading, bookmarkedLoading);
+
   return (
     <>
       <Modal isOpen={isModalOpen} closeClick={toggleModal} title={modalTitle}>
@@ -85,6 +81,7 @@ const Profile = () => {
           <FollowCard
             cardClick={() => {
               toggleModal();
+              setModalTitle('');
               navigate(PAGE_PATH.PROFILE(item.userId));
             }}
             isPermission={isMyPage}
