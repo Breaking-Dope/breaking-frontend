@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import MediaModal from 'pages/FeedDetail/units/MediaModal';

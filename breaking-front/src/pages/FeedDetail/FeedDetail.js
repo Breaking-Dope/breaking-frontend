@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useContext, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UserInformationContext } from 'providers/UserInformationProvider';
