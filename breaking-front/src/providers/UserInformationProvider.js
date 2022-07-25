@@ -15,7 +15,7 @@ const UserInformationProvider = ({ children }) => {
   });
 
   const { data, isSuccess, isError } = useQuery(
-    ['initalizeVaildUser'],
+    ['initalizeValidUser'],
     getJWTvalidation,
     { retry: 0 }
   );
