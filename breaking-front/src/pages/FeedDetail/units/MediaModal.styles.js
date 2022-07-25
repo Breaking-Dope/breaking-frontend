@@ -13,11 +13,12 @@ export const MediaModalOverlay = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 110;
+  cursor: zoom-out;
 `;
 
 export const MediaModal = styled.div`
   position: relative;
-  width: 800px;
+  width: 80vh;
 `;
 
 export const CloseButton = styled.span`
