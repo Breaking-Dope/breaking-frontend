@@ -3,7 +3,7 @@ import { useContext } from 'react';
 
 const useCheckMyPage = (id) => {
   const { userId } = useContext(UserInformationContext);
-  return userId === id;
+  return userId === Number(id);
 };
 
 export default useCheckMyPage;
