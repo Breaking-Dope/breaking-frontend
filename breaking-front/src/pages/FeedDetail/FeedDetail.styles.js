@@ -17,7 +17,6 @@ export const ContentHeader = styled.div`
   display: flex;
   align-items: center;
   min-height: 160px;
-  margin-top: 20px;
   padding: 20px;
 `;
 

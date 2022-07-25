@@ -5,6 +5,8 @@ import MediaModal from 'pages/FeedDetail/units/MediaModal';
 import * as Style from 'pages/FeedDetail/units/Carousel.styles';
 import { ReactComponent as LeftIcon } from 'assets/svg/carousel-left.svg';
 import { ReactComponent as RightIcon } from 'assets/svg/carousel-right.svg';
+import { ReactComponent as SlideDotIcon } from 'assets/svg/slide-dot.svg';
+import { ReactComponent as SildeDotFillIcon } from 'assets/svg/slide-dot-fill.svg';
 
 const Carousel = ({ mediaList }) => {
   const mediaCount = mediaList.length;
@@ -50,19 +52,33 @@ const Carousel = ({ mediaList }) => {
                 key={'media-' + index}
               />
             ) : (
-              <Style.Video controls key={'media-' + index}>
+              <Style.Video key={'media-' + index} controls>
                 <source src={media} type="video/mp4" />
               </Style.Video>
             )
           )}
         </Style.SliderContainer>
-        <Style.LeftIcon>
-          <LeftIcon onClick={prevSlide} />
-        </Style.LeftIcon>
-        <Style.RightIcon>
-          <RightIcon onClick={nextSlide} />
-        </Style.RightIcon>
+        {currentSlide !== 0 && (
+          <Style.LeftIcon>
+            <LeftIcon onClick={prevSlide} />
+          </Style.LeftIcon>
+        )}
+        {currentSlide !== mediaCount - 1 && (
+          <Style.RightIcon>
+            <RightIcon onClick={nextSlide} />
+          </Style.RightIcon>
+        )}
       </Style.CarouselContainer>
+      <Style.SlideDotContainer>
+        {mediaList.map((media, index) => (
+          <Style.SlideDot
+            key={'dot-' + index}
+            onClick={() => setCurrentSlide(index)}
+          >
+            {currentSlide === index ? <SildeDotFillIcon /> : <SlideDotIcon />}
+          </Style.SlideDot>
+        ))}
+      </Style.SlideDotContainer>
     </>
   );
 };

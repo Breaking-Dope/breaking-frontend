@@ -26,6 +26,15 @@ export const Image = styled.img`
   cursor: zoom-in;
 `;
 
+export const SlideDotContainer = styled.ul`
+  display: flex;
+  justify-content: center;
+`;
+
+export const SlideDot = styled.li`
+  cursor: pointer;
+`;
+
 export const LeftIcon = styled.span`
   position: absolute;
   transform: translateY(-50%);
