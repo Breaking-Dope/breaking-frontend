@@ -9,6 +9,7 @@ import { PAGE_PATH } from 'constants/path';
 import useFollowList from 'hooks/queries/useFollowList';
 import useProfile from 'hooks/queries/useProfile';
 import useProfilePost from 'hooks/queries/useProfilePost';
+import useCheckMyPage from 'hooks/useCheckMyPage';
 import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
@@ -20,14 +21,8 @@ const Profile = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   let { id: userId } = useParams();
-  userId = Number(userId);
-  // 숫자가 아니면 NaN으로 표시됨 예외처리 필요
 
-  let isMyPage = false;
-  if (userId === 0) {
-    isMyPage = true;
-  }
-  // 추후에 전역 state와 비교해서 내프로필 페이지인지 확인할 예정
+  const isMyPage = useCheckMyPage(Number(userId));
 
   // 팔로우 리스트에서 삭제버튼 눌렀을때 api 실행 되어야함
   // msw search params를 이용해서 filter 결과물에 맞춰서 반환해주어야함
