@@ -11,7 +11,7 @@ const UserInformationProvider = ({ children }) => {
     userId: null,
     profileImgURL: '',
     nickname: '',
-    price: null,
+    balance: null,
   });
 
   const { data, isSuccess, isError } = useQuery(
