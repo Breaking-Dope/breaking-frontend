@@ -22,7 +22,7 @@ const Profile = () => {
   const navigate = useNavigate();
   let { id: userId } = useParams();
 
-  const isMyPage = useCheckMyPage(Number(userId));
+  const isMyPage = useCheckMyPage(userId);
 
   // 팔로우 리스트에서 삭제버튼 눌렀을때 api 실행 되어야함
   // msw search params를 이용해서 filter 결과물에 맞춰서 반환해주어야함
@@ -83,7 +83,10 @@ const Profile = () => {
       <Modal isOpen={isModalOpen} closeClick={toggleModal} title={modalTitle}>
         {followListData?.data.map((item) => (
           <FollowCard
-            cardClick={() => navigate(PAGE_PATH.PROFILE(item.userId))}
+            cardClick={() => {
+              toggleModal();
+              navigate(PAGE_PATH.PROFILE(item.userId));
+            }}
             isPermission={isMyPage}
             profileData={item}
             key={item.userId}
