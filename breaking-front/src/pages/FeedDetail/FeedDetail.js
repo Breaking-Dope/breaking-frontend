@@ -128,16 +128,16 @@ const FeedDetail = () => {
   const [isLiked, setIsLiked] = useState(dummyData.isLiked);
   const [likeCount, setLikeCount] = useState(dummyData.likeCount);
 
-  const handleLiked = () => {
+  const toggleLiked = () => {
     setLikeCount((pre) => (isLiked ? pre - 1 : pre + 1));
     setIsLiked((pre) => !pre);
   };
 
-  const handleBookmarked = () => {
+  const toggleBookmarked = () => {
     setIsBookmarked((pre) => !pre);
   };
 
-  const handleContentToggle = () => {
+  const toggleComment = () => {
     setIsContentToggle((pre) => !pre);
   };
 
@@ -201,7 +201,7 @@ const FeedDetail = () => {
         </Style.HashtagContainer>
         <Style.ContentFooter>
           <Style.ContentStatus>
-            <label onClick={handleLiked}>
+            <label onClick={toggleLiked}>
               {isLiked ? <LikedIcon /> : <LikeIcon />}
               {likeCount}
             </label>
@@ -210,7 +210,7 @@ const FeedDetail = () => {
               {dummyData.comment.count}
             </label>
           </Style.ContentStatus>
-          <ETCIcon onClick={handleContentToggle} />
+          <ETCIcon onClick={toggleComment} />
           <Style.ContentToggle>
             {isContentToggle && (
               <Toggle width="100px">
@@ -228,7 +228,7 @@ const FeedDetail = () => {
                   path={PAGE_PATH.FEED_DETAIL(postId)}
                   icon={isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />}
                   label="북마크"
-                  onClick={handleBookmarked}
+                  onClick={toggleBookmarked}
                 />
                 <Toggle.LabelLink
                   path={PAGE_PATH.FEED_DETAIL(postId)}
