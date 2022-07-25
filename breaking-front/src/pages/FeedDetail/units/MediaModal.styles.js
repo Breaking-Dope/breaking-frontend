@@ -7,12 +7,12 @@ export const MediaModalOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 110;
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.opacityBlack};
   justify-content: center;
   align-items: center;
-  z-index: 110;
   cursor: zoom-out;
 `;
 

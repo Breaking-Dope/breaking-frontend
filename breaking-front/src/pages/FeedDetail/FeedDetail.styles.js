@@ -15,9 +15,9 @@ export const BackIconContainer = styled.div`
 
 export const ContentHeader = styled.div`
   display: flex;
-  align-items: center;
   min-height: 160px;
   padding: 20px;
+  align-items: center;
 `;
 
 export const Context = styled.div`
@@ -91,9 +91,9 @@ export const Hashtag = styled.span`
 export const ContentFooter = styled.div`
   position: relative;
   display: flex;
-  justify-content: space-between;
   padding: 0px 10px;
   margin-top: 20px;
+  justify-content: space-between;
   svg {
     cursor: pointer;
   }
@@ -103,9 +103,9 @@ export const ContentStatus = styled.div`
   display: flex;
   label {
     display: flex;
-    align-items: center;
     margin-right: 10px;
     font-size: 12px;
+    align-items: center;
   }
   svg {
     margin-right: 5px;
@@ -123,6 +123,6 @@ export const Comments = styled.div`
 `;
 
 export const Reply = styled.div`
-  width: 750px;
   float: right;
+  width: 750px;
 `;

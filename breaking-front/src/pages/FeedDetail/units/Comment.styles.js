@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 export const Comment = styled.div`
   display: flex;
-  align-items: center;
   width: 100%;
   margin-bottom: 20px;
   padding: 10px;
-  background-color: ${({ theme }) => theme.gray[50]};
   border-radius: 10px;
+  background-color: ${({ theme }) => theme.gray[50]};
+  align-items: center;
 `;
 
 export const ContentContainer = styled.div`
@@ -28,7 +28,6 @@ export const Status = styled.div`
   display: flex;
   font-size: 12px;
   align-items: center;
-
   label {
     display: flex;
     align-items: center;
@@ -42,8 +41,8 @@ export const Status = styled.div`
 export const CommentFooter = styled.div`
   position: relative;
   display: flex;
-  justify-content: space-between;
   margin-top: 20px;
+  justify-content: space-between;
   svg,
   span {
     cursor: pointer;
@@ -57,6 +56,6 @@ export const CommentToggle = styled.div`
 `;
 
 export const AddComment = styled.div`
-  width: 750px;
   float: right;
+  width: 750px;
 `;
