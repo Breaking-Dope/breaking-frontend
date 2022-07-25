@@ -3,8 +3,11 @@ import Filter from 'components/Filter/Filter';
 import * as Style from 'pages/Profile/units/ProfileTabPanel.styles';
 import Feed from 'components/Feed/Feed';
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import { UserInformationContext } from 'providers/UserInformationProvider';
 
-const ProfileTabPanel = ({ data, setOption, userId }) => {
+const ProfileTabPanel = ({ data, setOption }) => {
+  const { userId } = useContext(UserInformationContext);
   return (
     <>
       <Style.PanelContainer>
