@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Style from 'pages/FeedDetail/units/MediaModal.styles';
+import * as Style from 'pages/Post/units/MediaModal.styles';
 
 const MediaModal = ({ isOpen, closeClick, media }) => {
   return (

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import * as Style from 'pages/FeedDetail/units/Carousel.styles';
+import * as Style from 'pages/Post/units/Carousel.styles';
 import { ReactComponent as LeftIcon } from 'assets/svg/carousel-left.svg';
 import { ReactComponent as RightIcon } from 'assets/svg/carousel-right.svg';
 import { ReactComponent as SlideDotIcon } from 'assets/svg/slide-dot.svg';

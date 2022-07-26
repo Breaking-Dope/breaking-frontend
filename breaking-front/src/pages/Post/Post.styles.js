@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const FeedDetail = styled.div`
+export const Post = styled.div`
   position: relative;
   width: 800px;
   margin: 0 auto;

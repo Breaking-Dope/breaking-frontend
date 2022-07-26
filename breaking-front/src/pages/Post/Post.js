@@ -6,10 +6,10 @@ import Toggle from 'components/Toggle/Toggle';
 import Line from 'components/Line/Line';
 import Button from 'components/Button/Button';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import Carousel from 'pages/FeedDetail/units/Carousel';
-import Comment from 'pages/FeedDetail/units/Comment';
-import CommentForm from 'pages/FeedDetail/units/CommentForm';
-import * as Style from 'pages/FeedDetail/FeedDetail.styles';
+import Carousel from 'pages/Post/units/Carousel';
+import Comment from 'pages/Post/units/Comment';
+import CommentForm from 'pages/Post/units/CommentForm';
+import * as Style from 'pages/Post/Post.styles';
 import { ReactComponent as BackIcon } from 'assets/svg/back.svg';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
@@ -22,7 +22,7 @@ import { ReactComponent as BookmarkIcon } from 'assets/svg/small-bookmark.svg';
 import { ReactComponent as BookmarkedIcon } from 'assets/svg/small-bookmarked.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 
-const FeedDetail = () => {
+const Post = () => {
   const navigate = useNavigate();
   let { id: postId } = useParams();
   const { userId, profileImgURL } = useContext(UserInformationContext);
@@ -121,7 +121,7 @@ const FeedDetail = () => {
   };
 
   return (
-    <Style.FeedDetail>
+    <Style.Post>
       <Style.BackIconContainer onClick={() => navigate(PAGE_PATH.HOME)}>
         <BackIcon />
       </Style.BackIconContainer>
@@ -226,8 +226,8 @@ const FeedDetail = () => {
           <Comment comment={comment} type="comment" key={comment.commentId} />
         ))}
       </Style.Comments>
-    </Style.FeedDetail>
+    </Style.Post>
   );
 };
 
-export default FeedDetail;
+export default Post;

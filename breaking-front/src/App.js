@@ -15,7 +15,7 @@ import GoogleRedirect from 'pages/SocialLogin/Redirect/GoogleRedirect';
 import Profile from 'pages/Profile/Profile';
 import UserInformationProvider from 'providers/UserInformationProvider';
 import ProfileEdit from 'pages/ProfileEdit/ProfileEdit';
-import FeedDetail from 'pages/FeedDetail/FeedDetail';
+import Post from 'pages/Post/Post';
 import MainFeed from 'pages/MainFeed/MainFeed';
 
 function App() {
@@ -54,7 +54,7 @@ function App() {
                   />
                   <Route
                     path={PAGE_PATH.FEED_DETAIL(':id')}
-                    element={<FeedDetail />}
+                    element={<Post />}
                   />
                 </Routes>
               </Layout>

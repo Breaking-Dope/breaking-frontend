@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import * as Style from 'pages/FeedDetail/units/CommentForm.styles';
+import * as Style from 'pages/Post/units/CommentForm.styles';
 
 const CommentForm = ({ profileImgURL }) => {
   const [comment, setComment] = useState('');
