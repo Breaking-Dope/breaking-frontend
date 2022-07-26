@@ -21,6 +21,7 @@ const PALETTE = {
     300: '#B48F8F',
     900: '#FF0000',
   },
+  BROWN: '#B06E06',
   YELLOW: '#FEE500',
   GREEN: '#45BF6F',
   WHITE: '#FFFFFF',
