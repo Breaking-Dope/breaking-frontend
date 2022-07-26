@@ -1,17 +1,18 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import { UserInformationContext } from 'providers/UserInformationProvider';
+import { PAGE_PATH } from 'constants/path';
 import Input from 'components/Input/Input';
 import Line from 'components/Line/Line';
 import Toggle from 'components/Toggle/Toggle';
-import { PAGE_PATH } from 'constants/path';
+import ProfileImage from 'components/ProfileImage/ProfileImage';
 import * as Style from 'components/Header/Header.styles';
 import { ReactComponent as LogoIcon } from 'assets/svg/small-logo.svg';
 import { ReactComponent as SearchIcon } from 'assets/svg/search.svg';
-import { ReactComponent as DownArrowIcon } from 'assets/svg/down-arrow.svg';
+import { ReactComponent as DropDownIcon } from 'assets/svg/drop-down.svg';
 import { ReactComponent as MoneyIcon } from 'assets/svg/money.svg';
 import { ReactComponent as SettingIcon } from 'assets/svg/setting.svg';
 import { ReactComponent as MyPageIcon } from 'assets/svg/mypage.svg';
-import { UserInformationContext } from 'providers/UserInformationProvider';
 
 export default function Header({ loginButtonClick, ...props }) {
   const [searchText, setSearchText] = useState('');
@@ -50,8 +51,8 @@ export default function Header({ loginButtonClick, ...props }) {
             onBlur={handleToggle}
             tabIndex="0"
           >
-            <Style.MyProfileImage size="small" src={profileImgURL} />
-            <DownArrowIcon />
+            <ProfileImage size="small" src={profileImgURL} />
+            <DropDownIcon />
           </Style.ProfileContent>
         ) : (
           <Style.ProfileContent>
