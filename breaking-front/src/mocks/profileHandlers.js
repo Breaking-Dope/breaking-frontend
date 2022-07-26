@@ -127,10 +127,10 @@ export const profileHandlers = [
     return res(ctx.status(200), ctx.json(...user));
   }),
 
-  rest.post(API_PATH.FOLLOW(1), (req, res, ctx) => {
+  rest.post(API_PATH.PROFILE_FOLLOW(1), (req, res, ctx) => {
     return res(ctx.status(200));
   }),
-  rest.post(API_PATH.UNFOLLOW(1), (req, res, ctx) => {
+  rest.post(API_PATH.PROFILE_UNFOLLOW(1), (req, res, ctx) => {
     return res(ctx.status(200));
   }),
 ];
