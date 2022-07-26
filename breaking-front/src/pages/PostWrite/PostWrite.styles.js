@@ -15,8 +15,8 @@ export const PostRadioButton = styled(Button)`
 
 export const PostSubmitButton = styled(Button)`
   display: block;
-  margin: 0 auto 50px;
   width: 170px;
+  margin: 0 auto 50px;
   background-color: ${({ theme }) => theme.blue[400]};
 `;
 
@@ -33,22 +33,22 @@ export const OccurTimeLayOut = styled.div`
 
 export const DatePicker = styled.input`
   position: relative;
-  padding: 10px;
-  margin-right: 10px;
   width: 230px;
-  border-radius: 10px;
+  margin-right: 10px;
+  padding: 10px;
   border: solid 1px ${({ theme }) => theme.gray[500]};
+  border-radius: 10px;
   ::-webkit-calendar-picker-indicator {
     position: absolute;
-    background: transparent;
+    top: 0;
+    right: 0;
     bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+    background: transparent;
     color: transparent;
     cursor: pointer;
-    height: auto;
-    left: 0;
-    right: 0;
-    top: 0;
-    width: auto;
   }
 `;
 
@@ -71,9 +71,9 @@ export const FindLocationLayOut = styled.div`
 `;
 
 export const FindLocationMessage = styled.span`
-  vertical-align: middle;
   font-size: 16px;
   color: ${({ theme }) => theme.blue[900]};
+  vertical-align: middle;
 `;
 
 export const LocationInputContainer = styled.div`
@@ -82,8 +82,8 @@ export const LocationInputContainer = styled.div`
 `;
 
 export const LocationInput = styled.input`
-  padding: 10px;
   width: 470px;
+  padding: 10px;
   border: solid 1px ${({ theme }) => theme.gray[500]};
   border-radius: 10px;
 `;
@@ -97,27 +97,26 @@ export const ContextLayout = styled.div`
 
 export const TitleInput = styled.input`
   width: 100%;
-  font-size: 18px;
-
   border: none;
   border-left: solid 3px ${({ theme }) => theme.gray[700]};
+  font-size: 18px;
   &:focus {
     outline: none;
   }
-  &::placeholder {
+  ::placeholder {
     font-weight: 100;
     color: ${({ theme }) => theme.gray[400]};
   }
 `;
 
 export const BodyTextArea = styled.textarea`
-  padding: 10px;
   width: 100%;
   height: 300px;
-  resize: none;
+  padding: 10px;
   border: solid 1px ${({ theme }) => theme.gray[500]};
   border-radius: 10px;
-  &::placeholder {
+  resize: none;
+  ::placeholder {
     color: ${({ theme }) => theme.gray[400]};
   }
 `;
@@ -146,9 +145,9 @@ export const PriceLayOut = styled.div`
 
 export const PostPriceInput = styled.input`
   padding: 10px;
-  font-size: 16px;
   border: solid 1px ${({ theme }) => theme.gray[500]};
   border-radius: 10px;
+  font-size: 16px;
   ::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }

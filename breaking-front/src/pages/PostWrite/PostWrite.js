@@ -33,7 +33,6 @@ const PostWrite = () => {
   };
 
   const maxLengthCheck = ({ target }) => {
-    console.log(target.value);
     if (target.value.length > target.maxLength) {
       target.value = target.value.slice(0, target.maxLength);
     }
