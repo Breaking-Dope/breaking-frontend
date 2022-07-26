@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const Comment = styled.div`
   display: flex;
   width: 100%;
-  margin-bottom: 20px;
   padding: 10px;
+  margin-bottom: ${({ isReply }) => (isReply ? '0px' : '10px')};
   border-radius: 10px;
   background-color: ${({ theme }) => theme.gray[50]};
   align-items: center;
@@ -16,12 +16,17 @@ export const ContentContainer = styled.div`
 `;
 
 export const Nickname = styled.h3`
-  font-size: 18px;
-  margin-bottom: 10px;
+  margin-bottom: 3px;
+  font-size: 16px;
 `;
-
+export const CreatedTime = styled.p`
+  margin-bottom: 10px;
+  font-size: 10px;
+  color: ${({ theme }) => theme.gray[700]};
+`;
 export const Content = styled.p`
   padding-right: 30px;
+  font-size: 14px;
 `;
 
 export const Status = styled.div`
@@ -56,6 +61,19 @@ export const CommentToggle = styled.div`
 `;
 
 export const AddComment = styled.div`
-  float: right;
+  margin-left: auto;
+  width: 750px;
+`;
+
+export const ReplyCount = styled.div`
+  display: flex;
+  margin-left: 75px;
+  align-items: center;
+  color: ${({ theme }) => theme.blue[900]};
+  cursor: pointer;
+`;
+
+export const Reply = styled.div`
+  margin-left: auto;
   width: 750px;
 `;
