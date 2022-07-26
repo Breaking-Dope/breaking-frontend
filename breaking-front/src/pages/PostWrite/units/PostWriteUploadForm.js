@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Style from 'pages/Post/units/PostUploadForm.styles';
+import * as Style from 'pages/PostWrite/units/PostWriteUploadForm.styles';
 import { ReactComponent as Plus } from 'assets/svg/Plus.svg';
 import { ReactComponent as LeftArrow } from 'assets/svg/left_arrow_line.svg';
 import { ReactComponent as RightArrow } from 'assets/svg/right_arrow_line.svg';

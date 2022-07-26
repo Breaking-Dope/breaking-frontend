@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import * as Style from 'pages/Post/Post.styles';
-import PostUploadForm from 'pages/Post/units/PostUploadForm';
+import * as Style from 'pages/PostWrite/PostWrite.styles';
+import PostUploadForm from 'pages/PostWrite/units/PostWriteUploadForm';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
 
-const Post = () => {
+const PostWrite = () => {
   const [occurDate, setOccurDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [occurTime, setOccurTime] = useState(dayjs().format('HH:mm'));
   const [selectedPostType, setSelectedPostType] = useState('charged');
@@ -145,4 +145,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default PostWrite;
