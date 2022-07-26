@@ -2,13 +2,20 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyle from 'styles/GlobalStyle';
 import theme from 'styles/theme';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import SocialLogin from 'pages/SocialLogin/SocialLogin';
+import KakaoRedirect from 'pages/SocialLogin/Redirect/KakaoRedirect';
+import SignUp from 'pages/SignUp/SignUp';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { PAGE_PATH } from 'constants/path';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { BreakingRoutes } from 'constants/BreakingRoutes';
-import { BrowserRouter } from 'react-router-dom';
-import UserInformationProvider from 'providers/UserInformationProvider';
 import Layout from 'components/Layout/Layout';
+import GoogleRedirect from 'pages/SocialLogin/Redirect/GoogleRedirect';
+import Profile from 'pages/Profile/Profile';
+import UserInformationProvider from 'providers/UserInformationProvider';
+import ProfileEdit from 'pages/ProfileEdit/ProfileEdit';
+import MainFeed from 'pages/MainFeed/MainFeed';
 
 function App() {
   const queryClient = new QueryClient({
@@ -16,19 +23,38 @@ function App() {
       queries: { refetchOnWindowFocus: false },
     },
   });
-
   return (
     <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_KEY}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
-          <UserInformationProvider>
-            <BrowserRouter>
+          <BrowserRouter>
+            <UserInformationProvider>
               <Layout>
-                <BreakingRoutes />
+                <Routes>
+                  <Route path={PAGE_PATH.HOME} element={<MainFeed />} />
+                  <Route path={PAGE_PATH.LOGIN} element={<SocialLogin />} />
+                  <Route
+                    path={PAGE_PATH.KAKAO_LOGIN}
+                    element={<KakaoRedirect />}
+                  ></Route>
+                  <Route
+                    path={PAGE_PATH.GOOGLE_LOGIN}
+                    element={<GoogleRedirect />}
+                  ></Route>
+                  <Route path={PAGE_PATH.SIGNUP} element={<SignUp />} />
+                  <Route
+                    path={PAGE_PATH.PROFILE(':id')}
+                    element={<Profile />}
+                  />
+                  <Route
+                    path={PAGE_PATH.PROFILE_EDIT}
+                    element={<ProfileEdit />}
+                  />
+                </Routes>
               </Layout>
-            </BrowserRouter>
-          </UserInformationProvider>
+            </UserInformationProvider>
+          </BrowserRouter>
         </ThemeProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
