@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import * as Style from 'pages/Post/units/Carousel.styles';
-import { ReactComponent as LeftIcon } from 'assets/svg/carousel-left.svg';
-import { ReactComponent as RightIcon } from 'assets/svg/carousel-right.svg';
-import { ReactComponent as SlideDotIcon } from 'assets/svg/slide-dot.svg';
-import { ReactComponent as SildeDotFillIcon } from 'assets/svg/slide-dot-fill.svg';
+import { ReactComponent as LeftIcon } from 'assets/svg/carousel_left.svg';
+import { ReactComponent as RightIcon } from 'assets/svg/carousel_right.svg';
+import { ReactComponent as SlideDotIcon } from 'assets/svg/slide_dot.svg';
+import { ReactComponent as SildeDotFillIcon } from 'assets/svg/slide_dot_fill.svg';
 
 const Carousel = ({ mediaList }) => {
   const mediaCount = mediaList.length;

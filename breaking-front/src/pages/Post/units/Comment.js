@@ -13,8 +13,8 @@ import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
 import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
 import { ReactComponent as ChatIcon } from 'assets/svg/chat.svg';
 import { ReactComponent as BlockIcon } from 'assets/svg/block.svg';
-import { ReactComponent as DropUpIcon } from 'assets/svg/drop-up.svg';
-import { ReactComponent as DropDownIcon } from 'assets/svg/drop-down.svg';
+import { ReactComponent as DropUpIcon } from 'assets/svg/drop_up.svg';
+import { ReactComponent as DropDownIcon } from 'assets/svg/drop_down.svg';
 
 const Comment = ({ comment, type }) => {
   const { userId, profileImgURL } = useContext(UserInformationContext);
