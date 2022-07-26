@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UserInformationContext } from 'providers/UserInformationProvider';
@@ -46,10 +47,9 @@ const FeedDetail = () => {
     
     TV 예능 프로그램 한 장면. [사진 인터넷 캡처]
     단, 웃자고 만드는 신조어에도 논리는 필요하다. 요즘 자주 쓰이는 단어로 ‘킹리적 갓심’이 있다. ‘지극히 합리적이고 확실한 의심’이라는 표현이라는데, 사람의 으뜸인 ‘킹’에 절대적인 존재인 갓(god·신)까지 붙여서 두 번이나 강조의 의미를 덧붙였지만 무분별하게 한·영 단어를 혼합했을 뿐 이 조합만으로는 그 의미를 이해할 근거가 전혀 안 보인다. 유머든, 논리든 새로운 언어의 생성과 쓰임에는 반드시 ‘그럴 만한’ 설득력이 필요하다.`,
-    hashtagList: ['해시태그1', '해시태그2'],
     mediaList: [
       'https://media.istockphoto.com/videos/young-woman-puts-on-white-medical-mask-on-a-blue-background-video-id1369048359',
-      'https://cdn.pixabay.com/photo/2022/04/19/09/08/flowers-7142409_960_720.jpg',
+      'https://cdn.pixabay.com/photo/2022/07/16/07/20/sunset-7324598__480.jpg',
       'https://cdn.pixabay.com/photo/2022/07/19/13/46/study-7332172_960_720.png',
     ],
     location: {
@@ -57,72 +57,52 @@ const FeedDetail = () => {
       longitude: 12.1234,
       latitude: 12.12345,
     },
+    hashtagList: ['해시태그1', '해시태그2'],
     price: 123111,
     postType: 'exclusive',
     eventTime: '2020-01-01T14:01:01',
     createdTime: '2022-07-22T14:38:54.829675',
-    modifiedDate: '2022-07-22T14:39:03.661634',
+    modifiedTime: '2022-07-22T14:39:03.661634',
     viewCount: 1,
-    shareCount: 0,
     soldCount: 10,
-    likeCount: 10,
-    isHidden: false,
+    isAnonymous: false,
     isSold: false,
-    anonymous: false,
-    comment: {
-      count: 4,
-      comment_list: [
-        {
-          commentId: 1,
-          user: {
-            userId: 10001,
-            profileImgURL: '',
-            nickname: '만두피',
-          },
-          content:
-            '코로나 사태가 아직 진정이 되지 않았는데, 또 다시 확산이 될까봐 걱정이 되네요 ㅠㅠ',
-          likeCount: 100,
-          isLiked: false,
-          recomment: [
-            {
-              commentId: 3,
-              content: '공감합니다',
-              likeCount: 10000,
-              isLiked: false,
-              user: {
-                userId: 10002,
-                profileImgURL: '',
-                nickname: '만두피1',
-              },
-            },
-            {
-              commentId: 4,
-              content: '저두요',
-              likeCount: 10000,
-              isLiked: false,
-              user: {
-                userId: 10000,
-                profileImgURL: '',
-                nickname: '주기22',
-              },
-            },
-          ],
-        },
-        {
-          commentId: 2,
-          user: {
-            userId: 100,
-            profileImgURL: '',
-            nickname: '주기',
-          },
-          content: 'ㅁㄴㅇㄻㄴㅇㄹ',
-          likeCount: 10000,
-          isLiked: false,
-          recomment: [],
-        },
-      ],
-    },
+    isHidden: false,
+    likeCount: 10,
+    commentCount: 4,
   };
+  const commentData = {
+    comment: [
+      {
+        commentId: 1,
+        content:
+          '코로나 사태가 아직 진정이 되지 않았는데, 또 다시 확산이 될까봐 걱정이 되네요 ㅠㅠ',
+        likeCount: 1,
+        replyCount: 2,
+        user: {
+          userId: 1,
+          profileImgURL: '',
+          nickname: '만두피',
+        },
+        isLiked: false,
+        createdTime: '2022-07-25T15:32:39.445Z',
+      },
+      {
+        commentId: 2,
+        content: '아이고 이를 어째 ㅠㅠㅠㅠㅠㅠ',
+        likeCount: 129,
+        replyCount: 0,
+        user: {
+          userId: 1,
+          profileImgURL: '',
+          nickname: '주기',
+        },
+        isLiked: false,
+        createdTime: '2022-07-25T15:32:39.445Z',
+      },
+    ],
+  };
+
   const [isContentToggle, setIsContentToggle] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(dummyData.isBookmarked);
   const [isLiked, setIsLiked] = useState(dummyData.isLiked);
@@ -207,7 +187,7 @@ const FeedDetail = () => {
             </label>
             <label>
               <CommentIcon />
-              {dummyData.comment.count}
+              {dummyData.commentCount}
             </label>
           </Style.ContentStatus>
           <ETCIcon onClick={toggleComment} />
@@ -243,19 +223,8 @@ const FeedDetail = () => {
       <Line width="800px" />
       <Style.Comments>
         <CommentForm profileImgURL={profileImgURL} />
-        {dummyData.comment.comment_list.map((comment) => (
-          <React.Fragment key={comment.commentId}>
-            <Comment comment={comment} />
-            <Style.Reply>
-              {comment?.recomment.map((recomment) => (
-                <Comment
-                  comment={recomment}
-                  isReply={true}
-                  key={recomment.commentId}
-                />
-              ))}
-            </Style.Reply>
-          </React.Fragment>
+        {commentData.comment.map((comment) => (
+          <Comment comment={comment} type="comment" key={comment.commentId} />
         ))}
       </Style.Comments>
     </Style.FeedDetail>

@@ -120,9 +120,5 @@ export const ContentToggle = styled.div`
 
 export const Comments = styled.div`
   width: 800px;
-`;
-
-export const Reply = styled.div`
-  float: right;
-  width: 750px;
+  margin-bottom: 30px;
 `;
