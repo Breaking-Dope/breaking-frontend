@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import defaultImage from 'assets/svg/default-profile-image.svg';
+import defaultImage from 'assets/svg/default_profile_image.svg';
 
 const sizeCss = {
   small: css`

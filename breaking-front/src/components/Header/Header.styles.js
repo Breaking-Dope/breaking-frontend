@@ -1,6 +1,5 @@
-import Button from 'components/Button/Button';
-import ProfileImage from 'components/ProfileImage/ProfileImage';
 import { Link } from 'react-router-dom';
+import Button from 'components/Button/Button';
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.header`
@@ -29,6 +28,11 @@ export const ProfileContent = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+  svg {
+    > path {
+      fill: ${({ theme }) => theme.blue[300]};
+    }
+  }
 `;
 
 export const LogoContainer = styled(Link)`
@@ -44,14 +48,10 @@ export const LoginButton = styled(Button)`
   padding: 10px 30px;
 `;
 
-export const MyProfileImage = styled(ProfileImage)`
-  margin-right: 10px;
-`;
-
 export const ProfileToggle = styled.div`
   position: absolute;
-  top: 80px;
-  right: -20px;
+  top: 70px;
+  right: -16px;
 `;
 
 export const Logout = styled.p`

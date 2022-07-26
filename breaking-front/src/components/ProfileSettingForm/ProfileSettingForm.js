@@ -10,7 +10,7 @@ import MESSAGE from 'constants/message';
 import useInputs from 'hooks/useInputs';
 import fileToBase64 from 'utils/fileToBase64';
 import urlToFile from 'utils/urlToFile';
-import { ReactComponent as XMark } from 'assets/svg/x-mark.svg';
+import { ReactComponent as XMark } from 'assets/svg/x_mark.svg';
 import * as Style from 'components/ProfileSettingForm/ProfileSettingForm.styles';
 
 export default function ProfileSettingForm({
