@@ -1,7 +1,7 @@
 import Button from 'components/Button/Button';
 import styled, { css } from 'styled-components';
 
-export const PostTitle = styled.h3`
+export const PostWriteTitle = styled.h3`
   font-size: 24px;
 `;
 
@@ -24,7 +24,7 @@ export const Container = styled.div``;
 
 export const BackSpace = styled.div``;
 
-export const OccurTime = styled.div`
+export const OccurTimeLayOut = styled.div`
   margin-top: 60px;
   > h3 {
     margin-bottom: 20px;
@@ -52,13 +52,11 @@ export const DatePicker = styled.input`
   }
 `;
 
-export const OccurTimeForm = styled.div``;
-
-export const Location = styled.div`
+export const LocationLayOut = styled.div`
   margin-top: 60px;
 `;
 
-export const FindLocation = styled.div`
+export const FindLocationLayOut = styled.div`
   display: inline-block;
   margin-left: 20px;
   cursor: pointer;
@@ -78,7 +76,7 @@ export const FindLocationMessage = styled.span`
   color: ${({ theme }) => theme.blue[900]};
 `;
 
-export const LocationForm = styled.div`
+export const LocationInputContainer = styled.div`
   margin-top: 20px;
   margin-bottom: 80px;
 `;
@@ -90,7 +88,7 @@ export const LocationInput = styled.input`
   border-radius: 10px;
 `;
 
-export const Context = styled.div`
+export const ContextLayout = styled.div`
   margin-top: 60px;
   > * {
     margin-bottom: 40px;
@@ -129,7 +127,7 @@ export const HashTagInput = styled(TitleInput)`
   color: ${({ theme }) => theme.blue[900]};
 `;
 
-export const PostType = styled.div`
+export const PostTypeLayOut = styled.div`
   margin-top: 40px;
   > button {
     margin-right: 30px;
@@ -139,7 +137,7 @@ export const PostType = styled.div`
   }
 `;
 
-export const Price = styled.div`
+export const PriceLayOut = styled.div`
   margin-top: 40px;
   > * {
     margin-bottom: 30px;
@@ -156,7 +154,7 @@ export const PostPriceInput = styled.input`
   }
 `;
 
-export const Anonymous = styled.div`
+export const AnonymousLayOut = styled.div`
   margin-top: 40px;
   > button {
     margin-right: 30px;
