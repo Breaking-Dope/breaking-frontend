@@ -3,6 +3,7 @@ import { profileSettingHandlers } from 'mocks/profileSettingHandlers';
 import { signInHandlers } from 'mocks/signInHandlers';
 import { signUpHandlers } from 'mocks/signUpHandlers';
 import { mainFeedHandlers } from 'mocks/mainFeedHandlers';
+import { postHandlers } from 'mocks/postHandlers';
 
 export const handlers = [
   ...profileSettingHandlers,
@@ -10,4 +11,5 @@ export const handlers = [
   ...signInHandlers,
   ...signUpHandlers,
   ...mainFeedHandlers,
+  ...postHandlers,
 ];
