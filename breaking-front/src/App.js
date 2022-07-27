@@ -52,10 +52,7 @@ function App() {
                     path={PAGE_PATH.PROFILE_EDIT}
                     element={<ProfileEdit />}
                   />
-                  <Route
-                    path={PAGE_PATH.FEED_DETAIL(':id')}
-                    element={<Post />}
-                  />
+                  <Route path={PAGE_PATH.POST(':id')} element={<Post />} />
                 </Routes>
               </Layout>
             </UserInformationProvider>
