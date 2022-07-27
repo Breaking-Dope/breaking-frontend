@@ -66,9 +66,9 @@ export const Carusel = styled(ScrollBarX)`
 `;
 
 export const UploadPreviewImg = styled.div`
-  padding: 10px;
   display: inline-block;
   position: relative;
+  padding: 10px;
 `;
 
 export const UploadBox = styled.img`
