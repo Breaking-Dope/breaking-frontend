@@ -22,7 +22,10 @@ export const PostSubmitButton = styled(Button)`
 
 export const Container = styled.div``;
 
-export const BackSpace = styled.div``;
+export const BackPageContainer = styled.div`
+  margin-top: 30px;
+  margin-bottom: 20px;
+`;
 
 export const OccurTimeLayOut = styled.div`
   margin-top: 60px;
