@@ -44,8 +44,8 @@ const Post = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
 
-  const { data: postData } = usePost(postId);
-  const { data: postCommentData } = usePostComment(postId, 1, 10);
+  const { data: PostData } = usePost(postId);
+  const { data: PostCommentData } = usePostComment(postId, 1, 10);
 
   const { mutate: PostLike } = useMutation(postPostLike);
   const { mutate: DeletePostLike } = useMutation(deletePostLike);
@@ -54,7 +54,7 @@ const Post = () => {
   const { mutate: DeletePost } = useMutation(deletePost);
 
   const handleProfileClick = () => {
-    navigate(PAGE_PATH.PROFILE(postData?.data.user.userId));
+    navigate(PAGE_PATH.PROFILE(PostData?.data.user.userId));
   };
 
   const handlePostDeleteClick = () => {
@@ -85,35 +85,35 @@ const Post = () => {
   };
 
   useEffect(() => {
-    setIsBookmarked(postData?.data.isBookmarked);
-    setIsLiked(postData?.data.isLiked);
-    setLikeCount(postData?.data.likeCount);
-  }, [postData]);
+    setIsBookmarked(PostData?.data.isBookmarked);
+    setIsLiked(PostData?.data.isLiked);
+    setLikeCount(PostData?.data.likeCount);
+  }, [PostData]);
 
   return (
     <Style.Post>
       <Style.BackIconContainer onClick={() => navigate(PAGE_PATH.HOME)}>
         <BackIcon />
       </Style.BackIconContainer>
-      {postData && <Carousel mediaList={postData.data.mediaList} />}
+      {PostData && <Carousel mediaList={PostData.data.mediaList} />}
       <Style.ContentHeader>
         <Style.ContentWriter>
           <ProfileImage
             size="large"
-            src={postData?.data.user.profileImgURL}
+            src={PostData?.data.user.profileImgURL}
             profileClick={handleProfileClick}
           />
           <Style.ContentWriterName>
-            {postData?.data.user.nickname}
+            {PostData?.data.user.nickname}
           </Style.ContentWriterName>
         </Style.ContentWriter>
         <Style.Context>
-          {postData?.data.postType === 'exclusive' && (
+          {PostData?.data.postType === 'exclusive' && (
             <Button color="dark" size="small" disabled>
               단독
             </Button>
           )}
-          {postData?.data.isSold ? (
+          {PostData?.data.isSold ? (
             <Button color="danger" size="small" disabled>
               판매 완료
             </Button>
@@ -122,34 +122,34 @@ const Post = () => {
               판매중
             </Button>
           )}
-          <Style.ContentTitle>{postData?.data.title}</Style.ContentTitle>
+          <Style.ContentTitle>{PostData?.data.title}</Style.ContentTitle>
           <Style.ContentLocation>
             <LocationIcon />
-            {postData?.data.location.region}
+            {PostData?.data.location.region}
           </Style.ContentLocation>
           <Style.ContentDetail>
-            {postData?.data.createdTime}
+            {PostData?.data.createdTime}
             <Style.ContentViewCount>
               조회&nbsp;
-              {postData?.data.viewCount.toLocaleString('ko-KR')}
+              {PostData?.data.viewCount.toLocaleString('ko-KR')}
             </Style.ContentViewCount>
           </Style.ContentDetail>
         </Style.Context>
         <Style.ContentPriceContainer>
           <Style.ContentPrice>
-            {postData?.data.price.toLocaleString('ko-KR')} 원
+            {PostData?.data.price.toLocaleString('ko-KR')} 원
           </Style.ContentPrice>
-          <Button color={postData?.data.isPurchased ? 'secondary' : 'primary'}>
-            {postData?.data.user.userId === userId
+          <Button color={PostData?.data.isPurchased ? 'secondary' : 'primary'}>
+            {PostData?.data.user.userId === userId
               ? '구매자 목록'
-              : postData?.data.isPurchased
+              : PostData?.data.isPurchased
               ? '구매 완료'
               : '구매 하기'}
           </Button>
           <Style.ContentDetail>
             누적 판매
             <Style.ContentSoldCount>
-              {postData?.data.soldCount.toLocaleString('ko-KR')}
+              {PostData?.data.soldCount.toLocaleString('ko-KR')}
             </Style.ContentSoldCount>
           </Style.ContentDetail>
         </Style.ContentPriceContainer>
@@ -158,9 +158,9 @@ const Post = () => {
       <Line width="800px" />
 
       <Style.ContentContainer>
-        <Style.Content>{postData?.data.content}</Style.Content>
+        <Style.Content>{PostData?.data.content}</Style.Content>
         <Style.HashtagContainer>
-          {postData?.data.hashtagList.map((hashtag, index) => (
+          {PostData?.data.hashtagList.map((hashtag, index) => (
             <Style.Hashtag key={'hashtag-' + index}>#{hashtag}</Style.Hashtag>
           ))}
         </Style.HashtagContainer>
@@ -172,14 +172,14 @@ const Post = () => {
             </label>
             <label>
               <CommentIcon />
-              {postData?.data.commentCount.toLocaleString('ko-KR')}
+              {PostData?.data.commentCount.toLocaleString('ko-KR')}
             </label>
           </Style.ContentStatus>
           <ETCIcon onClick={toggleComment} />
           <Style.ContentToggle>
             {isContentToggle && (
               <Toggle width="100px">
-                {postData?.data.user.userId === userId ? (
+                {PostData?.data.user.userId === userId ? (
                   <>
                     <Toggle.LabelLink
                       path={PAGE_PATH.POST(postId)}
@@ -226,7 +226,7 @@ const Post = () => {
           userId={userId}
           postId={postId}
         />
-        {postCommentData?.data.comment.map((comment) => (
+        {PostCommentData?.data.comment.map((comment) => (
           <Comment
             comment={comment}
             type="comment"
