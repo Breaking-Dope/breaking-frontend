@@ -10,7 +10,7 @@ export const getProfile = ({ queryKey }) => {
 };
 
 export const getProfileWritten = async ({ queryKey, pageParam = 0 }) => {
-  const [, { userId, option = 'all' }] = queryKey;
+  const [, { userId, option }] = queryKey;
   const { data } = await api({
     method: 'get',
     url: API_PATH.PROFILE_WRITTEN(userId, pageParam, option),
@@ -22,7 +22,7 @@ export const getProfileWritten = async ({ queryKey, pageParam = 0 }) => {
 };
 
 export const getProfileBought = async ({ queryKey, pageParam = 0 }) => {
-  const [, { userId, option = 'all' }] = queryKey;
+  const [, { userId, option }] = queryKey;
   const { data } = await api({
     method: 'get',
     url: API_PATH.PROFILE_BOUGHT(userId, pageParam, option),
@@ -34,7 +34,7 @@ export const getProfileBought = async ({ queryKey, pageParam = 0 }) => {
 };
 
 export const getProfileBookmarked = async ({ queryKey, pageParam = 0 }) => {
-  const [, { userId, option = 'all' }] = queryKey;
+  const [, { userId, option }] = queryKey;
   const { data } = await api({
     method: 'get',
     url: API_PATH.PROFILE_BOOKMARKED(userId, pageParam, option),
