@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { postFollow, postUnFollow } from 'api/profile';
-import Button from 'components/Button/Button';
 import FollowCard from 'components/FollowCard/FollowCard';
 import Line from 'components/Line/Line';
 import Modal from 'components/Modal/Modal';
@@ -76,7 +75,6 @@ const Profile = () => {
 
   return (
     <>
-      <Button onClick={() => fetchNextWritten()}></Button>
       <Modal isOpen={isModalOpen} closeClick={toggleModal} title={modalTitle}>
         {followListData?.data.map((item) => (
           <FollowCard
