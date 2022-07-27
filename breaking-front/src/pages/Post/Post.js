@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import usePost from 'hooks/queries/usePost';
@@ -34,10 +34,11 @@ import {
 import { useMutation } from 'react-query';
 
 const Post = () => {
-  const navigate = useNavigate();
   let { id: postId } = useParams();
-  const { userId, profileImgURL } = useContext(UserInformationContext);
   postId = Number(postId);
+  const targetRef = useRef();
+  const navigate = useNavigate();
+  const { userId, profileImgURL } = useContext(UserInformationContext);
 
   const [isContentToggle, setIsContentToggle] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -45,7 +46,11 @@ const Post = () => {
   const [likeCount, setLikeCount] = useState(0);
 
   const { data: PostData } = usePost(postId);
-  const { data: PostCommentData } = usePostComment(postId, 1, 10);
+  const {
+    data: PostCommentData,
+    isFetching: IsPostCommentFetching,
+    fetchNextPage: FetchNextPostComment,
+  } = usePostComment(postId);
 
   const { mutate: PostLike } = useMutation(postPostLike);
   const { mutate: DeletePostLike } = useMutation(deletePostLike);
@@ -89,6 +94,25 @@ const Post = () => {
     setIsLiked(PostData?.data.isLiked);
     setLikeCount(PostData?.data.likeCount);
   }, [PostData]);
+
+  useEffect(() => {
+    let observer;
+    const onIntersect = async ([entry], observer) => {
+      if (entry.isIntersecting) {
+        observer.unobserve(entry.target);
+        FetchNextPostComment();
+        observer.observe(entry.target);
+      }
+    };
+
+    if (PostCommentData) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 0.8,
+      });
+      observer.observe(targetRef.current);
+    }
+    return () => observer && observer.disconnect();
+  }, [FetchNextPostComment, PostCommentData]);
 
   return (
     <Style.Post>
@@ -226,14 +250,21 @@ const Post = () => {
           userId={userId}
           postId={postId}
         />
-        {PostCommentData?.data.comment.map((comment) => (
-          <Comment
-            comment={comment}
-            type="comment"
-            postId={postId}
-            key={comment.commentId}
-          />
-        ))}
+        {PostCommentData?.pages.map((page) =>
+          page.result.map((comment) => (
+            <Comment
+              comment={comment}
+              type="comment"
+              postId={postId}
+              key={comment.commentId}
+            />
+          ))
+        )}
+        <div ref={targetRef}>
+          {IsPostCommentFetching && (
+            <Style.Loading type="spin" color="#014d91" width="40px" />
+          )}
+        </div>
       </Style.Comments>
     </Style.Post>
   );

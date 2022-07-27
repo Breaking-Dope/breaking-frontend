@@ -1,3 +1,4 @@
+import ReactLoading from 'react-loading';
 import styled from 'styled-components';
 
 export const Post = styled.div`
@@ -126,4 +127,11 @@ export const ContentToggle = styled.div`
 export const Comments = styled.div`
   width: 800px;
   margin-bottom: 30px;
+`;
+
+export const Loading = styled(ReactLoading)`
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, -50%);
 `;
