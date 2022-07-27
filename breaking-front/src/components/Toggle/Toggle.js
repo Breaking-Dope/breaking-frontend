@@ -11,9 +11,9 @@ export default function Toggle({ isArrowMark, width, children }) {
   );
 }
 
-function LabelLink({ path, label, blueLabel, icon }) {
+function LabelLink({ path, label, blueLabel, icon, ...props }) {
   return (
-    <Style.LabelLink to={path}>
+    <Style.LabelLink to={path} {...props}>
       {icon}
       <Style.LabelText>{label}</Style.LabelText>
       {blueLabel && <Style.BlueLabel>{blueLabel}</Style.BlueLabel>}
