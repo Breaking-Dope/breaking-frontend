@@ -31,6 +31,7 @@ export const UploadFileBox = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  cursor: pointer;
 `;
 
 export const PlusIconContainer = styled.div`
