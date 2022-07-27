@@ -43,6 +43,11 @@ export const ContentTitle = styled.h1`
   margin-bottom: 20px;
   font-size: 24px;
 `;
+
+export const ContentViewCount = styled.span`
+  margin-left: 5px;
+`;
+
 export const ContentPrice = styled.h1`
   margin-bottom: 15px;
   font-weight: 700;
