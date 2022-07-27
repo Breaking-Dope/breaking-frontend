@@ -43,7 +43,7 @@ export const DatePicker = styled.input`
   padding: 10px;
   border: solid 1px ${({ theme }) => theme.gray[500]};
   border-radius: 10px;
-  ::-webkit-calendar-picker-indicator {
+  &::-webkit-calendar-picker-indicator {
     position: absolute;
     top: 0;
     right: 0;
@@ -108,7 +108,7 @@ export const TitleInput = styled.input`
   &:focus {
     outline: none;
   }
-  ::placeholder {
+  &::placeholder {
     font-weight: 100;
     color: ${({ theme }) => theme.gray[400]};
   }
@@ -121,7 +121,7 @@ export const BodyTextArea = styled.textarea`
   border: solid 1px ${({ theme }) => theme.gray[500]};
   border-radius: 10px;
   resize: none;
-  ::placeholder {
+  &::placeholder {
     color: ${({ theme }) => theme.gray[400]};
   }
 `;
@@ -153,7 +153,7 @@ export const PostPriceInput = styled.input`
   border: solid 1px ${({ theme }) => theme.gray[500]};
   border-radius: 10px;
   font-size: 16px;
-  ::-webkit-inner-spin-button {
+  &::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
 `;
