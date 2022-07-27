@@ -80,7 +80,7 @@ export const SOLDOUT_CONTENT = {
   createdTime: new Date(),
 };
 
-export const FREE_CONTNET = {
+export const FREE_CONTENT = {
   postId: 5,
   title: '공짜글',
   region: '경기도',
@@ -97,4 +97,109 @@ export const FREE_CONTNET = {
   isLiked: false,
   isBookmarked: true,
   createdTime: new Date(),
+};
+
+export const FEED_DETAIL_DATA = {
+  isLiked: false,
+  isBookmarked: false,
+  user: {
+    userId: 0,
+    profileImgURL: NO_FOLLOW_USER.profileImgURL,
+    nickname: NO_FOLLOW_USER.nickname,
+    phoneNumber: '',
+  },
+  title: '킹받네',
+  content: `며칠 전 한 TV 예능 프로그램에 가수 에릭 남의 형제들이 출연했다. 미국에서 태어나고 자란 이들은 한국어가 서툴다. 그나마 한국에서 오래 활동한 에릭 남이 한국어에 가장 능통한 편. 삼형제는 여행 내내 초등학생들처럼 투닥거렸는데, 어느 순간 발끈한 막내가 맏형 에릭 남에게 물었다. “이럴 때 뭐라고 말하지? 기분 안 좋을 때?” 그러자 에릭 남이 답했다. “요즘 한국에선 이럴 때 ‘킹받다’라고 해.”(사진)
+
+  ‘킹받다’는 ‘열 받다’를 강조하기 위해 킹(king·왕)을 접두어처럼 사용한 신조어다. 한 마디로 엄청 화났다는 뜻이다. 유사표현으로 ‘KG받네’ ‘킹받드라쉬’ ‘킹받으라슈’ 등이 있다. ‘왕’의 국어사전적 의미는 ‘일정한 분야·범위 안에서 으뜸이 되는 사람’이다. 그러니 어떤 단어라도 ‘킹’ 또는 ‘왕’을 앞에 붙이면 ‘가장·제일’이라는 뜻으로 해석된다. 오래전 소개팅 자리에서 자주 사용했던 말로 ‘킹카(외모가 뛰어난 남자)’가 있다. 이처럼 강조하고 싶은 말에 ‘킹’이나 ‘갓’을 붙이는 표현은 욕을 하듯 ‘X나’를 붙이는 것보다 순하고 귀엽게 들린다.
+  
+  
+  TV 예능 프로그램 한 장면. [사진 인터넷 캡처]
+  단, 웃자고 만드는 신조어에도 논리는 필요하다. 요즘 자주 쓰이는 단어로 ‘킹리적 갓심’이 있다. ‘지극히 합리적이고 확실한 의심’이라는 표현이라는데, 사람의 으뜸인 ‘킹’에 절대적인 존재인 갓(god·신)까지 붙여서 두 번이나 강조의 의미를 덧붙였지만 무분별하게 한·영 단어를 혼합했을 뿐 이 조합만으로는 그 의미를 이해할 근거가 전혀 안 보인다. 유머든, 논리든 새로운 언어의 생성과 쓰임에는 반드시 ‘그럴 만한’ 설득력이 필요하다.`,
+  mediaList: [
+    'https://media.istockphoto.com/videos/young-woman-puts-on-white-medical-mask-on-a-blue-background-video-id1369048359',
+    'https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202207/21/6c777760-7ff2-459d-9574-b5a6b9870682.jpg',
+    'https://cdn.pixabay.com/photo/2022/07/19/13/46/study-7332172_960_720.png',
+  ],
+  location: {
+    region: '압구정',
+    longitude: 12.1234,
+    latitude: 12.12345,
+  },
+  hashtagList: ['해시태그1', '해시태그2'],
+  price: 123111,
+  postType: 'exclusive',
+  eventTime: '2020-01-01T14:01:01',
+  createdTime: '2022-07-22T14:38:54.829675',
+  modifiedTime: '2022-07-22T14:39:03.661634',
+  viewCount: 1,
+  soldCount: 10,
+  isAnonymous: false,
+  isSold: false,
+  isHidden: false,
+  likeCount: 10,
+  commentCount: 4,
+};
+
+export const COMMENT_DATA = {
+  comment: [
+    {
+      commentId: 1,
+      content:
+        '코로나 사태가 아직 진정이 되지 않았는데, 또 다시 확산이 될까봐 걱정이 되네요 ㅠㅠ',
+      likeCount: 1,
+      replyCount: 2,
+      user: {
+        userId: 1,
+        profileImgURL: '',
+        nickname: '만두피',
+      },
+      isLiked: false,
+      createdTime: '2022-07-25T15:32:39.445Z',
+    },
+    {
+      commentId: 2,
+      content: '아이고 이를 어째 ㅠㅠㅠㅠㅠㅠ',
+      likeCount: 129,
+      replyCount: 0,
+      user: {
+        userId: 1,
+        profileImgURL: '',
+        nickname: '주기',
+      },
+      isLiked: false,
+      createdTime: '2022-07-25T15:32:39.445Z',
+    },
+  ],
+};
+
+export const REPLY_DATA = {
+  comment: [
+    {
+      commentId: 3,
+      content: '대댓글1',
+      likeCount: 1,
+      replyCount: 0,
+      user: {
+        userId: 1,
+        profileImgURL: '',
+        nickname: '만두피',
+      },
+      isLiked: false,
+      createdTime: '2022-07-25T15:32:39.445Z',
+    },
+    {
+      commentId: 4,
+      content: '대댓글2',
+      likeCount: 1,
+      replyCount: 0,
+      user: {
+        userId: 1,
+        profileImgURL: '',
+        nickname: '만두피',
+      },
+      isLiked: false,
+      createdTime: '2022-07-25T15:32:39.445Z',
+    },
+  ],
 };

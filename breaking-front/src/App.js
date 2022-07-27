@@ -15,6 +15,7 @@ import GoogleRedirect from 'pages/SocialLogin/Redirect/GoogleRedirect';
 import Profile from 'pages/Profile/Profile';
 import UserInformationProvider from 'providers/UserInformationProvider';
 import ProfileEdit from 'pages/ProfileEdit/ProfileEdit';
+import Post from 'pages/Post/Post';
 import MainFeed from 'pages/MainFeed/MainFeed';
 import PostWrite from 'pages/PostWrite/PostWrite';
 
@@ -52,7 +53,11 @@ function App() {
                     path={PAGE_PATH.PROFILE_EDIT}
                     element={<ProfileEdit />}
                   />
-                  <Route path={PAGE_PATH.POST} element={<PostWrite />} />
+                  <Route path={PAGE_PATH.POST_WRITE} element={<PostWrite />} />
+                  <Route
+                    path={PAGE_PATH.FEED_DETAIL(':id')}
+                    element={<Post />}
+                  />
                 </Routes>
               </Layout>
             </UserInformationProvider>

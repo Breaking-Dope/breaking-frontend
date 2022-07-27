@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ReactComponent as CloseIcon } from 'assets/svg/x-mark.svg';
+import { ReactComponent as CloseIcon } from 'assets/svg/x_mark.svg';
 import * as Style from 'components/Modal/Modal.styles';
 import Line from 'components/Line/Line';
 

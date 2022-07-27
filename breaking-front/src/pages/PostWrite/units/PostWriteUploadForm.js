@@ -3,7 +3,7 @@ import * as Style from 'pages/PostWrite/units/PostWriteUploadForm.styles';
 import { ReactComponent as Plus } from 'assets/svg/Plus.svg';
 import { ReactComponent as LeftArrow } from 'assets/svg/left_arrow_line.svg';
 import { ReactComponent as RightArrow } from 'assets/svg/right_arrow_line.svg';
-import { ReactComponent as XMark } from 'assets/svg/x-mark.svg';
+import { ReactComponent as XMark } from 'assets/svg/x_mark.svg';
 import { useRef } from 'react';
 
 const PostUploadForm = () => {
