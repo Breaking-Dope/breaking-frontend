@@ -7,7 +7,7 @@ const useProfileBookmarkedPost = (userId, isMyPage, option) => {
     getProfileBookmarked,
     {
       getNextPageParam: (lastPage) => {
-        return lastPage.nextPage;
+        return lastPage.cursor;
       },
       enabled: isMyPage,
     }

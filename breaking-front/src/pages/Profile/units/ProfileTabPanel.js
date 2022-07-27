@@ -1,13 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Filter from 'components/Filter/Filter';
 import * as Style from 'pages/Profile/units/ProfileTabPanel.styles';
 import Feed from 'components/Feed/Feed';
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { UserInformationContext } from 'providers/UserInformationProvider';
+import { useRef } from 'react';
+import ReactLoading from 'react-loading';
 
-const ProfileTabPanel = ({ data, setOption }) => {
+const ProfileTabPanel = ({ data, isFetching, nextFetch, setOption }) => {
+  const targetRef = useRef();
   const { userId } = useContext(UserInformationContext);
+  console.log(isFetching);
+  useEffect(() => {
+    let observer;
+    const onIntersect = async ([entry], observer) => {
+      if (entry.isIntersecting) {
+        observer.unobserve(entry.target);
+        nextFetch();
+        observer.observe(entry.target);
+      }
+    };
+    if (data) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 0.8,
+      });
+      observer.observe(targetRef.current);
+    }
+    return () => observer && observer.disconnect();
+  }, [data, nextFetch]);
+
   return (
     <>
       <Style.PanelContainer>
@@ -30,6 +52,9 @@ const ProfileTabPanel = ({ data, setOption }) => {
               <Feed feedData={feed} key={feed.postId} userId={userId} />
             ))
           )}
+          <div ref={targetRef}>
+            {isFetching && <ReactLoading /> /* 확인 작업이 한번 필요함*/}
+          </div>
         </Style.FeedContainer>
       </Style.PanelContainer>
     </>
@@ -38,8 +63,9 @@ const ProfileTabPanel = ({ data, setOption }) => {
 
 ProfileTabPanel.propTypes = {
   data: PropTypes.array,
+  isFetching: PropTypes.bool,
+  nextFetch: PropTypes.func,
   setOption: PropTypes.func,
-  userId: PropTypes.number,
 };
 
 export default ProfileTabPanel;

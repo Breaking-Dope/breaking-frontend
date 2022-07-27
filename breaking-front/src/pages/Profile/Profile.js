@@ -11,7 +11,6 @@ import useFollowList from 'hooks/queries/useFollowList';
 import useProfile from 'hooks/queries/useProfile';
 import useProfileBookmarkedPost from 'hooks/queries/useProfileBookmarkedPost';
 import useProfileBoughtPost from 'hooks/queries/useProfileBoughtPost';
-import useProfilePost from 'hooks/queries/useProfilePost';
 import useProfileWrittenPost from 'hooks/queries/useProfileWrittenPost';
 import useCheckMyPage from 'hooks/useCheckMyPage';
 import * as Style from 'pages/Profile/Profile.styles';
@@ -36,14 +35,23 @@ const Profile = () => {
   const { mutate: UnFollow } = useMutation(postUnFollow);
   const { mutate: Follow } = useMutation(postFollow);
 
-  const { data: writtenData, fetchNextPage: fetchNextWritten } =
-    useProfileWrittenPost(userId, isMyPage, writtenOption);
+  const {
+    data: writtenData,
+    fetchNextPage: fetchNextWritten,
+    isFetching: isWrittenFetching,
+  } = useProfileWrittenPost(userId, isMyPage, writtenOption);
 
-  const { data: boughtData, fetchNextPage: fetchNextBought } =
-    useProfileBoughtPost(userId, isMyPage, boughtOption);
+  const {
+    data: boughtData,
+    fetchNextPage: fetchNextBought,
+    isFetching: isBoughtFetching,
+  } = useProfileBoughtPost(userId, isMyPage, boughtOption);
 
-  const { data: bookmarkedData, fetchNextPage: fetchNextBookmarked } =
-    useProfileBookmarkedPost(userId, isMyPage, bookmarkedOption);
+  const {
+    data: bookmarkedData,
+    fetchNextPage: fetchNextBookmarked,
+    isFetching: isBookmarkedFetching,
+  } = useProfileBookmarkedPost(userId, isMyPage, bookmarkedOption);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
@@ -130,18 +138,20 @@ const Profile = () => {
 
           <Tabs.TabPanel>
             <ProfileTabPanel
+              nextFetch={fetchNextWritten}
+              isFetching={isWrittenFetching}
               data={writtenData}
               setOption={setWrittenOption}
-              userId={userId}
             />
           </Tabs.TabPanel>
 
           {isMyPage && (
             <Tabs.TabPanel>
               <ProfileTabPanel
+                nextFetch={fetchNextBought}
+                isFetching={isBoughtFetching}
                 data={boughtData}
                 setOption={setBoughtOption}
-                userId={userId}
               />
             </Tabs.TabPanel>
           )}
@@ -149,9 +159,10 @@ const Profile = () => {
           {isMyPage && (
             <Tabs.TabPanel>
               <ProfileTabPanel
+                nextFetch={fetchNextBookmarked}
+                isFetching={isBookmarkedFetching}
                 data={bookmarkedData}
                 setOption={setBookmarkedOption}
-                userId={userId}
               />
             </Tabs.TabPanel>
           )}

@@ -4,7 +4,7 @@ import { useInfiniteQuery } from 'react-query';
 const useProfileBoughtPost = (userId, isMyPage, option) => {
   return useInfiniteQuery(['bought', { userId, option }], getProfileBought, {
     getNextPageParam: (lastPage) => {
-      return lastPage.nextPage;
+      return lastPage.cursor;
     },
     enabled: isMyPage,
   });
