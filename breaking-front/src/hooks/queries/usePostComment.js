@@ -1,11 +1,12 @@
 import { getPostCommentData } from 'api/post';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 
-const usePostComment = (postId, cursorId, size) => {
-  return useQuery(
-    ['postComment', { postId, cursorId, size }],
-    getPostCommentData
-  );
+const usePostComment = (postId) => {
+  return useInfiniteQuery(['postComment', postId], getPostCommentData, {
+    getNextPageParam: (lastPage) => {
+      return lastPage.cursor;
+    },
+  });
 };
 
 export default usePostComment;

@@ -7,16 +7,13 @@ export const postHandlers = [
     return res(ctx.status(200), ctx.json(POST_DATA));
   }),
 
-  rest.get(API_PATH.POST_COMMENT_DATA(':postId', '*', '*'), (req, res, ctx) => {
+  rest.get(API_PATH.POST_COMMENT_DATA(':postId', '*'), (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(COMMENT_DATA));
   }),
 
-  rest.get(
-    API_PATH.POST_REPLY_DATA(':commentId', '*', '*'),
-    (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(REPLY_DATA));
-    }
-  ),
+  rest.get(API_PATH.POST_REPLY_DATA(':commentId', '*'), (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(REPLY_DATA));
+  }),
 
   rest.post(API_PATH.POST_COMMENT_WRITE(':postId'), (req, res, ctx) => {
     console.log('댓글 등록 성공');

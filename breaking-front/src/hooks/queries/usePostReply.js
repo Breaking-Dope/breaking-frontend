@@ -1,14 +1,14 @@
 import { getPostReplyData } from 'api/post';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 
-const usePostReply = (commentId, cursorId, size) => {
-  return useQuery(
-    ['postReply', { commentId, cursorId, size }],
-    getPostReplyData,
-    {
-      enabled: false,
-    }
-  );
+const usePostReply = (commentId) => {
+  return useInfiniteQuery(['postReply', commentId], getPostReplyData, {
+    enabled: false,
+
+    getNextPageParam: (lastPage) => {
+      return lastPage.cursor;
+    },
+  });
 };
 
 export default usePostReply;

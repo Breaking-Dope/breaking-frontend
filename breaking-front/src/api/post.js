@@ -9,20 +9,32 @@ export const getPostData = ({ queryKey }) => {
   });
 };
 
-export const getPostCommentData = ({ queryKey }) => {
-  const [, { postId, cursorId, size }] = queryKey;
-  return api({
+export const getPostCommentData = async ({ queryKey, pageParam = 0 }) => {
+  const [, postId] = queryKey;
+  const { data } = await api({
     method: 'get',
-    url: API_PATH.POST_COMMENT_DATA(postId, cursorId, size),
+    url: API_PATH.POST_COMMENT_DATA(postId, pageParam),
   });
+  const comments = data.comment;
+
+  return {
+    result: comments,
+    cursor: comments[comments.length - 1].commentId,
+  };
 };
 
-export const getPostReplyData = ({ queryKey }) => {
-  const [, { commentId, cursorId, size }] = queryKey;
-  return api({
+export const getPostReplyData = async ({ queryKey, pageParam = 0 }) => {
+  const [, commentId] = queryKey;
+  const { data } = await api({
     method: 'get',
-    url: API_PATH.POST_REPLY_DATA(commentId, cursorId, size),
+    url: API_PATH.POST_REPLY_DATA(commentId, pageParam),
   });
+  const comments = data.comment;
+
+  return {
+    result: comments,
+    cursor: comments[comments.length - 1].commentId,
+  };
 };
 
 export const deletePost = (postId) => {
