@@ -22,12 +22,12 @@ export const API_PATH = {
   FOLLOW: (userId) => `/follow/${userId}`,
   UNFOLLOW: (userId) => `/follow/${userId}`,
   PROFILE_DATA: (userId) => `/profile/${userId}`,
-  PROFILE_WRITTEN: (userId, option) =>
-    `/feed/user/${userId}/write?sold-option=${option}`,
-  PROFILE_BOUGHT: (userId, option) =>
-    `/feed/user/${userId}/buy?sold-option=${option}`,
-  PROFILE_BOOKMARKED: (userId, option) =>
-    `/feed/user/${userId}/bookmark?sold-option=${option}`,
+  PROFILE_WRITTEN: (userId, cursor, option, size = 10) =>
+    `/feed/user/${userId}/write?cursor=${cursor}&size=${size}&sold-option=${option}`,
+  PROFILE_BOUGHT: (userId, cursor, option, size = 10) =>
+    `/feed/user/${userId}/buy?cursor=${cursor}&size=${size}&sold-option=${option}`,
+  PROFILE_BOOKMARKED: (userId, cursor, option, size = 10) =>
+    `/feed/user/${userId}/bookmark?cursor=${cursor}&size=${size}&sold-option=${option}`,
   PROFILE_FOLLOWINGS: (userId) => `/follow/following/${userId}`,
   PROFILE_FOLLOWERS: (userId) => `/follow/follower/${userId}`,
   PROFILE_TRANSACTION: (userId) => `/profile/${userId}/transaction`,
