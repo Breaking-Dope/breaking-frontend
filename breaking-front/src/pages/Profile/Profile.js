@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { postFollow, postUnFollow } from 'api/profile';
+import Button from 'components/Button/Button';
 import FollowCard from 'components/FollowCard/FollowCard';
 import Line from 'components/Line/Line';
 import Modal from 'components/Modal/Modal';
@@ -8,7 +9,10 @@ import Tabs from 'components/Tabs/Tabs';
 import { PAGE_PATH } from 'constants/path';
 import useFollowList from 'hooks/queries/useFollowList';
 import useProfile from 'hooks/queries/useProfile';
+import useProfileBookmarkedPost from 'hooks/queries/useProfileBookmarkedPost';
+import useProfileBoughtPost from 'hooks/queries/useProfileBoughtPost';
 import useProfilePost from 'hooks/queries/useProfilePost';
+import useProfileWrittenPost from 'hooks/queries/useProfileWrittenPost';
 import useCheckMyPage from 'hooks/useCheckMyPage';
 import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
@@ -32,26 +36,14 @@ const Profile = () => {
   const { mutate: UnFollow } = useMutation(postUnFollow);
   const { mutate: Follow } = useMutation(postFollow);
 
-  const { data: writtenData, isLoading: writtenLoading } = useProfilePost(
-    userId,
-    isMyPage,
-    'written',
-    writtenOption
-  );
+  const { data: writtenData, fetchNextPage: fetchNextWritten } =
+    useProfileWrittenPost(userId, isMyPage, writtenOption);
 
-  const { data: boughtData, isLoading: boughtLoading } = useProfilePost(
-    userId,
-    isMyPage,
-    'bought',
-    boughtOption
-  );
+  const { data: boughtData, fetchNextPage: fetchNextBought } =
+    useProfileBoughtPost(userId, isMyPage, boughtOption);
 
-  const { data: bookmarkedData, isLoading: bookmarkedLoading } = useProfilePost(
-    userId,
-    isMyPage,
-    'bookmarked',
-    bookmarkedOption
-  );
+  const { data: bookmarkedData, fetchNextPage: fetchNextBookmarked } =
+    useProfileBookmarkedPost(userId, isMyPage, bookmarkedOption);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
@@ -76,6 +68,7 @@ const Profile = () => {
 
   return (
     <>
+      <Button onClick={() => fetchNextWritten()}></Button>
       <Modal isOpen={isModalOpen} closeClick={toggleModal} title={modalTitle}>
         {followListData?.data.map((item) => (
           <FollowCard
@@ -137,7 +130,7 @@ const Profile = () => {
 
           <Tabs.TabPanel>
             <ProfileTabPanel
-              data={writtenData?.data}
+              data={writtenData}
               setOption={setWrittenOption}
               userId={userId}
             />
@@ -146,7 +139,7 @@ const Profile = () => {
           {isMyPage && (
             <Tabs.TabPanel>
               <ProfileTabPanel
-                data={boughtData?.data}
+                data={boughtData}
                 setOption={setBoughtOption}
                 userId={userId}
               />
@@ -156,7 +149,7 @@ const Profile = () => {
           {isMyPage && (
             <Tabs.TabPanel>
               <ProfileTabPanel
-                data={bookmarkedData?.data}
+                data={bookmarkedData}
                 setOption={setBookmarkedOption}
                 userId={userId}
               />

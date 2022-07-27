@@ -25,9 +25,11 @@ const ProfileTabPanel = ({ data, setOption }) => {
           </Filter>
         </Style.FilterContainer>
         <Style.FeedContainer>
-          {data?.map((feed) => (
-            <Feed feedData={feed} key={feed.postId} userId={userId} />
-          ))}
+          {data?.pages.map((page) =>
+            page.result.map((feed) => (
+              <Feed feedData={feed} key={feed.postId} userId={userId} />
+            ))
+          )}
         </Style.FeedContainer>
       </Style.PanelContainer>
     </>
