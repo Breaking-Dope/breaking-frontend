@@ -66,12 +66,21 @@ export const AddComment = styled.div`
 `;
 
 export const ReplyCount = styled.div`
-  display: flex;
+  display: inline-block;
   margin-left: 75px;
-  align-items: center;
   color: ${({ theme }) => theme.blue[900]};
   font-size: 14px;
   cursor: pointer;
+  svg {
+    vertical-align: middle;
+  }
+`;
+
+export const Loading = styled(ReactLoading)`
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, -50%);
 `;
 
 export const Reply = styled.div`
@@ -81,9 +90,9 @@ export const Reply = styled.div`
   width: 750px;
 `;
 
-export const Loading = styled(ReactLoading)`
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translate(-50%, -50%);
+export const MoreChowReply = styled(ReplyCount)`
+  svg {
+    margin-right: 3px;
+    vertical-align: bottom;
+  }
 `;

@@ -23,6 +23,7 @@ import { ReactComponent as ChatIcon } from 'assets/svg/chat.svg';
 import { ReactComponent as BlockIcon } from 'assets/svg/block.svg';
 import { ReactComponent as DropUpIcon } from 'assets/svg/drop_up.svg';
 import { ReactComponent as DropDownIcon } from 'assets/svg/drop_down.svg';
+import { ReactComponent as MoreIcon } from 'assets/svg/more_arrow.svg';
 
 const Comment = ({ comment, type, postId }) => {
   const navigate = useNavigate();
@@ -36,19 +37,20 @@ const Comment = ({ comment, type, postId }) => {
 
   const {
     data: PostReplyData,
-    isLoading: PostReplyIsLoading,
-    refetch: PostReplyRefetch,
-  } = usePostReply(comment.commentId, 1, 10);
+    isFetching: IsPostReplyFetching,
+    fetchNextPage: FetchNextPostReply,
+    refetch: PostReplyReFetch,
+  } = usePostReply(comment.commentId);
 
   const { mutate: CommentLike } = useMutation(postPostCommentLike);
   const { mutate: DeleteCommentLike } = useMutation(deletePostCommentLike);
   const { mutate: DeleteComment } = useMutation(deletePostComment);
 
-  const handleProfileClick = () => {
+  const profileClick = () => {
     navigate(PAGE_PATH.PROFILE(comment.user.userId));
   };
 
-  const handleCommentDeleteClick = () => {
+  const commentDeleteClick = () => {
     let deleteConfirm = window.confirm('삭제하시겠습니까?');
 
     deleteConfirm &&
@@ -57,6 +59,10 @@ const Comment = ({ comment, type, postId }) => {
           alert('댓글을 삭제하였습니다.');
         },
       });
+  };
+
+  const moreShowReplyClick = () => {
+    FetchNextPostReply();
   };
 
   const toggleLiked = () => {
@@ -77,7 +83,7 @@ const Comment = ({ comment, type, postId }) => {
 
   const toggleReply = () => {
     setIsOpenReplyToggle((pre) => !pre);
-    PostReplyRefetch();
+    PostReplyReFetch();
   };
 
   return (
@@ -86,7 +92,7 @@ const Comment = ({ comment, type, postId }) => {
         <ProfileImage
           size="medium"
           src={comment.user.profileImgURL}
-          profileClick={handleProfileClick}
+          profileClick={profileClick}
         />
         <Style.ContentContainer>
           <Style.Nickname>{comment.user.nickname}</Style.Nickname>
@@ -116,7 +122,7 @@ const Comment = ({ comment, type, postId }) => {
                       path={PAGE_PATH.POST(postId)}
                       icon={<RemoveIcon />}
                       label="삭제"
-                      onClick={handleCommentDeleteClick}
+                      onClick={commentDeleteClick}
                     />
                   </Toggle>
                 ) : (
@@ -154,12 +160,20 @@ const Comment = ({ comment, type, postId }) => {
       )}
       {isOpenReplyToggle && (
         <Style.Reply>
-          {PostReplyIsLoading ? (
+          {IsPostReplyFetching ? (
             <Style.Loading type="spin" color="#014d91" width="40px" />
           ) : (
-            PostReplyData?.data.comment?.map((reply) => (
-              <Comment comment={reply} type="reply" key={reply.commentId} />
-            ))
+            <>
+              {PostReplyData?.pages.map((page) =>
+                page.result.map((reply) => (
+                  <Comment comment={reply} type="reply" key={reply.commentId} />
+                ))
+              )}
+              <Style.MoreChowReply onClick={moreShowReplyClick}>
+                <MoreIcon />
+                더보기
+              </Style.MoreChowReply>
+            </>
           )}
         </Style.Reply>
       )}
