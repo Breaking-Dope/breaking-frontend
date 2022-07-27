@@ -1,6 +1,14 @@
 import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
 import PropTypes from 'prop-types';
 import { UserInformationContext } from 'providers/UserInformationProvider';
+import {
+  deletePostComment,
+  deletePostCommentLike,
+  postPostCommentLike,
+} from 'api/post';
+import usePostReply from 'hooks/queries/usePostReply';
 import { PAGE_PATH } from 'constants/path';
 import Toggle from 'components/Toggle/Toggle';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
@@ -16,44 +24,45 @@ import { ReactComponent as BlockIcon } from 'assets/svg/block.svg';
 import { ReactComponent as DropUpIcon } from 'assets/svg/drop_up.svg';
 import { ReactComponent as DropDownIcon } from 'assets/svg/drop_down.svg';
 
-const Comment = ({ comment, type }) => {
+const Comment = ({ comment, type, postId }) => {
+  const navigate = useNavigate();
+
   const { userId, profileImgURL } = useContext(UserInformationContext);
   const [isOpenCommentToggle, setIsOpenCommentToggle] = useState(false);
   const [isOpenCommentFormToggle, setIsOpenCommentFormToggle] = useState(false);
   const [isOpenReplyToggle, setIsOpenReplyToggle] = useState(false);
   const [isLiked, setIsLiked] = useState(comment.isLiked);
   const [likeCount, setLikeCount] = useState(comment.likeCount);
-  const replyData = {
-    comment: [
-      {
-        commentId: 3,
-        content: '대댓글1',
-        likeCount: 1,
-        replyCount: 0,
-        user: {
-          userId: 1,
-          profileImgURL: '',
-          nickname: '만두피',
-        },
-        isLiked: false,
-        createdTime: '2022-07-25T15:32:39.445Z',
-      },
-      {
-        commentId: 4,
-        content: '대댓글2',
-        likeCount: 1,
-        replyCount: 0,
-        user: {
-          userId: 1,
-          profileImgURL: '',
-          nickname: '만두피',
-        },
-        isLiked: false,
-        createdTime: '2022-07-25T15:32:39.445Z',
-      },
-    ],
+
+  const {
+    data: PostReplyData,
+    isLoading: PostReplyIsLoading,
+    refetch: PostReplyRefetch,
+  } = usePostReply(comment.commentId, 1, 10);
+
+  const { mutate: CommentLike } = useMutation(postPostCommentLike);
+  const { mutate: DeleteCommentLike } = useMutation(deletePostCommentLike);
+  const { mutate: DeleteComment } = useMutation(deletePostComment);
+
+  const handleProfileClick = () => {
+    navigate(PAGE_PATH.PROFILE(comment.user.userId));
   };
+
+  const handleCommentDeleteClick = () => {
+    let deleteConfirm = window.confirm('삭제하시겠습니까?');
+
+    deleteConfirm &&
+      DeleteComment(comment.commentId, {
+        onSuccess: () => {
+          alert('댓글을 삭제하였습니다.');
+        },
+      });
+  };
+
   const toggleLiked = () => {
+    isLiked
+      ? DeleteCommentLike(comment.commentId)
+      : CommentLike(comment.commentId);
     setLikeCount((pre) => (isLiked ? pre - 1 : pre + 1));
     setIsLiked((pre) => !pre);
   };
@@ -68,13 +77,17 @@ const Comment = ({ comment, type }) => {
 
   const toggleReply = () => {
     setIsOpenReplyToggle((pre) => !pre);
-    // 대댓글 api 호출
+    PostReplyRefetch();
   };
 
   return (
     <>
       <Style.Comment isReply={comment.replyCount}>
-        <ProfileImage size="medium" src={comment.user.profileImgURL} />
+        <ProfileImage
+          size="medium"
+          src={comment.user.profileImgURL}
+          profileClick={handleProfileClick}
+        />
         <Style.ContentContainer>
           <Style.Nickname>{comment.user.nickname}</Style.Nickname>
           <Style.CreatedTime>{comment.createdTime}</Style.CreatedTime>
@@ -83,7 +96,7 @@ const Comment = ({ comment, type }) => {
             <Style.Status>
               <label onClick={toggleLiked}>
                 {isLiked ? <LikedIcon /> : <LikeIcon />}
-                {likeCount}
+                {likeCount.toLocaleString('ko-KR')}
               </label>
               {type === 'comment' && (
                 <span onClick={toggleCommentForm}>답글쓰기</span>
@@ -95,25 +108,26 @@ const Comment = ({ comment, type }) => {
                 (comment.user.userId === userId ? (
                   <Toggle width="100px">
                     <Toggle.LabelLink
-                      path={PAGE_PATH.HOME}
+                      path={PAGE_PATH.POST(postId)}
                       icon={<EditIcon />}
                       label="수정"
                     />
                     <Toggle.LabelLink
-                      path={PAGE_PATH.HOME}
+                      path={PAGE_PATH.POST(postId)}
                       icon={<RemoveIcon />}
                       label="삭제"
+                      onClick={handleCommentDeleteClick}
                     />
                   </Toggle>
                 ) : (
                   <Toggle width="100px">
                     <Toggle.LabelLink
-                      path={PAGE_PATH.HOME}
+                      path={PAGE_PATH.POST(postId)}
                       icon={<ChatIcon />}
                       label="채팅"
                     />
                     <Toggle.LabelLink
-                      path={PAGE_PATH.HOME}
+                      path={PAGE_PATH.POST(postId)}
                       icon={<BlockIcon />}
                       label="차단"
                     />
@@ -125,7 +139,11 @@ const Comment = ({ comment, type }) => {
       </Style.Comment>
       {isOpenCommentFormToggle && (
         <Style.AddComment>
-          <CommentForm profileImgURL={profileImgURL} />
+          <CommentForm
+            profileImgURL={profileImgURL}
+            userId={userId}
+            postId={postId}
+          />
         </Style.AddComment>
       )}
       {comment.replyCount !== 0 && (
@@ -136,9 +154,13 @@ const Comment = ({ comment, type }) => {
       )}
       {isOpenReplyToggle && (
         <Style.Reply>
-          {replyData.comment.map((reply) => (
-            <Comment comment={reply} type="reply" key={reply.commentId} />
-          ))}
+          {PostReplyIsLoading ? (
+            <Style.Loading type="spin" color="#014d91" width="40px" />
+          ) : (
+            PostReplyData?.data.comment?.map((reply) => (
+              <Comment comment={reply} type="reply" key={reply.commentId} />
+            ))
+          )}
         </Style.Reply>
       )}
     </>
@@ -148,6 +170,7 @@ const Comment = ({ comment, type }) => {
 Comment.propTypes = {
   comment: PropTypes.object.isRequired,
   type: PropTypes.oneOf(['comment', 'reply']),
+  postId: PropTypes.number,
 };
 
 export default Comment;

@@ -1,3 +1,4 @@
+import ReactLoading from 'react-loading';
 import styled from 'styled-components';
 
 export const Comment = styled.div`
@@ -6,7 +7,6 @@ export const Comment = styled.div`
   padding: 10px;
   margin-bottom: ${({ isReply }) => (isReply ? '0px' : '10px')};
   border-radius: 10px;
-  background-color: ${({ theme }) => theme.gray[50]};
   align-items: center;
 `;
 
@@ -70,10 +70,20 @@ export const ReplyCount = styled.div`
   margin-left: 75px;
   align-items: center;
   color: ${({ theme }) => theme.blue[900]};
+  font-size: 14px;
   cursor: pointer;
 `;
 
 export const Reply = styled.div`
+  position: relative;
   margin-left: auto;
+  min-height: 100px;
   width: 750px;
+`;
+
+export const Loading = styled(ReactLoading)`
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, -50%);
 `;
