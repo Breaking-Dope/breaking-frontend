@@ -64,13 +64,13 @@ export const getFollowings = ({ queryKey }) => {
 export const postFollow = (userId) => {
   return api({
     method: 'post',
-    url: API_PATH.FOLLOW(userId),
+    url: API_PATH.PROFILE_FOLLOW(userId),
   });
 };
 
 export const postUnFollow = (userId) => {
   return api({
     method: 'delete',
-    url: API_PATH.UNFOLLOW(userId),
+    url: API_PATH.PROFILE_UNFOLLOW(userId),
   });
 };

@@ -15,6 +15,7 @@ import GoogleRedirect from 'pages/SocialLogin/Redirect/GoogleRedirect';
 import Profile from 'pages/Profile/Profile';
 import UserInformationProvider from 'providers/UserInformationProvider';
 import ProfileEdit from 'pages/ProfileEdit/ProfileEdit';
+import Post from 'pages/Post/Post';
 import MainFeed from 'pages/MainFeed/MainFeed';
 
 function App() {
@@ -50,6 +51,10 @@ function App() {
                   <Route
                     path={PAGE_PATH.PROFILE_EDIT}
                     element={<ProfileEdit />}
+                  />
+                  <Route
+                    path={PAGE_PATH.FEED_DETAIL(':id')}
+                    element={<Post />}
                   />
                 </Routes>
               </Layout>
