@@ -11,7 +11,6 @@ import ReactLoading from 'react-loading';
 const ProfileTabPanel = ({ data, isFetching, nextFetch, setOption }) => {
   const targetRef = useRef();
   const { userId } = useContext(UserInformationContext);
-  console.log(isFetching);
   useEffect(() => {
     let observer;
     const onIntersect = async ([entry], observer) => {
