@@ -33,7 +33,7 @@ export const UploadFileBox = styled.div`
   flex-direction: column;
 `;
 
-export const PlusContainer = styled.div`
+export const PlusIconContainer = styled.div`
   margin-top: 30px;
 `;
 
@@ -77,7 +77,7 @@ export const UploadBox = styled.img`
   border-radius: 10px;
 `;
 
-export const XMarkIcon = styled.div`
+export const XMarkIconContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -92,7 +92,7 @@ export const XMarkIcon = styled.div`
   cursor: pointer;
 `;
 
-export const ArrowIcon = styled.div`
+export const ArrowIconContainer = styled.div`
   margin-bottom: 20px;
   cursor: pointer;
 `;

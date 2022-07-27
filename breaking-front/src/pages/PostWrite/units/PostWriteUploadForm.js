@@ -20,70 +20,70 @@ const PostUploadForm = () => {
       <Style.UploadForm>
         <Style.UploadFileLayOut>
           <Style.UploadFileBox>
-            <Style.PlusContainer>
+            <Style.PlusIconContainer>
               <Plus />
-            </Style.PlusContainer>
+            </Style.PlusIconContainer>
             <Style.UploadCount>0</Style.UploadCount>
           </Style.UploadFileBox>
         </Style.UploadFileLayOut>
 
         <Style.UploadPreview>
-          <Style.ArrowIcon>
+          <Style.ArrowIconContainer>
             <LeftArrow onClick={onLeftClick} />
-          </Style.ArrowIcon>
+          </Style.ArrowIconContainer>
           <Style.Carusel ref={caruselRef}>
             <Style.UploadPreviewImg>
               <Style.UploadBox></Style.UploadBox>
-              <Style.XMarkIcon>
+              <Style.XMarkIconContainer>
                 <XMark />
-              </Style.XMarkIcon>
+              </Style.XMarkIconContainer>
             </Style.UploadPreviewImg>
 
             <Style.UploadPreviewImg>
               <Style.UploadBox></Style.UploadBox>
-              <Style.XMarkIcon>
+              <Style.XMarkIconContainer>
                 <XMark />
-              </Style.XMarkIcon>
+              </Style.XMarkIconContainer>
             </Style.UploadPreviewImg>
 
             <Style.UploadPreviewImg>
               <Style.UploadBox></Style.UploadBox>
-              <Style.XMarkIcon>
+              <Style.XMarkIconContainer>
                 <XMark />
-              </Style.XMarkIcon>
+              </Style.XMarkIconContainer>
             </Style.UploadPreviewImg>
 
             <Style.UploadPreviewImg>
               <Style.UploadBox></Style.UploadBox>
-              <Style.XMarkIcon>
+              <Style.XMarkIconContainer>
                 <XMark />
-              </Style.XMarkIcon>
+              </Style.XMarkIconContainer>
             </Style.UploadPreviewImg>
 
             <Style.UploadPreviewImg>
               <Style.UploadBox></Style.UploadBox>
-              <Style.XMarkIcon>
+              <Style.XMarkIconContainer>
                 <XMark />
-              </Style.XMarkIcon>
+              </Style.XMarkIconContainer>
             </Style.UploadPreviewImg>
 
             <Style.UploadPreviewImg>
               <Style.UploadBox></Style.UploadBox>
-              <Style.XMarkIcon>
+              <Style.XMarkIconContainer>
                 <XMark />
-              </Style.XMarkIcon>
+              </Style.XMarkIconContainer>
             </Style.UploadPreviewImg>
 
             <Style.UploadPreviewImg>
               <Style.UploadBox></Style.UploadBox>
-              <Style.XMarkIcon>
+              <Style.XMarkIconContainer>
                 <XMark />
-              </Style.XMarkIcon>
+              </Style.XMarkIconContainer>
             </Style.UploadPreviewImg>
           </Style.Carusel>
-          <Style.ArrowIcon>
+          <Style.ArrowIconContainer>
             <RightArrow onClick={onRightClick} />
-          </Style.ArrowIcon>
+          </Style.ArrowIconContainer>
         </Style.UploadPreview>
       </Style.UploadForm>
     </Style.Upload>

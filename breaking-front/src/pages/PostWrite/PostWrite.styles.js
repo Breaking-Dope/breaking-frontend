@@ -22,7 +22,7 @@ export const PostSubmitButton = styled(Button)`
 
 export const Container = styled.div``;
 
-export const BackPageContainer = styled.div`
+export const BackPageIconContainer = styled.div`
   margin-top: 30px;
   margin-bottom: 20px;
 `;

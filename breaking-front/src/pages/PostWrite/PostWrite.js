@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import * as Style from 'pages/PostWrite/PostWrite.styles';
 import PostUploadForm from 'pages/PostWrite/units/PostWriteUploadForm';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
+import { ReactComponent as BackPageIcon } from 'assets/svg/back.svg';
 import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
 
@@ -19,6 +20,7 @@ const PostWrite = () => {
   const handleAnonymous = (event) => {
     setSelectedAnonymous(event.target.id);
   };
+
   const handleOccurDate = (event) => {
     setOccurDate(event.target.value);
   };
@@ -28,6 +30,7 @@ const PostWrite = () => {
   const handlePrice = (event) => {
     setPrice(Number(event.target.value));
   };
+
   const toggleShowPirceInput = () => {
     setIsShowPriceInput((pre) => !pre);
   };
@@ -40,7 +43,9 @@ const PostWrite = () => {
 
   return (
     <Style.Container>
-      <Style.BackSpace></Style.BackSpace>
+      <Style.BackPageIconContainer>
+        <BackPageIcon />
+      </Style.BackPageIconContainer>
 
       <PostUploadForm />
 
