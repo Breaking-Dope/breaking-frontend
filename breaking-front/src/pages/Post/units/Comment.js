@@ -27,11 +27,11 @@ import { ReactComponent as MoreIcon } from 'assets/svg/more_arrow.svg';
 
 const Comment = ({ comment, type, postId }) => {
   const navigate = useNavigate();
-  const content = comment.content.split(/(#[^\s#]+)/g);
 
   const { userId, profileImgURL } = useContext(UserInformationContext);
   const [isOpenCommentToggle, setIsOpenCommentToggle] = useState(false);
   const [isOpenCommentFormToggle, setIsOpenCommentFormToggle] = useState(false);
+  const [isOpenCommentEditToggle, setIsOpenCommentEditToggle] = useState(false);
   const [isOpenReplyToggle, setIsOpenReplyToggle] = useState(false);
   const [isLiked, setIsLiked] = useState(comment.isLiked);
   const [likeCount, setLikeCount] = useState(comment.likeCount);
@@ -49,6 +49,12 @@ const Comment = ({ comment, type, postId }) => {
 
   const profileClick = () => {
     navigate(PAGE_PATH.PROFILE(comment.user.userId));
+  };
+
+  const commentEditClick = () => {
+    setIsOpenCommentFormToggle(false);
+    setIsOpenCommentToggle(false);
+    setIsOpenCommentEditToggle((pre) => !pre);
   };
 
   const commentDeleteClick = () => {
@@ -89,7 +95,7 @@ const Comment = ({ comment, type, postId }) => {
 
   return (
     <>
-      <Style.Comment isReply={comment.replyCount}>
+      <Style.Comment isEditing={isOpenCommentEditToggle}>
         <ProfileImage
           size="medium"
           src={comment.user.profileImgURL}
@@ -99,15 +105,18 @@ const Comment = ({ comment, type, postId }) => {
           <Style.Nickname>{comment.user.nickname}</Style.Nickname>
           <Style.CreatedTime>{comment.createdTime}</Style.CreatedTime>
           <Style.Content>
-            {content.map((contentSlice, index) =>
-              contentSlice[0] === '#' ? (
-                <Style.Hashtag key={'comment-hashtag-' + index}>
-                  {contentSlice}
-                </Style.Hashtag>
-              ) : (
-                contentSlice
-              )
-            )}
+            {comment.content
+              .split(/(#[^\s#]+|\n)/g)
+              .map((contentSlice, index) => {
+                if (contentSlice === '\n') return <br />;
+                else if (contentSlice[0] === '#')
+                  return (
+                    <Style.Hashtag key={'comment-hashtag-' + index}>
+                      {contentSlice}
+                    </Style.Hashtag>
+                  );
+                else return contentSlice;
+              })}
           </Style.Content>
           <Style.CommentFooter>
             <Style.Status>
@@ -128,6 +137,7 @@ const Comment = ({ comment, type, postId }) => {
                       path={PAGE_PATH.POST(postId)}
                       icon={<EditIcon />}
                       label="수정"
+                      onClick={commentEditClick}
                     />
                     <Toggle.LabelLink
                       path={PAGE_PATH.POST(postId)}
@@ -158,8 +168,8 @@ const Comment = ({ comment, type, postId }) => {
         <Style.AddComment>
           <CommentForm
             profileImgURL={profileImgURL}
-            userId={userId}
-            postId={postId}
+            commentId={comment.commentId}
+            type="reply"
           />
         </Style.AddComment>
       )}
@@ -187,6 +197,19 @@ const Comment = ({ comment, type, postId }) => {
             </>
           )}
         </Style.Reply>
+      )}
+      {isOpenCommentEditToggle && (
+        <Style.CommentEditForm>
+          <CommentForm
+            profileImgURL={profileImgURL}
+            commentId={comment.commentId}
+            content={comment.content}
+            type="edit"
+          />
+          <Style.CancelCommentEdit onClick={commentEditClick}>
+            취소
+          </Style.CancelCommentEdit>
+        </Style.CommentEditForm>
       )}
     </>
   );

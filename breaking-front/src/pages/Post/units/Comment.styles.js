@@ -2,11 +2,9 @@ import ReactLoading from 'react-loading';
 import styled from 'styled-components';
 
 export const Comment = styled.div`
-  display: flex;
+  display: ${({ isEditing }) => (isEditing ? 'none' : 'flex')};
   width: 100%;
   padding: 10px;
-  margin-bottom: ${({ isReply }) => (isReply ? '0px' : '10px')};
-  border-radius: 10px;
   align-items: center;
 `;
 
@@ -26,7 +24,7 @@ export const CreatedTime = styled.p`
   color: ${({ theme }) => theme.gray[700]};
 `;
 
-export const Content = styled.p`
+export const Content = styled.div`
   padding-right: 30px;
   font-size: 14px;
 `;
@@ -101,4 +99,16 @@ export const MoreChowReply = styled(ReplyCount)`
     margin-right: 3px;
     vertical-align: bottom;
   }
+`;
+
+export const CommentEditForm = styled.div`
+  margin: 30px 0px;
+  padding: 10px 0px;
+`;
+
+export const CancelCommentEdit = styled.div`
+  margin-left: 80px;
+  color: ${({ theme }) => theme.blue[900]};
+  font-size: 14px;
+  cursor: pointer;
 `;
