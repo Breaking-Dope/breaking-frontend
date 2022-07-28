@@ -1,6 +1,21 @@
 import { API_PATH } from 'constants/path';
 import { rest } from 'msw';
 import { COMMENT_DATA, POST_DATA, REPLY_DATA } from 'mocks/dummyData/contents';
+import {
+  FOLLWOING_USER,
+  NO_FOLLOW_USER,
+  NO_POSTCOUNT_USER,
+  NO_PROFILEIMGURL_USER,
+  NO_STATUSMSG_USER,
+} from 'mocks/dummyData/users';
+
+const boughtUserList = [
+  NO_STATUSMSG_USER,
+  NO_PROFILEIMGURL_USER,
+  NO_POSTCOUNT_USER,
+  NO_FOLLOW_USER,
+  FOLLWOING_USER,
+];
 
 export const postHandlers = [
   rest.get(API_PATH.POST_DATA(':postId'), (req, res, ctx) => {
@@ -15,13 +30,17 @@ export const postHandlers = [
     return res(ctx.status(200), ctx.json(REPLY_DATA));
   }),
 
-  rest.post(API_PATH.POST_COMMENT_WRITE(':postId'), (req, res, ctx) => {
-    console.log('댓글 등록 성공');
-    return res(ctx.status(200));
+  rest.get(API_PATH.POST_BOUGHT_LIST(':postId'), (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({ Users: boughtUserList }));
   }),
 
   rest.delete(API_PATH.POST_DELETE(':postId'), (req, res, ctx) => {
     console.log('게시글 삭제 성공');
+    return res(ctx.status(200));
+  }),
+
+  rest.post(API_PATH.POST_BUY(':postId', ':userId'), (req, res, ctx) => {
+    console.log('게시글 구매 성공');
     return res(ctx.status(200));
   }),
 
@@ -42,6 +61,11 @@ export const postHandlers = [
 
   rest.delete(API_PATH.POST_BOOKMARK_DELETE(':postId'), (req, res, ctx) => {
     console.log('게시글 북마크 취소');
+    return res(ctx.status(200));
+  }),
+
+  rest.post(API_PATH.POST_COMMENT_WRITE(':postId'), (req, res, ctx) => {
+    console.log('댓글 등록 성공');
     return res(ctx.status(200));
   }),
 

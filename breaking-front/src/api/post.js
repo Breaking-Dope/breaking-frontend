@@ -37,6 +37,14 @@ export const getPostReplyData = async ({ queryKey, pageParam = 0 }) => {
   };
 };
 
+export const getPostBoughtList = ({ queryKey }) => {
+  const [, postId] = queryKey;
+  return api({
+    method: 'get',
+    url: API_PATH.POST_BOUGHT_LIST(postId),
+  });
+};
+
 export const deletePost = (postId) => {
   return api({
     method: 'delete',
