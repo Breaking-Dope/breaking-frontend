@@ -27,6 +27,7 @@ import { ReactComponent as MoreIcon } from 'assets/svg/more_arrow.svg';
 
 const Comment = ({ comment, type, postId }) => {
   const navigate = useNavigate();
+  const content = comment.content.split(/(#[^\s#]+)/g);
 
   const { userId, profileImgURL } = useContext(UserInformationContext);
   const [isOpenCommentToggle, setIsOpenCommentToggle] = useState(false);
@@ -97,7 +98,17 @@ const Comment = ({ comment, type, postId }) => {
         <Style.ContentContainer>
           <Style.Nickname>{comment.user.nickname}</Style.Nickname>
           <Style.CreatedTime>{comment.createdTime}</Style.CreatedTime>
-          <Style.Content>{comment.content}</Style.Content>
+          <Style.Content>
+            {content.map((contentSlice, index) =>
+              contentSlice[0] === '#' ? (
+                <Style.Hashtag key={'comment-hashtag-' + index}>
+                  {contentSlice}
+                </Style.Hashtag>
+              ) : (
+                contentSlice
+              )
+            )}
+          </Style.Content>
           <Style.CommentFooter>
             <Style.Status>
               <label onClick={toggleLiked}>

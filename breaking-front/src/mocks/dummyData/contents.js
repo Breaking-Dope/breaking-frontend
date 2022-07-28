@@ -146,7 +146,8 @@ export const COMMENT_DATA = {
   comment: [
     {
       commentId: 1,
-      content: '아이고 이를 어째 ㅠㅠㅠㅠㅠㅠ',
+      content:
+        '아이고 이를 어째 ㅠㅠㅠㅠㅠㅠ  #슬픔 #공감 #추천 #해#시#태#그 글 사이에#해시태그 있어도 잘 됩니다!',
       likeCount: 1,
       replyCount: 2,
       user: {

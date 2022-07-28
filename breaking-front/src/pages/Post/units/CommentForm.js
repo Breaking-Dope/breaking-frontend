@@ -29,8 +29,16 @@ const CommentForm = ({ profileImgURL, userId, postId }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const hashtagList = comment
+      .match(/#[^\s#]+/g)
+      ?.map((hashtag) => hashtag.replace('#', ''));
 
-    comment && CommentWrite({ postId: postId, data: comment });
+    comment &&
+      CommentWrite({
+        postId: postId,
+        content: comment,
+        hashtagList: hashtagList,
+      });
     setComment('');
   };
   return (

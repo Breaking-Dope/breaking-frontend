@@ -79,11 +79,11 @@ export const postPostBuy = ({ postId, userId }) => {
   });
 };
 
-export const postPostCommentWrite = ({ postId, data }) => {
+export const postPostCommentWrite = ({ postId, content, hashtagList }) => {
   return api({
     method: 'post',
     url: API_PATH.POST_COMMENT_WRITE(postId),
-    data: { content: data },
+    data: { content: content, hashtagList: hashtagList },
   });
 };
 

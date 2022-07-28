@@ -19,14 +19,20 @@ export const Nickname = styled.h3`
   margin-bottom: 3px;
   font-size: 16px;
 `;
+
 export const CreatedTime = styled.p`
   margin-bottom: 10px;
   font-size: 10px;
   color: ${({ theme }) => theme.gray[700]};
 `;
+
 export const Content = styled.p`
   padding-right: 30px;
   font-size: 14px;
+`;
+
+export const Hashtag = styled.span`
+  color: ${({ theme }) => theme.blue[900]};
 `;
 
 export const Status = styled.div`
