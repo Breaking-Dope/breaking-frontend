@@ -108,7 +108,8 @@ const Comment = ({ comment, type, postId }) => {
             {comment.content
               .split(/(#[^\s#]+|\n)/g)
               .map((contentSlice, index) => {
-                if (contentSlice === '\n') return <br />;
+                if (contentSlice === '\n')
+                  return <br key={'comment-br-' + index} />;
                 else if (contentSlice[0] === '#')
                   return (
                     <Style.Hashtag key={'comment-hashtag-' + index}>
