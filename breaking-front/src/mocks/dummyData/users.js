@@ -73,7 +73,7 @@ export const NO_FOLLOW_USER = {
   isFollowing: false,
 };
 
-export const FOLLWOING_USER = {
+export const FOLLOWING_USER = {
   userId: 5,
   price: 10000,
   profileImgURL: '',

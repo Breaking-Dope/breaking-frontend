@@ -7,7 +7,7 @@ import {
   SOLDOUT_CONTENT,
 } from 'mocks/dummyData/contents';
 import {
-  FOLLWOING_USER,
+  FOLLOWING_USER,
   NORMAL_USER,
   NO_FOLLOW_USER,
   NO_POSTCOUNT_USER,
@@ -48,7 +48,7 @@ const followerList = [
   NO_PROFILEIMGURL_USER,
   NO_POSTCOUNT_USER,
   NO_FOLLOW_USER,
-  FOLLWOING_USER,
+  FOLLOWING_USER,
 ];
 
 const followingList = [
@@ -57,7 +57,7 @@ const followingList = [
   NO_PROFILEIMGURL_USER,
   NO_POSTCOUNT_USER,
   NO_FOLLOW_USER,
-  FOLLWOING_USER,
+  FOLLOWING_USER,
   NORMAL_USER,
   NORMAL_USER,
   NORMAL_USER,
@@ -76,7 +76,7 @@ const userList = [
   NO_PROFILEIMGURL_USER,
   NO_POSTCOUNT_USER,
   NO_FOLLOW_USER,
-  FOLLWOING_USER,
+  FOLLOWING_USER,
 ];
 
 export const profileHandlers = [

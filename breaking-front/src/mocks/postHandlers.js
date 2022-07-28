@@ -2,7 +2,7 @@ import { API_PATH } from 'constants/path';
 import { rest } from 'msw';
 import { COMMENT_DATA, POST_DATA, REPLY_DATA } from 'mocks/dummyData/contents';
 import {
-  FOLLWOING_USER,
+  FOLLOWING_USER,
   NO_FOLLOW_USER,
   NO_POSTCOUNT_USER,
   NO_PROFILEIMGURL_USER,
@@ -14,7 +14,7 @@ const boughtUserList = [
   NO_PROFILEIMGURL_USER,
   NO_POSTCOUNT_USER,
   NO_FOLLOW_USER,
-  FOLLWOING_USER,
+  FOLLOWING_USER,
 ];
 
 export const postHandlers = [
