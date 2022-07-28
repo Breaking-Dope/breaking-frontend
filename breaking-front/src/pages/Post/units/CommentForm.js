@@ -19,7 +19,7 @@ const CommentForm = ({ profileImgURL, userId, postId }) => {
     },
   });
 
-  const handleProfileClick = () => {
+  const profileClick = () => {
     navigate(PAGE_PATH.PROFILE(userId));
   };
 
@@ -47,7 +47,7 @@ const CommentForm = ({ profileImgURL, userId, postId }) => {
         <ProfileImage
           size="medium"
           src={profileImgURL}
-          profileClick={handleProfileClick}
+          profileClick={profileClick}
         />
         <Style.CommentInput
           placeholder="댓글 추가"

@@ -58,11 +58,11 @@ const Post = () => {
   const { mutate: DeletePostBookmark } = useMutation(deletePostBookmark);
   const { mutate: DeletePost } = useMutation(deletePost);
 
-  const handleProfileClick = () => {
+  const profileClick = () => {
     navigate(PAGE_PATH.PROFILE(PostData?.data.user.userId));
   };
 
-  const handlePostDeleteClick = () => {
+  const postDeleteClick = () => {
     let deleteConfirm = window.confirm('삭제하시겠습니까?');
 
     deleteConfirm &&
@@ -125,7 +125,7 @@ const Post = () => {
           <ProfileImage
             size="large"
             src={PostData?.data.user.profileImgURL}
-            profileClick={handleProfileClick}
+            profileClick={profileClick}
           />
           <Style.ContentWriterName>
             {PostData?.data.user.nickname}
@@ -214,7 +214,7 @@ const Post = () => {
                       path={PAGE_PATH.POST(postId)}
                       icon={<RemoveIcon />}
                       label="삭제"
-                      onClick={handlePostDeleteClick}
+                      onClick={postDeleteClick}
                     />
                   </>
                 ) : (
