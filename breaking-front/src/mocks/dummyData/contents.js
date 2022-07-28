@@ -123,18 +123,18 @@ export const POST_DATA = {
     latitude: 12.12345,
   },
   hashtagList: ['킹받네', '신조어'],
-  price: 123111,
-  postType: 'exclusive',
+  price: 123456,
+  postType: 'charged',
   eventTime: '2020-01-01T14:01:01',
   createdTime: '2022-07-22T14:39:03.661634',
   modifiedTime: '2022-07-22T14:39:03.661634',
-  viewCount: 1,
-  soldCount: 1,
+  viewCount: 1000000,
+  soldCount: 5,
   isAnonymous: false,
   isSold: false,
   isHidden: false,
-  likeCount: 10,
-  commentCount: 4,
+  likeCount: 1004,
+  commentCount: 5,
 };
 
 export const COMMENT_DATA = {
@@ -142,7 +142,7 @@ export const COMMENT_DATA = {
     {
       commentId: 1,
       content:
-        '아이고 이를 어째 ㅠㅠㅠㅠㅠㅠ\n#슬픔 #공감 #추천 #해#시#태#그 글 사이에#해시태그 있어도 잘 됩니다!',
+        '킹받네\n#공감 #추천 #해#시#태#그 글 사이에#해시태그 있어도 잘 됩니다!',
       likeCount: 1,
       replyCount: 2,
       user: {
@@ -155,8 +155,7 @@ export const COMMENT_DATA = {
     },
     {
       commentId: 2,
-      content:
-        '코로나 사태가 아직 진정이 되지 않았는데, 또 다시 확산이 될까봐 걱정이 되네요 ㅠㅠ',
+      content: '유익한 정보 감사합니다!',
       likeCount: 129,
       replyCount: 0,
       user: {
