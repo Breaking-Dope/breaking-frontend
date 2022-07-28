@@ -37,8 +37,8 @@ const Comment = ({ comment, type, postId }) => {
   const [likeCount, setLikeCount] = useState(comment.likeCount);
 
   const {
-    data: PostReplyData,
-    isFetching: IsPostReplyFetching,
+    data: postReplyData,
+    isFetching: isPostReplyFetching,
     fetchNextPage: FetchNextPostReply,
     refetch: PostReplyReFetch,
   } = usePostReply(comment.commentId);
@@ -182,11 +182,11 @@ const Comment = ({ comment, type, postId }) => {
       )}
       {isOpenReplyToggle && (
         <Style.Reply>
-          {IsPostReplyFetching ? (
+          {isPostReplyFetching ? (
             <Style.Loading type="spin" color="#014d91" width="40px" />
           ) : (
             <>
-              {PostReplyData?.pages.map((page) =>
+              {postReplyData?.pages.map((page) =>
                 page.result.map((reply) => (
                   <Comment comment={reply} type="reply" key={reply.commentId} />
                 ))

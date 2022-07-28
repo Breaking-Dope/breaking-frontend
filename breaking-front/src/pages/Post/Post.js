@@ -55,8 +55,8 @@ const Post = () => {
   const { data: PostBoughtList, refetch: PostBoughtListReFetch } =
     usePostBoughtList(postId);
   const {
-    data: PostCommentData,
-    isFetching: IsPostCommentFetching,
+    data: postCommentData,
+    isFetching: isPostCommentFetching,
     fetchNextPage: FetchNextPostComment,
   } = usePostComment(postId);
 
@@ -137,14 +137,14 @@ const Post = () => {
       }
     };
 
-    if (PostCommentData) {
+    if (postCommentData) {
       observer = new IntersectionObserver(onIntersect, {
         threshold: 0.8,
       });
       observer.observe(targetRef.current);
     }
     return () => observer && observer.disconnect();
-  }, [FetchNextPostComment, PostCommentData]);
+  }, [FetchNextPostComment, postCommentData]);
 
   return (
     <>
@@ -309,7 +309,7 @@ const Post = () => {
             postId={postId}
             type="comment"
           />
-          {PostCommentData?.pages.map((page) =>
+          {postCommentData?.pages.map((page) =>
             page.result.map((comment) => (
               <Comment
                 comment={comment}
@@ -320,7 +320,7 @@ const Post = () => {
             ))
           )}
           <div ref={targetRef}>
-            {IsPostCommentFetching && (
+            {isPostCommentFetching && (
               <Style.Loading type="spin" color="#014d91" width="40px" />
             )}
           </div>
