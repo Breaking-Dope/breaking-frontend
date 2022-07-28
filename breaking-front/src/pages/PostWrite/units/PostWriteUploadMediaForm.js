@@ -8,10 +8,10 @@ import { useRef } from 'react';
 
 const PostUploadMediaForm = () => {
   const caruselRef = useRef();
-  const onLeftClick = () => {
+  const LeftCaruselClick = () => {
     caruselRef.current.scrollLeft -= 620;
   };
-  const onRightClick = () => {
+  const RightCaruselClick = () => {
     caruselRef.current.scrollLeft += 620;
   };
   return (
@@ -29,7 +29,7 @@ const PostUploadMediaForm = () => {
 
         <Style.UploadPreviewLayout>
           <Style.ArrowIconContainer>
-            <LeftArrowIcon onClick={onLeftClick} />
+            <LeftArrowIcon onClick={LeftCaruselClick} />
           </Style.ArrowIconContainer>
           <Style.Carusel ref={caruselRef}>
             <Style.UploadPreviewImg>
@@ -82,7 +82,7 @@ const PostUploadMediaForm = () => {
             </Style.UploadPreviewImg>
           </Style.Carusel>
           <Style.ArrowIconContainer>
-            <RightArrowIcon onClick={onRightClick} />
+            <RightArrowIcon onClick={RightCaruselClick} />
           </Style.ArrowIconContainer>
         </Style.UploadPreviewLayout>
       </Style.UploadForm>

@@ -26,8 +26,8 @@ export const UploadFileBox = styled.div`
   padding: 10px;
   width: 145px;
   height: 145px;
-  background-color: ${({ theme }) => theme.blue[300]};
   border-radius: 10px;
+  background-color: ${({ theme }) => theme.blue[300]};
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -74,22 +74,22 @@ export const UploadPreviewImg = styled.div`
 export const UploadBox = styled.img`
   width: 145px;
   height: 145px;
-  background-color: ${({ theme }) => theme.blue[300]};
   border-radius: 10px;
+  background-color: ${({ theme }) => theme.blue[300]};
 `;
 
 export const XMarkIconContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
   position: absolute;
-  width: 24px;
-  height: 24px;
   top: 0;
   right: 0;
-  background-color: ${({ theme }) => theme.white};
+  width: 24px;
+  height: 24px;
   border: 1px solid ${({ theme }) => theme.gray[300]};
   border-radius: 50%;
+  background-color: ${({ theme }) => theme.white};
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 `;
 

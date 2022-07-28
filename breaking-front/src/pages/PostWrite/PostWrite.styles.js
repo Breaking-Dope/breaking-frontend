@@ -63,9 +63,9 @@ export const FindLocationLayout = styled.div`
   margin-left: 20px;
   cursor: pointer;
   > svg {
-    vertical-align: middle;
     width: 15px;
     height: 15px;
+    vertical-align: middle;
     > path {
       stroke: ${({ theme }) => theme.blue[900]};
     }
