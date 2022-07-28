@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import * as Style from 'pages/PostWrite/PostWrite.styles';
-import PostUploadForm from 'pages/PostWrite/units/PostWriteUploadForm';
+import PostUploadMediaForm from 'pages/PostWrite/units/PostWriteUploadMediaForm';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import { ReactComponent as BackPageIcon } from 'assets/svg/back.svg';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -47,9 +47,9 @@ const PostWrite = () => {
         <BackPageIcon />
       </Style.BackPageIconContainer>
 
-      <PostUploadForm />
+      <PostUploadMediaForm />
 
-      <Style.OccurTimeLayOut>
+      <Style.OccurTimeLayout>
         <Style.PostWriteTitle>제보 발생 시간</Style.PostWriteTitle>
         <Style.DatePicker
           type="date"
@@ -61,23 +61,21 @@ const PostWrite = () => {
           value={occurTime}
           onChange={handleOccurTime}
         ></Style.DatePicker>
-      </Style.OccurTimeLayOut>
+      </Style.OccurTimeLayout>
 
-      <Style.LocationLayOut>
+      <Style.LocationLayout>
         <Style.PostWriteTitle>
           위치
-          <Style.FindLocationLayOut>
+          <Style.FindLocationLayout>
             <LocationIcon />
             <Style.FindLocationMessage>
               현재 위치 찾기
             </Style.FindLocationMessage>
-          </Style.FindLocationLayOut>
+          </Style.FindLocationLayout>
         </Style.PostWriteTitle>
 
-        <Style.LocationInputContainer>
-          <Style.LocationInput type="text" placeholder="주소를 입력하세요" />
-        </Style.LocationInputContainer>
-      </Style.LocationLayOut>
+        <Style.LocationInput type="text" placeholder="주소를 입력하세요" />
+      </Style.LocationLayout>
 
       <Style.ContextLayout>
         <Style.TitleInput
@@ -90,32 +88,32 @@ const PostWrite = () => {
         <Style.HashTagInput placeholder=" # 해시태그를 입력하세요. (최대 8개)"></Style.HashTagInput>
       </Style.ContextLayout>
 
-      <Style.PostTypeLayOut>
+      <Style.PostTypeLayout>
         <Style.PostWriteTitle>제보 방식</Style.PostWriteTitle>
         <Style.PostRadioButton
           onClick={handlePostType}
           id="charged"
-          radioContorl={selectedPostType}
+          radioControl={selectedPostType}
         >
           유료제보
         </Style.PostRadioButton>
         <Style.PostRadioButton
           onClick={handlePostType}
           id="free"
-          radioContorl={selectedPostType}
+          radioControl={selectedPostType}
         >
           무료제보
         </Style.PostRadioButton>
         <Style.PostRadioButton
           onClick={handlePostType}
           id="exclusive"
-          radioContorl={selectedPostType}
+          radioControl={selectedPostType}
         >
           단독제보
         </Style.PostRadioButton>
-      </Style.PostTypeLayOut>
+      </Style.PostTypeLayout>
 
-      <Style.PriceLayOut>
+      <Style.PriceLayout>
         <Style.PostWriteTitle>제보 가격</Style.PostWriteTitle>
         <Style.PostPriceInput
           type="text"
@@ -128,25 +126,25 @@ const PostWrite = () => {
           onBlur={toggleShowPirceInput}
           onFocus={toggleShowPirceInput}
         ></Style.PostPriceInput>
-      </Style.PriceLayOut>
+      </Style.PriceLayout>
 
-      <Style.AnonymousLayOut>
+      <Style.AnonymousLayout>
         <Style.PostWriteTitle>프로필을 공개하시겠습니까?</Style.PostWriteTitle>
         <Style.PostRadioButton
           onClick={handleAnonymous}
           id="private"
-          radioContorl={selectedAnonymous}
+          radioControl={selectedAnonymous}
         >
           비공개
         </Style.PostRadioButton>
         <Style.PostRadioButton
           onClick={handleAnonymous}
           id="public"
-          radioContorl={selectedAnonymous}
+          radioControl={selectedAnonymous}
         >
           공개
         </Style.PostRadioButton>
-      </Style.AnonymousLayOut>
+      </Style.AnonymousLayout>
 
       <Style.PostSubmitButton type="submit">제보 하기</Style.PostSubmitButton>
     </Style.Container>

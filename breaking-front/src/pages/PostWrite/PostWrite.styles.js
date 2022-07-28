@@ -1,16 +1,13 @@
 import Button from 'components/Button/Button';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const PostWriteTitle = styled.h3`
   font-size: 24px;
 `;
 
 export const PostRadioButton = styled(Button)`
-  ${({ id, radioContorl }) =>
-    id === radioContorl &&
-    css`
-      background-color: ${({ theme }) => theme.blue[400]};
-    `}
+  background-color: ${({ id, radioControl, theme }) =>
+    id === radioControl && theme.blue[400]};
 `;
 
 export const PostSubmitButton = styled(Button)`
@@ -29,7 +26,7 @@ export const BackPageIconContainer = styled.div`
   cursor: pointer;
 `;
 
-export const OccurTimeLayOut = styled.div`
+export const OccurTimeLayout = styled.div`
   margin-top: 60px;
   > h3 {
     margin-bottom: 20px;
@@ -57,11 +54,11 @@ export const DatePicker = styled.input`
   }
 `;
 
-export const LocationLayOut = styled.div`
+export const LocationLayout = styled.div`
   margin-top: 60px;
 `;
 
-export const FindLocationLayOut = styled.div`
+export const FindLocationLayout = styled.div`
   display: inline-block;
   margin-left: 20px;
   cursor: pointer;
@@ -81,14 +78,11 @@ export const FindLocationMessage = styled.span`
   vertical-align: middle;
 `;
 
-export const LocationInputContainer = styled.div`
-  margin-top: 20px;
-  margin-bottom: 80px;
-`;
-
 export const LocationInput = styled.input`
   width: 470px;
   padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 80px;
   border: solid 1px ${({ theme }) => theme.gray[500]};
   border-radius: 10px;
 `;
@@ -131,7 +125,7 @@ export const HashTagInput = styled(TitleInput)`
   color: ${({ theme }) => theme.blue[900]};
 `;
 
-export const PostTypeLayOut = styled.div`
+export const PostTypeLayout = styled.div`
   margin-top: 40px;
   > button {
     margin-right: 30px;
@@ -141,7 +135,7 @@ export const PostTypeLayOut = styled.div`
   }
 `;
 
-export const PriceLayOut = styled.div`
+export const PriceLayout = styled.div`
   margin-top: 40px;
   > * {
     margin-bottom: 30px;
@@ -158,7 +152,7 @@ export const PostPriceInput = styled.input`
   }
 `;
 
-export const AnonymousLayOut = styled.div`
+export const AnonymousLayout = styled.div`
   margin-top: 40px;
   > button {
     margin-right: 30px;

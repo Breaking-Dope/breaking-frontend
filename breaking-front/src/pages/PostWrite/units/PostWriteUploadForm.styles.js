@@ -1,7 +1,7 @@
 import { ScrollBarX } from 'components/ScrollBar/ScrollBar';
 import styled from 'styled-components';
 
-export const Upload = styled.div`
+export const UploadLayout = styled.div`
   padding: 10px;
   background-color: ${({ theme }) => theme.gray[50]};
 `;
@@ -17,7 +17,7 @@ export const UploadForm = styled.div`
   justify-content: center;
 `;
 
-export const UploadFileLayOut = styled.div`
+export const UploadFileLayout = styled.div`
   padding: 10px;
 `;
 
@@ -48,7 +48,7 @@ export const UploadCount = styled.p`
   }
 `;
 
-export const UploadPreview = styled.div`
+export const UploadPreviewLayout = styled.div`
   display: flex;
   align-items: center;
   margin-left: 50px;
