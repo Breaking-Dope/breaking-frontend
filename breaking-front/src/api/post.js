@@ -87,11 +87,11 @@ export const postPostCommentWrite = ({ postId, content, hashtagList }) => {
   });
 };
 
-export const postPostReplyWrite = ({ commentId, data }) => {
+export const postPostReplyWrite = ({ commentId, content, hashtagList }) => {
   return api({
     method: 'post',
     url: API_PATH.POST_REPLY_WRITE(commentId),
-    data: { content: data },
+    data: { content: content, hashtagList: hashtagList },
   });
 };
 
@@ -109,11 +109,11 @@ export const deletePostCommentLike = (commentId) => {
   });
 };
 
-export const putPostCommentEdit = ({ commentId, data }) => {
+export const putPostCommentEdit = ({ commentId, content, hashtagList }) => {
   return api({
     method: 'put',
     url: API_PATH.POST_COMMENT_EDIT(commentId),
-    data: { content: data },
+    data: { content: content, hashtagList: hashtagList },
   });
 };
 

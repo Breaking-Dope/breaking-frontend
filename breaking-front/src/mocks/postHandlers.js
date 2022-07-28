@@ -58,6 +58,11 @@ export const postHandlers = [
     }
   ),
 
+  rest.post(API_PATH.POST_REPLY_WRITE(':commentId'), (req, res, ctx) => {
+    console.log('대댓글 등록 성공');
+    return res(ctx.status(200));
+  }),
+
   rest.put(API_PATH.POST_COMMENT_EDIT(':commentId'), (req, res, ctx) => {
     console.log('댓글 수정 성공');
     return res(ctx.status(200));
