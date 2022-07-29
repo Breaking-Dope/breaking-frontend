@@ -2,8 +2,7 @@ import { ScrollBarX } from 'components/ScrollBar/ScrollBar';
 import styled from 'styled-components';
 
 export const UploadLayout = styled.div`
-  padding: 10px;
-  background-color: ${({ theme }) => theme.gray[50]};
+  width: 100%;
 `;
 
 export const UploadTitle = styled.h3`
@@ -14,18 +13,20 @@ export const UploadTitle = styled.h3`
 
 export const UploadForm = styled.div`
   display: flex;
+  height: 200px;
+  background-color: ${({ theme }) => theme.gray[50]};
   justify-content: center;
 `;
 
 export const UploadFileLayout = styled.div`
-  padding: 10px;
+  padding: 20px;
 `;
 
 export const UploadFileBox = styled.div`
   display: flex;
+  width: 130px;
+  height: 130px;
   padding: 10px;
-  width: 145px;
-  height: 145px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.blue[300]};
   justify-content: center;
@@ -51,17 +52,17 @@ export const UploadCount = styled.p`
 export const UploadPreviewLayout = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 50px;
+  margin-left: 20px;
 `;
 
 export const Carusel = styled(ScrollBarX)`
-  width: 620px;
-  height: 200px;
+  width: 520px;
+  height: 180px;
   overflow-x: scroll;
   white-space: nowrap;
   > * {
-    margin-right: 20px;
-    margin-left: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
   }
 `;
 
@@ -72,8 +73,8 @@ export const UploadPreviewImg = styled.div`
 `;
 
 export const UploadBox = styled.img`
-  width: 145px;
-  height: 145px;
+  width: 130px;
+  height: 130px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.blue[300]};
 `;

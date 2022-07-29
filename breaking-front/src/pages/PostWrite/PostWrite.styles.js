@@ -2,7 +2,7 @@ import Button from 'components/Button/Button';
 import styled from 'styled-components';
 
 export const PostWriteTitle = styled.h3`
-  font-size: 24px;
+  font-size: 18px;
 `;
 
 export const PostRadioButton = styled(Button)`
@@ -17,12 +17,13 @@ export const PostSubmitButton = styled(Button)`
   background-color: ${({ theme }) => theme.blue[400]};
 `;
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  width: 800px;
+  margin: 60px auto;
+`;
 
 export const BackPageIconContainer = styled.div`
-  display: inline-block;
-  margin-top: 30px;
-  margin-bottom: 20px;
+  position: absolute;
   cursor: pointer;
 `;
 
@@ -35,7 +36,7 @@ export const OccurTimeLayout = styled.div`
 
 export const DatePicker = styled.input`
   position: relative;
-  width: 230px;
+  width: 200px;
   margin-right: 10px;
   padding: 10px;
   border: solid 1px ${({ theme }) => theme.gray[500]};
@@ -73,32 +74,33 @@ export const FindLocationLayout = styled.div`
 `;
 
 export const FindLocationMessage = styled.span`
-  font-size: 16px;
+  font-size: 14px;
   color: ${({ theme }) => theme.blue[900]};
   vertical-align: middle;
 `;
 
 export const LocationInput = styled.input`
-  width: 470px;
+  width: 410px;
   padding: 10px;
   margin-top: 20px;
-  margin-bottom: 80px;
   border: solid 1px ${({ theme }) => theme.gray[500]};
   border-radius: 10px;
 `;
 
 export const ContextLayout = styled.div`
-  margin-top: 60px;
+  margin-top: 80px;
+  margin-bottom: 40px;
   > * {
     margin-bottom: 40px;
   }
 `;
 
-export const TitleInput = styled.input`
+export const ContextTitleInput = styled.input`
   width: 100%;
+  padding: 10px;
   border: none;
-  border-left: solid 3px ${({ theme }) => theme.gray[700]};
-  font-size: 18px;
+  border-left: solid 2px ${({ theme }) => theme.gray[700]};
+  font-size: 24px;
   &:focus {
     outline: none;
   }
@@ -108,7 +110,7 @@ export const TitleInput = styled.input`
   }
 `;
 
-export const BodyTextArea = styled.textarea`
+export const ContextBodyTextArea = styled.textarea`
   width: 100%;
   height: 300px;
   padding: 10px;
@@ -120,7 +122,7 @@ export const BodyTextArea = styled.textarea`
   }
 `;
 
-export const HashTagInput = styled(TitleInput)`
+export const ContextHashTagInput = styled(ContextTitleInput)`
   font-size: 12px;
   color: ${({ theme }) => theme.blue[900]};
 `;

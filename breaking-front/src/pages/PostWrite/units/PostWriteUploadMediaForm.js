@@ -9,10 +9,10 @@ import { useRef } from 'react';
 const PostUploadMediaForm = () => {
   const caruselRef = useRef();
   const LeftCaruselClick = () => {
-    caruselRef.current.scrollLeft -= 620;
+    caruselRef.current.scrollLeft -= 500;
   };
   const RightCaruselClick = () => {
-    caruselRef.current.scrollLeft += 620;
+    caruselRef.current.scrollLeft += 500;
   };
   return (
     <Style.UploadLayout>
