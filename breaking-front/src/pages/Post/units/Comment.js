@@ -96,11 +96,13 @@ const Comment = ({ comment, type, postId }) => {
   return (
     <>
       <Style.Comment isEditing={isOpenCommentEditToggle}>
-        <ProfileImage
-          size="medium"
-          src={comment.user.profileImgURL}
-          profileClick={profileClick}
-        />
+        <Style.ProfileImageContainer>
+          <ProfileImage
+            size="medium"
+            src={comment.user.profileImgURL}
+            profileClick={profileClick}
+          />
+        </Style.ProfileImageContainer>
         <Style.ContentContainer>
           <Style.Nickname>{comment.user.nickname}</Style.Nickname>
           <Style.CreatedTime>{comment.createdTime}</Style.CreatedTime>
@@ -205,11 +207,9 @@ const Comment = ({ comment, type, postId }) => {
             profileImgURL={profileImgURL}
             commentId={comment.commentId}
             content={comment.content}
+            cancelClick={commentEditClick}
             type="edit"
           />
-          <Style.CancelCommentEdit onClick={commentEditClick}>
-            취소
-          </Style.CancelCommentEdit>
         </Style.CommentEditForm>
       )}
     </>

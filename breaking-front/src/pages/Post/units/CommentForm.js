@@ -9,7 +9,14 @@ import {
   putPostCommentEdit,
 } from 'api/post';
 
-const CommentForm = ({ profileImgURL, postId, commentId, content, type }) => {
+const CommentForm = ({
+  profileImgURL,
+  postId,
+  commentId,
+  content,
+  cancelClick,
+  type,
+}) => {
   const queryClient = useQueryClient();
   const textareaRef = useRef();
   const [comment, setComment] = useState(content);
@@ -90,14 +97,25 @@ const CommentForm = ({ profileImgURL, postId, commentId, content, type }) => {
   return (
     <>
       <Style.CommentForm onSubmit={handleSubmit}>
-        <ProfileImage size="medium" src={profileImgURL} />
-        <Style.CommentTextarea
-          ref={textareaRef}
-          placeholder="댓글 추가"
-          onChange={handleChange}
-          value={comment}
-        />
-        <Style.CommentButton type="submit">등록</Style.CommentButton>
+        <Style.FlexContainer>
+          <Style.ProfileImageContainer>
+            <ProfileImage size="medium" src={profileImgURL} />
+          </Style.ProfileImageContainer>
+          <Style.CommentTextarea
+            ref={textareaRef}
+            placeholder="댓글 추가"
+            onChange={handleChange}
+            value={comment}
+          />
+        </Style.FlexContainer>
+        <Style.CommentFormFooter>
+          {type === 'edit' && (
+            <Style.CommentButton onClick={cancelClick}>
+              취소
+            </Style.CommentButton>
+          )}
+          <Style.CommentButton type="submit">등록</Style.CommentButton>
+        </Style.CommentFormFooter>
       </Style.CommentForm>
     </>
   );
@@ -107,6 +125,7 @@ CommentForm.propTypes = {
   postId: PropTypes.number,
   commentId: PropTypes.number,
   content: PropTypes.string,
+  cancelClick: PropTypes.func,
   type: PropTypes.oneOf(['comment', 'reply', 'edit']),
 };
 

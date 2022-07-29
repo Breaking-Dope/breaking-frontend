@@ -5,7 +5,10 @@ export const Comment = styled.div`
   display: ${({ isEditing }) => (isEditing ? 'none' : 'flex')};
   width: 100%;
   padding: 10px;
-  align-items: center;
+`;
+
+export const ProfileImageContainer = styled.div`
+  margin-top: 10px;
 `;
 
 export const ContentContainer = styled.div`
