@@ -56,10 +56,10 @@ export const API_PATH = {
   POST_LIKE_LIST: (postId) => `/post/${postId}/like-list`,
   POST_BOUGHT_LIST: (postId) => `/post/${postId}/buy-list`,
   POST_BUY: (postId, userId) => `/post/${postId}/purchase/${userId}`,
-  POST_COMMENT_DATA: (postId, cursorId, size = '10') =>
-    `/post/${postId}/comment?cursor=${cursorId}&size=${size}`,
-  POST_REPLY_DATA: (commentId, cursorId, size = '10') =>
-    `/post/reply/${commentId}?cursor=${cursorId}&size=${size}`,
+  POST_COMMENT_DATA: (postId, cursor, size = '10') =>
+    `/post/${postId}/comment?cursor=${cursor}&size=${size}`,
+  POST_REPLY_DATA: (commentId, cursor, size = '10') =>
+    `/post/reply/${commentId}?cursor=${cursor}&size=${size}`,
   POST_COMMENT_WRITE: (postId) => `/post/${postId}/comment`,
   POST_REPLY_WRITE: (commentId) => `/post/comment/${commentId}/reply`,
   POST_COMMENT_EDIT: (commentId) => `/post/comment/${commentId}`,

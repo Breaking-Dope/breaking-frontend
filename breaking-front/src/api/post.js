@@ -15,11 +15,9 @@ export const getPostCommentData = async ({ queryKey, pageParam = 0 }) => {
     method: 'get',
     url: API_PATH.POST_COMMENT_DATA(postId, pageParam),
   });
-  const comments = data.comment;
-
   return {
-    result: comments,
-    cursor: comments[comments.length - 1].commentId,
+    result: data.comment,
+    cursor: data.comment[data.comment.length - 1].commentId,
   };
 };
 
@@ -29,11 +27,9 @@ export const getPostReplyData = async ({ queryKey, pageParam = 0 }) => {
     method: 'get',
     url: API_PATH.POST_REPLY_DATA(commentId, pageParam),
   });
-  const comments = data.comment;
-
   return {
-    result: comments,
-    cursor: comments[comments.length - 1].commentId,
+    result: data.comment,
+    cursor: data.comment[data.comment.length - 1].commentId,
   };
 };
 
