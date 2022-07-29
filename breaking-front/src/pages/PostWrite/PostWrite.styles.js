@@ -61,7 +61,7 @@ export const LocationLayout = styled.div`
 
 export const FindLocationLayout = styled.div`
   display: inline-block;
-  margin-left: 20px;
+  margin-left: 10px;
   cursor: pointer;
   > svg {
     width: 15px;

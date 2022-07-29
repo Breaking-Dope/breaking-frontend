@@ -6,26 +6,24 @@ export const UploadLayout = styled.div`
 `;
 
 export const UploadTitle = styled.h3`
-  margin-bottom: 40px;
-  font-size: 24px;
+  margin-bottom: 20px;
+  font-size: 18px;
   text-align: center;
 `;
 
 export const UploadForm = styled.div`
   display: flex;
   height: 200px;
+  border-radius: 10px;
   background-color: ${({ theme }) => theme.gray[50]};
   justify-content: center;
-`;
-
-export const UploadFileLayout = styled.div`
-  padding: 20px;
 `;
 
 export const UploadFileBox = styled.div`
   display: flex;
   width: 130px;
   height: 130px;
+  margin: 20px;
   padding: 10px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.blue[300]};
@@ -55,7 +53,7 @@ export const UploadPreviewLayout = styled.div`
   margin-left: 20px;
 `;
 
-export const Carusel = styled(ScrollBarX)`
+export const Carousel = styled(ScrollBarX)`
   width: 520px;
   height: 180px;
   overflow-x: scroll;
@@ -66,7 +64,7 @@ export const Carusel = styled(ScrollBarX)`
   }
 `;
 
-export const UploadPreviewImg = styled.div`
+export const UploadPreviewImage = styled.div`
   display: inline-block;
   position: relative;
   padding: 10px;
