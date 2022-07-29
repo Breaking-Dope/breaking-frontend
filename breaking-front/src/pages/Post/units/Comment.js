@@ -24,8 +24,10 @@ import { ReactComponent as BlockIcon } from 'assets/svg/block.svg';
 import { ReactComponent as DropUpIcon } from 'assets/svg/drop_up.svg';
 import { ReactComponent as DropDownIcon } from 'assets/svg/drop_down.svg';
 import { ReactComponent as MoreIcon } from 'assets/svg/more_arrow.svg';
+import { useTheme } from 'styled-components';
 
 const Comment = ({ comment, type, postId }) => {
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const { userId, profileImgURL } = useContext(UserInformationContext);
@@ -185,7 +187,7 @@ const Comment = ({ comment, type, postId }) => {
       {isOpenReplyToggle && (
         <Style.Reply>
           {isPostReplyFetching ? (
-            <Style.Loading type="spin" color="#014d91" width="40px" />
+            <Style.Loading type="spin" color={theme.blue[900]} width="40px" />
           ) : (
             <>
               {postReplyData?.pages.map((page) =>
