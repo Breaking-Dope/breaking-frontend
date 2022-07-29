@@ -9,27 +9,40 @@ export const getProfile = ({ queryKey }) => {
   });
 };
 
-export const getProfileWritten = ({ queryKey }) => {
-  const [, { userId, option = 'all' }] = queryKey;
-  return api({
+export const getProfileWritten = async ({ queryKey, pageParam = 0 }) => {
+  const [, { userId, option }] = queryKey;
+  const { data } = await api({
     method: 'get',
-    url: API_PATH.PROFILE_WRITTEN(userId, option),
+    url: API_PATH.PROFILE_WRITTEN(userId, pageParam, option),
   });
+  return {
+    result: data.content,
+    cursor: data.content[data.content.length - 1].postId,
+  };
 };
 
-export const getProfileBought = ({ queryKey }) => {
-  const [, { userId, option = 'all' }] = queryKey;
-  return api({
+export const getProfileBought = async ({ queryKey, pageParam = 0 }) => {
+  const [, { userId, option }] = queryKey;
+  const { data } = await api({
     method: 'get',
-    url: API_PATH.PROFILE_BOUGHT(userId, option),
+    url: API_PATH.PROFILE_BOUGHT(userId, pageParam, option),
   });
+  return {
+    result: data.content,
+    cursor: data.content[data.content.length - 1].postId,
+  };
 };
-export const getProfileBookmarked = ({ queryKey }) => {
-  const [, { userId, option = 'all' }] = queryKey;
-  return api({
+
+export const getProfileBookmarked = async ({ queryKey, pageParam = 0 }) => {
+  const [, { userId, option }] = queryKey;
+  const { data } = await api({
     method: 'get',
-    url: API_PATH.PROFILE_BOOKMARKED(userId, option),
+    url: API_PATH.PROFILE_BOOKMARKED(userId, pageParam, option),
   });
+  return {
+    result: data.content,
+    cursor: data.content[data.content.length - 1].postId,
+  };
 };
 
 export const getFollowers = ({ queryKey }) => {

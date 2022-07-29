@@ -80,35 +80,44 @@ const userList = [
 ];
 
 export const profileHandlers = [
-  rest.get(API_PATH.PROFILE_WRITTEN('*', 'all'), (req, res, ctx) => {
-    const soldOption = req.url.searchParams.get('sold-option');
-    const data = writtenContents.filter((item) => {
-      if (soldOption === 'unsold') return !item.isSold;
-      else if (soldOption === 'sold') return item.isSold;
-      else return item;
-    });
-    return res(ctx.status(200), ctx.json(data));
-  }),
+  rest.get(
+    API_PATH.PROFILE_WRITTEN(':userId', '*', '*', '*'),
+    (req, res, ctx) => {
+      const soldOption = req.url.searchParams.get('sold-option');
+      const data = writtenContents.filter((item) => {
+        if (soldOption === 'unsold') return !item.isSold;
+        else if (soldOption === 'sold') return item.isSold;
+        else return item;
+      });
+      return res(ctx.status(200), ctx.json({ content: data }));
+    }
+  ),
 
-  rest.get(API_PATH.PROFILE_BOUGHT('*', 'all'), (req, res, ctx) => {
-    const soldOption = req.url.searchParams.get('sold-option');
-    const data = boughtContents.filter((item) => {
-      if (soldOption === 'unsold') return !item.isSold;
-      else if (soldOption === 'sold') return item.isSold;
-      else return item;
-    });
-    return res(ctx.status(200), ctx.json(data));
-  }),
+  rest.get(
+    API_PATH.PROFILE_BOUGHT(':userId', '*', '*', '*'),
+    (req, res, ctx) => {
+      const soldOption = req.url.searchParams.get('sold-option');
+      const data = boughtContents.filter((item) => {
+        if (soldOption === 'unsold') return !item.isSold;
+        else if (soldOption === 'sold') return item.isSold;
+        else return item;
+      });
+      return res(ctx.status(200), ctx.json({ content: data }));
+    }
+  ),
 
-  rest.get(API_PATH.PROFILE_BOOKMARKED('*', 'all'), (req, res, ctx) => {
-    const soldOption = req.url.searchParams.get('sold-option');
-    const data = bookmarkedContents.filter((item) => {
-      if (soldOption === 'unsold') return !item.isSold;
-      else if (soldOption === 'sold') return item.isSold;
-      else return item;
-    });
-    return res(ctx.status(200), ctx.json(data));
-  }),
+  rest.get(
+    API_PATH.PROFILE_BOOKMARKED(':userId', '*', '*', '*'),
+    (req, res, ctx) => {
+      const soldOption = req.url.searchParams.get('sold-option');
+      const data = bookmarkedContents.filter((item) => {
+        if (soldOption === 'unsold') return !item.isSold;
+        else if (soldOption === 'sold') return item.isSold;
+        else return item;
+      });
+      return res(ctx.status(200), ctx.json({ content: data }));
+    }
+  ),
 
   rest.get(API_PATH.PROFILE_DATA(0), (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(NORMAL_USER));
