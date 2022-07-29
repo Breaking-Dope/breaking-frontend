@@ -7,6 +7,7 @@ export const PAGE_PATH = {
   PROFILE: (userId) => `/profile/${userId}`,
   TRANSACTION: '/transaction',
   PROFILE_EDIT: '/profile/edit',
+  POST_WRITE: '/post/write',
   FEED_DETAIL: (postId) => `/post/${postId}`,
 };
 

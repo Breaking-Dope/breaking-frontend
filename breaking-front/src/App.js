@@ -17,6 +17,7 @@ import UserInformationProvider from 'providers/UserInformationProvider';
 import ProfileEdit from 'pages/ProfileEdit/ProfileEdit';
 import Post from 'pages/Post/Post';
 import MainFeed from 'pages/MainFeed/MainFeed';
+import PostWrite from 'pages/PostWrite/PostWrite';
 
 function App() {
   const queryClient = new QueryClient({
@@ -52,6 +53,7 @@ function App() {
                     path={PAGE_PATH.PROFILE_EDIT}
                     element={<ProfileEdit />}
                   />
+                  <Route path={PAGE_PATH.POST_WRITE} element={<PostWrite />} />
                   <Route
                     path={PAGE_PATH.FEED_DETAIL(':id')}
                     element={<Post />}
