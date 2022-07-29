@@ -83,7 +83,7 @@ const PostWrite = () => {
           placeholder="제목을 입력하세요"
         ></Style.ContextTitleInput>
         <Style.ContextBodyTextArea
-          placeholder="상황을 최대한 상세하게 기록해 주세요&#13;(상황, 시간, 사건 전개과정, 경과상태 등&#13;&#10;최대 2000자"
+          placeholder="상황을 최대한 상세하게 기록해 주세요&#13;(상황, 시간, 사건 전개과정, 경과상태 등)&#13;&#10;최대 2000자"
         ></Style.ContextBodyTextArea>
         <Style.ContextHashTagInput placeholder="#해시태그를 입력하세요. (최대 8개)"></Style.ContextHashTagInput>
       </Style.ContextLayout>
