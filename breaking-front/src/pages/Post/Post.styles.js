@@ -8,12 +8,6 @@ export const Post = styled.div`
   padding-top: 40px;
 `;
 
-export const BackIconContainer = styled.div`
-  position: absolute;
-  left: -60px;
-  cursor: pointer;
-`;
-
 export const ContentHeader = styled.div`
   display: flex;
   min-height: 160px;
@@ -93,6 +87,7 @@ export const Hashtag = styled.span`
   margin-right: 10px;
   font-size: 12px;
   color: ${({ theme }) => theme.blue[900]};
+  cursor: pointer;
 `;
 export const ContentFooter = styled.div`
   position: relative;
@@ -107,14 +102,14 @@ export const ContentFooter = styled.div`
 
 export const ContentStatus = styled.div`
   display: flex;
+  font-size: 12px;
+  align-items: center;
   label {
-    display: flex;
     margin-right: 10px;
-    font-size: 12px;
-    align-items: center;
   }
   svg {
     margin-right: 5px;
+    vertical-align: middle;
   }
 `;
 

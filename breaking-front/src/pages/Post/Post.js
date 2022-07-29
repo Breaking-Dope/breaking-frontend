@@ -12,7 +12,6 @@ import Carousel from 'pages/Post/units/Carousel';
 import Comment from 'pages/Post/units/Comment';
 import CommentForm from 'pages/Post/units/CommentForm';
 import * as Style from 'pages/Post/Post.styles';
-import { ReactComponent as BackIcon } from 'assets/svg/back.svg';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
 import { ReactComponent as LikedIcon } from 'assets/svg/liked.svg';
@@ -36,10 +35,12 @@ import { useMutation } from 'react-query';
 import usePostBoughtList from 'hooks/queries/usePostBoughtList';
 import Modal from 'components/Modal/Modal';
 import FollowCard from 'components/FollowCard/FollowCard';
+import { useTheme } from 'styled-components';
 
 const Post = () => {
   let { id: postId } = useParams();
   postId = Number(postId);
+  const theme = useTheme();
   const targetRef = useRef();
   const navigate = useNavigate();
   const { userId, profileImgURL } = useContext(UserInformationContext);
@@ -158,9 +159,6 @@ const Post = () => {
         ))}
       </Modal>
       <Style.Post>
-        <Style.BackIconContainer onClick={() => navigate(PAGE_PATH.HOME)}>
-          <BackIcon />
-        </Style.BackIconContainer>
         {PostData && <Carousel mediaList={PostData.data.mediaList} />}
         <Style.ContentHeader>
           <Style.ContentWriter>
@@ -321,7 +319,7 @@ const Post = () => {
           )}
           <div ref={targetRef}>
             {isPostCommentFetching && (
-              <Style.Loading type="spin" color="#014d91" width="40px" />
+              <Style.Loading type="spin" color={theme.blue[900]} width="40px" />
             )}
           </div>
         </Style.Comments>
