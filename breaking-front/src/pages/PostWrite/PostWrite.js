@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import * as Style from 'pages/PostWrite/PostWrite.styles';
 import PostUploadMediaForm from 'pages/PostWrite/units/PostWriteUploadMediaForm';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
-import { ReactComponent as BackPageIcon } from 'assets/svg/back.svg';
 import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
 
@@ -43,10 +42,6 @@ const PostWrite = () => {
 
   return (
     <Style.Container>
-      <Style.BackPageIconContainer>
-        <BackPageIcon />
-      </Style.BackPageIconContainer>
-
       <PostUploadMediaForm />
 
       <Style.OccurTimeLayout>

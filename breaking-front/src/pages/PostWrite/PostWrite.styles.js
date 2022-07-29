@@ -22,11 +22,6 @@ export const Container = styled.div`
   margin: 60px auto;
 `;
 
-export const BackPageIconContainer = styled.div`
-  position: absolute;
-  cursor: pointer;
-`;
-
 export const OccurTimeLayout = styled.div`
   margin-top: 60px;
   > h3 {
