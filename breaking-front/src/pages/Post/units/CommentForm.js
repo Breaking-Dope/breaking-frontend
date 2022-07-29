@@ -41,8 +41,6 @@ const CommentForm = ({
   });
 
   const handleChange = (event) => {
-    if (textareaRef === null || textareaRef.current === null) return;
-
     textareaRef.current.style.height = '27px';
     textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
 
