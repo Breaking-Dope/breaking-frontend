@@ -8,7 +8,7 @@ export default function Tabs({ children, ...props }) {
   return (
     <Style.TabsContainer {...props}>
       {children.map((child, key) => {
-        if (child.type?.name === 'TabPanel') {
+        if (child.type?.displayName === 'TabPanel') {
           index++;
           return React.cloneElement(child, {
             active,
@@ -16,7 +16,7 @@ export default function Tabs({ children, ...props }) {
             index,
             key: `${key}-TabPanel`,
           });
-        } else if (child.type?.name === 'TabList') {
+        } else if (child.type?.displayName === 'TabList') {
           return React.cloneElement(child, {
             active,
             setActive,
@@ -73,7 +73,9 @@ function TabPanel({ active, index, children, ...props }) {
 }
 
 Tabs.TabList = TabList;
+TabList.displayName = 'TabList';
 Tabs.TabItem = TabItem;
+TabPanel.displayName = 'TabPanel';
 Tabs.TabPanel = TabPanel;
 
 Tabs.propTypes = {
