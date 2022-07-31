@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import * as Style from 'pages/PostWrite/PostWrite.styles';
 import PostUploadMediaForm from 'pages/PostWrite/units/PostWriteUploadMediaForm';
-import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
-import Modal from 'components/Modal/Modal';
-import { Map } from 'react-kakao-maps-sdk';
-import { useEffect } from 'react';
+import PostWriteSearchLocation from './units/PostWriteSearchLocation';
 
 const PostWrite = () => {
   const [occurDate, setOccurDate] = useState(dayjs().format('YYYY-MM-DD'));
@@ -15,10 +12,6 @@ const PostWrite = () => {
   const [selectedAnonymous, setSelectedAnonymous] = useState('public');
   const [price, setPrice] = useState(0);
   const [isShowPriceInput, setIsShowPriceInput] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [map, setMap] = useState();
-  console.log(map);
 
   const handlePostType = (event) => {
     setSelectedPostType(event.target.id);
@@ -40,9 +33,6 @@ const PostWrite = () => {
   const toggleShowPirceInput = () => {
     setIsShowPriceInput((pre) => !pre);
   };
-  const toggleModal = () => {
-    setIsModalOpen((pre) => !pre);
-  };
 
   const maxLengthCheck = ({ target }) => {
     if (target.value.length > target.maxLength) {
@@ -50,13 +40,9 @@ const PostWrite = () => {
     }
   };
 
-  useEffect(() => {
-    isModalOpen && map.relayout();
-  }, [isModalOpen]);
   return (
     <Style.Container>
       <PostUploadMediaForm />
-
       <Style.OccurTimeLayout>
         <Style.PostWriteTitle>제보 발생 시간</Style.PostWriteTitle>
         <Style.DatePicker
@@ -72,38 +58,8 @@ const PostWrite = () => {
       </Style.OccurTimeLayout>
 
       <Style.LocationLayout>
-        <Style.PostWriteTitle>
-          위치
-          <Style.FindLocationLayout>
-            <LocationIcon />
-            <Style.FindLocationMessage>
-              현재 위치 찾기
-            </Style.FindLocationMessage>
-          </Style.FindLocationLayout>
-        </Style.PostWriteTitle>
-
-        <Style.LocationInput
-          type="text"
-          placeholder="주소를 입력하세요"
-          onClick={toggleModal}
-        />
+        <PostWriteSearchLocation />
       </Style.LocationLayout>
-      <Modal title="위치 찾기" isOpen={isModalOpen} closeClick={toggleModal}>
-        <Map
-          center={{
-            // 지도의 중심좌표
-            lat: 33.450701,
-            lng: 126.570667,
-          }}
-          style={{
-            // 지도의 크기
-            width: '100%',
-            height: '450px',
-          }}
-          level={3} // 지도의 확대 레벨
-          onCreate={setMap}
-        ></Map>
-      </Modal>
 
       <Style.ContextLayout>
         <Style.ContextTitleInput
