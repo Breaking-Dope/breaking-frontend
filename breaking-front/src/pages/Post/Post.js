@@ -232,18 +232,19 @@ const Post = () => {
         <Style.ContentContainer>
           <Style.Content>
             {PostData?.data.content
-              .split(/(\n)/g)
+              .split(/(#[^\s#]+|\n)/g)
               .map((contentSlice, index) => {
                 if (contentSlice === '\n')
                   return <br key={'post-br-' + index} />;
+                else if (contentSlice[0] === '#')
+                  return (
+                    <Style.Hashtag key={'comment-hashtag-' + index}>
+                      {contentSlice}
+                    </Style.Hashtag>
+                  );
                 else return contentSlice;
               })}
           </Style.Content>
-          <Style.HashtagContainer>
-            {PostData?.data.hashtagList.map((hashtag, index) => (
-              <Style.Hashtag key={'hashtag-' + index}>#{hashtag}</Style.Hashtag>
-            ))}
-          </Style.HashtagContainer>
           <Style.ContentFooter>
             <Style.ContentStatus>
               <label onClick={toggleLiked}>

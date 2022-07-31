@@ -47,6 +47,7 @@ export const Content = styled.div`
 
 export const Hashtag = styled.span`
   color: ${({ theme }) => theme.blue[900]};
+  cursor: pointer;
 `;
 
 export const Status = styled.div`
