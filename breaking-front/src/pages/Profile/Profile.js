@@ -8,7 +8,10 @@ import Tabs from 'components/Tabs/Tabs';
 import { PAGE_PATH } from 'constants/path';
 import useFollowList from 'hooks/queries/useFollowList';
 import useProfile from 'hooks/queries/useProfile';
-import useProfilePost from 'hooks/queries/useProfilePost';
+import useProfileBookmarkedPost from 'hooks/queries/useProfileBookmarkedPost';
+import useProfileBoughtPost from 'hooks/queries/useProfileBoughtPost';
+import useProfileWrittenPost from 'hooks/queries/useProfileWrittenPost';
+import useCheckMyPage from 'hooks/useCheckMyPage';
 import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
@@ -20,18 +23,8 @@ const Profile = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   let { id: userId } = useParams();
-  userId = Number(userId);
-  // 숫자가 아니면 NaN으로 표시됨 예외처리 필요
 
-  let isMyPage = false;
-  if (userId === 0) {
-    isMyPage = true;
-  }
-  // 추후에 전역 state와 비교해서 내프로필 페이지인지 확인할 예정
-
-  // 팔로우 리스트에서 삭제버튼 눌렀을때 api 실행 되어야함
-  // msw search params를 이용해서 filter 결과물에 맞춰서 반환해주어야함
-
+  const isMyPage = useCheckMyPage(userId);
   const { profileData, isLoading } = useProfile(userId);
 
   const [writtenOption, setWrittenOption] = useState('all');
@@ -41,26 +34,23 @@ const Profile = () => {
   const { mutate: UnFollow } = useMutation(postUnFollow);
   const { mutate: Follow } = useMutation(postFollow);
 
-  const { data: writtenData, isLoading: writtenLoading } = useProfilePost(
-    userId,
-    isMyPage,
-    'written',
-    writtenOption
-  );
+  const {
+    data: writtenData,
+    fetchNextPage: FetchNextWritten,
+    isFetching: isWrittenFetching,
+  } = useProfileWrittenPost(userId, isMyPage, writtenOption);
 
-  const { data: boughtData, isLoading: boughtLoading } = useProfilePost(
-    userId,
-    isMyPage,
-    'bought',
-    boughtOption
-  );
+  const {
+    data: boughtData,
+    fetchNextPage: FetchNextBought,
+    isFetching: isBoughtFetching,
+  } = useProfileBoughtPost(userId, isMyPage, boughtOption);
 
-  const { data: bookmarkedData, isLoading: bookmarkedLoading } = useProfilePost(
-    userId,
-    isMyPage,
-    'bookmarked',
-    bookmarkedOption
-  );
+  const {
+    data: bookmarkedData,
+    fetchNextPage: FetchNextBookmarked,
+    isFetching: isBookmarkedFetching,
+  } = useProfileBookmarkedPost(userId, isMyPage, bookmarkedOption);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
@@ -77,18 +67,22 @@ const Profile = () => {
     setModalTitle('팔로잉');
     toggleModal();
   };
+
   const followerClick = () => {
     setModalTitle('팔로워');
     toggleModal();
   };
-  console.log(followListLoading);
-  console.log(writtenLoading, boughtLoading, bookmarkedLoading);
+
   return (
     <>
       <Modal isOpen={isModalOpen} closeClick={toggleModal} title={modalTitle}>
         {followListData?.data.map((item) => (
           <FollowCard
-            cardClick={() => navigate(PAGE_PATH.PROFILE(item.userId))}
+            cardClick={() => {
+              toggleModal();
+              setModalTitle('');
+              navigate(PAGE_PATH.PROFILE(item.userId));
+            }}
             isPermission={isMyPage}
             profileData={item}
             key={item.userId}
@@ -142,18 +136,20 @@ const Profile = () => {
 
           <Tabs.TabPanel>
             <ProfileTabPanel
-              data={writtenData?.data}
+              nextFetch={FetchNextWritten}
+              isFetching={isWrittenFetching}
+              data={writtenData}
               setOption={setWrittenOption}
-              userId={userId}
             />
           </Tabs.TabPanel>
 
           {isMyPage && (
             <Tabs.TabPanel>
               <ProfileTabPanel
-                data={boughtData?.data}
+                nextFetch={FetchNextBought}
+                isFetching={isBoughtFetching}
+                data={boughtData}
                 setOption={setBoughtOption}
-                userId={userId}
               />
             </Tabs.TabPanel>
           )}
@@ -161,9 +157,10 @@ const Profile = () => {
           {isMyPage && (
             <Tabs.TabPanel>
               <ProfileTabPanel
-                data={bookmarkedData?.data}
+                nextFetch={FetchNextBookmarked}
+                isFetching={isBookmarkedFetching}
+                data={bookmarkedData}
                 setOption={setBookmarkedOption}
-                userId={userId}
               />
             </Tabs.TabPanel>
           )}

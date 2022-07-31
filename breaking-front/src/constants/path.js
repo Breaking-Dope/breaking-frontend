@@ -8,6 +8,7 @@ export const PAGE_PATH = {
   TRANSACTION: '/transaction',
   PROFILE_EDIT: '/profile/edit',
   POST: (postId) => `/post/${postId}`,
+  POST_WRITE: '/post/write',
 };
 
 export const API_PATH = {
@@ -21,14 +22,14 @@ export const API_PATH = {
   PROFILE_DETAIL_DATA: '/profile/detail',
   PROFILE_EDIT: '/profile',
   PROFILE_DATA: (userId) => `/profile/${userId}`,
+  PROFILE_WRITTEN: (userId, cursor, option = 'all', size = 10) =>
+    `/feed/user/${userId}/write?cursor=${cursor}&size=${size}&sold-option=${option}`,
+  PROFILE_BOUGHT: (userId, cursor, option = 'all', size = 10) =>
+    `/feed/user/${userId}/buy?cursor=${cursor}&size=${size}&sold-option=${option}`,
+  PROFILE_BOOKMARKED: (userId, cursor, option = 'all', size = 10) =>
+    `/feed/user/${userId}/bookmark?cursor=${cursor}&size=${size}&sold-option=${option}`,
   PROFILE_FOLLOW: (userId) => `/follow/${userId}`,
   PROFILE_UNFOLLOW: (userId) => `/follow/${userId}`,
-  PROFILE_WRITTEN: (userId, option = 'all') =>
-    `/feed/user/${userId}/write?sold-option=${option}`,
-  PROFILE_BOUGHT: (userId, option = 'all') =>
-    `/feed/user/${userId}/buy?sold-option=${option}`,
-  PROFILE_BOOKMARKED: (userId, option = 'all') =>
-    `/feed/user/${userId}/bookmark?sold-option=${option}`,
   PROFILE_FOLLOWINGS: (userId) => `/follow/following/${userId}`,
   PROFILE_FOLLOWERS: (userId) => `/follow/follower/${userId}`,
   PROFILE_TRANSACTION: (userId) => `/profile/${userId}/transaction`,

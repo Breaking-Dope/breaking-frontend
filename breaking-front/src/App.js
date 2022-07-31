@@ -17,6 +17,7 @@ import UserInformationProvider from 'providers/UserInformationProvider';
 import ProfileEdit from 'pages/ProfileEdit/ProfileEdit';
 import Post from 'pages/Post/Post';
 import MainFeed from 'pages/MainFeed/MainFeed';
+import PostWrite from 'pages/PostWrite/PostWrite';
 
 function App() {
   const queryClient = new QueryClient({
@@ -38,11 +39,11 @@ function App() {
                   <Route
                     path={PAGE_PATH.KAKAO_LOGIN}
                     element={<KakaoRedirect />}
-                  ></Route>
+                  />
                   <Route
                     path={PAGE_PATH.GOOGLE_LOGIN}
                     element={<GoogleRedirect />}
-                  ></Route>
+                  />
                   <Route path={PAGE_PATH.SIGNUP} element={<SignUp />} />
                   <Route
                     path={PAGE_PATH.PROFILE(':id')}
@@ -53,6 +54,7 @@ function App() {
                     element={<ProfileEdit />}
                   />
                   <Route path={PAGE_PATH.POST(':id')} element={<Post />} />
+                  <Route path={PAGE_PATH.POST_WRITE} element={<PostWrite />} />
                 </Routes>
               </Layout>
             </UserInformationProvider>
