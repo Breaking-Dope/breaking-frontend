@@ -1,10 +1,23 @@
 import ReactLoading from 'react-loading';
 import styled from 'styled-components';
 
+export const ETCIconContainer = styled.div`
+  display: none;
+  height: 24px;
+`;
+
 export const Comment = styled.div`
   display: ${({ isEditing }) => (isEditing ? 'none' : 'flex')};
   width: 100%;
   padding: 10px;
+  ${ETCIconContainer} {
+    display: ${({ isOpenToggle }) => (isOpenToggle ? 'block' : 'none')};
+  }
+  &:hover {
+    ${ETCIconContainer} {
+      display: block;
+    }
+  }
 `;
 
 export const ProfileImageContainer = styled.div`
@@ -62,6 +75,7 @@ export const CommentFooter = styled.div`
 `;
 
 export const CommentToggle = styled.div`
+  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   position: absolute;
   right: -70px;
   bottom: 30px;

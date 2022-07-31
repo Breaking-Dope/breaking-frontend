@@ -97,7 +97,10 @@ const Comment = ({ comment, type, postId }) => {
 
   return (
     <>
-      <Style.Comment isEditing={isOpenCommentEditToggle}>
+      <Style.Comment
+        isEditing={isOpenCommentEditToggle}
+        isOpenToggle={isOpenCommentToggle}
+      >
         <Style.ProfileImageContainer>
           <ProfileImage
             size="medium"
@@ -133,38 +136,39 @@ const Comment = ({ comment, type, postId }) => {
                 <span onClick={toggleCommentForm}>답글쓰기</span>
               )}
             </Style.Status>
-            <ETCIcon onClick={toggleComment} />
-            <Style.CommentToggle>
-              {isOpenCommentToggle &&
-                (comment.user.userId === userId ? (
-                  <Toggle width="100px">
-                    <Toggle.LabelLink
-                      path={PAGE_PATH.POST(postId)}
-                      icon={<EditIcon />}
-                      label="수정"
-                      onClick={commentEditClick}
-                    />
-                    <Toggle.LabelLink
-                      path={PAGE_PATH.POST(postId)}
-                      icon={<RemoveIcon />}
-                      label="삭제"
-                      onClick={commentDeleteClick}
-                    />
-                  </Toggle>
-                ) : (
-                  <Toggle width="100px">
-                    <Toggle.LabelLink
-                      path={PAGE_PATH.POST(postId)}
-                      icon={<ChatIcon />}
-                      label="채팅"
-                    />
-                    <Toggle.LabelLink
-                      path={PAGE_PATH.POST(postId)}
-                      icon={<BlockIcon />}
-                      label="차단"
-                    />
-                  </Toggle>
-                ))}
+            <Style.ETCIconContainer onClick={toggleComment}>
+              <ETCIcon />
+            </Style.ETCIconContainer>
+            <Style.CommentToggle isOpen={isOpenCommentToggle}>
+              {comment.user.userId === userId ? (
+                <Toggle width="100px">
+                  <Toggle.LabelLink
+                    path={PAGE_PATH.POST(postId)}
+                    icon={<EditIcon />}
+                    label="수정"
+                    onClick={commentEditClick}
+                  />
+                  <Toggle.LabelLink
+                    path={PAGE_PATH.POST(postId)}
+                    icon={<RemoveIcon />}
+                    label="삭제"
+                    onClick={commentDeleteClick}
+                  />
+                </Toggle>
+              ) : (
+                <Toggle width="100px">
+                  <Toggle.LabelLink
+                    path={PAGE_PATH.POST(postId)}
+                    icon={<ChatIcon />}
+                    label="채팅"
+                  />
+                  <Toggle.LabelLink
+                    path={PAGE_PATH.POST(postId)}
+                    icon={<BlockIcon />}
+                    label="차단"
+                  />
+                </Toggle>
+              )}
             </Style.CommentToggle>
           </Style.CommentFooter>
         </Style.ContentContainer>
