@@ -8,9 +8,16 @@ import { UserInformationContext } from 'providers/UserInformationProvider';
 import { useRef } from 'react';
 import ReactLoading from 'react-loading';
 
-const ProfileTabPanel = ({ data, isFetching, nextFetch, setOption }) => {
+const ProfileTabPanel = ({
+  data,
+  hasNextPage,
+  isFetching,
+  nextFetch,
+  setOption,
+}) => {
   const targetRef = useRef();
   const { userId } = useContext(UserInformationContext);
+
   useEffect(() => {
     let observer;
     const onIntersect = async ([entry], observer) => {
@@ -20,14 +27,14 @@ const ProfileTabPanel = ({ data, isFetching, nextFetch, setOption }) => {
         observer.observe(entry.target);
       }
     };
-    if (data) {
+    if (hasNextPage) {
       observer = new IntersectionObserver(onIntersect, {
         threshold: 0.8,
       });
       observer.observe(targetRef.current);
     }
     return () => observer && observer.disconnect();
-  }, [data, nextFetch]);
+  }, [hasNextPage, nextFetch]);
 
   return (
     <>
@@ -62,6 +69,7 @@ const ProfileTabPanel = ({ data, isFetching, nextFetch, setOption }) => {
 
 ProfileTabPanel.propTypes = {
   data: PropTypes.array,
+  hasNextPage: PropTypes.bool,
   isFetching: PropTypes.bool,
   nextFetch: PropTypes.func,
   setOption: PropTypes.func,

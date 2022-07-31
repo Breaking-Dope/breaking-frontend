@@ -15,9 +15,10 @@ export const getProfileWritten = async ({ queryKey, pageParam = 0 }) => {
     method: 'get',
     url: API_PATH.PROFILE_WRITTEN(userId, pageParam, option),
   });
+
   return {
     result: data.content,
-    cursor: data.content[data.content.length - 1].postId,
+    cursor: data.content[data.content.length - 1]?.postId,
   };
 };
 
@@ -29,7 +30,7 @@ export const getProfileBought = async ({ queryKey, pageParam = 0 }) => {
   });
   return {
     result: data.content,
-    cursor: data.content[data.content.length - 1].postId,
+    cursor: data.content[data.content.length - 1]?.postId,
   };
 };
 
@@ -41,7 +42,7 @@ export const getProfileBookmarked = async ({ queryKey, pageParam = 0 }) => {
   });
   return {
     result: data.content,
-    cursor: data.content[data.content.length - 1].postId,
+    cursor: data.content[data.content.length - 1]?.postId,
   };
 };
 
