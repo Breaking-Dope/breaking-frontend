@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const ToggleContainer = styled.div`
@@ -31,7 +30,7 @@ export const Toggle = styled.div`
   background-color: ${({ theme }) => theme.white};
 `;
 
-export const LabelLink = styled(Link)`
+export const LabelLink = styled.label`
   margin-bottom: 10px;
   display: flex;
   align-items: center;
