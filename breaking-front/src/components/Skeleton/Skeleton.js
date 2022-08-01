@@ -28,9 +28,17 @@ export function FeedSkeleton() {
   );
 }
 
-export function PostSkeleton() {}
-
-export function FollowCardSkeleton() {}
+export function FollowCardSkeleton() {
+  return (
+    <Style.FollowCardSkeleton>
+      <Style.FollowCardProfileImage />
+      <Style.FollowCardContent>
+        <Style.FollowCardNickname />
+        <Style.FollowCardStatusMessage />
+      </Style.FollowCardContent>
+    </Style.FollowCardSkeleton>
+  );
+}
 
 export function CommentSkeleton() {}
 
@@ -41,5 +49,5 @@ Skeleton.propTypes = {
 };
 
 Skeleton.defaultProps = {
-  radius: '10',
+  radius: '10px',
 };

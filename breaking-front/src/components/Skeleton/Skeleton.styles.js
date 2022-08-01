@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const Skeleton = styled.div`
-  width: ${({ width }) => width}px;
-  height: ${({ height }) => height}px;
-  border-radius: ${({ radius }) => radius}px;
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  border-radius: ${({ radius }) => radius};
   background-color: ${({ theme }) => theme.gray[200]};
 `;
 
@@ -91,4 +91,31 @@ export const FeedIcons = styled.div`
   height: 24px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.gray[200]};
+`;
+
+export const FollowCardSkeleton = styled.div`
+  display: flex;
+  align-items: center;
+  width: 400px;
+  height: 80px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.blue[50]};
+`;
+
+export const FollowCardProfileImage = styled(FeedProfileImage)``;
+
+export const FollowCardContent = styled.div`
+  display: flex;
+  width: 250px;
+  margin-left: 20px;
+  flex-direction: column;
+`;
+export const FollowCardNickname = styled(FeedLocation)`
+  width: 50px;
+  margin-bottom: 5px;
+`;
+
+export const FollowCardStatusMessage = styled(FeedLocation)`
+  width: 100px;
 `;
