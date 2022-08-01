@@ -67,10 +67,12 @@ export default function Header({ loginButtonClick, ...props }) {
         <Style.ProfileToggle onMouseDown={(event) => event.preventDefault()}>
           {isOpenToggle && (
             <Toggle width="220px" isArrowMark={true}>
+              <Style.BlueLabel onClick={() => navigate(PAGE_PATH.TRANSACTION)}>
+                입출금내역
+              </Style.BlueLabel>
               <Toggle.LabelLink
                 icon={<MoneyIcon />}
                 label="10,000원"
-                blueLabel="입출금내역"
                 labelClick={() => navigate(PAGE_PATH.TRANSACTION)}
               />
               <Toggle.LabelLink
