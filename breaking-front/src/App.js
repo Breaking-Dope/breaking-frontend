@@ -39,11 +39,11 @@ function App() {
                   <Route
                     path={PAGE_PATH.KAKAO_LOGIN}
                     element={<KakaoRedirect />}
-                  ></Route>
+                  />
                   <Route
                     path={PAGE_PATH.GOOGLE_LOGIN}
                     element={<GoogleRedirect />}
-                  ></Route>
+                  />
                   <Route path={PAGE_PATH.SIGNUP} element={<SignUp />} />
                   <Route
                     path={PAGE_PATH.PROFILE(':id')}
@@ -53,11 +53,8 @@ function App() {
                     path={PAGE_PATH.PROFILE_EDIT}
                     element={<ProfileEdit />}
                   />
+                  <Route path={PAGE_PATH.POST(':id')} element={<Post />} />
                   <Route path={PAGE_PATH.POST_WRITE} element={<PostWrite />} />
-                  <Route
-                    path={PAGE_PATH.FEED_DETAIL(':id')}
-                    element={<Post />}
-                  />
                 </Routes>
               </Layout>
             </UserInformationProvider>

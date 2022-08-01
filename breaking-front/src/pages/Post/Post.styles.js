@@ -1,3 +1,4 @@
+import ReactLoading from 'react-loading';
 import styled from 'styled-components';
 
 export const Post = styled.div`
@@ -5,12 +6,6 @@ export const Post = styled.div`
   width: 800px;
   margin: 0 auto;
   padding-top: 40px;
-`;
-
-export const BackIconContainer = styled.div`
-  position: absolute;
-  left: -60px;
-  cursor: pointer;
 `;
 
 export const ContentHeader = styled.div`
@@ -43,6 +38,11 @@ export const ContentTitle = styled.h1`
   margin-bottom: 20px;
   font-size: 24px;
 `;
+
+export const ContentViewCount = styled.span`
+  margin-left: 5px;
+`;
+
 export const ContentPrice = styled.h1`
   margin-bottom: 15px;
   font-weight: 700;
@@ -79,15 +79,11 @@ export const Content = styled.div`
   line-height: 1.5;
 `;
 
-export const HashtagContainer = styled.div`
-  margin-top: 30px;
+export const Hashtag = styled.span`
+  color: ${({ theme }) => theme.blue[900]};
+  cursor: pointer;
 `;
 
-export const Hashtag = styled.span`
-  margin-right: 10px;
-  font-size: 12px;
-  color: ${({ theme }) => theme.blue[900]};
-`;
 export const ContentFooter = styled.div`
   position: relative;
   display: flex;
@@ -101,14 +97,14 @@ export const ContentFooter = styled.div`
 
 export const ContentStatus = styled.div`
   display: flex;
+  font-size: 12px;
+  align-items: center;
   label {
-    display: flex;
     margin-right: 10px;
-    font-size: 12px;
-    align-items: center;
   }
   svg {
     margin-right: 5px;
+    vertical-align: middle;
   }
 `;
 
@@ -121,4 +117,11 @@ export const ContentToggle = styled.div`
 export const Comments = styled.div`
   width: 800px;
   margin-bottom: 30px;
+`;
+
+export const Loading = styled(ReactLoading)`
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, -50%);
 `;
