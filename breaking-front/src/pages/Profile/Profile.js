@@ -16,6 +16,7 @@ import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
+import ImageUrlTranslator from 'utils/ImageUrlTranslator';
 import ProfileFollowButton from './units/ProfileFollowButton';
 import ProfileTabPanel from './units/ProfileTabPanel';
 
@@ -100,7 +101,10 @@ const Profile = () => {
         ))}
       </Modal>
       <Style.UserContainer>
-        <ProfileImage size="xlarge" src={profileData?.data.profileImgURL} />
+        <ProfileImage
+          size="xlarge"
+          src={ImageUrlTranslator(profileData?.data.profileImgURL)}
+        />
         <Style.UserInformation>
           <Style.Title>
             <Style.NickName>{profileData?.data.nickname}</Style.NickName>
