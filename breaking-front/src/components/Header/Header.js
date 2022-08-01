@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import { PAGE_PATH } from 'constants/path';
 import Input from 'components/Input/Input';
@@ -15,6 +16,7 @@ import { ReactComponent as SettingIcon } from 'assets/svg/setting.svg';
 import { ReactComponent as MyPageIcon } from 'assets/svg/mypage.svg';
 
 export default function Header({ loginButtonClick, ...props }) {
+  const navigate = useNavigate();
   const [searchText, setSearchText] = useState('');
   const [isOpenToggle, setIsOpenToggle] = useState(false);
   const { isLogin, profileImgURL, userId } = useContext(UserInformationContext);
@@ -48,7 +50,7 @@ export default function Header({ loginButtonClick, ...props }) {
         {isLogin ? (
           <Style.ProfileContent
             onClick={handleToggle}
-            onBlur={handleToggle}
+            onBlur={() => setIsOpenToggle(false)}
             tabIndex="0"
           >
             <ProfileImage size="small" src={profileImgURL} />
@@ -66,20 +68,20 @@ export default function Header({ loginButtonClick, ...props }) {
           {isOpenToggle && (
             <Toggle width="220px" isArrowMark={true}>
               <Toggle.LabelLink
-                path={PAGE_PATH.TRANSACTION}
                 icon={<MoneyIcon />}
                 label="10,000원"
                 blueLabel="입출금내역"
+                labelClick={() => navigate(PAGE_PATH.TRANSACTION)}
               />
               <Toggle.LabelLink
-                path={PAGE_PATH.PROFILE(userId)}
                 icon={<MyPageIcon />}
                 label="마이페이지"
+                labelClick={() => navigate(PAGE_PATH.PROFILE(userId))}
               />
               <Toggle.LabelLink
-                path={PAGE_PATH.PROFILE_EDIT}
                 icon={<SettingIcon />}
                 label="프로필 수정"
+                labelClick={() => navigate(PAGE_PATH.PROFILE_EDIT)}
               />
               <Line width="200" />
               <Style.Logout>로그아웃</Style.Logout>
