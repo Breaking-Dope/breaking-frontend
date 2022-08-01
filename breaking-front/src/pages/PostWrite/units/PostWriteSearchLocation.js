@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
+import { ReactComponent as SearchIcon } from 'assets/svg/search.svg';
 import * as Style from 'pages/PostWrite/units/PostWriteSearchLocation.styles';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import Modal from 'components/Modal/Modal';
+import PostWriteModal from './PostWriteModal';
 
 const PostWriteSearchLocation = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [map, setMap] = useState();
   const [info, setInfo] = useState();
-  const [markers, setMarkers] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
   const [searchContent, setSearchContent] = useState('');
 
   const toggleModal = () => {
@@ -21,16 +22,6 @@ const PostWriteSearchLocation = () => {
 
   const SearchMap = (event) => {
     event.preventDefault();
-
-    console.log(event.target);
-  };
-  console.log(markers);
-
-  useEffect(() => {
-    map && map.relayout();
-  }, [isModalOpen, map]);
-
-  useEffect(() => {
     const { kakao } = window;
     const ps = new kakao.maps.services.Places();
 
@@ -39,27 +30,21 @@ const PostWriteSearchLocation = () => {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
         const bounds = new kakao.maps.LatLngBounds();
-        let markers = [];
-
+        setSearchResult(data);
+        // let markers = [];
         for (var i = 0; i < data.length; i++) {
-          // @ts-ignore
-          markers.push({
-            position: {
-              lat: data[i].y,
-              lng: data[i].x,
-            },
-            content: data[i].place_name,
-          });
-          // @ts-ignore
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         }
-        setMarkers(markers);
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         map.setBounds(bounds);
       }
     });
-  }, [searchContent]);
+  };
+
+  useEffect(() => {
+    map && map.relayout();
+  }, [isModalOpen, map]);
 
   return (
     <>
@@ -76,7 +61,11 @@ const PostWriteSearchLocation = () => {
         placeholder="주소를 입력하세요"
         onClick={toggleModal}
       />
-      <Modal title="위치 찾기" isOpen={isModalOpen} closeClick={toggleModal}>
+      <PostWriteModal
+        title="위치 찾기"
+        isOpen={isModalOpen}
+        closeClick={toggleModal}
+      >
         <Map
           center={{
             // 지도의 중심좌표
@@ -86,32 +75,49 @@ const PostWriteSearchLocation = () => {
           style={{
             // 지도의 크기
             width: '100%',
-            height: '450px',
+            height: '640px',
           }}
           level={8} // 지도의 확대 레벨
-          onCreate={setMap}
+          onCreate={setMap} //map 객체를 받아옴
         >
-          {markers.map((marker) => (
+          {searchResult.map((data) => (
             <MapMarker
-              key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
-              position={marker.position}
-              onClick={() => setInfo(marker)}
+              key={`marker-${data.place_name}-${data.y},${data.x}`}
+              position={{ lat: data.y, lng: data.x }}
+              onMouseOver={() => setInfo(data)}
             >
-              {info && info.content === marker.content && (
-                <div style={{ color: '#000' }}>{marker.content}</div>
+              {info && info.id === data.id && (
+                <Style.SearchMarker>
+                  <Style.PlaceName>{data.place_name}</Style.PlaceName>
+                </Style.SearchMarker>
               )}
             </MapMarker>
           ))}
         </Map>
-        <form onSubmit={SearchMap}>
-          <input
-            onChange={handleSearchInput}
-            value={searchContent}
-            type="text"
-          ></input>
-          <input type="submit"></input>
-        </form>
-      </Modal>
+        <Style.SearchInformationSideBar>
+          <Style.SearchForm onSubmit={SearchMap}>
+            <Style.SearchInput
+              icon={<SearchIcon />}
+              onChange={handleSearchInput}
+              value={searchContent}
+              iconClick={SearchMap}
+            />
+          </Style.SearchForm>
+          <Style.SearchResult>
+            {searchResult.map((data, index) => (
+              <Style.SearchItem key={data.id} onMouseOver={() => setInfo(data)}>
+                <Style.PlaceName>
+                  {index + 1 + '. ' + data.place_name}
+                </Style.PlaceName>
+                <Style.RoadAdressName>
+                  {data.road_address_name}
+                </Style.RoadAdressName>
+                <Style.AdressName>(지번) {data.address_name}</Style.AdressName>
+              </Style.SearchItem>
+            ))}
+          </Style.SearchResult>
+        </Style.SearchInformationSideBar>
+      </PostWriteModal>
     </>
   );
 };
