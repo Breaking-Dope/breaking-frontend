@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import logo from 'assets/svg/logo.svg';
 
 export const Feed = styled.div`
+  display: ${({ isDeleted }) => (isDeleted ? 'none' : 'block')};
   width: 400px;
   height: 400px;
   background-color: ${({ theme }) => theme.gray[50]};

@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
 import PropTypes from 'prop-types';
+import {
+  deletePost,
+  deletePostBookmark,
+  deletePostLike,
+  postPostBookmark,
+  postPostLike,
+} from 'api/post';
+import { PAGE_PATH } from 'constants/path';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import Button from 'components/Button/Button';
 import Toggle from 'components/Toggle/Toggle';
@@ -15,15 +24,21 @@ import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
 import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as HideIcon } from 'assets/svg/hide.svg';
-import { PAGE_PATH } from 'constants/path';
 
 export default function Feed({ feedData, userId, ...props }) {
   const navigate = useNavigate();
 
+  const [isDeleted, setIsDeleted] = useState(false);
   const [isLiked, setIsLiked] = useState(feedData.isLiked);
   const [isBookmarked, setIsBookmarked] = useState(feedData.isBookmarked);
   const [likeCount, setLikeCount] = useState(feedData.likeCount);
   const [isOpenToggle, setIsOpenToggle] = useState(false);
+
+  const { mutate: PostLike } = useMutation(postPostLike);
+  const { mutate: DeletePostLike } = useMutation(deletePostLike);
+  const { mutate: PostBookmark } = useMutation(postPostBookmark);
+  const { mutate: DeletePostBookmark } = useMutation(deletePostBookmark);
+  const { mutate: DeletePost } = useMutation(deletePost);
 
   const handleFeedClick = () => {
     navigate(PAGE_PATH.POST(feedData.postId));
@@ -34,17 +49,31 @@ export default function Feed({ feedData, userId, ...props }) {
   };
 
   const toggleLiked = () => {
-    // 추후 좋아요 로직 작성
-    isLiked ? setLikeCount((pre) => pre - 1) : setLikeCount((pre) => pre + 1);
+    isLiked ? DeletePostLike(feedData.postId) : PostLike(feedData.postId);
+    setLikeCount((pre) => (isLiked ? pre - 1 : pre + 1));
     setIsLiked((pre) => !pre);
   };
   const toggleBookmarked = () => {
-    // 추후 북마크 로직 작성
+    isBookmarked
+      ? DeletePostBookmark(feedData.postId)
+      : PostBookmark(feedData.postId);
     setIsBookmarked((pre) => !pre);
   };
 
   const toggleETC = () => {
     setIsOpenToggle((pre) => !pre);
+  };
+
+  const postDeleteClick = () => {
+    let deleteConfirm = window.confirm('게시글을 삭제하시겠습니까?');
+
+    deleteConfirm &&
+      DeletePost(feedData.postId, {
+        onSuccess: () => {
+          alert('게시글을 삭제하였습니다.');
+          setIsDeleted(true);
+        },
+      });
   };
 
   useEffect(() => {
@@ -54,7 +83,7 @@ export default function Feed({ feedData, userId, ...props }) {
   }, [feedData]);
 
   return (
-    <Style.Feed {...props}>
+    <Style.Feed isDeleted={isDeleted} {...props}>
       {feedData.thumbnailImgURL ? (
         <Style.ThumbNailImage
           src={feedData.thumbnailImgURL}
@@ -117,14 +146,18 @@ export default function Feed({ feedData, userId, ...props }) {
             (userId === feedData.userId ? (
               // 추후 로직 작성
               <Toggle width="80px">
-                <Toggle.LabelLink path="/" icon={<EditIcon />} label="수정" />
-                <Toggle.LabelLink path="/" icon={<RemoveIcon />} label="삭제" />
-                <Toggle.LabelLink path="/" icon={<ShareIcon />} label="공유" />
+                <Toggle.LabelLink icon={<EditIcon />} label="수정" />
+                <Toggle.LabelLink
+                  icon={<RemoveIcon />}
+                  label="삭제"
+                  labelClick={postDeleteClick}
+                />
+                <Toggle.LabelLink icon={<ShareIcon />} label="공유" />
               </Toggle>
             ) : (
               <Toggle width="80px">
-                <Toggle.LabelLink path="/" icon={<HideIcon />} label="숨김" />
-                <Toggle.LabelLink path="/" icon={<ShareIcon />} label="공유" />
+                <Toggle.LabelLink icon={<HideIcon />} label="숨김" />
+                <Toggle.LabelLink icon={<ShareIcon />} label="공유" />
               </Toggle>
             ))}
         </Style.FeedToggle>
