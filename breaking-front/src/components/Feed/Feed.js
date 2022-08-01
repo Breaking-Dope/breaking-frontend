@@ -15,6 +15,7 @@ import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
 import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as HideIcon } from 'assets/svg/hide.svg';
+import { PAGE_PATH } from 'constants/path';
 
 export default function Feed({ feedData, userId, ...props }) {
   const navigate = useNavigate();
@@ -25,11 +26,11 @@ export default function Feed({ feedData, userId, ...props }) {
   const [isOpenToggle, setIsOpenToggle] = useState(false);
 
   const handleFeedClick = () => {
-    navigate(`/post/${feedData.postId}`);
+    navigate(PAGE_PATH.POST(feedData.postId));
   };
 
   const handleProfileClick = () => {
-    navigate(`/profile/${feedData.userId}`);
+    navigate(PAGE_PATH.PROFILE(feedData.userId));
   };
 
   const toggleLiked = () => {
@@ -76,7 +77,7 @@ export default function Feed({ feedData, userId, ...props }) {
             {feedData.region}
           </Style.Detail>
           <Style.Detail>{feedData.createdTime}</Style.Detail>
-          {feedData.postType === 'EXCLUSIVE' && (
+          {feedData.postType === 'exclusive' && (
             <Button color="dark" size="small" disabled>
               단독
             </Button>
@@ -90,25 +91,27 @@ export default function Feed({ feedData, userId, ...props }) {
               판매중
             </Button>
           )}
-          <Style.Price>{feedData.price.toLocaleString('ko-KR')} 원</Style.Price>
+          <Style.ViewCount>조회 {feedData.viewCount}</Style.ViewCount>
         </Style.Context>
-
-        <Style.Icons>
-          <Style.IconContainer onClick={toggleLiked}>
-            {isLiked ? <LikedIcon /> : <LikeIcon />}
-            <Style.Count>{likeCount.toLocaleString('ko-KR')}</Style.Count>
-          </Style.IconContainer>
-          <Style.IconContainer onClick={toggleBookmarked}>
-            {isBookmarked ? <BookMarkedIcon /> : <BookMarkIcon />}
-          </Style.IconContainer>
-          <Style.IconContainer
-            onClick={toggleETC}
-            tabIndex="0"
-            onBlur={() => setIsOpenToggle(false)}
-          >
-            <ETCIcon />
-          </Style.IconContainer>
-        </Style.Icons>
+        <Style.ContentStatus>
+          <Style.Price>{feedData.price.toLocaleString('ko-KR')} 원</Style.Price>
+          <Style.Icons>
+            <Style.IconContainer onClick={toggleLiked}>
+              {isLiked ? <LikedIcon /> : <LikeIcon />}
+              <Style.Count>{likeCount.toLocaleString('ko-KR')}</Style.Count>
+            </Style.IconContainer>
+            <Style.IconContainer onClick={toggleBookmarked}>
+              {isBookmarked ? <BookMarkedIcon /> : <BookMarkIcon />}
+            </Style.IconContainer>
+            <Style.IconContainer
+              onClick={toggleETC}
+              tabIndex="0"
+              onBlur={() => setIsOpenToggle(false)}
+            >
+              <ETCIcon />
+            </Style.IconContainer>
+          </Style.Icons>
+        </Style.ContentStatus>
         <Style.FeedToggle onMouseDown={(event) => event.preventDefault()}>
           {isOpenToggle &&
             (userId === feedData.userId ? (
