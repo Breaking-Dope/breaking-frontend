@@ -2,7 +2,6 @@ import ReactLoading from 'react-loading';
 import styled from 'styled-components';
 
 export const Post = styled.div`
-  position: relative;
   width: 800px;
   margin: 0 auto;
   padding-top: 40px;
@@ -118,6 +117,11 @@ export const ContentToggle = styled.div`
 export const Comments = styled.div`
   width: 800px;
   margin-bottom: 30px;
+`;
+
+export const TargetDiv = styled.div`
+  position: relative;
+  height: 140px;
 `;
 
 export const Loading = styled(ReactLoading)`

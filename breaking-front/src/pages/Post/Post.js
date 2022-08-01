@@ -311,11 +311,11 @@ const Post = () => {
               />
             ))
           )}
-          <div ref={targetRef}>
+          <Style.TargetDiv ref={targetRef}>
             {isPostCommentFetching && (
               <Style.Loading type="spin" color={theme.blue[900]} width="40px" />
             )}
-          </div>
+          </Style.TargetDiv>
         </Style.Comments>
       </Style.Post>
     </>
