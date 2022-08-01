@@ -165,3 +165,32 @@ export const PostStatus = styled(Skeleton)`
   display: inline-block;
   margin-right: 10px;
 `;
+
+export const ProfileSkeleton = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 20px;
+  margin-top: 30px;
+`;
+
+export const ProfileImage = styled(Skeleton)``;
+
+export const ProfileContent = styled.div`
+  display: flex;
+  margin-left: 30px;
+  flex-direction: column;
+  justify-content: space-evenly;
+`;
+
+export const ProfileName = styled(Skeleton)``;
+
+export const ProfileStatusMessage = styled(Skeleton)``;
+
+export const ProfileInformationContainer = styled.div`
+  margin-top: 10px;
+`;
+
+export const ProfileInformation = styled(Skeleton)`
+  display: inline-block;
+  margin-right: 20px;
+`;

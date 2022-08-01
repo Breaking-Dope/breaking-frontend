@@ -73,6 +73,23 @@ export function PostSkeleton() {
   );
 }
 
+export function ProfileSkeleton() {
+  return (
+    <Style.ProfileSkeleton>
+      <Style.ProfileImage width="200px" height="200px" radius="50%" />
+      <Style.ProfileContent>
+        <Style.ProfileName width="100px" height="32px" />
+        <Style.ProfileStatusMessage width="200px" height="48px" />
+        <Style.ProfileInformationContainer>
+          <Style.ProfileInformation width="50px" height="12px" />
+          <Style.ProfileInformation width="50px" height="12px" />
+          <Style.ProfileInformation width="50px" height="12px" />
+        </Style.ProfileInformationContainer>
+      </Style.ProfileContent>
+    </Style.ProfileSkeleton>
+  );
+}
+
 Skeleton.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,

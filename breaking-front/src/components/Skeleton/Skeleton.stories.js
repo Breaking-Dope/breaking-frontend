@@ -3,6 +3,7 @@ import Skeleton, {
   FeedSkeleton,
   FollowCardSkeleton,
   PostSkeleton,
+  ProfileSkeleton,
 } from 'components/Skeleton/Skeleton';
 
 export default {
@@ -20,4 +21,8 @@ export const FollowCardSkeletonUI = (args) => {
 
 export const PostSkeletonUI = (args) => {
   return <PostSkeleton />;
+};
+
+export const ProfileSkeletonUI = (args) => {
+  return <ProfileSkeleton />;
 };
