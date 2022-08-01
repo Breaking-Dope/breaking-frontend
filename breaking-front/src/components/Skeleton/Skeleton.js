@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Line from 'components/Line/Line';
 import * as Style from 'components/Skeleton/Skeleton.styles';
 
 export default function Skeleton({ width, height, radius }) {
@@ -11,17 +12,17 @@ export function FeedSkeleton() {
     <Style.FeedSkeleton>
       <Style.FeedThumbnailImage />
       <Style.FeedContent>
-        <Style.FeedProfileImage />
+        <Style.FeedProfileImage width="51px" height="51px" radius="50%" />
         <Style.FeedContext>
-          <Style.FeedTitle />
-          <Style.FeedLocation />
-          <Style.FeedTime />
-          <Style.FeedPostType />
-          <Style.FeedViewCount />
+          <Style.FeedTitle width="120px" height="21px" />
+          <Style.FeedLocation width="80px" height="12px" />
+          <Style.FeedTime width="50px" height="12px" />
+          <Style.FeedPostType width="30px" height="20px" />
+          <Style.FeedViewCount width="30px" height="20px" />
         </Style.FeedContext>
         <Style.FeedContentStatus>
-          <Style.FeedPrice />
-          <Style.FeedIcons />
+          <Style.FeedPrice width="100px" height="18px" />
+          <Style.FeedIcons width="120px" height="24px" />
         </Style.FeedContentStatus>
       </Style.FeedContent>
     </Style.FeedSkeleton>
@@ -31,23 +32,49 @@ export function FeedSkeleton() {
 export function FollowCardSkeleton() {
   return (
     <Style.FollowCardSkeleton>
-      <Style.FollowCardProfileImage />
+      <Style.FollowCardProfileImage width="51px" height="51px" radius="50%" />
       <Style.FollowCardContent>
-        <Style.FollowCardNickname />
-        <Style.FollowCardStatusMessage />
+        <Style.FollowCardNickname width="50px" height="14px" />
+        <Style.FollowCardStatusMessage width="100px" height="14px" />
       </Style.FollowCardContent>
     </Style.FollowCardSkeleton>
   );
 }
 
-export function CommentSkeleton() {}
+export function PostSkeleton() {
+  return (
+    <Style.PostSkeleton>
+      <Style.PostCarousel width="800px" height="400px" />
+      <Style.PostHeader>
+        <div>
+          <Style.PostProfileImage width="100px" height="100px" radius="50%" />
+          <Style.PostWriterName width="50px" height="18px" />
+        </div>
+        <Style.PostContext>
+          <Style.PostType width="40px" height="20px" />
+          <Style.PostTitle width="200px" height="24px" />
+          <Style.PostLocation width="80px" height="12px" />
+          <Style.PostCreatedTime width="50px" height="12px" />
+          <Style.PostViewCount width="50px" height="12px" />
+        </Style.PostContext>
+        <Style.PostPriceContainer>
+          <Style.PostPrice width="100px" height="24px" />
+          <Style.PostBuyButton width="100px" height="51px" />
+          <Style.PostSoldCount width="70px" height="12px" />
+        </Style.PostPriceContainer>
+      </Style.PostHeader>
+      <Line width="800px" />
+      <Style.PostContent width="800px" height="500px" />
+      <Style.PostFooter>
+        <Style.PostStatus width="50px" height="24px" />
+        <Style.PostStatus width="50px" height="24px" />
+      </Style.PostFooter>
+    </Style.PostSkeleton>
+  );
+}
 
 Skeleton.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
   radius: PropTypes.string,
-};
-
-Skeleton.defaultProps = {
-  radius: '10px',
 };
