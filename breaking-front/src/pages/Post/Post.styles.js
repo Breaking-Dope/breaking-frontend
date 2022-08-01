@@ -91,6 +91,7 @@ export const ContentFooter = styled.div`
   margin-top: 20px;
   justify-content: space-between;
   svg {
+    outline: none;
     cursor: pointer;
   }
 `;

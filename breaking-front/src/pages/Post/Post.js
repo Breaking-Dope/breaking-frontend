@@ -83,7 +83,7 @@ const Post = () => {
       DeletePost(postId, {
         onSuccess: () => {
           alert('게시글을 삭제하였습니다.');
-          navigate(PAGE_PATH.HOME);
+          navigate(-1);
         },
       });
   };
@@ -100,6 +100,7 @@ const Post = () => {
       PostBuy(postId, {
         onSuccess: () => {
           alert('게시글을 구매하였습니다.');
+          // 새로 postData 불러오기
         },
       });
   };
@@ -256,43 +257,35 @@ const Post = () => {
                 {PostData?.data.commentCount.toLocaleString('ko-KR')}
               </label>
             </Style.ContentStatus>
-            <ETCIcon onClick={toggleComment} />
-            <Style.ContentToggle>
+            <ETCIcon
+              onClick={toggleComment}
+              tabIndex="0"
+              onBlur={() => setIsContentToggle(false)}
+            />
+            <Style.ContentToggle
+              onMouseDown={(event) => event.preventDefault()}
+            >
               {isContentToggle && (
                 <Toggle width="100px">
                   {PostData?.data.user.userId === userId ? (
                     <>
+                      <Toggle.LabelLink icon={<EditIcon />} label="수정" />
                       <Toggle.LabelLink
-                        path={PAGE_PATH.POST(postId)}
-                        icon={<EditIcon />}
-                        label="수정"
-                      />
-                      <Toggle.LabelLink
-                        path={PAGE_PATH.POST(postId)}
                         icon={<RemoveIcon />}
                         label="삭제"
-                        onClick={postDeleteClick}
+                        labelClick={postDeleteClick}
                       />
                     </>
                   ) : (
-                    <Toggle.LabelLink
-                      path={PAGE_PATH.POST(postId)}
-                      icon={<HideIcon />}
-                      label="숨김"
-                    />
+                    <Toggle.LabelLink icon={<HideIcon />} label="숨김" />
                   )}
 
                   <Toggle.LabelLink
-                    path={PAGE_PATH.POST(postId)}
                     icon={isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />}
                     label="북마크"
-                    onClick={toggleBookmarked}
+                    labelClick={toggleBookmarked}
                   />
-                  <Toggle.LabelLink
-                    path={PAGE_PATH.POST(postId)}
-                    icon={<ShareIcon />}
-                    label="공유"
-                  />
+                  <Toggle.LabelLink icon={<ShareIcon />} label="공유" />
                 </Toggle>
               )}
             </Style.ContentToggle>

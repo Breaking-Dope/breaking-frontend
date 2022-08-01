@@ -136,37 +136,34 @@ const Comment = ({ comment, type, postId }) => {
                 <span onClick={toggleCommentForm}>답글쓰기</span>
               )}
             </Style.Status>
-            <Style.ETCIconContainer onClick={toggleComment}>
+            <Style.ETCIconContainer
+              onClick={toggleComment}
+              tabIndex="0"
+              onBlur={() => setIsOpenCommentToggle(false)}
+            >
               <ETCIcon />
             </Style.ETCIconContainer>
-            <Style.CommentToggle isOpen={isOpenCommentToggle}>
+            <Style.CommentToggle
+              isOpen={isOpenCommentToggle}
+              onMouseDown={(event) => event.preventDefault()}
+            >
               {comment.user.userId === userId ? (
                 <Toggle width="100px">
                   <Toggle.LabelLink
-                    path={PAGE_PATH.POST(postId)}
                     icon={<EditIcon />}
                     label="수정"
-                    onClick={commentEditClick}
+                    labelClick={commentEditClick}
                   />
                   <Toggle.LabelLink
-                    path={PAGE_PATH.POST(postId)}
                     icon={<RemoveIcon />}
                     label="삭제"
-                    onClick={commentDeleteClick}
+                    labelClick={commentDeleteClick}
                   />
                 </Toggle>
               ) : (
                 <Toggle width="100px">
-                  <Toggle.LabelLink
-                    path={PAGE_PATH.POST(postId)}
-                    icon={<ChatIcon />}
-                    label="채팅"
-                  />
-                  <Toggle.LabelLink
-                    path={PAGE_PATH.POST(postId)}
-                    icon={<BlockIcon />}
-                    label="차단"
-                  />
+                  <Toggle.LabelLink icon={<ChatIcon />} label="채팅" />
+                  <Toggle.LabelLink icon={<BlockIcon />} label="차단" />
                 </Toggle>
               )}
             </Style.CommentToggle>
