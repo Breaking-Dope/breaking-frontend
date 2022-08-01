@@ -120,7 +120,9 @@ export default function Feed({ feedData, userId, ...props }) {
               판매중
             </Button>
           )}
-          <Style.ViewCount>조회 {feedData.viewCount}</Style.ViewCount>
+          <Style.ViewCount>
+            조회 {feedData.viewCount.toLocaleString('ko-KR')}
+          </Style.ViewCount>
         </Style.Context>
         <Style.ContentStatus>
           <Style.Price>{feedData.price.toLocaleString('ko-KR')} 원</Style.Price>
