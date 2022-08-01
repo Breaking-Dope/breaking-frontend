@@ -30,22 +30,17 @@ export const Toggle = styled.div`
   background-color: ${({ theme }) => theme.white};
 `;
 
-export const LabelLink = styled.label`
+export const LabelLink = styled.div`
+  display: flex;
   margin-bottom: 10px;
+`;
+
+export const Label = styled.label`
   display: flex;
   align-items: center;
 `;
 
-export const LabelText = styled.label`
+export const LabelText = styled.span`
   margin-left: 5px;
-  cursor: pointer;
-`;
-
-export const BlueLabel = styled.span`
-  position: absolute;
-  right: 20px;
-  font-size: 12px;
-  color: ${({ theme }) => theme.blue[900]};
-  font-weight: 600;
   cursor: pointer;
 `;

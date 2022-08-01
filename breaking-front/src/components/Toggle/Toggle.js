@@ -11,12 +11,13 @@ export default function Toggle({ isArrowMark, width, children }) {
   );
 }
 
-function LabelLink({ labelClick, label, blueLabel, icon }) {
+function LabelLink({ labelClick, label, icon }) {
   return (
-    <Style.LabelLink onClick={labelClick}>
-      {icon}
-      <Style.LabelText>{label}</Style.LabelText>
-      {blueLabel && <Style.BlueLabel>{blueLabel}</Style.BlueLabel>}
+    <Style.LabelLink>
+      <Style.Label onClick={labelClick}>
+        {icon}
+        <Style.LabelText>{label}</Style.LabelText>
+      </Style.Label>
     </Style.LabelLink>
   );
 }
@@ -38,5 +39,4 @@ LabelLink.propTypes = {
   labelClick: PropTypes.func,
   icon: PropTypes.node,
   label: PropTypes.string,
-  blueLabel: PropTypes.string,
 };
