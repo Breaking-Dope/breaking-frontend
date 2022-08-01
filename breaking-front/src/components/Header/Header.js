@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { UserInformationContext } from 'providers/UserInformationProvider';
 import { PAGE_PATH } from 'constants/path';
 import Input from 'components/Input/Input';
 import Line from 'components/Line/Line';
@@ -15,11 +14,17 @@ import { ReactComponent as MoneyIcon } from 'assets/svg/money.svg';
 import { ReactComponent as SettingIcon } from 'assets/svg/setting.svg';
 import { ReactComponent as MyPageIcon } from 'assets/svg/mypage.svg';
 
-export default function Header({ loginButtonClick, ...props }) {
+export default function Header({
+  isLogin,
+  profileImgURL,
+  userId,
+  loginButtonClick,
+  ...props
+}) {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState('');
   const [isOpenToggle, setIsOpenToggle] = useState(false);
-  const { isLogin, profileImgURL, userId } = useContext(UserInformationContext);
+
   const onChange = (event) => {
     setSearchText(event.target.value);
   };
@@ -97,5 +102,7 @@ export default function Header({ loginButtonClick, ...props }) {
 
 Header.propTypes = {
   isLogin: PropTypes.bool,
+  profileImgURL: PropTypes.string,
+  userId: PropTypes.number,
   loginButtonClick: PropTypes.func,
 };
