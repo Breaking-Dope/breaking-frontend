@@ -35,13 +35,13 @@ export const LocationInput = styled.input`
 `;
 
 export const SearchInformationSideBar = styled.div`
-  padding: 5px;
   position: absolute;
   top: 80px;
   left: 20px;
   z-index: 10;
   height: 600px;
   width: 185px;
+  padding: 5px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.opacityWhite};
 `;
