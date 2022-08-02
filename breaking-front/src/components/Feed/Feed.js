@@ -49,8 +49,14 @@ export default function Feed({ feedData, userId, ...props }) {
   };
 
   const toggleLiked = () => {
-    isLiked ? DeletePostLike(feedData.postId) : PostLike(feedData.postId);
-    setLikeCount((pre) => (isLiked ? pre - 1 : pre + 1));
+    if (isLiked) {
+      DeletePostLike(feedData.postId);
+      setLikeCount((pre) => pre - 1);
+    } else {
+      PostLike(feedData.postId);
+      setLikeCount((pre) => pre + 1);
+    }
+
     setIsLiked((pre) => !pre);
   };
   const toggleBookmarked = () => {
@@ -146,7 +152,6 @@ export default function Feed({ feedData, userId, ...props }) {
         <Style.FeedToggle onMouseDown={(event) => event.preventDefault()}>
           {isOpenToggle &&
             (userId === feedData.userId ? (
-              // 추후 로직 작성
               <Toggle width="80px">
                 <Toggle.LabelLink icon={<EditIcon />} label="수정" />
                 <Toggle.LabelLink

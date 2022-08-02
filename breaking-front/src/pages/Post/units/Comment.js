@@ -75,10 +75,13 @@ const Comment = ({ comment, type, postId }) => {
   };
 
   const toggleLiked = () => {
-    isLiked
-      ? DeleteCommentLike(comment.commentId)
-      : CommentLike(comment.commentId);
-    setLikeCount((pre) => (isLiked ? pre - 1 : pre + 1));
+    if (isLiked) {
+      DeleteCommentLike(comment.commentId);
+      setLikeCount((pre) => pre - 1);
+    } else {
+      CommentLike(comment.commentId);
+      setLikeCount((pre) => pre + 1);
+    }
     setIsLiked((pre) => !pre);
   };
 
