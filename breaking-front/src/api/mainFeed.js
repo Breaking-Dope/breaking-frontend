@@ -1,26 +1,38 @@
 import { API_PATH } from 'constants/path';
 import api from 'api/api';
 
-export const getFeeds = ({ queryKey }) => {
-  const [, { page, size, sort, option }] = queryKey;
-  return api({
+export const getFeeds = async ({ queryKey, pageParam = 0 }) => {
+  const [, { sort, option }] = queryKey;
+  const { data } = await api({
     method: 'get',
-    url: API_PATH.FEEDS(page, size, sort, option),
+    url: API_PATH.FEEDS(pageParam, sort, option),
   });
+  return {
+    result: data,
+    cursor: data[data.length - 1].postId,
+  };
 };
 
-export const getFeedsSearch = ({ queryKey }) => {
-  const [, { page, size, search, sort, option }] = queryKey;
-  return api({
+export const getFeedsSearch = async ({ queryKey, pageParam = 0 }) => {
+  const [, { search, sort, option }] = queryKey;
+  const { data } = await api({
     method: 'get',
-    url: API_PATH.FEEDS(page, size, search, sort, option),
+    url: API_PATH.FEEDS_SEARCH(pageParam, search, sort, option),
   });
+  return {
+    result: data,
+    cursor: data[data.length - 1].postId,
+  };
 };
 
-export const getFeedsHashtag = ({ queryKey }) => {
-  const [, { page, size, hashtag, sort, option }] = queryKey;
-  return api({
+export const getFeedsHashtag = async ({ queryKey, pageParam = 0 }) => {
+  const [, { hashtag, sort, option }] = queryKey;
+  const { data } = await api({
     method: 'get',
-    url: API_PATH.FEEDS(page, size, hashtag, sort, option),
+    url: API_PATH.FEEDS_HASHTAG(pageParam, hashtag, sort, option),
   });
+  return {
+    result: data,
+    cursor: data[data.length - 1].postId,
+  };
 };
