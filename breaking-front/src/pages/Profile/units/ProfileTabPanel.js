@@ -7,10 +7,20 @@ import { useContext } from 'react';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import { useRef } from 'react';
 import ReactLoading from 'react-loading';
+import { useQueryClient } from 'react-query';
 
-const ProfileTabPanel = ({ data, isFetching, nextFetch, setOption }) => {
+const ProfileTabPanel = ({
+  type,
+  data,
+  hasNextPage,
+  isFetching,
+  nextFetch,
+  setOption,
+}) => {
   const targetRef = useRef();
   const { userId } = useContext(UserInformationContext);
+  const queryClient = useQueryClient();
+
   useEffect(() => {
     let observer;
     const onIntersect = async ([entry], observer) => {
@@ -20,40 +30,55 @@ const ProfileTabPanel = ({ data, isFetching, nextFetch, setOption }) => {
         observer.observe(entry.target);
       }
     };
-    if (data) {
+    if (hasNextPage && !isFetching) {
       observer = new IntersectionObserver(onIntersect, {
         threshold: 0.8,
       });
       observer.observe(targetRef.current);
     }
     return () => observer && observer.disconnect();
-  }, [data, nextFetch]);
+  }, [hasNextPage, nextFetch, isFetching]);
 
   return (
     <>
       <Style.PanelContainer>
         <Style.FilterContainer>
           <Filter width="180px">
-            <Filter.FilterDetail onClick={() => setOption('all')}>
+            <Filter.FilterDetail
+              onClick={() => {
+                queryClient.resetQueries([type]);
+                setOption('all');
+              }}
+            >
               모든 제보글
             </Filter.FilterDetail>
-            <Filter.FilterDetail onClick={() => setOption('unsold')}>
+            <Filter.FilterDetail
+              onClick={() => {
+                queryClient.resetQueries([type]);
+                setOption('unsold');
+              }}
+            >
               판매되지 않은 제보글
             </Filter.FilterDetail>
-            <Filter.FilterDetail onClick={() => setOption('sold')}>
+            <Filter.FilterDetail
+              onClick={() => {
+                queryClient.resetQueries([type]);
+                setOption('sold');
+              }}
+            >
               판매된 제보글
             </Filter.FilterDetail>
           </Filter>
         </Style.FilterContainer>
         <Style.FeedContainer>
-          {data?.pages.map((page) =>
-            page.result.map((feed) => (
-              <Feed feedData={feed} key={feed.postId} userId={userId} />
-            ))
-          )}
-          <div ref={targetRef}>
-            {isFetching && <ReactLoading /> /* 확인 작업이 한번 필요함*/}
-          </div>
+          <>
+            {data?.pages.map((page) =>
+              page.result.map((feed) => (
+                <Feed feedData={feed} key={feed.postId} userId={userId} />
+              ))
+            )}
+            {isFetching ? <ReactLoading /> : <div ref={targetRef}></div>}
+          </>
         </Style.FeedContainer>
       </Style.PanelContainer>
     </>
@@ -61,7 +86,9 @@ const ProfileTabPanel = ({ data, isFetching, nextFetch, setOption }) => {
 };
 
 ProfileTabPanel.propTypes = {
-  data: PropTypes.array,
+  type: PropTypes.string,
+  data: PropTypes.object,
+  hasNextPage: PropTypes.bool,
   isFetching: PropTypes.bool,
   nextFetch: PropTypes.func,
   setOption: PropTypes.func,
