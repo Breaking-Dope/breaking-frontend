@@ -28,13 +28,6 @@ export const CloseButton = styled.span`
   cursor: pointer;
 `;
 
-export const HambugerButton = styled.span`
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  cursor: pointer;
-`;
-
 export const Content = styled.div`
   margin-top: 60px;
 `;
