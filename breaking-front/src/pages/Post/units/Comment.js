@@ -43,6 +43,7 @@ const Comment = ({ comment, type }) => {
     data: postReplyData,
     isFetching: isPostReplyFetching,
     fetchNextPage: FetchNextPostReply,
+    hasNextPage: postReplyHasNextPage,
   } = usePostReply(commentId);
 
   const { mutate: CommentLike } = useMutation(postPostCommentLike);
@@ -190,20 +191,21 @@ const Comment = ({ comment, type }) => {
       )}
       {isOpenReplyToggle && (
         <Style.Reply>
-          {isPostReplyFetching ? (
-            <Style.Loading type="spin" color={theme.blue[900]} width="40px" />
-          ) : (
-            <>
-              {postReplyData?.pages.map((page) =>
-                page.result.map((reply) => (
-                  <Comment comment={reply} type="reply" key={reply.commentId} />
-                ))
-              )}
-              <Style.MoreChowReply onClick={moreShowReplyClick}>
-                <MoreIcon />
-                더보기
-              </Style.MoreChowReply>
-            </>
+          {postReplyData?.pages.map((page) =>
+            page.result.map((reply) => (
+              <Comment comment={reply} type="reply" key={reply.commentId} />
+            ))
+          )}
+          {postReplyHasNextPage && !isPostReplyFetching && (
+            <Style.MoreChowReply onClick={moreShowReplyClick}>
+              <MoreIcon />
+              더보기
+            </Style.MoreChowReply>
+          )}
+          {isPostReplyFetching && (
+            <Style.LoadingContainer>
+              <Style.Loading type="spin" color={theme.blue[900]} width="40px" />
+            </Style.LoadingContainer>
           )}
         </Style.Reply>
       )}

@@ -59,6 +59,7 @@ const Post = () => {
     data: postCommentData,
     isFetching: isPostCommentFetching,
     fetchNextPage: FetchNextPostComment,
+    hasNextPage: postCommentHasNextPage,
   } = usePostComment(postId);
 
   const { mutate: PostLike } = useMutation(postPostLike);
@@ -139,20 +140,19 @@ const Post = () => {
         observer.observe(entry.target);
       }
     };
-
-    if (postCommentData) {
+    if (postCommentHasNextPage && !isPostCommentFetching) {
       observer = new IntersectionObserver(onIntersect, {
         threshold: 0.8,
       });
       observer.observe(targetRef.current);
     }
     return () => observer && observer.disconnect();
-  }, [FetchNextPostComment, postCommentData]);
+  }, [FetchNextPostComment, isPostCommentFetching, postCommentHasNextPage]);
 
   return (
     <>
       <Modal isOpen={isModalOpen} closeClick={toggleModal} title="구매자 목록">
-        {PostBoughtList?.data.Users.map((item) => (
+        {PostBoughtList?.data.map((item) => (
           <FollowCard
             cardClick={() => navigate(PAGE_PATH.PROFILE(item.userId))}
             profileData={item}
