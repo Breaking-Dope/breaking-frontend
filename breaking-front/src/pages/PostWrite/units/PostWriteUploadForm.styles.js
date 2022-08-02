@@ -49,15 +49,15 @@ export const UploadCount = styled.p`
 
 export const UploadPreviewLayout = styled.div`
   display: flex;
-  align-items: center;
   margin-left: 20px;
+  align-items: center;
 `;
 
 export const Carousel = styled(ScrollBarX)`
   width: 520px;
   height: 180px;
-  overflow-x: scroll;
   white-space: nowrap;
+  overflow-x: scroll;
   > * {
     margin-right: 10px;
     margin-left: 10px;

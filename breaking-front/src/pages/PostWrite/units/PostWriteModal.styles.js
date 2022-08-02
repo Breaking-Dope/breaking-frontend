@@ -5,14 +5,12 @@ export const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  z-index: 110;
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.opacityBlack};
   justify-content: center;
   align-items: center;
-  z-index: 110;
 `;
 
 export const Modal = styled.div`
