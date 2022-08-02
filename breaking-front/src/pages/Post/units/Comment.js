@@ -26,7 +26,7 @@ import { ReactComponent as DropDownIcon } from 'assets/svg/drop_down.svg';
 import { ReactComponent as MoreIcon } from 'assets/svg/more_arrow.svg';
 import { useTheme } from 'styled-components';
 
-const Comment = ({ comment, type, postId }) => {
+const Comment = ({ comment, type }) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -37,13 +37,13 @@ const Comment = ({ comment, type, postId }) => {
   const [isOpenReplyToggle, setIsOpenReplyToggle] = useState(false);
   const [isLiked, setIsLiked] = useState(comment.isLiked);
   const [likeCount, setLikeCount] = useState(comment.likeCount);
+  const [commentId, setCommentId] = useState('');
 
   const {
     data: postReplyData,
     isFetching: isPostReplyFetching,
     fetchNextPage: FetchNextPostReply,
-    refetch: PostReplyReFetch,
-  } = usePostReply(comment.commentId);
+  } = usePostReply(commentId);
 
   const { mutate: CommentLike } = useMutation(postPostCommentLike);
   const { mutate: DeleteCommentLike } = useMutation(deletePostCommentLike);
@@ -95,7 +95,7 @@ const Comment = ({ comment, type, postId }) => {
 
   const toggleReply = () => {
     setIsOpenReplyToggle((pre) => !pre);
-    PostReplyReFetch();
+    setCommentId(comment.commentId);
   };
 
   return (
@@ -225,7 +225,6 @@ const Comment = ({ comment, type, postId }) => {
 Comment.propTypes = {
   comment: PropTypes.object.isRequired,
   type: PropTypes.oneOf(['comment', 'reply']),
-  postId: PropTypes.number,
 };
 
 export default Comment;

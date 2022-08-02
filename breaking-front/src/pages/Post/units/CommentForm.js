@@ -23,20 +23,20 @@ const CommentForm = ({
 
   const { mutate: CommentWrite } = useMutation(postPostCommentWrite, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['postComment']);
+      queryClient.resetQueries('postComment');
     },
   });
 
   const { mutate: CommentReply } = useMutation(postPostReplyWrite, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['postReply', commentId]);
+      queryClient.resetQueries(['postReply', commentId]);
     },
   });
 
   const { mutate: CommentEdit } = useMutation(putPostCommentEdit, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['postComment']);
-      queryClient.invalidateQueries(['postReply']);
+      queryClient.resetQueries('postComment');
+      queryClient.resetQueries('postReply');
     },
   });
 

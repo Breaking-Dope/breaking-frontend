@@ -124,6 +124,7 @@ const Post = () => {
     if (PostData?.data.user.userId === userId) setPurchaseType('구매자 목록');
     else if (PostData?.data.isPurchased) setPurchaseType('구매 완료');
     else setPurchaseType('구매 하기');
+
     setIsBookmarked(PostData?.data.isBookmarked);
     setIsLiked(PostData?.data.isLiked);
     setLikeCount(PostData?.data.likeCount);
