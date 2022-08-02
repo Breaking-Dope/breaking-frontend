@@ -143,6 +143,7 @@ const Profile = () => {
 
           <Tabs.TabPanel>
             <ProfileTabPanel
+              type="written"
               hasNextPage={writtenHasNextPage}
               nextFetch={FetchNextWritten}
               isFetching={isWrittenFetching}
@@ -154,6 +155,7 @@ const Profile = () => {
           {isMyPage && (
             <Tabs.TabPanel>
               <ProfileTabPanel
+                type="bought"
                 hasNextPage={boughtHasNextPage}
                 nextFetch={FetchNextBought}
                 isFetching={isBoughtFetching}
@@ -166,6 +168,7 @@ const Profile = () => {
           {isMyPage && (
             <Tabs.TabPanel>
               <ProfileTabPanel
+                type="bookmarked"
                 hasNextPage={bookmarkedHasNextPage}
                 nextFetch={FetchNextBookmarked}
                 isFetching={isBookmarkedFetching}
