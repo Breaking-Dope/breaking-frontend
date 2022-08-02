@@ -4,7 +4,6 @@ import { ReactComponent as MoneyIcon } from 'assets/svg/money.svg';
 import { ReactComponent as SettingIcon } from 'assets/svg/setting.svg';
 import { ReactComponent as MyPageIcon } from 'assets/svg/mypage.svg';
 import Line from 'components/Line/Line';
-import { PAGE_PATH } from 'constants/path';
 import styled from 'styled-components';
 
 export default {
@@ -39,21 +38,12 @@ ProfileToggle.args = {
   children: (
     <>
       <Toggle.LabelLink
-        path={PAGE_PATH.TRANSACTION}
         icon={<MoneyIcon />}
         label="10,000원"
         blueLabel="입출금내역"
       />
-      <Toggle.LabelLink
-        path={PAGE_PATH.MYPAGE}
-        icon={<MyPageIcon />}
-        label="마이페이지"
-      />
-      <Toggle.LabelLink
-        path={PAGE_PATH.PROFILE_EDIT}
-        icon={<SettingIcon />}
-        label="프로필 수정"
-      />
+      <Toggle.LabelLink icon={<MyPageIcon />} label="마이페이지" />
+      <Toggle.LabelLink icon={<SettingIcon />} label="프로필 수정" />
       <Line width="200" />
       <Logout>로그아웃</Logout>
     </>
@@ -64,21 +54,9 @@ export const NarrowToggle = Template.bind({});
 NarrowToggle.args = {
   children: (
     <>
-      <Toggle.LabelLink
-        path={PAGE_PATH.TRANSACTION}
-        icon={<MoneyIcon />}
-        label="수정"
-      />
-      <Toggle.LabelLink
-        path={PAGE_PATH.MYPAGE}
-        icon={<MyPageIcon />}
-        label="삭제"
-      />
-      <Toggle.LabelLink
-        path={PAGE_PATH.PROFILE_EDIT}
-        icon={<SettingIcon />}
-        label="공유"
-      />
+      <Toggle.LabelLink icon={<MoneyIcon />} label="수정" />
+      <Toggle.LabelLink icon={<MyPageIcon />} label="삭제" />
+      <Toggle.LabelLink icon={<SettingIcon />} label="공유" />
     </>
   ),
 };

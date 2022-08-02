@@ -98,6 +98,11 @@ export const ReplyCount = styled.div`
   }
 `;
 
+export const LoadingContainer = styled.div`
+  position: relative;
+  height: 100px;
+`;
+
 export const Loading = styled(ReactLoading)`
   position: absolute;
   left: 50%;
@@ -106,7 +111,6 @@ export const Loading = styled(ReactLoading)`
 `;
 
 export const Reply = styled.div`
-  position: relative;
   margin-left: auto;
   min-height: 100px;
   width: 750px;

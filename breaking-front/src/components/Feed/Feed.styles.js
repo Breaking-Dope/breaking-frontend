@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import logo from 'assets/svg/logo.svg';
 
 export const Feed = styled.div`
+  display: ${({ isDeleted }) => (isDeleted ? 'none' : 'block')};
   width: 400px;
   height: 400px;
   background-color: ${({ theme }) => theme.gray[50]};
@@ -25,7 +26,7 @@ export const Content = styled.div`
   display: flex;
   width: 100%;
   height: 100px;
-  padding: 10px;
+  padding: 0px 10px;
   align-items: center;
 `;
 
@@ -40,33 +41,42 @@ export const Context = styled.div`
 
 export const Title = styled.a`
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
 `;
 
 export const Detail = styled.div`
+  display: flex;
   font-size: 12px;
   color: ${({ theme }) => theme.gray[800]};
 `;
 
-export const Price = styled.p`
-  display: inline;
-  font-size: 12px;
-  font-weight: bold;
+export const ViewCount = styled(Detail)`
+  display: inline-block;
+`;
+
+export const Price = styled.h3`
+  margin-bottom: 10px;
   color: ${({ theme }) => theme.blue[900]};
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
 `;
 
 export const IconContainer = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
   margin-left: 8px;
   cursor: pointer;
 `;
 
+export const ContentStatus = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const Icons = styled.div`
   display: flex;
-  align-items: center;
 `;
 
 export const Count = styled.span`

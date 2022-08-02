@@ -137,78 +137,74 @@ export const POST_DATA = {
   commentCount: 5,
 };
 
-export const COMMENT_DATA = {
-  comment: [
-    {
-      commentId: 1,
-      content:
-        '킹받네\n#공감 #추천 #해#시#태#그 글 사이에#해시태그 있어도 잘 됩니다!',
-      likeCount: 1,
-      replyCount: 2,
-      user: {
-        userId: NO_STATUSMSG_USER.userId,
-        profileImgURL: NO_STATUSMSG_USER.profileImgURL,
-        nickname: NO_STATUSMSG_USER.nickname,
-      },
-      isLiked: false,
-      createdTime: '2022-07-25T15:32:39.445Z',
+export const COMMENT_DATA = [
+  {
+    commentId: 1,
+    content:
+      '킹받네\n#공감 #추천 #해#시#태#그 글 사이에#해시태그 있어도 잘 됩니다!',
+    likeCount: 1,
+    replyCount: 2,
+    user: {
+      userId: NO_STATUSMSG_USER.userId,
+      profileImgURL: NO_STATUSMSG_USER.profileImgURL,
+      nickname: NO_STATUSMSG_USER.nickname,
     },
-    {
-      commentId: 2,
-      content: '유익한 정보 감사합니다!',
-      likeCount: 129,
-      replyCount: 0,
-      user: {
-        userId: NO_PROFILEIMGURL_USER.userId,
-        profileImgURL: NO_PROFILEIMGURL_USER.profileImgURL,
-        nickname: NO_PROFILEIMGURL_USER.nickname,
-      },
-      isLiked: false,
-      createdTime: '2022-07-25T15:32:39.445Z',
+    isLiked: false,
+    createdTime: '2022-07-25T15:32:39.445Z',
+  },
+  {
+    commentId: 2,
+    content: '유익한 정보 감사합니다!',
+    likeCount: 129,
+    replyCount: 0,
+    user: {
+      userId: NO_PROFILEIMGURL_USER.userId,
+      profileImgURL: NO_PROFILEIMGURL_USER.profileImgURL,
+      nickname: NO_PROFILEIMGURL_USER.nickname,
     },
-    {
-      commentId: 5,
-      content: '이거 띄어쓰기\n한건데 잘 되나요?\n#띄어쓰기 #잘됨?',
-      likeCount: 991199,
-      replyCount: 0,
-      user: {
-        userId: NORMAL_USER.userId,
-        profileImgURL: NORMAL_USER.profileImgURL,
-        nickname: NORMAL_USER.nickname,
-      },
-      isLiked: true,
-      createdTime: '2022-07-25T15:32:39.445Z',
+    isLiked: false,
+    createdTime: '2022-07-25T15:32:39.445Z',
+  },
+  {
+    commentId: 5,
+    content: '이거 띄어쓰기\n한건데 잘 되나요?\n#띄어쓰기 #잘됨?',
+    likeCount: 991199,
+    replyCount: 0,
+    user: {
+      userId: NORMAL_USER.userId,
+      profileImgURL: NORMAL_USER.profileImgURL,
+      nickname: NORMAL_USER.nickname,
     },
-  ],
-};
+    isLiked: true,
+    createdTime: '2022-07-25T15:32:39.445Z',
+  },
+];
 
-export const REPLY_DATA = {
-  comment: [
-    {
-      commentId: 3,
-      content: '공감합니다',
-      likeCount: 1,
-      replyCount: 0,
-      user: {
-        userId: NO_POSTCOUNT_USER.userId,
-        profileImgURL: NO_POSTCOUNT_USER.profileImgURL,
-        nickname: NO_POSTCOUNT_USER.nickname,
-      },
-      isLiked: false,
-      createdTime: '2022-07-25T15:32:39.445Z',
+export const REPLY_DATA = [
+  {
+    commentId: 3,
+    content: '공감합니다',
+    likeCount: 1,
+    replyCount: 0,
+    user: {
+      userId: NO_POSTCOUNT_USER.userId,
+      profileImgURL: NO_POSTCOUNT_USER.profileImgURL,
+      nickname: NO_POSTCOUNT_USER.nickname,
     },
-    {
-      commentId: 4,
-      content: '저두요',
-      likeCount: 1,
-      replyCount: 0,
-      user: {
-        userId: NO_FOLLOW_USER.userId,
-        profileImgURL: NO_FOLLOW_USER.profileImgURL,
-        nickname: NO_FOLLOW_USER.nickname,
-      },
-      isLiked: false,
-      createdTime: '2022-07-25T15:32:39.445Z',
+    isLiked: false,
+    createdTime: '2022-07-25T15:32:39.445Z',
+  },
+  {
+    commentId: 4,
+    content: '저두요',
+    likeCount: 1,
+    replyCount: 0,
+    user: {
+      userId: NO_FOLLOW_USER.userId,
+      profileImgURL: NO_FOLLOW_USER.profileImgURL,
+      nickname: NO_FOLLOW_USER.nickname,
     },
-  ],
-};
+    isLiked: false,
+    createdTime: '2022-07-25T15:32:39.445Z',
+  },
+];

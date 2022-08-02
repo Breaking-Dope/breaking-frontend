@@ -54,6 +54,16 @@ export const ProfileToggle = styled.div`
   right: -16px;
 `;
 
+export const BlueLabel = styled.span`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 12px;
+  color: ${({ theme }) => theme.blue[900]};
+  font-weight: 700;
+  cursor: pointer;
+`;
+
 export const Logout = styled.p`
   text-align: center;
   margin: 10px;
