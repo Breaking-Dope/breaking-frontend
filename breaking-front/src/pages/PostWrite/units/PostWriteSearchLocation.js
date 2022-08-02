@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 
 const PostWriteSearchLocation = ({ setForm }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [locationInputValue, setLocationInputValue] = useState('');
 
   const [map, setMap] = useState(); //map 객체
   const [mapCenterPosition, setMapCenterPosition] = useState({
@@ -33,18 +34,40 @@ const PostWriteSearchLocation = ({ setForm }) => {
 
   const { kakao } = window;
   const geocoder = new kakao.maps.services.Geocoder();
+  const GetCurrentPosition = () => {
+    //현재 위치를 가져옴
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log(position);
+        geocoder.coord2Address(
+          position.coords.longitude,
+          position.coords.latitude,
+          (adresses) => {
+            setLocationInputValue(adresses[0].address.address_name);
+          }
+        );
+      },
+      (error) => {
+        console.log(error);
+      },
+      {
+        enableHighAccuracy: false,
+      }
+    );
+  };
 
   const LocationSubmit = () => {
     // parent의 form state를 받아와 결과값을 추가
-    console.log('클릭이당');
+    setLocationInputValue(markerInformation.addressName);
+    setIsModalOpen(false);
   };
 
   const coord2AdressCallback = (adresses, status) => {
     if (status === 'OK') {
       setMarkerInformation((pre) => ({
         ...pre,
-        road_address: adresses[0].road_address?.address_name,
-        address: adresses[0].address.address_name,
+        roadAddressName: adresses[0].road_address?.address_name,
+        addressName: adresses[0].address.address_name,
       }));
       setIsCustomMarker(true);
     }
@@ -94,7 +117,7 @@ const PostWriteSearchLocation = ({ setForm }) => {
     <>
       <Style.PostWriteTitle>
         위치
-        <Style.FindLocationLayout>
+        <Style.FindLocationLayout onClick={GetCurrentPosition}>
           <LocationIcon />
           <Style.FindLocationMessage>현재 위치 찾기</Style.FindLocationMessage>
         </Style.FindLocationLayout>
@@ -104,6 +127,8 @@ const PostWriteSearchLocation = ({ setForm }) => {
         type="text"
         placeholder="주소를 입력하세요"
         onClick={toggleModal}
+        value={locationInputValue}
+        readOnly
       />
       <PostWriteModal
         title="위치 찾기"
@@ -140,7 +165,9 @@ const PostWriteSearchLocation = ({ setForm }) => {
               onClick={LocationSubmit}
             >
               <Style.SearchMarker>
-                <Style.PlaceName>{markerInformation?.address}</Style.PlaceName>
+                <Style.PlaceName>
+                  {markerInformation?.addressName}
+                </Style.PlaceName>
               </Style.SearchMarker>
             </MapMarker>
           )}
