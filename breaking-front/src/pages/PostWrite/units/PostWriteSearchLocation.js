@@ -9,6 +9,10 @@ import PropTypes from 'prop-types';
 const PostWriteSearchLocation = ({ setForm }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [map, setMap] = useState(); //map 객체
+  const [mapCenterPosition, setMapCenterPosition] = useState({
+    lat: 37.5666805,
+    lng: 126.9784147,
+  });
 
   const [searchMarkerInformation, setSearchMarkerInformation] = useState(); // marker 클릭시 보여주는 정보객체
   const [searchResult, setSearchResult] = useState([]);
@@ -62,7 +66,6 @@ const PostWriteSearchLocation = ({ setForm }) => {
     map && map.relayout();
     // modal과 같이 display의 값이 바뀌는 곳에서는  map.relayout() 가 필요
   }, [isModalOpen, map]);
-
   return (
     <>
       <Style.PostWriteTitle>
@@ -84,11 +87,8 @@ const PostWriteSearchLocation = ({ setForm }) => {
         closeClick={toggleModal}
       >
         <Map
-          center={{
-            // 지도의 중심좌표
-            lat: 37.5666805,
-            lng: 126.9784147,
-          }}
+          center={mapCenterPosition}
+          isPanto={true}
           style={{
             // 지도의 크기
             width: '100%',
@@ -98,6 +98,7 @@ const PostWriteSearchLocation = ({ setForm }) => {
           level={8} // 지도의 확대 레벨
           onCreate={setMap} //map 객체를 받아옴
           onClick={(_t, mouseEvent) => {
+            console.log(mouseEvent);
             setClickMarkerInformation({
               lat: mouseEvent.latLng.getLat(),
               lng: mouseEvent.latLng.getLng(),
@@ -116,9 +117,7 @@ const PostWriteSearchLocation = ({ setForm }) => {
               onClick={LocationSubmit}
             >
               <Style.SearchMarker>
-                <Style.AdressName>
-                  지번: {clickMarkerInformation.address?.address_name}
-                </Style.AdressName>
+                <div>지번: {clickMarkerInformation.address?.address_name}</div>
               </Style.SearchMarker>
             </MapMarker>
           )}
@@ -127,8 +126,11 @@ const PostWriteSearchLocation = ({ setForm }) => {
             <MapMarker
               key={`marker-${data.place_name}-${data.y},${data.x}`}
               position={{ lat: data.y, lng: data.x }}
-              onMouseOver={() => setSearchMarkerInformation(data)}
-              clickable={true}
+              onMouseOver={() => {
+                setMapCenterPosition({ lat: data.y, lng: data.x });
+                setSearchMarkerInformation(data);
+              }}
+              clickable={true} //설정없으면 클릭 이벤트가 마커가아닌 지도로 인식함
               onClick={LocationSubmit}
             >
               {searchMarkerInformation &&
@@ -155,7 +157,10 @@ const PostWriteSearchLocation = ({ setForm }) => {
             {searchResult.map((data, index) => (
               <Style.SearchItem
                 key={data.id}
-                onMouseOver={() => setSearchMarkerInformation(data)}
+                onMouseOver={() => {
+                  setMapCenterPosition({ lat: data.y, lng: data.x });
+                  setSearchMarkerInformation(data);
+                }}
                 onClick={LocationSubmit}
               >
                 <Style.PlaceName>
