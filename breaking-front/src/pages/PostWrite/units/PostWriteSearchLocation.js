@@ -8,17 +8,29 @@ import PropTypes from 'prop-types';
 
 const PostWriteSearchLocation = ({ setForm }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [map, setMap] = useState(); //map 객체
   const [mapCenterPosition, setMapCenterPosition] = useState({
     lat: 37.5666805,
     lng: 126.9784147,
   });
 
-  const [searchMarkerInformation, setSearchMarkerInformation] = useState(); // marker 클릭시 보여주는 정보객체
+  const [markerInformation, setMarkerInformation] = useState(); // marker 클릭시 보여주는 정보객체
+  /*
+   {
+    lat: "number"
+    lng: "number"
+    id: "number"
+    placeName: "str" // 유저가 클릭했을때는 placeName이 없음
+    addressName: "str"
+    roadAddressName: "str" //없을시에는 빈 문자열
+   }
+   */
+  const [isCustomMarker, setIsCustomMarker] = useState(false); // 유저가 맵을 클릭할시에 true로 변함
+
   const [searchResult, setSearchResult] = useState([]);
   const [searchContent, setSearchContent] = useState('');
 
-  const [clickMarkerInformation, setClickMarkerInformation] = useState(); //마우스로 지도를 클릭했을때 마커의 정보
   const { kakao } = window;
   const geocoder = new kakao.maps.services.Geocoder();
 
@@ -27,12 +39,24 @@ const PostWriteSearchLocation = ({ setForm }) => {
     console.log('클릭이당');
   };
 
-  const latitudeLongitudeToAdress = (adresses) => {
-    setClickMarkerInformation((pre) => ({
-      ...pre,
-      road_address: adresses[0].road_address,
-      address: adresses[0].address,
-    }));
+  const coord2AdressCallback = (adresses, status) => {
+    if (status === 'OK') {
+      setMarkerInformation((pre) => ({
+        ...pre,
+        road_address: adresses[0].road_address?.address_name,
+        address: adresses[0].address.address_name,
+      }));
+      setIsCustomMarker(true);
+    }
+  };
+
+  const SetCustomMarker = (lat, lng) => {
+    // 클릭위치에 마커가 찍어지도록 state를 변경
+    setMarkerInformation({
+      lat: lat,
+      lng: lng,
+    });
+    geocoder.coord2Address(lng, lat, coord2AdressCallback);
   };
 
   const toggleModal = () => {
@@ -98,47 +122,53 @@ const PostWriteSearchLocation = ({ setForm }) => {
           level={8} // 지도의 확대 레벨
           onCreate={setMap} //map 객체를 받아옴
           onClick={(_t, mouseEvent) => {
-            console.log(mouseEvent);
-            setClickMarkerInformation({
-              lat: mouseEvent.latLng.getLat(),
-              lng: mouseEvent.latLng.getLng(),
-            });
-            geocoder.coord2Address(
-              mouseEvent.latLng.getLng(),
+            // 맵을 클릭시에 실행되는 eventHandler
+            SetCustomMarker(
               mouseEvent.latLng.getLat(),
-              latitudeLongitudeToAdress
+              mouseEvent.latLng.getLng()
             );
           }}
         >
-          {clickMarkerInformation && (
+          {/*맵을 클릭했을때 나오는 마커 */}
+          {isCustomMarker && (
             <MapMarker
-              position={clickMarkerInformation}
+              position={{
+                lat: markerInformation.lat,
+                lng: markerInformation.lng,
+              }}
               clickable={true}
               onClick={LocationSubmit}
             >
               <Style.SearchMarker>
-                <div>지번: {clickMarkerInformation.address?.address_name}</div>
+                <Style.PlaceName>{markerInformation?.address}</Style.PlaceName>
               </Style.SearchMarker>
             </MapMarker>
           )}
-
+          {/*검색결과로 나오는 마커 */}
           {searchResult.map((data) => (
             <MapMarker
               key={`marker-${data.place_name}-${data.y},${data.x}`}
               position={{ lat: data.y, lng: data.x }}
               onMouseOver={() => {
+                setIsCustomMarker(false);
                 setMapCenterPosition({ lat: data.y, lng: data.x });
-                setSearchMarkerInformation(data);
+                setMarkerInformation({
+                  lat: data.y,
+                  lng: data.x,
+                  id: data.id,
+                  placeName: data.place_name,
+                  addressName: data.address_name,
+                  roadAddressName: data.road_address_name,
+                });
               }}
-              clickable={true} //설정없으면 클릭 이벤트가 마커가아닌 지도로 인식함
+              clickable={true}
               onClick={LocationSubmit}
             >
-              {searchMarkerInformation &&
-                searchMarkerInformation.id === data.id && (
-                  <Style.SearchMarker>
-                    <Style.PlaceName>{data.place_name}</Style.PlaceName>
-                  </Style.SearchMarker>
-                )}
+              {markerInformation && markerInformation?.id === data.id && (
+                <Style.SearchMarker>
+                  <Style.PlaceName>{data.place_name}</Style.PlaceName>
+                </Style.SearchMarker>
+              )}
             </MapMarker>
           ))}
         </Map>
@@ -158,8 +188,16 @@ const PostWriteSearchLocation = ({ setForm }) => {
               <Style.SearchItem
                 key={data.id}
                 onMouseOver={() => {
+                  setIsCustomMarker(false);
                   setMapCenterPosition({ lat: data.y, lng: data.x });
-                  setSearchMarkerInformation(data);
+                  setMarkerInformation({
+                    lat: data.y,
+                    lng: data.x,
+                    id: data.id,
+                    placeName: data.place_name,
+                    addressName: data.address_name,
+                    roadAddressName: data.road_address_name,
+                  });
                 }}
                 onClick={LocationSubmit}
               >
