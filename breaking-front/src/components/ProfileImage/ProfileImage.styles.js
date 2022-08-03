@@ -23,11 +23,15 @@ const sizeCss = {
 export const ProfileImageContainer = styled.div``;
 
 export const ProfileImage = styled.img`
+  display: block;
   ${({ size }) => sizeCss[size]};
+  text-align: center;
   border-radius: 50%;
+  background-color: ${({ theme }) => theme.gray[200]};
+  word-wrap: break-word;
   object-fit: cover;
   cursor: pointer;
-  background-color: ${({ theme }) => theme.gray[200]};
+  overflow: hidden;
 `;
 
 export const DefaultImage = styled.img.attrs({
@@ -37,4 +41,5 @@ export const DefaultImage = styled.img.attrs({
   border-radius: 50%;
   cursor: pointer;
   background-color: ${({ theme }) => theme.gray[200]};
+  overflow: hidden;
 `;
