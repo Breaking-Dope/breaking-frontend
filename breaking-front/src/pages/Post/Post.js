@@ -59,6 +59,7 @@ const Post = () => {
     data: postCommentData,
     isFetching: isPostCommentFetching,
     fetchNextPage: FetchNextPostComment,
+    hasNextPage: postCommentHasNextPage,
   } = usePostComment(postId);
 
   const { mutate: PostLike } = useMutation(postPostLike);
@@ -83,7 +84,7 @@ const Post = () => {
       DeletePost(postId, {
         onSuccess: () => {
           alert('게시글을 삭제하였습니다.');
-          navigate(PAGE_PATH.HOME);
+          navigate(-1);
         },
       });
   };
@@ -100,6 +101,7 @@ const Post = () => {
       PostBuy(postId, {
         onSuccess: () => {
           alert('게시글을 구매하였습니다.');
+          // 새로 postData 불러오기
         },
       });
   };
@@ -123,6 +125,7 @@ const Post = () => {
     if (PostData?.data.user.userId === userId) setPurchaseType('구매자 목록');
     else if (PostData?.data.isPurchased) setPurchaseType('구매 완료');
     else setPurchaseType('구매 하기');
+
     setIsBookmarked(PostData?.data.isBookmarked);
     setIsLiked(PostData?.data.isLiked);
     setLikeCount(PostData?.data.likeCount);
@@ -137,20 +140,19 @@ const Post = () => {
         observer.observe(entry.target);
       }
     };
-
-    if (postCommentData) {
+    if (postCommentHasNextPage && !isPostCommentFetching) {
       observer = new IntersectionObserver(onIntersect, {
         threshold: 0.8,
       });
       observer.observe(targetRef.current);
     }
     return () => observer && observer.disconnect();
-  }, [FetchNextPostComment, postCommentData]);
+  }, [FetchNextPostComment, isPostCommentFetching, postCommentHasNextPage]);
 
   return (
     <>
       <Modal isOpen={isModalOpen} closeClick={toggleModal} title="구매자 목록">
-        {PostBoughtList?.data.Users.map((item) => (
+        {PostBoughtList?.data.map((item) => (
           <FollowCard
             cardClick={() => navigate(PAGE_PATH.PROFILE(item.userId))}
             profileData={item}
@@ -256,43 +258,35 @@ const Post = () => {
                 {PostData?.data.commentCount.toLocaleString('ko-KR')}
               </label>
             </Style.ContentStatus>
-            <ETCIcon onClick={toggleComment} />
-            <Style.ContentToggle>
+            <ETCIcon
+              onClick={toggleComment}
+              tabIndex="0"
+              onBlur={() => setIsContentToggle(false)}
+            />
+            <Style.ContentToggle
+              onMouseDown={(event) => event.preventDefault()}
+            >
               {isContentToggle && (
                 <Toggle width="100px">
                   {PostData?.data.user.userId === userId ? (
                     <>
+                      <Toggle.LabelLink icon={<EditIcon />} label="수정" />
                       <Toggle.LabelLink
-                        path={PAGE_PATH.POST(postId)}
-                        icon={<EditIcon />}
-                        label="수정"
-                      />
-                      <Toggle.LabelLink
-                        path={PAGE_PATH.POST(postId)}
                         icon={<RemoveIcon />}
                         label="삭제"
-                        onClick={postDeleteClick}
+                        labelClick={postDeleteClick}
                       />
                     </>
                   ) : (
-                    <Toggle.LabelLink
-                      path={PAGE_PATH.POST(postId)}
-                      icon={<HideIcon />}
-                      label="숨김"
-                    />
+                    <Toggle.LabelLink icon={<HideIcon />} label="숨김" />
                   )}
 
                   <Toggle.LabelLink
-                    path={PAGE_PATH.POST(postId)}
                     icon={isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />}
                     label="북마크"
-                    onClick={toggleBookmarked}
+                    labelClick={toggleBookmarked}
                   />
-                  <Toggle.LabelLink
-                    path={PAGE_PATH.POST(postId)}
-                    icon={<ShareIcon />}
-                    label="공유"
-                  />
+                  <Toggle.LabelLink icon={<ShareIcon />} label="공유" />
                 </Toggle>
               )}
             </Style.ContentToggle>
@@ -318,11 +312,11 @@ const Post = () => {
               />
             ))
           )}
-          <div ref={targetRef}>
+          <Style.TargetDiv ref={targetRef}>
             {isPostCommentFetching && (
               <Style.Loading type="spin" color={theme.blue[900]} width="40px" />
             )}
-          </div>
+          </Style.TargetDiv>
         </Style.Comments>
       </Style.Post>
     </>

@@ -31,7 +31,7 @@ export const postHandlers = [
   }),
 
   rest.get(API_PATH.POST_BOUGHT_LIST(':postId'), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({ Users: boughtUserList }));
+    return res(ctx.status(200), ctx.json(boughtUserList));
   }),
 
   rest.delete(API_PATH.POST_DELETE(':postId'), (req, res, ctx) => {

@@ -16,6 +16,7 @@ import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
+import ImageUrlConverter from 'utils/ImageUrlConverter';
 import ProfileFollowButton from './units/ProfileFollowButton';
 import ProfileTabPanel from './units/ProfileTabPanel';
 
@@ -38,18 +39,21 @@ const Profile = () => {
     data: writtenData,
     fetchNextPage: FetchNextWritten,
     isFetching: isWrittenFetching,
-  } = useProfileWrittenPost(userId, isMyPage, writtenOption);
+    hasNextPage: writtenHasNextPage,
+  } = useProfileWrittenPost(userId, writtenOption);
 
   const {
     data: boughtData,
     fetchNextPage: FetchNextBought,
     isFetching: isBoughtFetching,
+    hasNextPage: boughtHasNextPage,
   } = useProfileBoughtPost(userId, isMyPage, boughtOption);
 
   const {
     data: bookmarkedData,
     fetchNextPage: FetchNextBookmarked,
     isFetching: isBookmarkedFetching,
+    hasNextPage: bookmarkedHasNextPage,
   } = useProfileBookmarkedPost(userId, isMyPage, bookmarkedOption);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -97,7 +101,10 @@ const Profile = () => {
         ))}
       </Modal>
       <Style.UserContainer>
-        <ProfileImage size="xlarge" src={profileData?.data.profileImgURL} />
+        <ProfileImage
+          size="xlarge"
+          src={ImageUrlConverter(profileData?.data.profileImgURL)}
+        />
         <Style.UserInformation>
           <Style.Title>
             <Style.NickName>{profileData?.data.nickname}</Style.NickName>
@@ -136,6 +143,8 @@ const Profile = () => {
 
           <Tabs.TabPanel>
             <ProfileTabPanel
+              type="written"
+              hasNextPage={writtenHasNextPage}
               nextFetch={FetchNextWritten}
               isFetching={isWrittenFetching}
               data={writtenData}
@@ -146,6 +155,8 @@ const Profile = () => {
           {isMyPage && (
             <Tabs.TabPanel>
               <ProfileTabPanel
+                type="bought"
+                hasNextPage={boughtHasNextPage}
                 nextFetch={FetchNextBought}
                 isFetching={isBoughtFetching}
                 data={boughtData}
@@ -157,6 +168,8 @@ const Profile = () => {
           {isMyPage && (
             <Tabs.TabPanel>
               <ProfileTabPanel
+                type="bookmarked"
+                hasNextPage={bookmarkedHasNextPage}
                 nextFetch={FetchNextBookmarked}
                 isFetching={isBookmarkedFetching}
                 data={bookmarkedData}

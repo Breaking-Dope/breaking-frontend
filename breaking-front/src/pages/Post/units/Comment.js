@@ -26,7 +26,7 @@ import { ReactComponent as DropDownIcon } from 'assets/svg/drop_down.svg';
 import { ReactComponent as MoreIcon } from 'assets/svg/more_arrow.svg';
 import { useTheme } from 'styled-components';
 
-const Comment = ({ comment, type, postId }) => {
+const Comment = ({ comment, type }) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -37,13 +37,14 @@ const Comment = ({ comment, type, postId }) => {
   const [isOpenReplyToggle, setIsOpenReplyToggle] = useState(false);
   const [isLiked, setIsLiked] = useState(comment.isLiked);
   const [likeCount, setLikeCount] = useState(comment.likeCount);
+  const [commentId, setCommentId] = useState('');
 
   const {
     data: postReplyData,
     isFetching: isPostReplyFetching,
     fetchNextPage: FetchNextPostReply,
-    refetch: PostReplyReFetch,
-  } = usePostReply(comment.commentId);
+    hasNextPage: postReplyHasNextPage,
+  } = usePostReply(commentId);
 
   const { mutate: CommentLike } = useMutation(postPostCommentLike);
   const { mutate: DeleteCommentLike } = useMutation(deletePostCommentLike);
@@ -75,10 +76,13 @@ const Comment = ({ comment, type, postId }) => {
   };
 
   const toggleLiked = () => {
-    isLiked
-      ? DeleteCommentLike(comment.commentId)
-      : CommentLike(comment.commentId);
-    setLikeCount((pre) => (isLiked ? pre - 1 : pre + 1));
+    if (isLiked) {
+      DeleteCommentLike(comment.commentId);
+      setLikeCount((pre) => pre - 1);
+    } else {
+      CommentLike(comment.commentId);
+      setLikeCount((pre) => pre + 1);
+    }
     setIsLiked((pre) => !pre);
   };
 
@@ -92,7 +96,7 @@ const Comment = ({ comment, type, postId }) => {
 
   const toggleReply = () => {
     setIsOpenReplyToggle((pre) => !pre);
-    PostReplyReFetch();
+    setCommentId(comment.commentId);
   };
 
   return (
@@ -136,37 +140,34 @@ const Comment = ({ comment, type, postId }) => {
                 <span onClick={toggleCommentForm}>답글쓰기</span>
               )}
             </Style.Status>
-            <Style.ETCIconContainer onClick={toggleComment}>
+            <Style.ETCIconContainer
+              onClick={toggleComment}
+              tabIndex="0"
+              onBlur={() => setIsOpenCommentToggle(false)}
+            >
               <ETCIcon />
             </Style.ETCIconContainer>
-            <Style.CommentToggle isOpen={isOpenCommentToggle}>
+            <Style.CommentToggle
+              isOpen={isOpenCommentToggle}
+              onMouseDown={(event) => event.preventDefault()}
+            >
               {comment.user.userId === userId ? (
                 <Toggle width="100px">
                   <Toggle.LabelLink
-                    path={PAGE_PATH.POST(postId)}
                     icon={<EditIcon />}
                     label="수정"
-                    onClick={commentEditClick}
+                    labelClick={commentEditClick}
                   />
                   <Toggle.LabelLink
-                    path={PAGE_PATH.POST(postId)}
                     icon={<RemoveIcon />}
                     label="삭제"
-                    onClick={commentDeleteClick}
+                    labelClick={commentDeleteClick}
                   />
                 </Toggle>
               ) : (
                 <Toggle width="100px">
-                  <Toggle.LabelLink
-                    path={PAGE_PATH.POST(postId)}
-                    icon={<ChatIcon />}
-                    label="채팅"
-                  />
-                  <Toggle.LabelLink
-                    path={PAGE_PATH.POST(postId)}
-                    icon={<BlockIcon />}
-                    label="차단"
-                  />
+                  <Toggle.LabelLink icon={<ChatIcon />} label="채팅" />
+                  <Toggle.LabelLink icon={<BlockIcon />} label="차단" />
                 </Toggle>
               )}
             </Style.CommentToggle>
@@ -190,20 +191,21 @@ const Comment = ({ comment, type, postId }) => {
       )}
       {isOpenReplyToggle && (
         <Style.Reply>
-          {isPostReplyFetching ? (
-            <Style.Loading type="spin" color={theme.blue[900]} width="40px" />
-          ) : (
-            <>
-              {postReplyData?.pages.map((page) =>
-                page.result.map((reply) => (
-                  <Comment comment={reply} type="reply" key={reply.commentId} />
-                ))
-              )}
-              <Style.MoreChowReply onClick={moreShowReplyClick}>
-                <MoreIcon />
-                더보기
-              </Style.MoreChowReply>
-            </>
+          {postReplyData?.pages.map((page) =>
+            page.result.map((reply) => (
+              <Comment comment={reply} type="reply" key={reply.commentId} />
+            ))
+          )}
+          {postReplyHasNextPage && !isPostReplyFetching && (
+            <Style.MoreChowReply onClick={moreShowReplyClick}>
+              <MoreIcon />
+              더보기
+            </Style.MoreChowReply>
+          )}
+          {isPostReplyFetching && (
+            <Style.LoadingContainer>
+              <Style.Loading type="spin" color={theme.blue[900]} width="40px" />
+            </Style.LoadingContainer>
           )}
         </Style.Reply>
       )}
@@ -225,7 +227,6 @@ const Comment = ({ comment, type, postId }) => {
 Comment.propTypes = {
   comment: PropTypes.object.isRequired,
   type: PropTypes.oneOf(['comment', 'reply']),
-  postId: PropTypes.number,
 };
 
 export default Comment;
