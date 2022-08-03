@@ -14,6 +14,7 @@ import Toggle from 'components/Toggle/Toggle';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import CommentForm from 'pages/Post/units/CommentForm';
 import * as Style from 'pages/Post/units/Comment.styles';
+import ImageUrlConverter from 'utils/ImageUrlConverter';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
 import { ReactComponent as LikedIcon } from 'assets/svg/liked.svg';
 import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
@@ -108,7 +109,7 @@ const Comment = ({ comment, type }) => {
         <Style.ProfileImageContainer>
           <ProfileImage
             size="medium"
-            src={comment.user.profileImgURL}
+            src={ImageUrlConverter(comment.user.profileImgURL)}
             profileClick={profileClick}
           />
         </Style.ProfileImageContainer>

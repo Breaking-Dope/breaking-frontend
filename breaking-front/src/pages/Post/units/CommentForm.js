@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
-import ProfileImage from 'components/ProfileImage/ProfileImage';
-import * as Style from 'pages/Post/units/CommentForm.styles';
 import { useMutation, useQueryClient } from 'react-query';
+import PropTypes from 'prop-types';
 import {
   postPostCommentWrite,
   postPostReplyWrite,
   putPostCommentEdit,
 } from 'api/post';
+import ImageUrlConverter from 'utils/ImageUrlConverter';
+import ProfileImage from 'components/ProfileImage/ProfileImage';
+import * as Style from 'pages/Post/units/CommentForm.styles';
 
 const CommentForm = ({
   profileImgURL,
@@ -97,7 +98,10 @@ const CommentForm = ({
       <Style.CommentForm onSubmit={handleSubmit}>
         <Style.FlexContainer>
           <Style.ProfileImageContainer>
-            <ProfileImage size="medium" src={profileImgURL} />
+            <ProfileImage
+              size="medium"
+              src={ImageUrlConverter(profileImgURL)}
+            />
           </Style.ProfileImageContainer>
           <Style.CommentTextarea
             ref={textareaRef}

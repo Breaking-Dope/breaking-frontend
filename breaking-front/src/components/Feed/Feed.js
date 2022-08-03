@@ -24,6 +24,7 @@ import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
 import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as HideIcon } from 'assets/svg/hide.svg';
+import ImageUrlConverter from 'utils/ImageUrlConverter';
 
 export default function Feed({ feedData, userId, ...props }) {
   const navigate = useNavigate();
@@ -91,8 +92,8 @@ export default function Feed({ feedData, userId, ...props }) {
   return (
     <Style.Feed isDeleted={isDeleted} {...props}>
       {feedData.thumbnailImgURL ? (
-        <Style.ThumbNailImage
-          src={feedData.thumbnailImgURL}
+        <Style.ThumbnailImage
+          src={ImageUrlConverter(feedData.thumbnailImgURL)}
           onClick={handleFeedClick}
         />
       ) : (
@@ -100,11 +101,10 @@ export default function Feed({ feedData, userId, ...props }) {
       )}
       <Style.Content>
         <ProfileImage
-          src={feedData.profileImgURL}
+          src={ImageUrlConverter(feedData.profileImgURL)}
           size="medium"
           profileClick={handleProfileClick}
         />
-
         <Style.Context>
           <Style.Title onClick={handleFeedClick}>{feedData.title}</Style.Title>
           <Style.Detail>

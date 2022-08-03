@@ -9,14 +9,14 @@ export const Feed = styled.div`
   filter: drop-shadow(2px 2px 2px ${({ theme }) => theme.gray[300]});
 `;
 
-export const ThumbNailImage = styled.img`
+export const ThumbnailImage = styled.img`
   width: 100%;
   height: 300px;
   background-color: ${({ theme }) => theme.gray[200]};
   cursor: pointer;
 `;
 
-export const ThumbnailDefaultImage = styled(ThumbNailImage).attrs({
+export const ThumbnailDefaultImage = styled(ThumbnailImage).attrs({
   src: `${logo}`,
 })`
   background-color: ${({ theme }) => theme.gray[200]};
