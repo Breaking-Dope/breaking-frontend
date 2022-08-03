@@ -1,7 +1,8 @@
+import { API_PATH } from 'constants/path';
 import { rest } from 'msw';
 
 export const mainFeedHandlers = [
-  rest.get('/feeds', (req, res, ctx) => {
+  rest.get(API_PATH.FEEDS('*', '*', '*'), (req, res, ctx) => {
     const sort = req.url.searchParams.get('sort');
     const option = req.url.searchParams.get('sold-option');
     if (sort === 'chronological')

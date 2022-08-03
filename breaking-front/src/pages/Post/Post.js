@@ -255,7 +255,7 @@ const Post = () => {
               </label>
               <label>
                 <CommentIcon />
-                {PostData?.data.commentCount.toLocaleString('ko-KR')}
+                {PostData?.data.totalCommentCount.toLocaleString('ko-KR')}
               </label>
             </Style.ContentStatus>
             <ETCIcon
