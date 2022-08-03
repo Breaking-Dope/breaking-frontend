@@ -19,7 +19,7 @@ export const UploadForm = styled.div`
   justify-content: center;
 `;
 
-export const UploadFileBox = styled.div`
+export const UploadFileBox = styled.label`
   display: flex;
   width: 130px;
   height: 130px;
@@ -31,6 +31,10 @@ export const UploadFileBox = styled.div`
   align-items: center;
   flex-direction: column;
   cursor: pointer;
+`;
+
+export const FileUploadInput = styled.input`
+  display: none;
 `;
 
 export const PlusIconContainer = styled.div`
@@ -64,13 +68,20 @@ export const Carousel = styled(ScrollBarX)`
   }
 `;
 
-export const UploadPreviewImage = styled.div`
+export const PreviewImageContainer = styled.div`
   display: inline-block;
   position: relative;
   padding: 10px;
 `;
 
-export const UploadBox = styled.img`
+export const PreviewImage = styled.img`
+  width: 130px;
+  height: 130px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.blue[300]};
+`;
+
+export const PreviewVedio = styled.video`
   width: 130px;
   height: 130px;
   border-radius: 10px;
