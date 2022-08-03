@@ -134,7 +134,7 @@ export const POST_DATA = {
   isSold: false,
   isHidden: false,
   likeCount: 1004,
-  commentCount: 5,
+  totalCommentCount: 5,
 };
 
 export const COMMENT_DATA = [

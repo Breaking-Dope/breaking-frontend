@@ -18,17 +18,23 @@ export const FilterContainer = styled.div`
 
 export const ShowSoldFeed = styled.label`
   display: flex;
-  align-items: center;
   margin-left: 15px;
   font-size: 12px;
+  align-items: center;
 `;
 
 export const FeedUploadButton = styled.button`
   display: flex;
-  align-items: center;
+  padding: 5px;
   border: 1px solid ${({ theme }) => theme.gray[500]};
   background-color: ${({ theme }) => theme.white};
+  align-items: center;
   cursor: pointer;
+  svg {
+    width: 16px;
+    height: 16px;
+    margin-right: 2px;
+  }
 `;
 
 export const Feeds = styled.div`
@@ -41,7 +47,7 @@ export const Feeds = styled.div`
 
 export const TargetDiv = styled.div`
   position: relative;
-  height: 200px;
+  height: 100px;
 `;
 
 export const Loading = styled(ReactLoading)`

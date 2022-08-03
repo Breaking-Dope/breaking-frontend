@@ -9,7 +9,7 @@ export const getFeeds = async ({ queryKey, pageParam = 0 }) => {
   });
   return {
     result: data,
-    cursor: data[data.length - 1].postId,
+    cursor: data[data.length - 1]?.postId,
   };
 };
 
@@ -21,7 +21,7 @@ export const getFeedsSearch = async ({ queryKey, pageParam = 0 }) => {
   });
   return {
     result: data,
-    cursor: data[data.length - 1].postId,
+    cursor: data[data.length - 1]?.postId,
   };
 };
 
@@ -33,6 +33,6 @@ export const getFeedsHashtag = async ({ queryKey, pageParam = 0 }) => {
   });
   return {
     result: data,
-    cursor: data[data.length - 1].postId,
+    cursor: data[data.length - 1]?.postId,
   };
 };

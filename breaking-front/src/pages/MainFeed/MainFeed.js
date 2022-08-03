@@ -9,6 +9,7 @@ import Filter from 'components/Filter/Filter';
 import Feed from 'components/Feed/Feed';
 import * as Style from 'pages/MainFeed/MainFeed.styles';
 import { ReactComponent as PenIcon } from 'assets/svg/pen.svg';
+import { FeedSkeleton } from 'components/Skeleton/Skeleton';
 
 const MainFeed = () => {
   const queryClient = useQueryClient();
@@ -24,6 +25,7 @@ const MainFeed = () => {
     data: mainFeedData,
     isFetching: isMainFeedFetching,
     fetchNextPage: FetchNextMainFeed,
+    hasNextPage: mainFeedHasNextPage,
   } = useMainFeedOption(sort, option);
 
   const handleFilter = (sortType) => {
@@ -37,7 +39,7 @@ const MainFeed = () => {
   };
 
   const handleUploadClick = () => {
-    navigate(PAGE_PATH.UPLOAD);
+    navigate(PAGE_PATH.POST_WRITE);
   };
 
   useEffect(() => {
@@ -50,14 +52,14 @@ const MainFeed = () => {
       }
     };
 
-    if (mainFeedData) {
+    if (mainFeedHasNextPage && !isMainFeedFetching) {
       observer = new IntersectionObserver(onIntersect, {
         threshold: 0.8,
       });
       observer.observe(targetRef.current);
     }
     return () => observer && observer.disconnect();
-  }, [FetchNextMainFeed, mainFeedData]);
+  }, [FetchNextMainFeed, isMainFeedFetching, mainFeedHasNextPage]);
 
   return (
     <Style.MainFeed>
@@ -105,6 +107,14 @@ const MainFeed = () => {
           page.result.map((feed) => (
             <Feed feedData={feed} key={feed.postId} userId={userId} />
           ))
+        )}
+        {isMainFeedFetching && (
+          <>
+            <FeedSkeleton />
+            <FeedSkeleton />
+            <FeedSkeleton />
+            <FeedSkeleton />
+          </>
         )}
       </Style.Feeds>
       <Style.TargetDiv ref={targetRef}>
