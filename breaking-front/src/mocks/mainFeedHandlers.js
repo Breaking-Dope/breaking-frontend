@@ -15,7 +15,7 @@ export const mainFeedHandlers = [
             region: '중구',
             thumbnailImgURL: '',
             likeCount: 999,
-            postType: 'EXCLUSIVE',
+            postType: 'exclusive',
             isSold: option === 'unsold' ? false : true,
             price: 10000,
             viewCount: 1000,
@@ -24,7 +24,7 @@ export const mainFeedHandlers = [
             realName: '가나다',
             isLiked: false,
             isBookmarked: false,
-            createdTime: new Date(),
+            createdTime: new Date(Date.now() - 24 * 60 * 60 * 1000),
           },
         ])
       );
@@ -38,7 +38,7 @@ export const mainFeedHandlers = [
             region: '중구',
             thumbnailImgURL: '',
             likeCount: 99999,
-            postType: 'EXCLUSIVE',
+            postType: 'exclusive',
             isSold: option === 'unsold' ? false : true,
             price: 10000,
             viewCount: 1000,
@@ -47,7 +47,7 @@ export const mainFeedHandlers = [
             realName: '가나다',
             isLiked: true,
             isBookmarked: false,
-            createdTime: new Date(),
+            createdTime: new Date(Date.now() - 60 * 60 * 1000),
           },
         ])
       );
@@ -61,7 +61,7 @@ export const mainFeedHandlers = [
             region: '중구',
             thumbnailImgURL: '',
             likeCount: 999,
-            postType: 'EXCLUSIVE',
+            postType: 'exclusive',
             isSold: option === 'unsold' ? false : true,
             price: 10000,
             viewCount: 99999,
@@ -70,7 +70,7 @@ export const mainFeedHandlers = [
             realName: '가나다',
             isLiked: false,
             isBookmarked: false,
-            createdTime: new Date(),
+            createdTime: new Date(Date.now() - 60 * 1000),
           },
           {
             postId: '4',
@@ -78,7 +78,7 @@ export const mainFeedHandlers = [
             region: '중구',
             thumbnailImgURL: '',
             likeCount: 999,
-            postType: 'EXCLUSIVE',
+            postType: 'exclusive',
             isSold: option === 'unsold' ? false : true,
             price: 10000,
             viewCount: 99999,
@@ -87,7 +87,7 @@ export const mainFeedHandlers = [
             realName: '가나다',
             isLiked: false,
             isBookmarked: false,
-            createdTime: new Date(),
+            createdTime: new Date(Date.now() - 60 * 1000),
           },
         ])
       );

@@ -26,6 +26,7 @@ import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as HideIcon } from 'assets/svg/hide.svg';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
 import numberFormatter from 'utils/numberFormatter';
+import timeFormatter from 'utils/timeFormatter';
 
 export default function Feed({ feedData, userId, ...props }) {
   const navigate = useNavigate();
@@ -112,7 +113,9 @@ export default function Feed({ feedData, userId, ...props }) {
             <LocationIcon />
             {feedData.region}
           </Style.Detail>
-          <Style.Detail>{feedData.createdTime}</Style.Detail>
+          <Style.Detail>
+            {timeFormatter(new Date(feedData.createdTime))}
+          </Style.Detail>
           {feedData.postType === 'exclusive' && (
             <Button color="dark" size="small" disabled>
               단독
