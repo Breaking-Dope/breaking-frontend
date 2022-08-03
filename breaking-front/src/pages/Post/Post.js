@@ -37,6 +37,7 @@ import { ReactComponent as HideIcon } from 'assets/svg/hide.svg';
 import { ReactComponent as BookmarkIcon } from 'assets/svg/small_bookmark.svg';
 import { ReactComponent as BookmarkedIcon } from 'assets/svg/small_bookmarked.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
+import dateFormatter from 'utils/dateFormatter';
 
 const Post = () => {
   let { id: postId } = useParams();
@@ -195,7 +196,7 @@ const Post = () => {
               {PostData?.data.location.region}
             </Style.ContentLocation>
             <Style.ContentDetail>
-              {PostData?.data.createdTime}
+              {PostData && dateFormatter(new Date(PostData.data.createdTime))}
               <Style.ContentViewCount>
                 조회&nbsp;
                 {PostData?.data.viewCount.toLocaleString('ko-KR')}
