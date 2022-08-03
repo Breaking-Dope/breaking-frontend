@@ -35,7 +35,7 @@ export const API_PATH = {
   PROFILE_TRANSACTION: (userId) => `/profile/${userId}/transaction`,
   PROFILE_WITHDRAWAL: (userId) => `/profile/${userId}`,
   FEEDS: (cursor, sort = 'chronological', option = 'all', size = '10') =>
-    `/feeds?cursor=${cursor}&size=${size}&sort=${sort}&sold-option=${option}`,
+    `/feed?cursor=${cursor}&size=${size}&sort=${sort}&sold-option=${option}`,
   FEEDS_SEARCH: (
     cursor,
     search,
@@ -43,7 +43,7 @@ export const API_PATH = {
     option = 'all',
     size = '10'
   ) =>
-    `/feeds?cursor=${cursor}&size=${size}&search=${search}&sort=${sort}&sold-option=${option}`,
+    `/feed?cursor=${cursor}&size=${size}&search=${search}&sort=${sort}&sold-option=${option}`,
   FEEDS_HASHTAG: (
     cursor,
     hashtag,
@@ -51,7 +51,7 @@ export const API_PATH = {
     option = 'all',
     size = '10'
   ) =>
-    `/feeds?cursor=${cursor}&size=${size}&hashtag=${hashtag}&sort=${sort}&sold-option=${option}`,
+    `/feed?cursor=${cursor}&size=${size}&hashtag=${hashtag}&sort=${sort}&sold-option=${option}`,
   POST_WRITE: '/post',
   POST_DATA: (postId) => `/post/${postId}`,
   POST_EDIT: (postId) => `/post/${postId}`,
