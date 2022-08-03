@@ -25,6 +25,7 @@ import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as HideIcon } from 'assets/svg/hide.svg';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
+import numberFormatter from 'utils/numberFormatter';
 
 export default function Feed({ feedData, userId, ...props }) {
   const navigate = useNavigate();
@@ -127,7 +128,7 @@ export default function Feed({ feedData, userId, ...props }) {
             </Button>
           )}
           <Style.ViewCount>
-            조회 {feedData.viewCount.toLocaleString('ko-KR')}
+            조회수 {numberFormatter(feedData.viewCount)}회
           </Style.ViewCount>
         </Style.Context>
         <Style.ContentStatus>
@@ -135,7 +136,7 @@ export default function Feed({ feedData, userId, ...props }) {
           <Style.Icons>
             <Style.IconContainer onClick={toggleLiked}>
               {isLiked ? <LikedIcon /> : <LikeIcon />}
-              <Style.Count>{likeCount.toLocaleString('ko-KR')}</Style.Count>
+              <Style.Count>{numberFormatter(likeCount)}</Style.Count>
             </Style.IconContainer>
             <Style.IconContainer onClick={toggleBookmarked}>
               {isBookmarked ? <BookMarkedIcon /> : <BookMarkIcon />}
