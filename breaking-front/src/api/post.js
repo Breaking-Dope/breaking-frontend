@@ -16,8 +16,8 @@ export const getPostCommentData = async ({ queryKey, pageParam = 0 }) => {
     url: API_PATH.POST_COMMENT_DATA(postId, pageParam),
   });
   return {
-    result: data.comment,
-    cursor: data.comment[data.comment.length - 1].commentId,
+    result: data,
+    cursor: data[data.length - 1].commentId,
   };
 };
 
@@ -28,8 +28,8 @@ export const getPostReplyData = async ({ queryKey, pageParam = 0 }) => {
     url: API_PATH.POST_REPLY_DATA(commentId, pageParam),
   });
   return {
-    result: data.comment,
-    cursor: data.comment[data.comment.length - 1].commentId,
+    result: data,
+    cursor: data[data.length - 1].commentId,
   };
 };
 

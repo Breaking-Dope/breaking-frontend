@@ -5,7 +5,7 @@ export const CarouselContainer = styled.div`
   width: 800px;
   height: 400px;
   border-radius: 10px;
-  background-color: black;
+  background-color: ${({ theme }) => theme.black};
   overflow: hidden;
 `;
 
