@@ -20,9 +20,7 @@ const PostUploadMediaForm = () => {
     setFilesThumbnail((pre) => pre.filter((item, index) => index !== target));
   };
 
-  const handleAddFiles = (event) => {
-    const fileLists = event.target.files;
-
+  const handleAddFiles = (fileLists) => {
     if (filesThumbnail.length + fileLists.length > 20) {
       alert('업로드 개수를 초과하였습니다');
     } else {
@@ -41,10 +39,21 @@ const PostUploadMediaForm = () => {
     }
   };
 
+  const dragDropUpload = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    handleAddFiles(event.dataTransfer.files);
+  };
+
+  const dragOverHandler = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
   return (
     <Style.UploadLayout>
       <Style.UploadTitle>사진/동영상 업로드</Style.UploadTitle>
-      <Style.UploadForm>
+      <Style.UploadForm onDrop={dragDropUpload} onDragOver={dragOverHandler}>
         <Style.UploadFileBox htmlFor="multiple-file">
           <Style.PlusIconContainer>
             <PlusIcon />
@@ -54,7 +63,7 @@ const PostUploadMediaForm = () => {
         <Style.FileUploadInput
           id="multiple-file"
           type="file"
-          onChange={handleAddFiles}
+          onChange={(event) => handleAddFiles(event.target.files)}
           multiple
         />
 
