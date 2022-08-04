@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
@@ -17,8 +18,8 @@ import * as Style from 'components/Feed/Feed.styles';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
 import { ReactComponent as LikedIcon } from 'assets/svg/liked.svg';
-import { ReactComponent as BookMarkIcon } from 'assets/svg/bookmark.svg';
-import { ReactComponent as BookMarkedIcon } from 'assets/svg/bookmarked.svg';
+import { ReactComponent as BookmarkIcon } from 'assets/svg/small_bookmark.svg';
+import { ReactComponent as BookmarkedIcon } from 'assets/svg/small_bookmarked.svg';
 import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
 import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
 import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
@@ -102,75 +103,77 @@ export default function Feed({ feedData, userId, ...props }) {
         <Style.ThumbnailDefaultImage onClick={handleFeedClick} />
       )}
       <Style.Content>
+        <Style.ETCIconContainer
+          onClick={toggleETC}
+          tabIndex="0"
+          onBlur={() => setIsOpenToggle(false)}
+        >
+          <ETCIcon />
+        </Style.ETCIconContainer>
         <ProfileImage
           src={ImageUrlConverter(feedData.profileImgURL)}
           size="medium"
           profileClick={handleProfileClick}
+          title={feedData.nickname}
         />
         <Style.Context>
-          <Style.Title onClick={handleFeedClick}>{feedData.title}</Style.Title>
+          <Style.Title onClick={handleFeedClick} title={feedData.title}>
+            {feedData.title}
+          </Style.Title>
           <Style.Detail>
             <LocationIcon />
-            {feedData.region}
+            {feedData.region} • {timeFormatter(new Date(feedData.createdTime))}
           </Style.Detail>
-          <Style.Detail>
-            {timeFormatter(new Date(feedData.createdTime))}
-          </Style.Detail>
-          {feedData.postType === 'exclusive' && (
-            <Button color="dark" size="small" disabled>
-              단독
-            </Button>
-          )}
-          {feedData.isSold ? (
-            <Button color="danger" size="small" disabled>
-              판매 완료
-            </Button>
-          ) : (
-            <Button color="primary" size="small" disabled>
-              판매중
-            </Button>
-          )}
-          <Style.ViewCount>
-            조회수 {numberFormatter(feedData.viewCount)}회
-          </Style.ViewCount>
+          <Style.ContextFooter>
+            {feedData.postType === 'exclusive' && (
+              <Button color="dark" size="small" disabled>
+                단독
+              </Button>
+            )}
+            {feedData.isSold ? (
+              <Button color="danger" size="small" disabled>
+                판매 완료
+              </Button>
+            ) : (
+              <Button color="primary" size="small" disabled>
+                판매중
+              </Button>
+            )}
+            <Style.ViewCount>
+              조회수 {numberFormatter(feedData.viewCount)}회
+            </Style.ViewCount>
+          </Style.ContextFooter>
         </Style.Context>
         <Style.ContentStatus>
           <Style.Price>{feedData.price.toLocaleString('ko-KR')} 원</Style.Price>
-          <Style.Icons>
-            <Style.IconContainer onClick={toggleLiked}>
-              {isLiked ? <LikedIcon /> : <LikeIcon />}
-              <Style.Count>{numberFormatter(likeCount)}</Style.Count>
-            </Style.IconContainer>
-            <Style.IconContainer onClick={toggleBookmarked}>
-              {isBookmarked ? <BookMarkedIcon /> : <BookMarkIcon />}
-            </Style.IconContainer>
-            <Style.IconContainer
-              onClick={toggleETC}
-              tabIndex="0"
-              onBlur={() => setIsOpenToggle(false)}
-            >
-              <ETCIcon />
-            </Style.IconContainer>
-          </Style.Icons>
+          <Style.LikeIconContainer onClick={toggleLiked}>
+            {isLiked ? <LikedIcon /> : <LikeIcon />}
+            <Style.LikeCount>{numberFormatter(likeCount)}</Style.LikeCount>
+          </Style.LikeIconContainer>
         </Style.ContentStatus>
         <Style.FeedToggle onMouseDown={(event) => event.preventDefault()}>
-          {isOpenToggle &&
-            (userId === feedData.userId ? (
-              <Toggle width="80px">
-                <Toggle.LabelLink icon={<EditIcon />} label="수정" />
-                <Toggle.LabelLink
-                  icon={<RemoveIcon />}
-                  label="삭제"
-                  labelClick={postDeleteClick}
-                />
-                <Toggle.LabelLink icon={<ShareIcon />} label="공유" />
-              </Toggle>
-            ) : (
-              <Toggle width="80px">
+          {isOpenToggle && (
+            <Toggle width="100px">
+              {feedData.userId === userId ? (
+                <>
+                  <Toggle.LabelLink icon={<EditIcon />} label="수정" />
+                  <Toggle.LabelLink
+                    icon={<RemoveIcon />}
+                    label="삭제"
+                    labelClick={postDeleteClick}
+                  />
+                </>
+              ) : (
                 <Toggle.LabelLink icon={<HideIcon />} label="숨김" />
-                <Toggle.LabelLink icon={<ShareIcon />} label="공유" />
-              </Toggle>
-            ))}
+              )}
+              <Toggle.LabelLink
+                icon={isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />}
+                label="북마크"
+                labelClick={toggleBookmarked}
+              />
+              <Toggle.LabelLink icon={<ShareIcon />} label="공유" />
+            </Toggle>
+          )}
         </Style.FeedToggle>
       </Style.Content>
     </Style.Feed>
