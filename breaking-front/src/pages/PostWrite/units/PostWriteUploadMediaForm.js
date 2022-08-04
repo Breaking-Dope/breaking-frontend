@@ -9,10 +9,16 @@ const PostUploadMediaForm = () => {
   const caruselRef = useRef();
   const [filesThumbnail, setFilesThumbnail] = useState([]);
   const LeftCaruselClick = () => {
-    caruselRef.current.scrollLeft -= 500;
+    caruselRef.current.scrollTo({
+      left: caruselRef.current.scrollLeft - 500,
+      behavior: 'smooth',
+    });
   };
   const RightCaruselClick = () => {
-    caruselRef.current.scrollLeft += 500;
+    caruselRef.current.scrollTo({
+      left: caruselRef.current.scrollLeft + 500,
+      behavior: 'smooth',
+    });
   };
 
   const deleteFile = (target) => {
