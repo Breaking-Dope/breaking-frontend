@@ -47,7 +47,7 @@ export const UploadCount = styled.p`
   color: ${({ theme }) => theme.brown};
   &::after {
     color: ${({ theme }) => theme.blue[900]};
-    content: '/10';
+    content: '/20';
   }
 `;
 
@@ -79,6 +79,7 @@ export const PreviewImage = styled.img`
   height: 130px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.blue[300]};
+  object-fit: cover;
 `;
 
 export const PreviewVedio = styled.video`
@@ -86,6 +87,7 @@ export const PreviewVedio = styled.video`
   height: 130px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.blue[300]};
+  object-fit: cover;
 `;
 
 export const XMarkIconContainer = styled.div`
