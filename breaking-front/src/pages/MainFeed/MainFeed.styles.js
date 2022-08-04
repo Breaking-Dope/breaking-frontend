@@ -39,7 +39,7 @@ export const FeedUploadButton = styled.button`
 
 export const Feeds = styled.div`
   display: grid;
-  min-height: 100vh;
+  min-height: 50vh;
   grid-template-columns: 400px 400px;
   row-gap: 60px;
   justify-content: space-between;
