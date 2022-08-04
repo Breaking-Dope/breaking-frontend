@@ -74,7 +74,7 @@ const PostUploadMediaForm = () => {
           <Style.Carousel ref={caruselRef}>
             {filesThumbnail &&
               filesThumbnail.map((file, index) => (
-                <Style.PreviewImageContainer key={index}>
+                <Style.PreviewImageContainer key={`file-${index}`}>
                   {file.type === 'image' ? (
                     <Style.PreviewImage src={file.url} />
                   ) : (
