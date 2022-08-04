@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as Style from 'pages/PostWrite/units/PostWriteModal.styles';
 import { ReactComponent as CloseIcon } from 'assets/svg/x_mark.svg';
-// import { ReactComponent as HambugerIcon } from 'assets/svg/hambuger-menu.svg';
 
 const PostWriteModal = ({ isOpen, closeClick, children }) => {
   return (

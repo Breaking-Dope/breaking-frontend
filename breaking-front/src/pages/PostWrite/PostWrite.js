@@ -3,7 +3,7 @@ import * as Style from 'pages/PostWrite/PostWrite.styles';
 import PostUploadMediaForm from 'pages/PostWrite/units/PostWriteUploadMediaForm';
 import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
-import PostWriteSearchLocation from './units/PostWriteSearchLocation';
+import PostWriteSearchLocation from 'pages/PostWrite/units/PostWriteSearchLocation';
 
 const PostWrite = () => {
   const [occurDate, setOccurDate] = useState(dayjs().format('YYYY-MM-DD'));

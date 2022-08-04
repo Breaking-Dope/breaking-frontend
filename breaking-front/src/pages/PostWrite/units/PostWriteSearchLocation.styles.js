@@ -53,9 +53,10 @@ export const SearchForm = styled.form`
 
 export const SearchMarker = styled.div`
   padding: 5px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+  border: solid 2px ${({ theme }) => theme.gray[500]};
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.white};
+  font-size: 12px;
 `;
 
 export const SearchInput = styled(Input)`
@@ -76,12 +77,12 @@ export const PlaceName = styled.p`
   font-size: 12px;
 `;
 
-export const RoadAdressName = styled.p`
+export const RoadAddressName = styled.p`
   margin-top: 5px;
   font-size: 10px;
 `;
 
-export const AdressName = styled.span`
+export const AddressName = styled.p`
   font-size: 8px;
   color: ${({ theme }) => theme.gray[600]};
 `;
