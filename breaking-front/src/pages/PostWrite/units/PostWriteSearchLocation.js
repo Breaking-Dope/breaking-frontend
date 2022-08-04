@@ -2,18 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import { ReactComponent as SearchIcon } from 'assets/svg/search.svg';
 import * as Style from 'pages/PostWrite/units/PostWriteSearchLocation.styles';
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import PostWriteModal from './PostWriteModal';
+import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
+import PostWriteModal from 'pages/PostWrite/units/PostWriteModal';
 import PropTypes from 'prop-types';
+import parseAddressName from 'utils/parseAddressName';
 
 const PostWriteSearchLocation = ({ setForm }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsModalOpen((pre) => !pre);
+  };
+
   const [locationInputValue, setLocationInputValue] = useState('');
+
+  const handleSearchInput = (event) => {
+    setSearchContent(event.target.value);
+  };
 
   const [map, setMap] = useState(); //map 객체
   const [mapCenterPosition, setMapCenterPosition] = useState({
-    lat: 37.5666805,
-    lng: 126.9784147,
+    lat: 37.566810689783956,
+    lng: 126.97866358173395,
   });
 
   const [markerInformation, setMarkerInformation] = useState(); // marker 클릭시 보여주는 정보객체
@@ -34,40 +44,13 @@ const PostWriteSearchLocation = ({ setForm }) => {
 
   const { kakao } = window;
   const geocoder = new kakao.maps.services.Geocoder();
-  const GetCurrentPosition = () => {
-    //현재 위치를 가져옴
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        console.log(position);
-        geocoder.coord2Address(
-          position.coords.longitude,
-          position.coords.latitude,
-          (adresses) => {
-            setLocationInputValue(adresses[0].address.address_name);
-          }
-        );
-      },
-      (error) => {
-        console.log(error);
-      },
-      {
-        enableHighAccuracy: false,
-      }
-    );
-  };
 
-  const LocationSubmit = () => {
-    // parent의 form state를 받아와 결과값을 추가
-    setLocationInputValue(markerInformation.addressName);
-    setIsModalOpen(false);
-  };
-
-  const coord2AdressCallback = (adresses, status) => {
+  const coord2AddressCallback = (addresses, status) => {
     if (status === 'OK') {
       setMarkerInformation((pre) => ({
         ...pre,
-        roadAddressName: adresses[0].road_address?.address_name,
-        addressName: adresses[0].address.address_name,
+        roadAddressName: addresses[0].road_address?.address_name,
+        addressName: addresses[0].address.address_name,
       }));
       setIsCustomMarker(true);
     }
@@ -79,15 +62,27 @@ const PostWriteSearchLocation = ({ setForm }) => {
       lat: lat,
       lng: lng,
     });
-    geocoder.coord2Address(lng, lat, coord2AdressCallback);
+    setMapCenterPosition({
+      lat: lat,
+      lng: lng,
+    });
+    geocoder.coord2Address(lng, lat, coord2AddressCallback);
   };
 
-  const toggleModal = () => {
-    setIsModalOpen((pre) => !pre);
-  };
-
-  const handleSearchInput = (event) => {
-    setSearchContent(event.target.value);
+  const getCurrentPosition = () => {
+    //현재 위치를 가져옴
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setIsModalOpen(true);
+        SetCustomMarker(position.coords.latitude, position.coords.longitude);
+      },
+      (error) => {
+        console.log(error);
+      },
+      {
+        enableHighAccuracy: false,
+      }
+    );
   };
 
   const SearchMap = (event) => {
@@ -109,15 +104,28 @@ const PostWriteSearchLocation = ({ setForm }) => {
     });
   };
 
+  const LocationSubmit = () => {
+    // parent의 form state를 받아와 결과값을 추가
+    setLocationInputValue(markerInformation.addressName);
+    setIsModalOpen(false);
+    console.log({
+      latitude: markerInformation.lat,
+      longitude: markerInformation.lng,
+      region: parseAddressName(markerInformation.addressName),
+      address: markerInformation.addressName,
+    });
+  };
+
   useEffect(() => {
     map && map.relayout();
     // modal과 같이 display의 값이 바뀌는 곳에서는  map.relayout() 가 필요
   }, [isModalOpen, map]);
+
   return (
     <>
       <Style.PostWriteTitle>
         위치
-        <Style.FindLocationLayout onClick={GetCurrentPosition}>
+        <Style.FindLocationLayout onClick={getCurrentPosition}>
           <LocationIcon />
           <Style.FindLocationMessage>현재 위치 찾기</Style.FindLocationMessage>
         </Style.FindLocationLayout>
@@ -144,7 +152,7 @@ const PostWriteSearchLocation = ({ setForm }) => {
             height: '640px',
             borderRadius: '0px 0px 10px 10px',
           }}
-          level={8} // 지도의 확대 레벨
+          level={5} // 지도의 확대 레벨
           onCreate={setMap} //map 객체를 받아옴
           onClick={(_t, mouseEvent) => {
             // 맵을 클릭시에 실행되는 eventHandler
@@ -156,47 +164,63 @@ const PostWriteSearchLocation = ({ setForm }) => {
         >
           {/*맵을 클릭했을때 나오는 마커 */}
           {isCustomMarker && (
-            <MapMarker
-              position={{
-                lat: markerInformation.lat,
-                lng: markerInformation.lng,
-              }}
-              clickable={true}
-              onClick={LocationSubmit}
-            >
-              <Style.SearchMarker>
-                <Style.PlaceName>
+            <>
+              <MapMarker
+                position={{
+                  lat: markerInformation.lat,
+                  lng: markerInformation.lng,
+                }}
+                clickable={true}
+                onClick={LocationSubmit}
+              ></MapMarker>
+              <CustomOverlayMap
+                position={{
+                  lat: markerInformation.lat,
+                  lng: markerInformation.lng,
+                }}
+                yAnchor="2.6"
+              >
+                <Style.SearchMarker>
                   {markerInformation?.addressName}
-                </Style.PlaceName>
-              </Style.SearchMarker>
-            </MapMarker>
+                </Style.SearchMarker>
+              </CustomOverlayMap>
+            </>
           )}
           {/*검색결과로 나오는 마커 */}
           {searchResult.map((data) => (
-            <MapMarker
-              key={`marker-${data.place_name}-${data.y},${data.x}`}
-              position={{ lat: data.y, lng: data.x }}
-              onMouseOver={() => {
-                setIsCustomMarker(false);
-                setMapCenterPosition({ lat: data.y, lng: data.x });
-                setMarkerInformation({
-                  lat: data.y,
-                  lng: data.x,
-                  id: data.id,
-                  placeName: data.place_name,
-                  addressName: data.address_name,
-                  roadAddressName: data.road_address_name,
-                });
-              }}
-              clickable={true}
-              onClick={LocationSubmit}
-            >
-              {markerInformation && markerInformation?.id === data.id && (
-                <Style.SearchMarker>
-                  <Style.PlaceName>{data.place_name}</Style.PlaceName>
-                </Style.SearchMarker>
+            <>
+              <MapMarker
+                key={`marker-${data.place_name}-${data.y},${data.x}`}
+                position={{ lat: data.y, lng: data.x }}
+                onMouseOver={() => {
+                  setIsCustomMarker(false);
+                  setMapCenterPosition({ lat: data.y, lng: data.x });
+                  setMarkerInformation({
+                    lat: data.y,
+                    lng: data.x,
+                    id: data.id,
+                    placeName: data.place_name,
+                    addressName: data.address_name,
+                    roadAddressName: data.road_address_name,
+                  });
+                }}
+                clickable={true}
+                onClick={LocationSubmit}
+              ></MapMarker>
+              {!isCustomMarker && (
+                <CustomOverlayMap
+                  position={{
+                    lat: markerInformation?.lat,
+                    lng: markerInformation?.lng,
+                  }}
+                  yAnchor="2.6"
+                >
+                  <Style.SearchMarker>
+                    {markerInformation?.addressName}
+                  </Style.SearchMarker>
+                </CustomOverlayMap>
               )}
-            </MapMarker>
+            </>
           ))}
         </Map>
 
@@ -231,10 +255,12 @@ const PostWriteSearchLocation = ({ setForm }) => {
                 <Style.PlaceName>
                   {index + 1 + '. ' + data.place_name}
                 </Style.PlaceName>
-                <Style.RoadAdressName>
+                <Style.RoadAddressName>
                   {data.road_address_name}
-                </Style.RoadAdressName>
-                <Style.AdressName>(지번) {data.address_name}</Style.AdressName>
+                </Style.RoadAddressName>
+                <Style.AddressName>
+                  (지번) {data.address_name}
+                </Style.AddressName>
               </Style.SearchItem>
             ))}
           </Style.SearchResult>
