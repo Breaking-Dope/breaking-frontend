@@ -104,7 +104,7 @@ const PostWriteSearchLocation = ({ setForm }) => {
     });
   };
 
-  const LocationSubmit = () => {
+  const locationSubmit = () => {
     // parent의 form state를 받아와 결과값을 추가
     setLocationInputValue(markerInformation.addressName);
     setIsModalOpen(false);
@@ -171,8 +171,8 @@ const PostWriteSearchLocation = ({ setForm }) => {
                   lng: markerInformation.lng,
                 }}
                 clickable={true}
-                onClick={LocationSubmit}
-              ></MapMarker>
+                onClick={locationSubmit}
+              />
               <CustomOverlayMap
                 position={{
                   lat: markerInformation.lat,
@@ -205,8 +205,8 @@ const PostWriteSearchLocation = ({ setForm }) => {
                   });
                 }}
                 clickable={true}
-                onClick={LocationSubmit}
-              ></MapMarker>
+                onClick={locationSubmit}
+              />
               {!isCustomMarker && (
                 <CustomOverlayMap
                   position={{
@@ -250,7 +250,7 @@ const PostWriteSearchLocation = ({ setForm }) => {
                     roadAddressName: data.road_address_name,
                   });
                 }}
-                onClick={LocationSubmit}
+                onClick={locationSubmit}
               >
                 <Style.PlaceName>
                   {index + 1 + '. ' + data.place_name}

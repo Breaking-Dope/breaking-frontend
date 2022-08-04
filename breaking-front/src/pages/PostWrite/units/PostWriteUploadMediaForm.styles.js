@@ -61,7 +61,7 @@ export const Carousel = styled(ScrollBarX)`
   width: 520px;
   height: 180px;
   white-space: nowrap;
-  overflow-x: scroll;
+  overflow-x: auto;
   > * {
     margin-right: 10px;
     margin-left: 10px;
@@ -82,7 +82,7 @@ export const PreviewImage = styled.img`
   object-fit: cover;
 `;
 
-export const PreviewVedio = styled.video`
+export const PreviewVideo = styled.video`
   width: 130px;
   height: 130px;
   border-radius: 10px;

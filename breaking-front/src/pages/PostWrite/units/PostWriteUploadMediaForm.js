@@ -73,33 +73,18 @@ const PostUploadMediaForm = () => {
           </Style.ArrowIconContainer>
           <Style.Carousel ref={caruselRef}>
             {filesThumbnail &&
-              filesThumbnail.map((file, index) => {
-                if (file.type === 'image') {
-                  return (
-                    <Style.PreviewImageContainer key={index}>
-                      <Style.PreviewImage src={file.url} />
-                      <Style.XMarkIconContainer
-                        onClick={() => deleteFile(index)}
-                      >
-                        <XMarkIcon />
-                      </Style.XMarkIconContainer>
-                    </Style.PreviewImageContainer>
-                  );
-                } else if (file.type === 'video') {
-                  return (
-                    <Style.PreviewImageContainer key={index}>
-                      <Style.PreviewVedio src={file.url} />
-                      <Style.XMarkIconContainer
-                        onClick={() => deleteFile(index)}
-                      >
-                        <XMarkIcon />
-                      </Style.XMarkIconContainer>
-                    </Style.PreviewImageContainer>
-                  );
-                } else {
-                  return <></>;
-                }
-              })}
+              filesThumbnail.map((file, index) => (
+                <Style.PreviewImageContainer key={index}>
+                  {file.type === 'image' ? (
+                    <Style.PreviewImage src={file.url} />
+                  ) : (
+                    <Style.PreviewVideo src={file.url} />
+                  )}
+                  <Style.XMarkIconContainer onClick={() => deleteFile(index)}>
+                    <XMarkIcon />
+                  </Style.XMarkIconContainer>
+                </Style.PreviewImageContainer>
+              ))}
           </Style.Carousel>
           <Style.ArrowIconContainer>
             <RightArrowIcon onClick={RightCaruselClick} />
