@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { PAGE_PATH } from 'constants/path';
 import Input from 'components/Input/Input';
 import Line from 'components/Line/Line';
@@ -22,8 +22,13 @@ export default function Header({
   ...props
 }) {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [searchText, setSearchText] = useState('');
   const [isOpenToggle, setIsOpenToggle] = useState(false);
+
+  const logoClick = () => {
+    if (pathname === '/') window.scrollTo(0, 0);
+  };
 
   const onChange = (event) => {
     setSearchText(event.target.value);
@@ -41,7 +46,7 @@ export default function Header({
     <Style.HeaderContainer isLogin={isLogin} {...props}>
       <Style.HeaderContent>
         <Style.SearchContent>
-          <Style.LogoContainer to={PAGE_PATH.HOME}>
+          <Style.LogoContainer to={PAGE_PATH.HOME} onClick={logoClick}>
             <LogoIcon width="100%" height="100%" />
           </Style.LogoContainer>
           <Style.Form onSubmit={handleSubmit}>
