@@ -7,7 +7,7 @@ import PostWriteModal from 'pages/PostWrite/units/PostWriteModal';
 import PropTypes from 'prop-types';
 import parseAddressName from 'utils/parseAddressName';
 
-const PostWriteSearchLocation = ({ setForm }) => {
+const PostWriteSearchLocation = ({ setPostWriteData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
@@ -103,12 +103,15 @@ const PostWriteSearchLocation = ({ setForm }) => {
     // parent의 form state를 받아와 결과값을 추가
     setLocationInputValue(markerInformation.addressName);
     setIsModalOpen(false);
-    console.log({
-      latitude: markerInformation.lat,
-      longitude: markerInformation.lng,
-      region: parseAddressName(markerInformation.addressName),
-      address: markerInformation.addressName,
-    });
+    setPostWriteData((pre) => ({
+      ...pre,
+      location: {
+        latitude: markerInformation.lat,
+        longitude: markerInformation.lng,
+        region: parseAddressName(markerInformation.addressName),
+        address: markerInformation.addressName,
+      },
+    }));
   };
 
   useEffect(() => {
@@ -271,7 +274,7 @@ const PostWriteSearchLocation = ({ setForm }) => {
 };
 
 PostWriteSearchLocation.propTypes = {
-  setForm: PropTypes.object,
+  setPostWriteData: PropTypes.func,
 };
 
 export default PostWriteSearchLocation;
