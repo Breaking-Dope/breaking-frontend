@@ -6,7 +6,6 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { ThemeProvider } from 'styled-components';
 import UserInformationProvider from 'providers/UserInformationProvider';
 import { PAGE_PATH } from 'constants/path';
-import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import Layout from 'components/Layout/Layout';
 import SocialLogin from 'pages/SocialLogin/SocialLogin';
 import KakaoRedirect from 'pages/SocialLogin/Redirect/KakaoRedirect';
@@ -34,34 +33,29 @@ function App() {
           <BrowserRouter>
             <UserInformationProvider>
               <Layout>
-                <ScrollToTop>
-                  <Routes>
-                    <Route path={PAGE_PATH.HOME} element={<MainFeed />} />
-                    <Route path={PAGE_PATH.LOGIN} element={<SocialLogin />} />
-                    <Route
-                      path={PAGE_PATH.KAKAO_LOGIN}
-                      element={<KakaoRedirect />}
-                    />
-                    <Route
-                      path={PAGE_PATH.GOOGLE_LOGIN}
-                      element={<GoogleRedirect />}
-                    />
-                    <Route path={PAGE_PATH.SIGNUP} element={<SignUp />} />
-                    <Route
-                      path={PAGE_PATH.PROFILE(':id')}
-                      element={<Profile />}
-                    />
-                    <Route
-                      path={PAGE_PATH.PROFILE_EDIT}
-                      element={<ProfileEdit />}
-                    />
-                    <Route path={PAGE_PATH.POST(':id')} element={<Post />} />
-                    <Route
-                      path={PAGE_PATH.POST_WRITE}
-                      element={<PostWrite />}
-                    />
-                  </Routes>
-                </ScrollToTop>
+                <Routes>
+                  <Route path={PAGE_PATH.HOME} element={<MainFeed />} />
+                  <Route path={PAGE_PATH.LOGIN} element={<SocialLogin />} />
+                  <Route
+                    path={PAGE_PATH.KAKAO_LOGIN}
+                    element={<KakaoRedirect />}
+                  />
+                  <Route
+                    path={PAGE_PATH.GOOGLE_LOGIN}
+                    element={<GoogleRedirect />}
+                  />
+                  <Route path={PAGE_PATH.SIGNUP} element={<SignUp />} />
+                  <Route
+                    path={PAGE_PATH.PROFILE(':id')}
+                    element={<Profile />}
+                  />
+                  <Route
+                    path={PAGE_PATH.PROFILE_EDIT}
+                    element={<ProfileEdit />}
+                  />
+                  <Route path={PAGE_PATH.POST(':id')} element={<Post />} />
+                  <Route path={PAGE_PATH.POST_WRITE} element={<PostWrite />} />
+                </Routes>
               </Layout>
             </UserInformationProvider>
           </BrowserRouter>
