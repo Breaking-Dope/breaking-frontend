@@ -1,7 +1,8 @@
+import { API_PATH } from 'constants/path';
 import { rest } from 'msw';
 
 export const mainFeedHandlers = [
-  rest.get('/feeds', (req, res, ctx) => {
+  rest.get(API_PATH.FEEDS('*', '*', '*'), (req, res, ctx) => {
     const sort = req.url.searchParams.get('sort');
     const option = req.url.searchParams.get('sold-option');
     if (sort === 'chronological')
@@ -10,20 +11,21 @@ export const mainFeedHandlers = [
         ctx.json([
           {
             postId: '3',
-            title: '최신순',
+            title:
+              '이 피드는 최신순을 보여주기 위한 피드입니다. 자세하게 보려면 클릭해주세요',
             region: '중구',
             thumbnailImgURL: '',
-            likeCount: 999,
-            postType: 'EXCLUSIVE',
+            likeCount: 12345678,
+            postType: 'exclusive',
             isSold: option === 'unsold' ? false : true,
-            price: 10000,
-            viewCount: 1000,
+            price: 1223000,
+            viewCount: 123333,
             userId: 1,
             profileImgURL: '',
-            realName: '가나다',
+            nickname: '가나다',
             isLiked: false,
             isBookmarked: false,
-            createdTime: new Date(),
+            createdTime: new Date(Date.now() - 24 * 60 * 60 * 1000),
           },
         ])
       );
@@ -37,16 +39,16 @@ export const mainFeedHandlers = [
             region: '중구',
             thumbnailImgURL: '',
             likeCount: 99999,
-            postType: 'EXCLUSIVE',
+            postType: 'exclusive',
             isSold: option === 'unsold' ? false : true,
             price: 10000,
             viewCount: 1000,
             userId: 123,
             profileImgURL: '',
-            realName: '가나다',
+            nickname: '가나다',
             isLiked: true,
             isBookmarked: false,
-            createdTime: new Date(),
+            createdTime: new Date(Date.now() - 60 * 60 * 1000),
           },
         ])
       );
@@ -60,16 +62,16 @@ export const mainFeedHandlers = [
             region: '중구',
             thumbnailImgURL: '',
             likeCount: 999,
-            postType: 'EXCLUSIVE',
+            postType: 'exclusive',
             isSold: option === 'unsold' ? false : true,
             price: 10000,
             viewCount: 99999,
             userId: 123,
             profileImgURL: '',
-            realName: '가나다',
+            nickname: '가나다',
             isLiked: false,
             isBookmarked: false,
-            createdTime: new Date(),
+            createdTime: new Date(Date.now() - 60 * 1000),
           },
           {
             postId: '4',
@@ -77,16 +79,16 @@ export const mainFeedHandlers = [
             region: '중구',
             thumbnailImgURL: '',
             likeCount: 999,
-            postType: 'EXCLUSIVE',
+            postType: 'exclusive',
             isSold: option === 'unsold' ? false : true,
             price: 10000,
             viewCount: 99999,
             userId: 123,
             profileImgURL: '',
-            realName: '가나다',
+            nickname: '가나다',
             isLiked: false,
             isBookmarked: false,
-            createdTime: new Date(),
+            createdTime: new Date(Date.now() - 60 * 1000),
           },
         ])
       );

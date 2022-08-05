@@ -1,9 +1,11 @@
 import { getFeeds } from 'api/mainFeed';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 
-const useMainFeedOption = (page, size, sort, option) => {
-  return useQuery(['mainFeedOption', { page, size, sort, option }], getFeeds, {
-    cacheTime: 0,
+const useMainFeedOption = (sort, option) => {
+  return useInfiniteQuery(['mainFeedOption', { sort, option }], getFeeds, {
+    getNextPageParam: (lastPage) => {
+      return lastPage.cursor;
+    },
   });
 };
 

@@ -1,23 +1,23 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
-import GlobalStyle from 'styles/GlobalStyle';
-import theme from 'styles/theme';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import SocialLogin from 'pages/SocialLogin/SocialLogin';
-import KakaoRedirect from 'pages/SocialLogin/Redirect/KakaoRedirect';
-import SignUp from 'pages/SignUp/SignUp';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { PAGE_PATH } from 'constants/path';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import Layout from 'components/Layout/Layout';
-import GoogleRedirect from 'pages/SocialLogin/Redirect/GoogleRedirect';
-import Profile from 'pages/Profile/Profile';
+import { ThemeProvider } from 'styled-components';
 import UserInformationProvider from 'providers/UserInformationProvider';
+import { PAGE_PATH } from 'constants/path';
+import Layout from 'components/Layout/Layout';
+import SocialLogin from 'pages/SocialLogin/SocialLogin';
+import KakaoRedirect from 'pages/SocialLogin/Redirect/KakaoRedirect';
+import GoogleRedirect from 'pages/SocialLogin/Redirect/GoogleRedirect';
+import SignUp from 'pages/SignUp/SignUp';
+import Profile from 'pages/Profile/Profile';
 import ProfileEdit from 'pages/ProfileEdit/ProfileEdit';
-import Post from 'pages/Post/Post';
 import MainFeed from 'pages/MainFeed/MainFeed';
+import Post from 'pages/Post/Post';
 import PostWrite from 'pages/PostWrite/PostWrite';
+import theme from 'styles/theme';
+import GlobalStyle from 'styles/GlobalStyle';
 
 function App() {
   const queryClient = new QueryClient({

@@ -126,15 +126,15 @@ export const POST_DATA = {
   price: 123456,
   postType: 'charged',
   eventTime: '2020-01-01T14:01:01',
-  createdTime: '2022-07-22T14:39:03.661634',
-  modifiedTime: '2022-07-22T14:39:03.661634',
+  createdTime: new Date(Date.now() - 24 * 60 * 60 * 1000),
+  modifiedTime: new Date(),
   viewCount: 1000000,
   soldCount: 5,
   isAnonymous: false,
   isSold: false,
   isHidden: false,
   likeCount: 1004,
-  commentCount: 5,
+  totalCommentCount: 5,
 };
 
 export const COMMENT_DATA = [
@@ -150,7 +150,7 @@ export const COMMENT_DATA = [
       nickname: NO_STATUSMSG_USER.nickname,
     },
     isLiked: false,
-    createdTime: '2022-07-25T15:32:39.445Z',
+    createdTime: new Date(),
   },
   {
     commentId: 2,
@@ -163,7 +163,7 @@ export const COMMENT_DATA = [
       nickname: NO_PROFILEIMGURL_USER.nickname,
     },
     isLiked: false,
-    createdTime: '2022-07-25T15:32:39.445Z',
+    createdTime: new Date(),
   },
   {
     commentId: 5,
@@ -176,7 +176,7 @@ export const COMMENT_DATA = [
       nickname: NORMAL_USER.nickname,
     },
     isLiked: true,
-    createdTime: '2022-07-25T15:32:39.445Z',
+    createdTime: new Date(),
   },
 ];
 
@@ -192,7 +192,7 @@ export const REPLY_DATA = [
       nickname: NO_POSTCOUNT_USER.nickname,
     },
     isLiked: false,
-    createdTime: '2022-07-25T15:32:39.445Z',
+    createdTime: new Date(),
   },
   {
     commentId: 4,
@@ -205,6 +205,6 @@ export const REPLY_DATA = [
       nickname: NO_FOLLOW_USER.nickname,
     },
     isLiked: false,
-    createdTime: '2022-07-25T15:32:39.445Z',
+    createdTime: new Date(),
   },
 ];

@@ -1,6 +1,7 @@
-/* eslint-disable no-unused-vars */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
+import { useTheme } from 'styled-components';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import useMainFeedOption from 'hooks/queries/useMainFeedOption';
 import { PAGE_PATH } from 'constants/path';
@@ -8,38 +9,62 @@ import Filter from 'components/Filter/Filter';
 import Feed from 'components/Feed/Feed';
 import * as Style from 'pages/MainFeed/MainFeed.styles';
 import { ReactComponent as PenIcon } from 'assets/svg/pen.svg';
+import { FeedSkeleton } from 'components/Skeleton/Skeleton';
+import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 
 const MainFeed = () => {
+  const queryClient = useQueryClient();
+  const targetRef = useRef();
+  const theme = useTheme();
   const navigate = useNavigate();
   const { userId } = useContext(UserInformationContext);
 
-  const [feedList, setFeedList] = useState([]);
   const [sort, setSort] = useState('chronological');
   const [option, setOption] = useState('all');
-  const { data, isLoading } = useMainFeedOption(5, 5, sort, option);
+
+  const {
+    data: mainFeedData,
+    isFetching: isMainFeedFetching,
+    fetchNextPage: FetchNextMainFeed,
+    hasNextPage: mainFeedHasNextPage,
+  } = useMainFeedOption(sort, option);
 
   const handleFilter = (sortType) => {
-    if (sort !== sortType) {
-      setFeedList([]);
-      setSort(sortType);
-    }
+    queryClient.resetQueries('mainFeedOption');
+    setSort(sortType);
   };
 
   const handleOption = () => {
-    setFeedList([]);
+    queryClient.resetQueries('mainFeedOption');
     setOption((pre) => (pre === 'all' ? 'unsold' : 'all'));
   };
 
   const handleUploadClick = () => {
-    navigate(PAGE_PATH.UPLOAD);
+    navigate(PAGE_PATH.POST_WRITE);
   };
 
   useEffect(() => {
-    data && setFeedList((pre) => [...pre, ...data.data]);
-  }, [data]);
+    let observer;
+    const onIntersect = async ([entry], observer) => {
+      if (entry.isIntersecting) {
+        observer.unobserve(entry.target);
+        FetchNextMainFeed();
+        observer.observe(entry.target);
+      }
+    };
+
+    if (mainFeedHasNextPage && !isMainFeedFetching) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 0.8,
+      });
+      observer.observe(targetRef.current);
+    }
+    return () => observer && observer.disconnect();
+  }, [FetchNextMainFeed, isMainFeedFetching, mainFeedHasNextPage]);
 
   return (
     <Style.MainFeed>
+      <ScrollToTop />
       <Style.NavBar>
         <Style.FilterContainer>
           <Filter>
@@ -80,10 +105,25 @@ const MainFeed = () => {
         </Style.FeedUploadButton>
       </Style.NavBar>
       <Style.Feeds>
-        {feedList?.map((feed) => (
-          <Feed feedData={feed} key={feed?.postId} userId={userId} />
-        ))}
+        {mainFeedData?.pages.map((page) =>
+          page.result.map((feed) => (
+            <Feed feedData={feed} key={feed.postId} userId={userId} />
+          ))
+        )}
+        {isMainFeedFetching && (
+          <>
+            <FeedSkeleton />
+            <FeedSkeleton />
+            <FeedSkeleton />
+            <FeedSkeleton />
+          </>
+        )}
       </Style.Feeds>
+      <Style.TargetDiv ref={targetRef}>
+        {isMainFeedFetching && (
+          <Style.Loading type="spin" color={theme.blue[900]} width="40px" />
+        )}
+      </Style.TargetDiv>
     </Style.MainFeed>
   );
 };

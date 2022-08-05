@@ -34,18 +34,24 @@ export const API_PATH = {
   PROFILE_FOLLOWERS: (userId) => `/follow/follower/${userId}`,
   PROFILE_TRANSACTION: (userId) => `/profile/${userId}/transaction`,
   PROFILE_WITHDRAWAL: (userId) => `/profile/${userId}`,
-  FEEDS: (page, size, sort = 'chronological', option = 'all') =>
-    `/feeds?page=${page}&size=${size}&sort=${sort}&sold-option=${option}`,
-  FEEDS_SEARCH: (page, size, search, sort = 'chronological', option = 'all') =>
-    `/feeds?page=${page}&size=${size}&search=${search}&sort=${sort}&sold-option=${option}`,
+  FEEDS: (cursor, sort = 'chronological', option = 'all', size = '10') =>
+    `/feed?cursor=${cursor}&size=${size}&sort=${sort}&sold-option=${option}`,
+  FEEDS_SEARCH: (
+    cursor,
+    search,
+    sort = 'chronological',
+    option = 'all',
+    size = '10'
+  ) =>
+    `/feed?cursor=${cursor}&size=${size}&search=${search}&sort=${sort}&sold-option=${option}`,
   FEEDS_HASHTAG: (
-    page,
-    size,
+    cursor,
     hashtag,
     sort = 'chronological',
-    option = 'all'
+    option = 'all',
+    size = '10'
   ) =>
-    `/feeds?page=${page}&size=${size}&hashtag=${hashtag}&sort=${sort}&sold-option=${option}`,
+    `/feed?cursor=${cursor}&size=${size}&hashtag=${hashtag}&sort=${sort}&sold-option=${option}`,
   POST_WRITE: '/post',
   POST_DATA: (postId) => `/post/${postId}`,
   POST_EDIT: (postId) => `/post/${postId}`,

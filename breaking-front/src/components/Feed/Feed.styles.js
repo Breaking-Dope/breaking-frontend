@@ -9,14 +9,14 @@ export const Feed = styled.div`
   filter: drop-shadow(2px 2px 2px ${({ theme }) => theme.gray[300]});
 `;
 
-export const ThumbNailImage = styled.img`
+export const ThumbnailImage = styled.img`
   width: 100%;
   height: 300px;
   background-color: ${({ theme }) => theme.gray[200]};
   cursor: pointer;
 `;
 
-export const ThumbnailDefaultImage = styled(ThumbNailImage).attrs({
+export const ThumbnailDefaultImage = styled(ThumbnailImage).attrs({
   src: `${logo}`,
 })`
   background-color: ${({ theme }) => theme.gray[200]};
@@ -24,35 +24,61 @@ export const ThumbnailDefaultImage = styled(ThumbNailImage).attrs({
 
 export const Content = styled.div`
   display: flex;
+  position: relative;
   width: 100%;
   height: 100px;
   padding: 0px 10px;
   align-items: center;
 `;
 
+export const ETCIconContainer = styled.div`
+  position: absolute;
+  top: 0;
+  right: 5px;
+  cursor: pointer;
+`;
+
 export const Context = styled.div`
+  width: 200px;
   margin-left: 12px;
   font-size: 12px;
-  flex-grow: 1;
-  > * {
-    margin: 4px;
-  }
 `;
 
 export const Title = styled.a`
-  font-size: 18px;
+  display: -webkit-box;
+  margin-bottom: 5px;
+  font-size: 16px;
   font-weight: 700;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  overflow: hidden;
   cursor: pointer;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 export const Detail = styled.div`
   display: flex;
+  margin-bottom: 10px;
   font-size: 12px;
   color: ${({ theme }) => theme.gray[800]};
 `;
 
 export const ViewCount = styled(Detail)`
   display: inline-block;
+`;
+
+export const ContextFooter = styled.div`
+  > * {
+    margin-right: 5px;
+  }
+`;
+
+export const ContentStatus = styled.div`
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 export const Price = styled.h3`
@@ -63,28 +89,25 @@ export const Price = styled.h3`
   text-align: center;
 `;
 
-export const IconContainer = styled.div`
+export const LikeIconContainer = styled.div`
   display: flex;
-  align-items: center;
   margin-left: 8px;
+  font-size: 14px;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+  svg {
+    width: 14px;
+    height: 14px;
+  }
 `;
 
-export const ContentStatus = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const Icons = styled.div`
-  display: flex;
-`;
-
-export const Count = styled.span`
+export const LikeCount = styled.span`
   margin-left: 5px;
 `;
 
 export const FeedToggle = styled.div`
   position: absolute;
-  right: -45px;
-  bottom: 60px;
+  right: -65px;
+  bottom: 100px;
 `;

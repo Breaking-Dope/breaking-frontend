@@ -1,16 +1,30 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useMutation } from 'react-query';
+import { useTheme } from 'styled-components';
+import {
+  deletePost,
+  deletePostBookmark,
+  deletePostLike,
+  postPostBookmark,
+  postPostBuy,
+  postPostLike,
+} from 'api/post';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import usePost from 'hooks/queries/usePost';
 import usePostComment from 'hooks/queries/usePostComment';
+import usePostBoughtList from 'hooks/queries/usePostBoughtList';
 import { PAGE_PATH } from 'constants/path';
 import Toggle from 'components/Toggle/Toggle';
 import Line from 'components/Line/Line';
 import Button from 'components/Button/Button';
+import Modal from 'components/Modal/Modal';
+import FollowCard from 'components/FollowCard/FollowCard';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import Carousel from 'pages/Post/units/Carousel';
 import Comment from 'pages/Post/units/Comment';
 import CommentForm from 'pages/Post/units/CommentForm';
+import ImageUrlConverter from 'utils/ImageUrlConverter';
 import * as Style from 'pages/Post/Post.styles';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
@@ -23,19 +37,6 @@ import { ReactComponent as HideIcon } from 'assets/svg/hide.svg';
 import { ReactComponent as BookmarkIcon } from 'assets/svg/small_bookmark.svg';
 import { ReactComponent as BookmarkedIcon } from 'assets/svg/small_bookmarked.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
-import {
-  deletePost,
-  deletePostBookmark,
-  deletePostLike,
-  postPostBookmark,
-  postPostBuy,
-  postPostLike,
-} from 'api/post';
-import { useMutation } from 'react-query';
-import usePostBoughtList from 'hooks/queries/usePostBoughtList';
-import Modal from 'components/Modal/Modal';
-import FollowCard from 'components/FollowCard/FollowCard';
-import { useTheme } from 'styled-components';
 
 const Post = () => {
   let { id: postId } = useParams();
@@ -166,7 +167,7 @@ const Post = () => {
           <Style.ContentWriter>
             <ProfileImage
               size="large"
-              src={PostData?.data.user.profileImgURL}
+              src={ImageUrlConverter(PostData?.data.user.profileImgURL)}
               profileClick={profileClick}
             />
             <Style.ContentWriterName>
@@ -255,7 +256,7 @@ const Post = () => {
               </label>
               <label>
                 <CommentIcon />
-                {PostData?.data.commentCount.toLocaleString('ko-KR')}
+                {PostData?.data.totalCommentCount.toLocaleString('ko-KR')}
               </label>
             </Style.ContentStatus>
             <ETCIcon
