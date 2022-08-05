@@ -74,7 +74,15 @@ const PostWrite = () => {
   };
 
   const handlePrice = (event) => {
-    setPostWriteData((pre) => ({ ...pre, price: Number(event.target.value) }));
+    event.preventDefault();
+    let price = Number(event.target.value);
+    if (Number.isNaN(price)) {
+      price = 0;
+    }
+    setPostWriteData((pre) => ({
+      ...pre,
+      price: price,
+    }));
   };
 
   const toggleShowPirceInput = () => {
@@ -86,7 +94,6 @@ const PostWrite = () => {
       target.value = target.value.slice(0, target.maxLength);
     }
   };
-  console.log(postWriteData);
   return (
     <Style.Container>
       <form onSubmit={postWriteSubmit}>
@@ -164,6 +171,12 @@ const PostWrite = () => {
             onChange={handlePrice}
             onBlur={toggleShowPirceInput}
             onFocus={toggleShowPirceInput}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                event.target.blur();
+              }
+            }}
           ></Style.PostPriceInput>
         </Style.PriceLayout>
 
