@@ -37,6 +37,9 @@ import { ReactComponent as HideIcon } from 'assets/svg/hide.svg';
 import { ReactComponent as BookmarkIcon } from 'assets/svg/small_bookmark.svg';
 import { ReactComponent as BookmarkedIcon } from 'assets/svg/small_bookmarked.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
+import { PostSkeleton } from 'components/Skeleton/Skeleton';
+import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
+import dayjs from 'dayjs';
 
 const Post = () => {
   let { id: postId } = useParams();
@@ -53,8 +56,8 @@ const Post = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
 
-  const { data: PostData } = usePost(postId);
-  const { data: PostBoughtList, refetch: PostBoughtListReFetch } =
+  const { data: postData, isLoading: isPostDataLoading } = usePost(postId);
+  const { data: postBoughtList, refetch: PostBoughtListReFetch } =
     usePostBoughtList(postId);
   const {
     data: postCommentData,
@@ -75,7 +78,7 @@ const Post = () => {
   };
 
   const profileClick = () => {
-    navigate(PAGE_PATH.PROFILE(PostData?.data.user.userId));
+    navigate(PAGE_PATH.PROFILE(postData?.data.user.userId));
   };
 
   const postDeleteClick = () => {
@@ -123,14 +126,14 @@ const Post = () => {
   };
 
   useEffect(() => {
-    if (PostData?.data.user.userId === userId) setPurchaseType('구매자 목록');
-    else if (PostData?.data.isPurchased) setPurchaseType('구매 완료');
+    if (postData?.data.user.userId === userId) setPurchaseType('구매자 목록');
+    else if (postData?.data.isPurchased) setPurchaseType('구매 완료');
     else setPurchaseType('구매 하기');
 
-    setIsBookmarked(PostData?.data.isBookmarked);
-    setIsLiked(PostData?.data.isLiked);
-    setLikeCount(PostData?.data.likeCount);
-  }, [PostData, userId]);
+    setIsBookmarked(postData?.data.isBookmarked);
+    setIsLiked(postData?.data.isLiked);
+    setLikeCount(postData?.data.likeCount);
+  }, [postData, userId]);
 
   useEffect(() => {
     let observer;
@@ -152,8 +155,9 @@ const Post = () => {
 
   return (
     <>
+      <ScrollToTop />
       <Modal isOpen={isModalOpen} closeClick={toggleModal} title="구매자 목록">
-        {PostBoughtList?.data.map((item) => (
+        {postBoughtList?.data.map((item) => (
           <FollowCard
             cardClick={() => navigate(PAGE_PATH.PROFILE(item.userId))}
             profileData={item}
@@ -162,137 +166,149 @@ const Post = () => {
         ))}
       </Modal>
       <Style.Post>
-        {PostData && <Carousel mediaList={PostData.data.mediaList} />}
-        <Style.ContentHeader>
-          <Style.ContentWriter>
-            <ProfileImage
-              size="large"
-              src={ImageUrlConverter(PostData?.data.user.profileImgURL)}
-              profileClick={profileClick}
-            />
-            <Style.ContentWriterName>
-              {PostData?.data.user.nickname}
-            </Style.ContentWriterName>
-          </Style.ContentWriter>
-          <Style.Context>
-            {PostData?.data.postType === 'exclusive' && (
-              <Button color="dark" size="small" disabled>
-                단독
-              </Button>
-            )}
-            {PostData?.data.isSold ? (
-              <Button color="danger" size="small" disabled>
-                판매 완료
-              </Button>
+        {isPostDataLoading ? (
+          <PostSkeleton />
+        ) : (
+          <>
+            {postData.data.mediaList.length !== 0 ? (
+              <Carousel mediaList={postData.data.mediaList} />
             ) : (
-              <Button color="primary" size="small" disabled>
-                판매중
-              </Button>
+              <Style.DefaultCarousel />
             )}
-            <Style.ContentTitle>{PostData?.data.title}</Style.ContentTitle>
-            <Style.ContentLocation>
-              <LocationIcon />
-              {PostData?.data.location.region}
-            </Style.ContentLocation>
-            <Style.ContentDetail>
-              {PostData?.data.createdTime}
-              <Style.ContentViewCount>
-                조회&nbsp;
-                {PostData?.data.viewCount.toLocaleString('ko-KR')}
-              </Style.ContentViewCount>
-            </Style.ContentDetail>
-          </Style.Context>
-          <Style.ContentPriceContainer>
-            <Style.ContentPrice>
-              {PostData?.data.price.toLocaleString('ko-KR')}&nbsp;원
-            </Style.ContentPrice>
-            {purchaseType === '구매자 목록' && (
-              <Button color="primary" onClick={postBuyListClick}>
-                {purchaseType}
-              </Button>
-            )}
-            {purchaseType === '구매 하기' && (
-              <Button color="primary" onClick={postBuyClick}>
-                {purchaseType}
-              </Button>
-            )}
-            {purchaseType === '구매 완료' && (
-              <Button color="secondary" disabled>
-                {purchaseType}
-              </Button>
-            )}
-            <Style.ContentDetail>
-              누적 판매
-              <Style.ContentSoldCount>
-                {PostData?.data.soldCount.toLocaleString('ko-KR')}
-              </Style.ContentSoldCount>
-            </Style.ContentDetail>
-          </Style.ContentPriceContainer>
-        </Style.ContentHeader>
-
-        <Line width="800px" />
-
-        <Style.ContentContainer>
-          <Style.Content>
-            {PostData?.data.content
-              .split(/(#[^\s#]+|\n)/g)
-              .map((contentSlice, index) => {
-                if (contentSlice === '\n')
-                  return <br key={'post-br-' + index} />;
-                else if (contentSlice[0] === '#')
-                  return (
-                    <Style.Hashtag key={'comment-hashtag-' + index}>
-                      {contentSlice}
-                    </Style.Hashtag>
-                  );
-                else return contentSlice;
-              })}
-          </Style.Content>
-          <Style.ContentFooter>
-            <Style.ContentStatus>
-              <label onClick={toggleLiked}>
-                {isLiked ? <LikedIcon /> : <LikeIcon />}
-                {likeCount?.toLocaleString('ko-KR')}
-              </label>
-              <label>
-                <CommentIcon />
-                {PostData?.data.totalCommentCount.toLocaleString('ko-KR')}
-              </label>
-            </Style.ContentStatus>
-            <ETCIcon
-              onClick={toggleComment}
-              tabIndex="0"
-              onBlur={() => setIsContentToggle(false)}
-            />
-            <Style.ContentToggle
-              onMouseDown={(event) => event.preventDefault()}
-            >
-              {isContentToggle && (
-                <Toggle width="100px">
-                  {PostData?.data.user.userId === userId ? (
-                    <>
-                      <Toggle.LabelLink icon={<EditIcon />} label="수정" />
-                      <Toggle.LabelLink
-                        icon={<RemoveIcon />}
-                        label="삭제"
-                        labelClick={postDeleteClick}
-                      />
-                    </>
-                  ) : (
-                    <Toggle.LabelLink icon={<HideIcon />} label="숨김" />
+            <Style.ContentHeader>
+              <Style.ContentWriter>
+                <ProfileImage
+                  size="large"
+                  src={ImageUrlConverter(postData.data.user.profileImgURL)}
+                  profileClick={profileClick}
+                />
+                <Style.ContentWriterName>
+                  {postData.data.user.nickname}
+                </Style.ContentWriterName>
+              </Style.ContentWriter>
+              <Style.Context>
+                {postData?.data.postType === 'exclusive' && (
+                  <Button color="dark" size="small" disabled>
+                    단독
+                  </Button>
+                )}
+                {postData?.data.isSold ? (
+                  <Button color="danger" size="small" disabled>
+                    판매 완료
+                  </Button>
+                ) : (
+                  <Button color="primary" size="small" disabled>
+                    판매중
+                  </Button>
+                )}
+                <Style.ContentTitle>{postData.data.title}</Style.ContentTitle>
+                <Style.ContentLocation>
+                  <LocationIcon />
+                  {postData.data.location.region}
+                </Style.ContentLocation>
+                <Style.ContentDetail>
+                  {dayjs(postData.data.createdTime).format(
+                    'YYYY.MM.DD HH:mm:ss'
                   )}
+                  <Style.ContentViewCount>
+                    조회수&nbsp;
+                    {postData?.data.viewCount.toLocaleString('ko-KR')}회
+                  </Style.ContentViewCount>
+                </Style.ContentDetail>
+              </Style.Context>
+              <Style.ContentPriceContainer>
+                <Style.ContentPrice>
+                  {postData?.data.price.toLocaleString('ko-KR')}&nbsp;원
+                </Style.ContentPrice>
+                {purchaseType === '구매자 목록' && (
+                  <Button color="primary" onClick={postBuyListClick}>
+                    {purchaseType}
+                  </Button>
+                )}
+                {purchaseType === '구매 하기' && (
+                  <Button color="primary" onClick={postBuyClick}>
+                    {purchaseType}
+                  </Button>
+                )}
+                {purchaseType === '구매 완료' && (
+                  <Button color="secondary" disabled>
+                    {purchaseType}
+                  </Button>
+                )}
+                <Style.ContentDetail>
+                  누적 판매
+                  <Style.ContentSoldCount>
+                    {postData?.data.soldCount.toLocaleString('ko-KR')}
+                  </Style.ContentSoldCount>
+                </Style.ContentDetail>
+              </Style.ContentPriceContainer>
+            </Style.ContentHeader>
+            <Line width="800px" />
+            <Style.ContentContainer>
+              <Style.Content>
+                {postData.data.content
+                  .split(/(#[^\s#]+|\n)/g)
+                  .map((contentSlice, index) => {
+                    if (contentSlice === '\n')
+                      return <br key={'post-br-' + index} />;
+                    else if (contentSlice[0] === '#')
+                      return (
+                        <Style.Hashtag key={'comment-hashtag-' + index}>
+                          {contentSlice}
+                        </Style.Hashtag>
+                      );
+                    else return contentSlice;
+                  })}
+              </Style.Content>
+              <Style.ContentFooter>
+                <Style.ContentStatus>
+                  <label onClick={toggleLiked}>
+                    {isLiked ? <LikedIcon /> : <LikeIcon />}
+                    {likeCount?.toLocaleString('ko-KR')}
+                  </label>
+                  <label>
+                    <CommentIcon />
+                    {postData?.data.totalCommentCount.toLocaleString('ko-KR')}
+                  </label>
+                </Style.ContentStatus>
+                <ETCIcon
+                  onClick={toggleComment}
+                  tabIndex="0"
+                  onBlur={() => setIsContentToggle(false)}
+                />
+                <Style.ContentToggle
+                  onMouseDown={(event) => event.preventDefault()}
+                >
+                  {isContentToggle && (
+                    <Toggle width="100px">
+                      {postData.data.user.userId === userId ? (
+                        <>
+                          <Toggle.LabelLink icon={<EditIcon />} label="수정" />
+                          <Toggle.LabelLink
+                            icon={<RemoveIcon />}
+                            label="삭제"
+                            labelClick={postDeleteClick}
+                          />
+                        </>
+                      ) : (
+                        <Toggle.LabelLink icon={<HideIcon />} label="숨김" />
+                      )}
 
-                  <Toggle.LabelLink
-                    icon={isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />}
-                    label="북마크"
-                    labelClick={toggleBookmarked}
-                  />
-                  <Toggle.LabelLink icon={<ShareIcon />} label="공유" />
-                </Toggle>
-              )}
-            </Style.ContentToggle>
-          </Style.ContentFooter>
-        </Style.ContentContainer>
+                      <Toggle.LabelLink
+                        icon={
+                          isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />
+                        }
+                        label="북마크"
+                        labelClick={toggleBookmarked}
+                      />
+                      <Toggle.LabelLink icon={<ShareIcon />} label="공유" />
+                    </Toggle>
+                  )}
+                </Style.ContentToggle>
+              </Style.ContentFooter>
+            </Style.ContentContainer>
+          </>
+        )}
 
         <Line width="800px" />
 

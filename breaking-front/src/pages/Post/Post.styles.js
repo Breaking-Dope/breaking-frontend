@@ -1,10 +1,21 @@
 import ReactLoading from 'react-loading';
 import styled from 'styled-components';
+import logo from 'assets/svg/logo.svg';
 
 export const Post = styled.div`
   width: 800px;
   margin: 0 auto;
   padding-top: 40px;
+`;
+
+export const DefaultCarousel = styled.img.attrs({
+  src: `${logo}`,
+})`
+  width: 800px;
+  height: 400px;
+  margin-bottom: 27px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.gray[200]};
 `;
 
 export const ContentHeader = styled.div`
@@ -39,7 +50,9 @@ export const ContentTitle = styled.h1`
 `;
 
 export const ContentViewCount = styled.span`
-  margin-left: 5px;
+  &::before {
+    content: ' • ';
+  }
 `;
 
 export const ContentPrice = styled.h1`

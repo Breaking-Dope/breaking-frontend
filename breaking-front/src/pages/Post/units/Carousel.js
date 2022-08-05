@@ -5,6 +5,7 @@ import { ReactComponent as LeftIcon } from 'assets/svg/carousel_left.svg';
 import { ReactComponent as RightIcon } from 'assets/svg/carousel_right.svg';
 import { ReactComponent as SlideDotIcon } from 'assets/svg/slide_dot.svg';
 import { ReactComponent as SildeDotFillIcon } from 'assets/svg/slide_dot_fill.svg';
+import ImageUrlConverter from 'utils/ImageUrlConverter';
 
 const Carousel = ({ mediaList }) => {
   const mediaCount = mediaList.length;
@@ -48,15 +49,15 @@ const Carousel = ({ mediaList }) => {
           {mediaList.map((media, index) =>
             /\.(?:jpg|gif|png)/g.test(media) ? (
               <Style.Image
-                src={media}
+                src={ImageUrlConverter(media)}
                 onClick={() => {
-                  showPopup(media);
+                  showPopup(ImageUrlConverter(media));
                 }}
                 key={'media-' + index}
               />
             ) : (
               <Style.Video key={'media-' + index} controls>
-                <source src={media} type="video/mp4" />
+                <source src={ImageUrlConverter(media)} type="video/mp4" />
               </Style.Video>
             )
           )}
