@@ -10,6 +10,7 @@ import Feed from 'components/Feed/Feed';
 import * as Style from 'pages/MainFeed/MainFeed.styles';
 import { ReactComponent as PenIcon } from 'assets/svg/pen.svg';
 import { FeedSkeleton } from 'components/Skeleton/Skeleton';
+import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 
 const MainFeed = () => {
   const queryClient = useQueryClient();
@@ -63,6 +64,7 @@ const MainFeed = () => {
 
   return (
     <Style.MainFeed>
+      <ScrollToTop />
       <Style.NavBar>
         <Style.FilterContainer>
           <Filter>
