@@ -89,11 +89,6 @@ export const ContextBodyTextArea = styled.textarea`
   }
 `;
 
-export const ContextHashTagInput = styled(ContextTitleInput)`
-  font-size: 12px;
-  color: ${({ theme }) => theme.blue[900]};
-`;
-
 export const PostTypeLayout = styled.div`
   margin-top: 40px;
   > button {

@@ -82,7 +82,6 @@ const PostWrite = () => {
           onChange={onChangePostData}
           name="content"
         ></Style.ContextBodyTextArea>
-        <Style.ContextHashTagInput placeholder="#해시태그를 입력하세요. (최대 8개)"></Style.ContextHashTagInput>
       </Style.ContextLayout>
 
       <Style.PostTypeLayout>
