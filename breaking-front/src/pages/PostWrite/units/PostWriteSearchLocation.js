@@ -114,6 +114,12 @@ const PostWriteSearchLocation = ({ setPostWriteData }) => {
     }));
   };
 
+  const handleSearchEnterPress = (event) => {
+    if (event.key === 'Enter') {
+      SearchMap(event);
+    }
+  };
+
   useEffect(() => {
     map && map.relayout();
     map &&
@@ -123,6 +129,7 @@ const PostWriteSearchLocation = ({ setPostWriteData }) => {
 
     // modal과 같이 display의 값이 바뀌는 곳에서는  map.relayout() 가 필요
   }, [isModalOpen, map]);
+
   return (
     <>
       <Style.PostWriteTitle>
@@ -228,12 +235,13 @@ const PostWriteSearchLocation = ({ setPostWriteData }) => {
         </Map>
 
         <Style.SearchInformationSideBar>
-          <Style.SearchForm onSubmit={SearchMap}>
+          <Style.SearchForm>
             <Style.SearchInput
               icon={<SearchIcon />}
               onChange={handleSearchInput}
               value={searchContent}
               iconClick={SearchMap}
+              onKeyDown={handleSearchEnterPress}
             />
           </Style.SearchForm>
 
