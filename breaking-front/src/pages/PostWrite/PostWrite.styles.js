@@ -31,7 +31,7 @@ export const OccurTimeLayout = styled.div`
 
 export const DatePicker = styled.input`
   position: relative;
-  width: 200px;
+  width: 180px;
   margin-right: 10px;
   padding: 10px;
   border: solid 1px ${({ theme }) => theme.gray[500]};

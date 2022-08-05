@@ -5,38 +5,34 @@ import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
 import PostWriteSearchLocation from 'pages/PostWrite/units/PostWriteSearchLocation';
 import useInputs from 'hooks/useInputs';
+import { useMutation } from 'react-query';
+import { postPostWrite } from 'api/postWrite';
 
 const PostWrite = () => {
-  const [occurDate, setOccurDate] = useState(dayjs().format('YYYY-MM-DD'));
-  const [occurTime, setOccurTime] = useState(dayjs().format('HH:mm'));
-
   const [isShowPriceInput, setIsShowPriceInput] = useState(false);
 
-  const [postData, onChangePostData, setPostData] = useInputs({
+  const [postWriteData, onChangePostWriteData, setPostWriteData] = useInputs({
+    location: undefined,
+    eventTime: dayjs().format('YYYY-MM-DDTHH:mm'),
     title: '',
     content: '',
     price: 0,
     postType: 'charged',
     isAnonymous: false,
+    thumbnailIndex: 0,
   });
 
-  console.log(postData);
+  const { mutate: PostWriteMutate } = useMutation(postPostWrite);
 
   const SetPrivate = () => {
-    setPostData((pre) => ({ ...pre, isAnonymous: true }));
+    setPostWriteData((pre) => ({ ...pre, isAnonymous: true }));
   };
   const SetPublic = () => {
-    setPostData((pre) => ({ ...pre, isAnonymous: false }));
+    setPostWriteData((pre) => ({ ...pre, isAnonymous: false }));
   };
 
-  const handleOccurDate = (event) => {
-    setOccurDate(event.target.value);
-  };
-  const handleOccurTime = (event) => {
-    setOccurTime(event.target.value);
-  };
   const handlePrice = (event) => {
-    setPostData((pre) => ({ ...pre, price: Number(event.target.value) }));
+    setPostWriteData((pre) => ({ ...pre, price: Number(event.target.value) }));
   };
 
   const toggleShowPirceInput = () => {
@@ -49,37 +45,42 @@ const PostWrite = () => {
     }
   };
 
+  const postWriteSubmit = (event) => {
+    event.preventDefault();
+    PostWriteMutate({
+      data: JSON.stringify({
+        ...postWriteData,
+        eventTime: postWriteData.eventTime.format('YYYY-MM-DD HH:ss:ss'),
+      }),
+    });
+  };
   return (
     <Style.Container>
       <PostUploadMediaForm />
       <Style.OccurTimeLayout>
         <Style.PostWriteTitle>제보 발생 시간</Style.PostWriteTitle>
         <Style.DatePicker
-          type="date"
-          value={occurDate}
-          onChange={handleOccurDate}
-        ></Style.DatePicker>
-        <Style.DatePicker
-          type="time"
-          value={occurTime}
-          onChange={handleOccurTime}
+          type="datetime-local"
+          name="eventTime"
+          value={postWriteData.eventTime}
+          onChange={onChangePostWriteData}
         ></Style.DatePicker>
       </Style.OccurTimeLayout>
 
       <Style.LocationLayout>
-        <PostWriteSearchLocation />
+        <PostWriteSearchLocation setPostWriteData={setPostWriteData} />
       </Style.LocationLayout>
 
       <Style.ContextLayout>
         <Style.ContextTitleInput
           type="text"
           placeholder="제목을 입력하세요"
-          onChange={onChangePostData}
+          onChange={onChangePostWriteData}
           name="title"
         ></Style.ContextTitleInput>
         <Style.ContextBodyTextArea
           placeholder="상황을 최대한 상세하게 기록해 주세요&#13;(상황, 시간, 사건 전개과정, 경과상태 등)&#13;&#10;최대 2000자"
-          onChange={onChangePostData}
+          onChange={onChangePostWriteData}
           name="content"
         ></Style.ContextBodyTextArea>
       </Style.ContextLayout>
@@ -87,26 +88,26 @@ const PostWrite = () => {
       <Style.PostTypeLayout>
         <Style.PostWriteTitle>제보 방식</Style.PostWriteTitle>
         <Style.PostRadioButton
-          onClick={onChangePostData}
+          onClick={onChangePostWriteData}
           value="charged"
           name="postType"
-          radioControl={postData.postType}
+          radioControl={postWriteData.postType}
         >
           유료제보
         </Style.PostRadioButton>
         <Style.PostRadioButton
-          onClick={onChangePostData}
+          onClick={onChangePostWriteData}
           value="free"
           name="postType"
-          radioControl={postData.postType}
+          radioControl={postWriteData.postType}
         >
           무료제보
         </Style.PostRadioButton>
         <Style.PostRadioButton
-          onClick={onChangePostData}
+          onClick={onChangePostWriteData}
           value="exclusive"
           name="postType"
-          radioControl={postData.postType}
+          radioControl={postWriteData.postType}
         >
           단독제보
         </Style.PostRadioButton>
@@ -120,8 +121,8 @@ const PostWrite = () => {
           maxLength="15"
           value={
             isShowPriceInput
-              ? postData.price
-              : postData.price.toLocaleString('ko-KR') + '원'
+              ? postWriteData.price
+              : postWriteData.price.toLocaleString('ko-KR') + '원'
           }
           onChange={handlePrice}
           onBlur={toggleShowPirceInput}
@@ -134,14 +135,14 @@ const PostWrite = () => {
         <Style.PostRadioButton
           onClick={SetPrivate}
           value={true}
-          radioControl={postData.isAnonymous}
+          radioControl={postWriteData.isAnonymous}
         >
           비공개
         </Style.PostRadioButton>
         <Style.PostRadioButton
           onClick={SetPublic}
           value={false}
-          radioControl={postData.isAnonymous}
+          radioControl={postWriteData.isAnonymous}
         >
           공개
         </Style.PostRadioButton>
