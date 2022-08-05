@@ -1,19 +1,17 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React from 'react';
+import * as Style from 'components/ScrollToTop/ScrollToTop.styles';
+import { ReactComponent as TopIcon } from 'assets/svg/top.svg';
 
-const ScrollToTop = ({ children }) => {
-  const { pathname } = useLocation();
-
-  useEffect(() => {
+const ScrollToTop = () => {
+  const scrollToTopClick = () => {
     window.scrollTo(0, 0);
-  }, [pathname]);
+  };
 
-  return children;
-};
-
-ScrollToTop.propTypes = {
-  children: PropTypes.node,
+  return (
+    <Style.ScrollToTop onClick={scrollToTopClick}>
+      <TopIcon />
+    </Style.ScrollToTop>
+  );
 };
 
 export default ScrollToTop;
