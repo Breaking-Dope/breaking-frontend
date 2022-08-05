@@ -33,6 +33,7 @@ const PostWrite = () => {
       'data',
       JSON.stringify({
         ...postWriteData,
+        price: postWriteData.postType === 'free' ? 0 : postWriteData.price,
         eventTime: dayjs(postWriteData.eventTime).format('YYYY-MM-DD HH:ss:ss'),
       })
     );
@@ -123,7 +124,7 @@ const PostWrite = () => {
           </Style.PostRadioButton>
         </Style.PostTypeLayout>
 
-        <Style.PriceLayout>
+        <Style.PriceLayout postType={postWriteData.postType}>
           <Style.PostWriteTitle>제보 가격</Style.PostWriteTitle>
           <Style.PostPriceInput
             type="text"
