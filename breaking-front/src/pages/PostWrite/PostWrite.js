@@ -7,9 +7,13 @@ import PostWriteSearchLocation from 'pages/PostWrite/units/PostWriteSearchLocati
 import useInputs from 'hooks/useInputs';
 import { useMutation } from 'react-query';
 import { postPostWrite } from 'api/postWrite';
+import MESSAGE from 'constants/message';
+import { useNavigate } from 'react-router-dom';
+import { PAGE_PATH } from 'constants/path';
 
 const PostWrite = () => {
   const [isShowPriceInput, setIsShowPriceInput] = useState(false);
+  const navigate = useNavigate();
 
   const [mediaList, setMediaList] = useState([]);
   const [postWriteData, onChangePostWriteData, setPostWriteData] = useInputs({
@@ -23,10 +27,31 @@ const PostWrite = () => {
     thumbnailIndex: 0,
   });
 
-  const { mutate: PostWriteMutate } = useMutation(postPostWrite);
+  const { mutate: PostWriteMutate } = useMutation(postPostWrite, {
+    onSuccess: () => {
+      alert('작성되었습니다.');
+      navigate(PAGE_PATH.HOME);
+    },
+    onError: (error) => {
+      console.log(error);
+      //에러처리
+    },
+  });
 
   const postWriteSubmit = (event) => {
     event.preventDefault();
+
+    if (!postWriteData.location) {
+      alert(MESSAGE.POST_WRITE.LOCATION_BLANK);
+      return;
+    } else if (postWriteData.title === '') {
+      alert(MESSAGE.POST_WRITE.TITLE_BLANK);
+      return;
+    } else if (postWriteData.content === '') {
+      alert(MESSAGE.POST_WRITE.CONTENT_BLANK);
+      return;
+    }
+
     const formData = new FormData();
     formData.append('mediaList', mediaList);
     formData.append(
@@ -37,6 +62,7 @@ const PostWrite = () => {
         eventTime: dayjs(postWriteData.eventTime).format('YYYY-MM-DD HH:ss:ss'),
       })
     );
+
     PostWriteMutate(formData);
   };
 
@@ -60,7 +86,7 @@ const PostWrite = () => {
       target.value = target.value.slice(0, target.maxLength);
     }
   };
-
+  console.log(postWriteData);
   return (
     <Style.Container>
       <form onSubmit={postWriteSubmit}>
