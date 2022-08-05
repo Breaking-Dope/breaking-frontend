@@ -4,20 +4,29 @@ import PostUploadMediaForm from 'pages/PostWrite/units/PostWriteUploadMediaForm'
 import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
 import PostWriteSearchLocation from 'pages/PostWrite/units/PostWriteSearchLocation';
+import useInputs from 'hooks/useInputs';
 
 const PostWrite = () => {
   const [occurDate, setOccurDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [occurTime, setOccurTime] = useState(dayjs().format('HH:mm'));
-  const [selectedPostType, setSelectedPostType] = useState('charged');
-  const [selectedAnonymous, setSelectedAnonymous] = useState('public');
-  const [price, setPrice] = useState(0);
+
   const [isShowPriceInput, setIsShowPriceInput] = useState(false);
 
-  const handlePostType = (event) => {
-    setSelectedPostType(event.target.id);
+  const [postData, onChangePostData, setPostData] = useInputs({
+    title: '',
+    content: '',
+    price: 0,
+    postType: 'charged',
+    isAnonymous: false,
+  });
+
+  console.log(postData);
+
+  const SetPrivate = () => {
+    setPostData((pre) => ({ ...pre, isAnonymous: true }));
   };
-  const handleAnonymous = (event) => {
-    setSelectedAnonymous(event.target.id);
+  const SetPublic = () => {
+    setPostData((pre) => ({ ...pre, isAnonymous: false }));
   };
 
   const handleOccurDate = (event) => {
@@ -27,7 +36,7 @@ const PostWrite = () => {
     setOccurTime(event.target.value);
   };
   const handlePrice = (event) => {
-    setPrice(Number(event.target.value));
+    setPostData((pre) => ({ ...pre, price: Number(event.target.value) }));
   };
 
   const toggleShowPirceInput = () => {
@@ -65,9 +74,13 @@ const PostWrite = () => {
         <Style.ContextTitleInput
           type="text"
           placeholder="제목을 입력하세요"
+          onChange={onChangePostData}
+          name="title"
         ></Style.ContextTitleInput>
         <Style.ContextBodyTextArea
           placeholder="상황을 최대한 상세하게 기록해 주세요&#13;(상황, 시간, 사건 전개과정, 경과상태 등)&#13;&#10;최대 2000자"
+          onChange={onChangePostData}
+          name="content"
         ></Style.ContextBodyTextArea>
         <Style.ContextHashTagInput placeholder="#해시태그를 입력하세요. (최대 8개)"></Style.ContextHashTagInput>
       </Style.ContextLayout>
@@ -75,23 +88,26 @@ const PostWrite = () => {
       <Style.PostTypeLayout>
         <Style.PostWriteTitle>제보 방식</Style.PostWriteTitle>
         <Style.PostRadioButton
-          onClick={handlePostType}
-          id="charged"
-          radioControl={selectedPostType}
+          onClick={onChangePostData}
+          value="charged"
+          name="postType"
+          radioControl={postData.postType}
         >
           유료제보
         </Style.PostRadioButton>
         <Style.PostRadioButton
-          onClick={handlePostType}
-          id="free"
-          radioControl={selectedPostType}
+          onClick={onChangePostData}
+          value="free"
+          name="postType"
+          radioControl={postData.postType}
         >
           무료제보
         </Style.PostRadioButton>
         <Style.PostRadioButton
-          onClick={handlePostType}
-          id="exclusive"
-          radioControl={selectedPostType}
+          onClick={onChangePostData}
+          value="exclusive"
+          name="postType"
+          radioControl={postData.postType}
         >
           단독제보
         </Style.PostRadioButton>
@@ -104,7 +120,9 @@ const PostWrite = () => {
           onInput={maxLengthCheck}
           maxLength="15"
           value={
-            isShowPriceInput ? price : price.toLocaleString('ko-KR') + '원'
+            isShowPriceInput
+              ? postData.price
+              : postData.price.toLocaleString('ko-KR') + '원'
           }
           onChange={handlePrice}
           onBlur={toggleShowPirceInput}
@@ -115,16 +133,16 @@ const PostWrite = () => {
       <Style.AnonymousLayout>
         <Style.PostWriteTitle>프로필을 공개하시겠습니까?</Style.PostWriteTitle>
         <Style.PostRadioButton
-          onClick={handleAnonymous}
-          id="private"
-          radioControl={selectedAnonymous}
+          onClick={SetPrivate}
+          value={true}
+          radioControl={postData.isAnonymous}
         >
           비공개
         </Style.PostRadioButton>
         <Style.PostRadioButton
-          onClick={handleAnonymous}
-          id="public"
-          radioControl={selectedAnonymous}
+          onClick={SetPublic}
+          value={false}
+          radioControl={postData.isAnonymous}
         >
           공개
         </Style.PostRadioButton>

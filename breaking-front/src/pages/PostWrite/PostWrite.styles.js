@@ -6,8 +6,8 @@ export const PostWriteTitle = styled.h3`
 `;
 
 export const PostRadioButton = styled(Button)`
-  background-color: ${({ id, radioControl, theme }) =>
-    id === radioControl && theme.blue[400]};
+  background-color: ${({ value, radioControl, theme }) =>
+    value === radioControl && theme.blue[400]};
 `;
 
 export const PostSubmitButton = styled(Button)`
