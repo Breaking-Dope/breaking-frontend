@@ -12,9 +12,8 @@ import { useNavigate } from 'react-router-dom';
 import { PAGE_PATH } from 'constants/path';
 
 const PostWrite = () => {
-  const [isShowPriceInput, setIsShowPriceInput] = useState(false);
   const navigate = useNavigate();
-
+  const [isShowPriceInput, setIsShowPriceInput] = useState(false);
   const [mediaList, setMediaList] = useState([]);
   const [postWriteData, onChangePostWriteData, setPostWriteData] = useInputs({
     location: undefined,
@@ -66,10 +65,10 @@ const PostWrite = () => {
     PostWriteMutate(formData);
   };
 
-  const SetPrivate = () => {
+  const postPrivate = () => {
     setPostWriteData((pre) => ({ ...pre, isAnonymous: true }));
   };
-  const SetPublic = () => {
+  const postPublic = () => {
     setPostWriteData((pre) => ({ ...pre, isAnonymous: false }));
   };
 
@@ -185,14 +184,14 @@ const PostWrite = () => {
             프로필을 공개하시겠습니까?
           </Style.PostWriteTitle>
           <Style.PostRadioButton
-            onClick={SetPrivate}
+            onClick={postPrivate}
             value={true}
             radioControl={postWriteData.isAnonymous}
           >
             비공개
           </Style.PostRadioButton>
           <Style.PostRadioButton
-            onClick={SetPublic}
+            onClick={postPublic}
             value={false}
             radioControl={postWriteData.isAnonymous}
           >
