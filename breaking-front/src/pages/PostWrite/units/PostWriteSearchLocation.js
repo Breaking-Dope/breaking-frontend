@@ -26,7 +26,7 @@ const PostWriteSearchLocation = ({ setForm }) => {
     lng: 126.97866358173395,
   });
 
-  const [markerInformation, setMarkerInformation] = useState(); // marker 클릭시 보여주는 정보객체
+  const [markerInformation, setMarkerInformation] = useState({}); // marker 클릭시 보여주는 정보객체
   /*
    {
     lat: "number"
@@ -45,28 +45,23 @@ const PostWriteSearchLocation = ({ setForm }) => {
   const { kakao } = window;
   const geocoder = new kakao.maps.services.Geocoder();
 
-  const coord2AddressCallback = (addresses, status) => {
-    if (status === 'OK') {
-      setMarkerInformation((pre) => ({
-        ...pre,
-        roadAddressName: addresses[0].road_address?.address_name,
-        addressName: addresses[0].address.address_name,
-      }));
-      setIsCustomMarker(true);
-    }
-  };
-
   const SetCustomMarker = (lat, lng) => {
     // 클릭위치에 마커가 찍어지도록 state를 변경
-    setMarkerInformation({
-      lat: lat,
-      lng: lng,
-    });
     setMapCenterPosition({
       lat: lat,
       lng: lng,
     });
-    geocoder.coord2Address(lng, lat, coord2AddressCallback);
+    geocoder.coord2Address(lng, lat, (addresses, status) => {
+      if (status === 'OK') {
+        setMarkerInformation({
+          lat: lat,
+          lng: lng,
+          roadAddressName: addresses[0].road_address?.address_name,
+          addressName: addresses[0].address.address_name,
+        });
+        setIsCustomMarker(true);
+      }
+    });
   };
 
   const getCurrentPosition = () => {
@@ -118,9 +113,13 @@ const PostWriteSearchLocation = ({ setForm }) => {
 
   useEffect(() => {
     map && map.relayout();
+    map &&
+      map.setCenter(
+        new kakao.maps.LatLng(mapCenterPosition.lat, mapCenterPosition.lng)
+      );
+
     // modal과 같이 display의 값이 바뀌는 곳에서는  map.relayout() 가 필요
   }, [isModalOpen, map]);
-
   return (
     <>
       <Style.PostWriteTitle>
@@ -152,7 +151,7 @@ const PostWriteSearchLocation = ({ setForm }) => {
             height: '640px',
             borderRadius: '0px 0px 10px 10px',
           }}
-          level={5} // 지도의 확대 레벨
+          level={3} // 지도의 확대 레벨
           onCreate={setMap} //map 객체를 받아옴
           onClick={(_t, mouseEvent) => {
             // 맵을 클릭시에 실행되는 eventHandler
@@ -173,6 +172,7 @@ const PostWriteSearchLocation = ({ setForm }) => {
                 clickable={true}
                 onClick={locationSubmit}
               />
+              {console.log(markerInformation)}
               <CustomOverlayMap
                 position={{
                   lat: markerInformation.lat,
