@@ -10,6 +10,7 @@ const theme = {
   black: PALETTE.BLACK,
   brown: PALETTE.BROWN,
   opacityBlack: PALETTE.OPACITY_BLACK,
+  opacityWhite: PALETTE.OPACITY_WHITE,
 };
 
 export default theme;

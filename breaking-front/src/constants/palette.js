@@ -27,6 +27,7 @@ const PALETTE = {
   WHITE: '#FFFFFF',
   BLACK: '#000000',
   OPACITY_BLACK: 'rgba(0, 0, 0, 0.4)',
+  OPACITY_WHITE: 'rgba(256, 256, 256, 0.8)',
 };
 
 export default PALETTE;

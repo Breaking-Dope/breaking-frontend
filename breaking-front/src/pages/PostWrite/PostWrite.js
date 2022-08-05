@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import * as Style from 'pages/PostWrite/PostWrite.styles';
 import PostUploadMediaForm from 'pages/PostWrite/units/PostWriteUploadMediaForm';
-import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
+import PostWriteSearchLocation from 'pages/PostWrite/units/PostWriteSearchLocation';
 
 const PostWrite = () => {
   const [occurDate, setOccurDate] = useState(dayjs().format('YYYY-MM-DD'));
@@ -43,7 +43,6 @@ const PostWrite = () => {
   return (
     <Style.Container>
       <PostUploadMediaForm />
-
       <Style.OccurTimeLayout>
         <Style.PostWriteTitle>제보 발생 시간</Style.PostWriteTitle>
         <Style.DatePicker
@@ -59,17 +58,7 @@ const PostWrite = () => {
       </Style.OccurTimeLayout>
 
       <Style.LocationLayout>
-        <Style.PostWriteTitle>
-          위치
-          <Style.FindLocationLayout>
-            <LocationIcon />
-            <Style.FindLocationMessage>
-              현재 위치 찾기
-            </Style.FindLocationMessage>
-          </Style.FindLocationLayout>
-        </Style.PostWriteTitle>
-
-        <Style.LocationInput type="text" placeholder="주소를 입력하세요" />
+        <PostWriteSearchLocation />
       </Style.LocationLayout>
 
       <Style.ContextLayout>

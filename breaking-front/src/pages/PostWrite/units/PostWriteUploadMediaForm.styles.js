@@ -19,7 +19,7 @@ export const UploadForm = styled.div`
   justify-content: center;
 `;
 
-export const UploadFileBox = styled.div`
+export const UploadFileBox = styled.label`
   display: flex;
   width: 130px;
   height: 130px;
@@ -33,6 +33,10 @@ export const UploadFileBox = styled.div`
   cursor: pointer;
 `;
 
+export const FileUploadInput = styled.input`
+  display: none;
+`;
+
 export const PlusIconContainer = styled.div`
   margin-top: 30px;
 `;
@@ -43,38 +47,47 @@ export const UploadCount = styled.p`
   color: ${({ theme }) => theme.brown};
   &::after {
     color: ${({ theme }) => theme.blue[900]};
-    content: '/10';
+    content: '/20';
   }
 `;
 
 export const UploadPreviewLayout = styled.div`
   display: flex;
-  align-items: center;
   margin-left: 20px;
+  align-items: center;
 `;
 
 export const Carousel = styled(ScrollBarX)`
   width: 520px;
   height: 180px;
-  overflow-x: scroll;
   white-space: nowrap;
+  overflow-x: auto;
   > * {
     margin-right: 10px;
     margin-left: 10px;
   }
 `;
 
-export const UploadPreviewImage = styled.div`
+export const PreviewImageContainer = styled.div`
   display: inline-block;
   position: relative;
   padding: 10px;
 `;
 
-export const UploadBox = styled.img`
+export const PreviewImage = styled.img`
   width: 130px;
   height: 130px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.blue[300]};
+  object-fit: cover;
+`;
+
+export const PreviewVideo = styled.video`
+  width: 130px;
+  height: 130px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.blue[300]};
+  object-fit: cover;
 `;
 
 export const XMarkIconContainer = styled.div`
