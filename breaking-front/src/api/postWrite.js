@@ -5,6 +5,7 @@ export const postPostWrite = (data) => {
   return api({
     method: 'post',
     url: API_PATH.POST_WRITE,
+    'Content-Type': 'multipart/form-data',
     data: data,
   });
 };
