@@ -52,16 +52,26 @@ const PostWrite = () => {
     }
 
     const formData = new FormData();
+
+    let hashtagList = [];
+    postWriteData.content
+      .split(/(#[^\s#]+|\n)/g)
+      .map(
+        (contentSlice) =>
+          contentSlice[0] === '#' && hashtagList.push(contentSlice)
+      );
+    // 해시태그 추출
+
     formData.append('mediaList', mediaList);
     formData.append(
       'data',
       JSON.stringify({
         ...postWriteData,
+        hashtagList: hashtagList.length === 0 ? 'null' : hashtagList,
         price: postWriteData.postType === 'free' ? 0 : postWriteData.price,
         eventTime: dayjs(postWriteData.eventTime).format('YYYY-MM-DD HH:ss:ss'),
       })
     );
-
     PostWriteMutate(formData);
   };
 
