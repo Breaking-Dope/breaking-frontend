@@ -108,7 +108,7 @@ const PostWriteSearchLocation = ({ setPostWriteData }) => {
       location: {
         latitude: markerInformation.lat,
         longitude: markerInformation.lng,
-        region: parseAddressName(markerInformation.addressName),
+        ...parseAddressName(markerInformation.addressName),
         address: markerInformation.addressName,
       },
     }));
@@ -182,7 +182,6 @@ const PostWriteSearchLocation = ({ setPostWriteData }) => {
                 clickable={true}
                 onClick={locationSubmit}
               />
-              {console.log(markerInformation)}
               <CustomOverlayMap
                 position={{
                   lat: markerInformation.lat,
