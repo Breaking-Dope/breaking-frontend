@@ -33,9 +33,10 @@ const Financial = () => {
       Deposit(depositValue, {
         onSuccess: () => {
           queryClient.invalidateQueries('transaction');
-          queryClient.resetQueries('initalizeValidUser');
+          queryClient.invalidateQueries('initalizeValidUser');
         },
       });
+    setDepositValue('');
   };
 
   const handleWithdrawSubmit = (event) => {
@@ -51,6 +52,7 @@ const Financial = () => {
           queryClient.invalidateQueries('initalizeValidUser');
         },
       });
+    setWithdrawValue('');
   };
 
   return (
