@@ -16,6 +16,7 @@ import ProfileEdit from 'pages/ProfileEdit/ProfileEdit';
 import MainFeed from 'pages/MainFeed/MainFeed';
 import Post from 'pages/Post/Post';
 import PostWrite from 'pages/PostWrite/PostWrite';
+import Financial from 'pages/Financial/Financial';
 import theme from 'styles/theme';
 import GlobalStyle from 'styles/GlobalStyle';
 
@@ -55,6 +56,7 @@ function App() {
                   />
                   <Route path={PAGE_PATH.POST(':id')} element={<Post />} />
                   <Route path={PAGE_PATH.POST_WRITE} element={<PostWrite />} />
+                  <Route path={PAGE_PATH.FINANCIAL} element={<Financial />} />
                 </Routes>
               </Layout>
             </UserInformationProvider>
