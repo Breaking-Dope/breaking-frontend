@@ -1,6 +1,6 @@
 import ReactLoading from 'react-loading';
 import styled from 'styled-components';
-import logo from 'assets/svg/logo.svg';
+import defaultThumbnail from 'assets/svg/default_thumbnail_image.svg';
 
 export const Post = styled.div`
   width: 800px;
@@ -8,15 +8,20 @@ export const Post = styled.div`
   padding-top: 40px;
 `;
 
-export const DefaultCarousel = styled.img.attrs({
-  src: `${logo}`,
-})`
+export const DefaultCarousel = styled.div`
+  display: flex;
   width: 800px;
   height: 400px;
   margin-bottom: 27px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.gray[200]};
+  align-items: center;
+  justify-content: center;
 `;
+
+export const DefaultThumbnailImage = styled.img.attrs({
+  src: `${defaultThumbnail}`,
+})``;
 
 export const ContentHeader = styled.div`
   display: flex;

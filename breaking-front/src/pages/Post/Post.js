@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useTheme } from 'styled-components';
 import {
   deletePost,
@@ -48,6 +48,7 @@ const Post = () => {
   const targetRef = useRef();
   const navigate = useNavigate();
   const { userId, profileImgURL } = useContext(UserInformationContext);
+  const queryClient = useQueryClient();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [purchaseType, setPurchaseType] = useState('구매하기');
@@ -105,7 +106,7 @@ const Post = () => {
       PostBuy(postId, {
         onSuccess: () => {
           alert('게시글을 구매하였습니다.');
-          // 새로 postData 불러오기
+          queryClient.invalidateQueries('post');
         },
       });
   };
@@ -173,7 +174,9 @@ const Post = () => {
             {postData.data.mediaList.length !== 0 ? (
               <Carousel mediaList={postData.data.mediaList} />
             ) : (
-              <Style.DefaultCarousel />
+              <Style.DefaultCarousel>
+                <Style.DefaultThumbnailImage />
+              </Style.DefaultCarousel>
             )}
             <Style.ContentHeader>
               <Style.ContentWriter>
