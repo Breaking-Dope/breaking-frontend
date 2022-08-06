@@ -1,17 +1,11 @@
-import React, { useContext, useEffect } from 'react';
-import * as Style from 'components/Layout/Layout.styles';
-import Header from 'components/Header/Header';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { PAGE_PATH } from 'constants/path';
-import { UserInformationContext } from 'providers/UserInformationProvider';
+import Header from 'components/Header/Header';
+import * as Style from 'components/Layout/Layout.styles';
 
 export default function Layout({ children }) {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const { isLogin, profileImgURL, userId } = useContext(UserInformationContext);
-
-  const moveLoginPage = () => navigate(PAGE_PATH.LOGIN);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -19,12 +13,7 @@ export default function Layout({ children }) {
 
   return (
     <>
-      <Header
-        isLogin={isLogin}
-        profileImgURL={profileImgURL}
-        userId={userId}
-        loginButtonClick={moveLoginPage}
-      />
+      <Header />
       <Style.Container>{children}</Style.Container>
     </>
   );

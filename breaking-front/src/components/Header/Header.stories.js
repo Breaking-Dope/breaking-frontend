@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Header from 'components/Header/Header';
+import { UserInformationContext } from 'providers/UserInformationProvider';
 
 export default {
   title: 'components/Header',
   component: Header,
-  argTypes: {},
 };
 
-function Template(args) {
-  return <Header {...args} />;
-}
+export const DefaultHeader = (args) => {
+  return <Header />;
+};
 
-export const Default = Template.bind({});
-Default.args = { isLogin: false };
+export const UserHeader = (args) => {
+  const { setUserInformation } = useContext(UserInformationContext);
 
-export const User = Template.bind({});
-User.args = { isLogin: true };
+  useEffect(() => {
+    setUserInformation((pre) => ({ ...pre, isLogin: true }));
+  }, []);
+  return <Header />;
+};

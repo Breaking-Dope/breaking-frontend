@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { PAGE_PATH } from 'constants/path';
 import Input from 'components/Input/Input';
@@ -13,21 +12,22 @@ import { ReactComponent as DropDownIcon } from 'assets/svg/drop_down.svg';
 import { ReactComponent as MoneyIcon } from 'assets/svg/money.svg';
 import { ReactComponent as SettingIcon } from 'assets/svg/setting.svg';
 import { ReactComponent as MyPageIcon } from 'assets/svg/mypage.svg';
+import { UserInformationContext } from 'providers/UserInformationProvider';
 
-export default function Header({
-  isLogin,
-  profileImgURL,
-  userId,
-  loginButtonClick,
-  ...props
-}) {
+export default function Header() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const userData = useContext(UserInformationContext);
+
   const [searchText, setSearchText] = useState('');
   const [isOpenToggle, setIsOpenToggle] = useState(false);
 
   const logoClick = () => {
     if (pathname === '/') window.scrollTo(0, 0);
+  };
+
+  const loginButtonClick = () => {
+    navigate(PAGE_PATH.LOGIN);
   };
 
   const onChange = (event) => {
@@ -38,12 +38,17 @@ export default function Header({
     setIsOpenToggle((pre) => !pre);
   };
 
+  const labelClick = (path) => {
+    navigate(path);
+    setIsOpenToggle(false);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
   };
 
   return (
-    <Style.HeaderContainer isLogin={isLogin} {...props}>
+    <Style.HeaderContainer>
       <Style.HeaderContent>
         <Style.SearchContent>
           <Style.LogoContainer to={PAGE_PATH.HOME} onClick={logoClick}>
@@ -57,13 +62,13 @@ export default function Header({
             />
           </Style.Form>
         </Style.SearchContent>
-        {isLogin ? (
+        {userData?.isLogin ? (
           <Style.ProfileContent
             onClick={handleToggle}
             onBlur={() => setIsOpenToggle(false)}
             tabIndex="0"
           >
-            <ProfileImage size="small" src={profileImgURL} />
+            <ProfileImage size="small" src={userData?.profileImgURL} />
             <DropDownIcon />
           </Style.ProfileContent>
         ) : (
@@ -77,23 +82,25 @@ export default function Header({
         <Style.ProfileToggle onMouseDown={(event) => event.preventDefault()}>
           {isOpenToggle && (
             <Toggle width="220px" isArrowMark={true}>
-              <Style.BlueLabel onClick={() => navigate(PAGE_PATH.TRANSACTION)}>
+              <Style.BlueLabel onClick={() => labelClick(PAGE_PATH.FINANCIAL)}>
                 입출금내역
               </Style.BlueLabel>
               <Toggle.LabelLink
                 icon={<MoneyIcon />}
-                label="10,000원"
-                labelClick={() => navigate(PAGE_PATH.TRANSACTION)}
+                label={`${userData?.balance?.toLocaleString('ko-KR')}원`}
+                labelClick={() => labelClick(PAGE_PATH.FINANCIAL)}
               />
               <Toggle.LabelLink
                 icon={<MyPageIcon />}
                 label="마이페이지"
-                labelClick={() => navigate(PAGE_PATH.PROFILE(userId))}
+                labelClick={() =>
+                  labelClick(PAGE_PATH.PROFILE(userData?.userId))
+                }
               />
               <Toggle.LabelLink
                 icon={<SettingIcon />}
                 label="프로필 수정"
-                labelClick={() => navigate(PAGE_PATH.PROFILE_EDIT)}
+                labelClick={() => labelClick(PAGE_PATH.PROFILE_EDIT)}
               />
               <Line width="200" />
               <Style.Logout>로그아웃</Style.Logout>
@@ -104,10 +111,3 @@ export default function Header({
     </Style.HeaderContainer>
   );
 }
-
-Header.propTypes = {
-  isLogin: PropTypes.bool,
-  profileImgURL: PropTypes.string,
-  userId: PropTypes.number,
-  loginButtonClick: PropTypes.func,
-};
