@@ -76,10 +76,10 @@ export const deletePostBookmark = (postId) => {
   });
 };
 
-export const postPostBuy = ({ postId, userId }) => {
+export const postPostBuy = (postId) => {
   return api({
     method: 'post',
-    url: API_PATH.POST_BUY(postId, userId),
+    url: API_PATH.POST_BUY(postId),
   });
 };
 
