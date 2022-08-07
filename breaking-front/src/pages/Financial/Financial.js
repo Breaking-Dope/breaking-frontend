@@ -48,7 +48,7 @@ const Financial = () => {
     withdrawConfirm &&
       Withdraw(withdrawValue, {
         onSuccess: () => {
-          queryClient.resetQueries('transaction');
+          queryClient.invalidateQueries('transaction');
           queryClient.invalidateQueries('initalizeValidUser');
         },
       });
