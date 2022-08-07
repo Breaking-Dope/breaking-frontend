@@ -26,7 +26,7 @@ const Carousel = ({ mediaList }) => {
     return window.open(
       media,
       'Popup',
-      `width=${width}, height=${height}, left=600, top=100, scrollbars=no, resizable=no`
+      `width=${width}, height=${height}, left=600, top=100, scrollbars=no, resizable=no, clearcache=yes`
     );
   };
 
