@@ -13,6 +13,9 @@ import { PAGE_PATH } from 'constants/path';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import Button from 'components/Button/Button';
 import Toggle from 'components/Toggle/Toggle';
+import ImageUrlConverter from 'utils/ImageUrlConverter';
+import numberFormatter from 'utils/numberFormatter';
+import timeFormatter from 'utils/timeFormatter';
 import * as Style from 'components/Feed/Feed.styles';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
@@ -24,9 +27,7 @@ import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
 import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as HideIcon } from 'assets/svg/hide.svg';
-import ImageUrlConverter from 'utils/ImageUrlConverter';
-import numberFormatter from 'utils/numberFormatter';
-import timeFormatter from 'utils/timeFormatter';
+import { ReactComponent as ThumbnailIcon } from 'assets/svg/default_thumbnail_image.svg';
 
 export default function Feed({ feedData, userId, ...props }) {
   const navigate = useNavigate();
@@ -99,7 +100,9 @@ export default function Feed({ feedData, userId, ...props }) {
           onClick={handleFeedClick}
         />
       ) : (
-        <Style.ThumbnailDefaultImage onClick={handleFeedClick} />
+        <Style.DefaultThumbnailImage onClick={handleFeedClick}>
+          <ThumbnailIcon />
+        </Style.DefaultThumbnailImage>
       )}
       <Style.Content>
         <Style.ETCIconContainer
@@ -124,7 +127,7 @@ export default function Feed({ feedData, userId, ...props }) {
             {feedData.region} • {timeFormatter(new Date(feedData.createdTime))}
           </Style.Detail>
           <Style.ContextFooter>
-            {feedData.postType === 'exclusive' && (
+            {feedData.postType === 'EXCLUSIVE' && (
               <Button color="dark" size="small" disabled>
                 단독
               </Button>

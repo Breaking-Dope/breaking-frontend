@@ -5,7 +5,7 @@ export const PAGE_PATH = {
   GOOGLE_LOGIN: 'login/google',
   SIGNUP: '/signup',
   PROFILE: (userId) => `/profile/${userId}`,
-  TRANSACTION: '/transaction',
+  FINANCIAL: '/financial',
   PROFILE_EDIT: '/profile/edit',
   POST: (postId) => `/post/${postId}`,
   POST_WRITE: '/post/write',
@@ -19,6 +19,9 @@ export const API_PATH = {
   OAUTH2_SIGNIN_GOOGLE: '/oauth2/sign-in/google',
   OAUTH2_SIGNOUT: '/oauth2/sign-out',
   OAUTH2_VALIDATE_JWT: '/oauth2/validate-jwt',
+  FINANCIAL_DEPOSIT: '/financial/deposit',
+  FINANCIAL_WITHDRAW: '/financial/withdraw',
+  PROFILE_TRANSACTION: '/profile/transaction',
   PROFILE_DETAIL_DATA: '/profile/detail',
   PROFILE_EDIT: '/profile',
   PROFILE_DATA: (userId) => `/profile/${userId}`,
@@ -32,7 +35,6 @@ export const API_PATH = {
   PROFILE_UNFOLLOW: (userId) => `/follow/${userId}`,
   PROFILE_FOLLOWINGS: (userId) => `/follow/following/${userId}`,
   PROFILE_FOLLOWERS: (userId) => `/follow/follower/${userId}`,
-  PROFILE_TRANSACTION: (userId) => `/profile/${userId}/transaction`,
   PROFILE_WITHDRAWAL: (userId) => `/profile/${userId}`,
   FEEDS: (cursor, sort = 'chronological', option = 'all', size = '10') =>
     `/feed?cursor=${cursor}&size=${size}&sort=${sort}&sold-option=${option}`,
@@ -62,7 +64,7 @@ export const API_PATH = {
   POST_BOOKMARK_DELETE: (postId) => `/post/${postId}/bookmark`,
   POST_LIKE_LIST: (postId) => `/post/${postId}/like-list`,
   POST_BOUGHT_LIST: (postId) => `/post/${postId}/buy-list`,
-  POST_BUY: (postId, userId) => `/post/${postId}/purchase/${userId}`,
+  POST_BUY: (postId) => `/post/${postId}/purchase`,
   POST_COMMENT_DATA: (postId, cursor, size = '10') =>
     `/post/${postId}/comment?cursor=${cursor}&size=${size}`,
   POST_REPLY_DATA: (commentId, cursor, size = '10') =>

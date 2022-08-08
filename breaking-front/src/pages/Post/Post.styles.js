@@ -1,11 +1,27 @@
 import ReactLoading from 'react-loading';
 import styled from 'styled-components';
+import defaultThumbnail from 'assets/svg/default_thumbnail_image.svg';
 
 export const Post = styled.div`
   width: 800px;
   margin: 0 auto;
   padding-top: 40px;
 `;
+
+export const DefaultCarousel = styled.div`
+  display: flex;
+  width: 800px;
+  height: 400px;
+  margin-bottom: 27px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.gray[200]};
+  align-items: center;
+  justify-content: center;
+`;
+
+export const DefaultThumbnailImage = styled.img.attrs({
+  src: `${defaultThumbnail}`,
+})``;
 
 export const ContentHeader = styled.div`
   display: flex;
@@ -28,9 +44,9 @@ export const ContentWriter = styled.div`
   text-align: center;
 `;
 
-export const ContentWriterName = styled.h3`
+export const ContentWriterName = styled.p`
   margin-top: 5px;
-  font-size: 18px;
+  font-size: ${({ length }) => (length < 8 ? '16px' : '14px')};
 `;
 
 export const ContentTitle = styled.h1`
@@ -39,7 +55,9 @@ export const ContentTitle = styled.h1`
 `;
 
 export const ContentViewCount = styled.span`
-  margin-left: 5px;
+  &::before {
+    content: ' • ';
+  }
 `;
 
 export const ContentPrice = styled.h1`

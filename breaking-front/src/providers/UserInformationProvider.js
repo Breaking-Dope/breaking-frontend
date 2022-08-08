@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PorpTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { getJWTvalidation } from 'api/signUp';
@@ -35,7 +35,7 @@ const UserInformationProvider = ({ children }) => {
 };
 
 UserInformationProvider.propTypes = {
-  children: PorpTypes.node,
+  children: PropTypes.node,
 };
 
 export default UserInformationProvider;

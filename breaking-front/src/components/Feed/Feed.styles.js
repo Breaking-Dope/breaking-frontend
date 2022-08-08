@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import logo from 'assets/svg/logo.svg';
 
 export const Feed = styled.div`
   display: ${({ isDeleted }) => (isDeleted ? 'none' : 'block')};
@@ -13,13 +12,19 @@ export const ThumbnailImage = styled.img`
   width: 100%;
   height: 300px;
   background-color: ${({ theme }) => theme.gray[200]};
+  object-fit: cover;
   cursor: pointer;
 `;
 
-export const ThumbnailDefaultImage = styled(ThumbnailImage).attrs({
-  src: `${logo}`,
-})`
+export const DefaultThumbnailImage = styled.div`
+  display: flex;
+  width: 100%;
+  height: 300px;
   background-color: ${({ theme }) => theme.gray[200]};
+  align-items: center;
+  justify-content: center;
+  object-fit: cover;
+  cursor: pointer;
 `;
 
 export const Content = styled.div`
