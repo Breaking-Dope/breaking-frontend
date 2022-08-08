@@ -75,6 +75,7 @@ const PostUploadMediaForm = ({ setMediaList }) => {
           type="file"
           onChange={(event) => handleAddFiles(event.target.files)}
           multiple
+          accept="video/*, image/*"
         />
 
         <Style.UploadPreviewLayout>
