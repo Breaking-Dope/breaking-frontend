@@ -7,7 +7,7 @@ import PostWriteModal from 'pages/PostWrite/units/PostWriteModal';
 import PropTypes from 'prop-types';
 import parseAddressName from 'utils/parseAddressName';
 
-const PostWriteSearchLocation = ({ setForm }) => {
+const PostWriteSearchLocation = ({ setPostWriteData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
@@ -103,12 +103,21 @@ const PostWriteSearchLocation = ({ setForm }) => {
     // parent의 form state를 받아와 결과값을 추가
     setLocationInputValue(markerInformation.addressName);
     setIsModalOpen(false);
-    console.log({
-      latitude: markerInformation.lat,
-      longitude: markerInformation.lng,
-      region: parseAddressName(markerInformation.addressName),
-      address: markerInformation.addressName,
-    });
+    setPostWriteData((pre) => ({
+      ...pre,
+      location: {
+        latitude: markerInformation.lat,
+        longitude: markerInformation.lng,
+        ...parseAddressName(markerInformation.addressName),
+        address: markerInformation.addressName,
+      },
+    }));
+  };
+
+  const handleSearchEnterPress = (event) => {
+    if (event.key === 'Enter') {
+      SearchMap(event);
+    }
   };
 
   useEffect(() => {
@@ -120,6 +129,7 @@ const PostWriteSearchLocation = ({ setForm }) => {
 
     // modal과 같이 display의 값이 바뀌는 곳에서는  map.relayout() 가 필요
   }, [isModalOpen, map]);
+
   return (
     <>
       <Style.PostWriteTitle>
@@ -172,7 +182,6 @@ const PostWriteSearchLocation = ({ setForm }) => {
                 clickable={true}
                 onClick={locationSubmit}
               />
-              {console.log(markerInformation)}
               <CustomOverlayMap
                 position={{
                   lat: markerInformation.lat,
@@ -225,12 +234,13 @@ const PostWriteSearchLocation = ({ setForm }) => {
         </Map>
 
         <Style.SearchInformationSideBar>
-          <Style.SearchForm onSubmit={SearchMap}>
+          <Style.SearchForm>
             <Style.SearchInput
               icon={<SearchIcon />}
               onChange={handleSearchInput}
               value={searchContent}
               iconClick={SearchMap}
+              onKeyDown={handleSearchEnterPress}
             />
           </Style.SearchForm>
 
@@ -271,7 +281,7 @@ const PostWriteSearchLocation = ({ setForm }) => {
 };
 
 PostWriteSearchLocation.propTypes = {
-  setForm: PropTypes.object,
+  setPostWriteData: PropTypes.func,
 };
 
 export default PostWriteSearchLocation;

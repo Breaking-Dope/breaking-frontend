@@ -4,10 +4,10 @@ import { ReactComponent as PlusIcon } from 'assets/svg/Plus.svg';
 import { ReactComponent as LeftArrowIcon } from 'assets/svg/left_arrow_line.svg';
 import { ReactComponent as RightArrowIcon } from 'assets/svg/right_arrow_line.svg';
 import { ReactComponent as XMarkIcon } from 'assets/svg/x_mark.svg';
+import PropTypes from 'prop-types';
 
-const PostUploadMediaForm = () => {
+const PostUploadMediaForm = ({ setMediaList }) => {
   const caruselRef = useRef();
-  const [filesThumbnail, setFilesThumbnail] = useState([]);
   const LeftCaruselClick = () => {
     caruselRef.current.scrollTo({
       left: caruselRef.current.scrollLeft - 500,
@@ -21,15 +21,19 @@ const PostUploadMediaForm = () => {
     });
   };
 
+  const [filesThumbnail, setFilesThumbnail] = useState([]);
+
   const deleteFile = (target) => {
-    window.URL.revokeObjectURL(filesThumbnail[target]);
+    URL.revokeObjectURL(filesThumbnail[target]);
     setFilesThumbnail((pre) => pre.filter((item, index) => index !== target));
+    setMediaList((pre) => pre.filter((item, index) => index !== target));
   };
 
   const handleAddFiles = (fileLists) => {
     if (filesThumbnail.length + fileLists.length > 20) {
       alert('업로드 개수를 초과하였습니다');
     } else {
+      setMediaList((pre) => [...pre, ...fileLists]);
       let fileList = [...filesThumbnail];
       for (let i = 0; i < fileLists.length; i++) {
         const currentFileUrl = URL.createObjectURL(fileLists[i]);
@@ -71,6 +75,7 @@ const PostUploadMediaForm = () => {
           type="file"
           onChange={(event) => handleAddFiles(event.target.files)}
           multiple
+          accept="video/*, image/*"
         />
 
         <Style.UploadPreviewLayout>
@@ -99,6 +104,10 @@ const PostUploadMediaForm = () => {
       </Style.UploadForm>
     </Style.UploadLayout>
   );
+};
+
+PostUploadMediaForm.propTypes = {
+  setMediaList: PropTypes.func,
 };
 
 export default PostUploadMediaForm;

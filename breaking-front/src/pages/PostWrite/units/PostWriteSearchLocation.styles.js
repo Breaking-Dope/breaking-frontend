@@ -46,7 +46,7 @@ export const SearchInformationSideBar = styled.div`
   background-color: ${({ theme }) => theme.opacityWhite};
 `;
 
-export const SearchForm = styled.form`
+export const SearchForm = styled.div`
   display: flex;
   padding: 10px;
 `;
