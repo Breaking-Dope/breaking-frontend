@@ -11,7 +11,9 @@ const useLogout = () => {
     enabled: false,
     onSuccess: () => {
       alert('로그아웃 되었습니다.');
-      queryClient.resetQueries();
+      localStorage.removeItem('access_token');
+      //refresh 토큰 또한 제거 예정
+      queryClient.clear();
       navigate(PAGE_PATH.LOGIN);
     },
   });
