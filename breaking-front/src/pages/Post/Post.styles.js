@@ -40,7 +40,7 @@ export const Context = styled.div`
 `;
 
 export const ContentWriter = styled.div`
-  /* width: 100px; */
+  width: 100px;
   text-align: center;
 `;
 
