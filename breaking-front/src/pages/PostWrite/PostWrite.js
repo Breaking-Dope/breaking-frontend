@@ -62,7 +62,9 @@ const PostWrite = () => {
       );
     // 해시태그 추출
 
-    formData.append('mediaList', mediaList);
+    for (let i = 0; i < mediaList.length; i++) {
+      formData.append('mediaList', mediaList[i]);
+    }
     formData.append(
       'data',
       JSON.stringify({
