@@ -207,7 +207,9 @@ const Post = () => {
                 <Style.ContentTitle>{postData.data.title}</Style.ContentTitle>
                 <Style.ContentLocation>
                   <LocationIcon />
-                  {postData.data.location.region}
+                  {postData.data.location.region_1depth_name +
+                    ' ' +
+                    postData.data.location.region_2depth_name}
                 </Style.ContentLocation>
                 <Style.ContentDetail>
                   {dayjs(postData.data.createdTime).format(
@@ -250,17 +252,18 @@ const Post = () => {
             <Style.ContentContainer>
               <Style.Content>
                 {postData.data.content
-                  .split(/(#[^\s#]+|\n)/g)
+                  .split(/(#[^\s#]+|\n|\s)/g)
                   .map((contentSlice, index) => {
+                    if (contentSlice === ' ') return '\u00a0';
                     if (contentSlice === '\n')
                       return <br key={'post-br-' + index} />;
-                    else if (contentSlice[0] === '#')
+                    if (contentSlice[0] === '#')
                       return (
                         <Style.Hashtag key={'comment-hashtag-' + index}>
                           {contentSlice}
                         </Style.Hashtag>
                       );
-                    else return contentSlice;
+                    return contentSlice;
                   })}
               </Style.Content>
               <Style.ContentFooter>
