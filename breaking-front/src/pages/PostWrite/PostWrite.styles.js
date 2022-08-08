@@ -6,11 +6,6 @@ export const PostWriteTitle = styled.h3`
   font-size: 18px;
 `;
 
-export const PostRadioButton = styled(Button)`
-  background-color: ${({ value, radioControl, theme }) =>
-    value === radioControl && theme.blue[400]};
-`;
-
 export const PostSubmitButton = styled(Button)`
   display: block;
   width: 170px;
