@@ -5,7 +5,6 @@ export const CarouselContainer = styled.div`
   width: 800px;
   height: 400px;
   border-radius: 10px;
-  background-color: ${({ theme }) => theme.black};
   overflow: hidden;
 `;
 
@@ -17,6 +16,7 @@ export const SliderContainer = styled.div`
 export const Video = styled.video`
   width: 800px;
   height: 400px;
+  background-color: ${({ theme }) => theme.black};
 `;
 
 export const Image = styled.img`
