@@ -53,23 +53,19 @@ const PostWrite = () => {
 
     const formData = new FormData();
 
-    let hashtagList = [];
-    postWriteData.content
-      .split(/(#[^\s#]+|\n)/g)
-      .map(
-        (contentSlice) =>
-          contentSlice[0] === '#' && hashtagList.push(contentSlice)
-      );
-    // 해시태그 추출
+    const hashtagList = postWriteData.content
+      .match(/#[^\s#]+/g)
+      ?.map((hashtag) => hashtag.replace('#', ''));
 
     for (let i = 0; i < mediaList.length; i++) {
       formData.append('mediaList', mediaList[i]);
     }
+
     formData.append(
       'data',
       JSON.stringify({
         ...postWriteData,
-        hashtagList: hashtagList.length === 0 ? 'null' : hashtagList,
+        hashtagList: hashtagList === undefined ? null : hashtagList,
         price: postWriteData.postType === 'free' ? 0 : postWriteData.price,
         eventTime: dayjs(postWriteData.eventTime).format('YYYY-MM-DD HH:ss:ss'),
       })
