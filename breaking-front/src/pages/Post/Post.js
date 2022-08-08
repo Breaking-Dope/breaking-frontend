@@ -180,14 +180,25 @@ const Post = () => {
             )}
             <Style.ContentHeader>
               <Style.ContentWriter>
-                <ProfileImage
-                  size="large"
-                  src={ImageUrlConverter(postData.data.user.profileImgURL)}
-                  profileClick={profileClick}
-                />
-                <Style.ContentWriterName>
-                  {postData.data.user.nickname}
-                </Style.ContentWriterName>
+                {postData.data.isAnonymous ? (
+                  <>
+                    <ProfileImage size="large" />
+                    <p>익명</p>
+                  </>
+                ) : (
+                  <>
+                    <ProfileImage
+                      size="large"
+                      src={ImageUrlConverter(postData.data.user.profileImgURL)}
+                      profileClick={profileClick}
+                    />
+                    <Style.ContentWriterName
+                      length={postData.data.user.nickname.length}
+                    >
+                      {postData.data.user.nickname}
+                    </Style.ContentWriterName>
+                  </>
+                )}
               </Style.ContentWriter>
               <Style.Context>
                 {postData?.data.postType === 'exclusive' && (

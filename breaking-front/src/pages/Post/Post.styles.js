@@ -40,13 +40,13 @@ export const Context = styled.div`
 `;
 
 export const ContentWriter = styled.div`
-  width: 100px;
+  /* width: 100px; */
   text-align: center;
 `;
 
-export const ContentWriterName = styled.h3`
+export const ContentWriterName = styled.p`
   margin-top: 5px;
-  font-size: 18px;
+  font-size: ${({ length }) => (length < 8 ? '16px' : '14px')};
 `;
 
 export const ContentTitle = styled.h1`
