@@ -67,7 +67,7 @@ const PostWrite = () => {
         ...postWriteData,
         hashtagList: hashtagList === undefined ? null : hashtagList,
         price: postWriteData.postType === 'free' ? 0 : postWriteData.price,
-        eventTime: dayjs(postWriteData.eventTime).format('YYYY-MM-DD HH:ss:ss'),
+        eventTime: dayjs(postWriteData.eventTime).format('YYYY-MM-DD HH:mm:ss'),
       })
     );
     PostWriteMutate(formData);
@@ -83,9 +83,7 @@ const PostWrite = () => {
   const handlePrice = (event) => {
     event.preventDefault();
     let price = Number(event.target.value);
-    if (Number.isNaN(price)) {
-      price = 0;
-    }
+    if (Number.isNaN(price)) return;
     setPostWriteData((pre) => ({
       ...pre,
       price: price,
