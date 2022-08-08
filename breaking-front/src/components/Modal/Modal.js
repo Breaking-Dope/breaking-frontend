@@ -4,7 +4,7 @@ import { ReactComponent as CloseIcon } from 'assets/svg/x_mark.svg';
 import * as Style from 'components/Modal/Modal.styles';
 import Line from 'components/Line/Line';
 
-export default function Modal({ isOpen, closeClick, title, children }) {
+export default function Modal({ isOpen, closeClick, title, grid, children }) {
   const modalRef = useRef();
 
   const modalOverlayClick = (event) => {
@@ -23,7 +23,11 @@ export default function Modal({ isOpen, closeClick, title, children }) {
         </Style.CloseButton>
         <Style.Title>{title}</Style.Title>
         <Line width="850px" />
-        <Style.Content>{children}</Style.Content>
+        {grid ? (
+          <Style.GridContent>{children}</Style.GridContent>
+        ) : (
+          <Style.NoGridContent>{children}</Style.NoGridContent>
+        )}
       </Style.Modal>
     </Style.ModalOverlay>
   );
@@ -34,4 +38,9 @@ Modal.propTypes = {
   closeClick: PropTypes.func,
   title: PropTypes.string,
   children: PropTypes.node,
+  grid: PropTypes.bool,
+};
+
+Modal.defaultProps = {
+  grid: true,
 };
