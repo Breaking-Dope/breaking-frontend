@@ -22,14 +22,6 @@ export const ProfileImage = styled.div`
   height: 200px;
 `;
 
-export const Loading = styled(ReactLoading)`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 50;
-`;
-
 export const LabelText = styled.p`
   margin-top: 20px;
   cursor: pointer;
@@ -54,8 +46,17 @@ export const Role = styled.div`
 `;
 
 export const SubmitButton = styled(Button)`
+  position: relative;
   display: block;
   margin: 0 auto;
   margin-bottom: 60px;
-  color: ${({ theme }) => theme.white};
+  color: ${({ theme, isLoading }) =>
+    isLoading ? theme.blue[300] : theme.white};
+`;
+
+export const Loading = styled(ReactLoading)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
