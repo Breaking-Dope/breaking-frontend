@@ -120,7 +120,7 @@ export const profileHandlers = [
   ),
 
   rest.get(API_PATH.PROFILE_DATA(0), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(NORMAL_USER));
+    return res(ctx.status(200), ctx.delay(1000), ctx.json(NORMAL_USER));
   }),
 
   rest.get(API_PATH.PROFILE_FOLLOWERS('*'), (req, res, ctx) => {

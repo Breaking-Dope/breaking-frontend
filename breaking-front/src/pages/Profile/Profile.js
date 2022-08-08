@@ -3,7 +3,7 @@ import FollowCard from 'components/FollowCard/FollowCard';
 import Line from 'components/Line/Line';
 import Modal from 'components/Modal/Modal';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import { FollowCardSkeleton } from 'components/Skeleton/Skeleton';
+import Skeleton, { FollowCardSkeleton } from 'components/Skeleton/Skeleton';
 import Tabs from 'components/Tabs/Tabs';
 import { PAGE_PATH } from 'constants/path';
 import useFollowerList from 'hooks/queries/useFollowerList';
@@ -145,26 +145,46 @@ const Profile = () => {
         />
         <Style.UserInformation>
           <Style.Title>
-            <Style.NickName>{profileData?.data.nickname}</Style.NickName>
-            <ProfileFollowButton
-              userId={userId}
-              isFollowing={profileData?.data.isFollowing}
-              isMyPage={isMyPage}
-              UnFollow={UnFollow}
-              Follow={Follow}
-            />
+            {isLoading ? (
+              <Skeleton width="120px" height="45px" radius="25px" />
+            ) : (
+              <>
+                <Style.NickName>{profileData.data.nickname}</Style.NickName>
+                <ProfileFollowButton
+                  userId={userId}
+                  isFollowing={profileData.data.isFollowing}
+                  isMyPage={isMyPage}
+                  UnFollow={UnFollow}
+                  Follow={Follow}
+                />
+              </>
+            )}
           </Style.Title>
           <Style.StatusMessage>
-            {profileData?.data.statusMsg}
+            {isLoading ? (
+              <Skeleton width="600px" height="25px" radius="30px" />
+            ) : (
+              profileData.data.statusMsg
+            )}
           </Style.StatusMessage>
           <Style.Information>
-            <div>작성제보 {profileData?.data.postCount}</div>
-            <div onClick={followerClick}>
-              팔로워 {profileData?.data.followerCount}
-            </div>
-            <div onClick={followingClick}>
-              팔로잉 {profileData?.data.followingCount}
-            </div>
+            {isLoading ? (
+              <>
+                <Skeleton width="50px" height="20px" radius="30px" />
+                <Skeleton width="50px" height="20px" radius="30px" />
+                <Skeleton width="50px" height="20px" radius="30px" />
+              </>
+            ) : (
+              <>
+                <div>작성제보 {profileData?.data.postCount}</div>
+                <div onClick={followerClick}>
+                  팔로워 {profileData?.data.followerCount}
+                </div>
+                <div onClick={followingClick}>
+                  팔로잉 {profileData?.data.followingCount}
+                </div>
+              </>
+            )}
           </Style.Information>
         </Style.UserInformation>
       </Style.UserContainer>
