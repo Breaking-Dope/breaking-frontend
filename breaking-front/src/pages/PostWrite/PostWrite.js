@@ -193,6 +193,7 @@ const PostWrite = () => {
             프로필을 공개하시겠습니까?
           </Style.PostWriteTitle>
           <Style.PostRadioButton
+            type="button"
             onClick={postPrivate}
             value={true}
             radioControl={postWriteData.isAnonymous}
@@ -200,6 +201,7 @@ const PostWrite = () => {
             비공개
           </Style.PostRadioButton>
           <Style.PostRadioButton
+            type="button"
             onClick={postPublic}
             value={false}
             radioControl={postWriteData.isAnonymous}
