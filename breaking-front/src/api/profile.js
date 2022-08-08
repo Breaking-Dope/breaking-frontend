@@ -74,3 +74,10 @@ export const postUnFollow = (userId) => {
     url: API_PATH.PROFILE_UNFOLLOW(userId),
   });
 };
+
+export const deleteProfileWithdrawal = (userId) => {
+  return api({
+    method: 'delete',
+    url: API_PATH.PROFILE_WITHDRAWAL(userId),
+  });
+};

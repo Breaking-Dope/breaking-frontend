@@ -126,6 +126,7 @@ export const profileHandlers = [
   rest.get(API_PATH.PROFILE_FOLLOWERS('*'), (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(followerList));
   }),
+
   rest.get(API_PATH.PROFILE_FOLLOWINGS('*'), (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(followingList));
   }),
@@ -139,7 +140,12 @@ export const profileHandlers = [
   rest.post(API_PATH.PROFILE_FOLLOW(1), (req, res, ctx) => {
     return res(ctx.status(200));
   }),
+
   rest.post(API_PATH.PROFILE_UNFOLLOW(1), (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
+
+  rest.delete(API_PATH.PROFILE_WITHDRAWAL(':userId'), (req, res, ctx) => {
     return res(ctx.status(200));
   }),
 ];
