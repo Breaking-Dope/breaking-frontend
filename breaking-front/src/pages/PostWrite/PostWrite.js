@@ -90,7 +90,7 @@ const PostWrite = () => {
     }));
   };
 
-  const toggleShowPirceInput = () => {
+  const toggleShowPriceInput = () => {
     setIsShowPriceInput((pre) => !pre);
   };
 
@@ -174,8 +174,8 @@ const PostWrite = () => {
                 : postWriteData.price.toLocaleString('ko-KR') + '원'
             }
             onChange={handlePrice}
-            onBlur={toggleShowPirceInput}
-            onFocus={toggleShowPirceInput}
+            onBlur={toggleShowPriceInput}
+            onFocus={toggleShowPriceInput}
             onKeyDown={(event) => {
               if (event.key === 'Enter') {
                 event.preventDefault();
