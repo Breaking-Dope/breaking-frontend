@@ -1,5 +1,6 @@
 import Button from 'components/Button/Button';
 import styled from 'styled-components';
+import ReactLoading from 'react-loading';
 
 export const PostWriteTitle = styled.h3`
   font-size: 18px;
@@ -125,4 +126,9 @@ export const AnonymousLayout = styled.div`
   > * {
     margin-bottom: 30px;
   }
+`;
+
+export const Loading = styled(ReactLoading)`
+  display: block;
+  margin: 0 auto 50px;
 `;

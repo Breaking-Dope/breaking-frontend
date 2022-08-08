@@ -10,9 +10,11 @@ import { postPostWrite } from 'api/postWrite';
 import MESSAGE from 'constants/message';
 import { useNavigate } from 'react-router-dom';
 import { PAGE_PATH } from 'constants/path';
+import { useTheme } from 'styled-components';
 
 const PostWrite = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
   const [isShowPriceInput, setIsShowPriceInput] = useState(false);
   const [mediaList, setMediaList] = useState([]);
   const [postWriteData, onChangePostWriteData, setPostWriteData] = useInputs({
@@ -26,16 +28,17 @@ const PostWrite = () => {
     thumbnailIndex: 0,
   });
 
-  const { mutate: PostWriteMutate } = useMutation(postPostWrite, {
-    onSuccess: () => {
-      alert('작성되었습니다.');
-      navigate(PAGE_PATH.HOME);
-    },
-    onError: (error) => {
-      console.log(error);
-      //에러처리
-    },
-  });
+  const { mutate: PostWriteMutate, isLoading: isPostWriteMutating } =
+    useMutation(postPostWrite, {
+      onSuccess: () => {
+        alert('작성되었습니다.');
+        navigate(PAGE_PATH.HOME);
+      },
+      onError: (error) => {
+        console.log(error);
+        //에러처리
+      },
+    });
 
   const postWriteSubmit = (event) => {
     event.preventDefault();
@@ -205,7 +208,13 @@ const PostWrite = () => {
           </Style.PostRadioButton>
         </Style.AnonymousLayout>
 
-        <Style.PostSubmitButton type="submit">제보 하기</Style.PostSubmitButton>
+        {isPostWriteMutating ? (
+          <Style.Loading type="bars" color={theme.blue[900]} />
+        ) : (
+          <Style.PostSubmitButton type="submit">
+            제보 하기
+          </Style.PostSubmitButton>
+        )}
       </form>
     </Style.Container>
   );
