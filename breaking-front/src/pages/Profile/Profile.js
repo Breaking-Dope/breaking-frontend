@@ -126,17 +126,16 @@ const Profile = () => {
               }
             ></FollowCard>
           ))}
-        {followerListLoading ||
-          (followingListLoading && (
-            <>
-              <FollowCardSkeleton />
-              <FollowCardSkeleton />
-              <FollowCardSkeleton />
-              <FollowCardSkeleton />
-              <FollowCardSkeleton />
-              <FollowCardSkeleton />
-            </>
-          ))}
+        {(followerListLoading || followingListLoading) && (
+          <>
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+          </>
+        )}
       </Modal>
       <Style.UserContainer>
         <ProfileImage
