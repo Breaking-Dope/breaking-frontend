@@ -124,10 +124,10 @@ export const profileHandlers = [
   }),
 
   rest.get(API_PATH.PROFILE_FOLLOWERS('*'), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(followerList));
+    return res(ctx.status(200), ctx.delay(1000), ctx.json(followerList));
   }),
   rest.get(API_PATH.PROFILE_FOLLOWINGS('*'), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(followingList));
+    return res(ctx.status(200), ctx.delay(1000), ctx.json(followingList));
   }),
 
   rest.get(API_PATH.PROFILE_DATA(':userId'), (req, res, ctx) => {
