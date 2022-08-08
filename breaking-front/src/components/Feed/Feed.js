@@ -127,7 +127,7 @@ export default function Feed({ feedData, userId, ...props }) {
             {feedData.region} • {timeFormatter(new Date(feedData.createdTime))}
           </Style.Detail>
           <Style.ContextFooter>
-            {feedData.postType === 'exclusive' && (
+            {feedData.postType === 'EXCLUSIVE' && (
               <Button color="dark" size="small" disabled>
                 단독
               </Button>

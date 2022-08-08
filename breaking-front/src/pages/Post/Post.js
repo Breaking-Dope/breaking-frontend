@@ -201,7 +201,7 @@ const Post = () => {
                 )}
               </Style.ContentWriter>
               <Style.Context>
-                {postData?.data.postType === 'exclusive' && (
+                {postData?.data.postType === 'EXCLUSIVE' && (
                   <Button color="dark" size="small" disabled>
                     단독
                   </Button>
