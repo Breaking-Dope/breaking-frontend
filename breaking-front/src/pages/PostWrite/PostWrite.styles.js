@@ -6,8 +6,8 @@ export const PostWriteTitle = styled.h3`
 `;
 
 export const PostRadioButton = styled(Button)`
-  background-color: ${({ id, radioControl, theme }) =>
-    id === radioControl && theme.blue[400]};
+  background-color: ${({ value, radioControl, theme }) =>
+    value === radioControl && theme.blue[400]};
 `;
 
 export const PostSubmitButton = styled(Button)`
@@ -31,7 +31,7 @@ export const OccurTimeLayout = styled.div`
 
 export const DatePicker = styled.input`
   position: relative;
-  width: 200px;
+  width: 180px;
   margin-right: 10px;
   padding: 10px;
   border: solid 1px ${({ theme }) => theme.gray[500]};
@@ -89,11 +89,6 @@ export const ContextBodyTextArea = styled.textarea`
   }
 `;
 
-export const ContextHashTagInput = styled(ContextTitleInput)`
-  font-size: 12px;
-  color: ${({ theme }) => theme.blue[900]};
-`;
-
 export const PostTypeLayout = styled.div`
   margin-top: 40px;
   > button {
@@ -105,6 +100,7 @@ export const PostTypeLayout = styled.div`
 `;
 
 export const PriceLayout = styled.div`
+  display: ${({ postType }) => (postType === 'free' ? 'none' : 'block')};
   margin-top: 40px;
   > * {
     margin-bottom: 30px;

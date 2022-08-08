@@ -6,6 +6,12 @@ const MESSAGE = {
     SUBMIT_INVALID_EMAIL: '이메일을 올바르게 기입해주시기 바랍니다.',
     WRONG_ACCESS: 'SNS 로그인 후 회원가입이 가능함니다.',
   },
+
+  POST_WRITE: {
+    LOCATION_BLANK: '제보가 발생한 위치를 입력해 주시기 바랍니다.',
+    TITLE_BLANK: '제목을 입력해 주시기 바랍니다.',
+    CONTENT_BLANK: '본문을 입력해 주시기 바랍니다.',
+  },
 };
 
 export default MESSAGE;
