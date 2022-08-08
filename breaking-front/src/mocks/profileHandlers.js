@@ -89,7 +89,7 @@ export const profileHandlers = [
         else if (soldOption === 'sold') return item.isSold;
         else return item;
       });
-      return res(ctx.status(200), ctx.json(data));
+      return res(ctx.status(200), ctx.delay(1000), ctx.json(data));
     }
   ),
 
@@ -102,7 +102,7 @@ export const profileHandlers = [
         else if (soldOption === 'sold') return item.isSold;
         else return item;
       });
-      return res(ctx.status(200), ctx.json(data));
+      return res(ctx.status(200), ctx.delay(1000), ctx.json(data));
     }
   ),
 
@@ -115,7 +115,7 @@ export const profileHandlers = [
         else if (soldOption === 'sold') return item.isSold;
         else return item;
       });
-      return res(ctx.status(200), ctx.json(data));
+      return res(ctx.status(200), ctx.delay(1000), ctx.json(data));
     }
   ),
 

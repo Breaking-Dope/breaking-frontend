@@ -6,21 +6,23 @@ import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import { useRef } from 'react';
-import ReactLoading from 'react-loading';
 import { useQueryClient } from 'react-query';
+import { useTheme } from 'styled-components';
+import { FeedSkeleton } from 'components/Skeleton/Skeleton';
 
 const ProfileTabPanel = ({
   type,
   data,
   hasNextPage,
   isFetching,
+  isLoading,
   nextFetch,
   setOption,
 }) => {
   const targetRef = useRef();
   const { userId } = useContext(UserInformationContext);
   const queryClient = useQueryClient();
-
+  const theme = useTheme();
   useEffect(() => {
     let observer;
     const onIntersect = async ([entry], observer) => {
@@ -71,15 +73,25 @@ const ProfileTabPanel = ({
           </Filter>
         </Style.FilterContainer>
         <Style.FeedContainer>
-          <>
-            {data?.pages.map((page) =>
-              page.result.map((feed) => (
-                <Feed feedData={feed} key={feed.postId} userId={userId} />
-              ))
-            )}
-            {isFetching ? <ReactLoading /> : <div ref={targetRef}></div>}
-          </>
+          {isLoading && (
+            <>
+              <FeedSkeleton />
+              <FeedSkeleton />
+              <FeedSkeleton />
+              <FeedSkeleton />
+            </>
+          )}
+          {data?.pages.map((page) =>
+            page.result.map((feed) => (
+              <Feed feedData={feed} key={feed.postId} userId={userId} />
+            ))
+          )}
         </Style.FeedContainer>
+        <Style.TargetDiv ref={targetRef}>
+          {isFetching && (
+            <Style.Loading type="spin" color={theme.blue[900]} width="40px" />
+          )}
+        </Style.TargetDiv>
       </Style.PanelContainer>
     </>
   );
@@ -90,6 +102,7 @@ ProfileTabPanel.propTypes = {
   data: PropTypes.object,
   hasNextPage: PropTypes.bool,
   isFetching: PropTypes.bool,
+  isLoading: PropTypes.bool,
   nextFetch: PropTypes.func,
   setOption: PropTypes.func,
 };

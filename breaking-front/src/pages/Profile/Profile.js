@@ -40,6 +40,7 @@ const Profile = () => {
     fetchNextPage: FetchNextWritten,
     isFetching: isWrittenFetching,
     hasNextPage: writtenHasNextPage,
+    isLoading: isWrittenLoading,
   } = useProfileWrittenPost(userId, writtenOption);
 
   const {
@@ -47,6 +48,7 @@ const Profile = () => {
     fetchNextPage: FetchNextBought,
     isFetching: isBoughtFetching,
     hasNextPage: boughtHasNextPage,
+    isLoading: isBoughtLoading,
   } = useProfileBoughtPost(userId, isMyPage, boughtOption);
 
   const {
@@ -54,6 +56,7 @@ const Profile = () => {
     fetchNextPage: FetchNextBookmarked,
     isFetching: isBookmarkedFetching,
     hasNextPage: bookmarkedHasNextPage,
+    isLoading: isBookmarkedLoading,
   } = useProfileBookmarkedPost(userId, isMyPage, bookmarkedOption);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -149,6 +152,7 @@ const Profile = () => {
               isFetching={isWrittenFetching}
               data={writtenData}
               setOption={setWrittenOption}
+              isLoading={isWrittenLoading}
             />
           </Tabs.TabPanel>
 
@@ -161,6 +165,7 @@ const Profile = () => {
                 isFetching={isBoughtFetching}
                 data={boughtData}
                 setOption={setBoughtOption}
+                isLoading={isBoughtLoading}
               />
             </Tabs.TabPanel>
           )}
@@ -174,6 +179,7 @@ const Profile = () => {
                 isFetching={isBookmarkedFetching}
                 data={bookmarkedData}
                 setOption={setBookmarkedOption}
+                isLoading={isBookmarkedLoading}
               />
             </Tabs.TabPanel>
           )}
