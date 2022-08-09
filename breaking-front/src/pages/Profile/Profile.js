@@ -107,7 +107,7 @@ const Profile = () => {
                   },
                 })
               }
-            ></FollowCard>
+            />
           ))}
         {modalTitle === '팔로잉' &&
           followingListData?.data.map((item) => (
@@ -127,7 +127,7 @@ const Profile = () => {
                   },
                 })
               }
-            ></FollowCard>
+            />
           ))}
         {(followerListLoading || followingListLoading) && (
           <>
