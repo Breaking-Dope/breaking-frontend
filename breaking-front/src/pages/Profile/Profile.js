@@ -1,12 +1,16 @@
-/* eslint-disable no-unused-vars */
 import { postFollow, postUnFollow } from 'api/profile';
 import FollowCard from 'components/FollowCard/FollowCard';
 import Line from 'components/Line/Line';
 import Modal from 'components/Modal/Modal';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
+import {
+  FollowCardSkeleton,
+  ProfileSkeleton,
+} from 'components/Skeleton/Skeleton';
 import Tabs from 'components/Tabs/Tabs';
 import { PAGE_PATH } from 'constants/path';
-import useFollowList from 'hooks/queries/useFollowList';
+import useFollowerList from 'hooks/queries/useFollowerList';
+import useFollowingList from 'hooks/queries/useFollowingList';
 import useProfile from 'hooks/queries/useProfile';
 import useProfileBookmarkedPost from 'hooks/queries/useProfileBookmarkedPost';
 import useProfileBoughtPost from 'hooks/queries/useProfileBoughtPost';
@@ -40,6 +44,7 @@ const Profile = () => {
     fetchNextPage: FetchNextWritten,
     isFetching: isWrittenFetching,
     hasNextPage: writtenHasNextPage,
+    isLoading: isWrittenLoading,
   } = useProfileWrittenPost(userId, writtenOption);
 
   const {
@@ -47,6 +52,7 @@ const Profile = () => {
     fetchNextPage: FetchNextBought,
     isFetching: isBoughtFetching,
     hasNextPage: boughtHasNextPage,
+    isLoading: isBoughtLoading,
   } = useProfileBoughtPost(userId, isMyPage, boughtOption);
 
   const {
@@ -54,14 +60,17 @@ const Profile = () => {
     fetchNextPage: FetchNextBookmarked,
     isFetching: isBookmarkedFetching,
     hasNextPage: bookmarkedHasNextPage,
+    isLoading: isBookmarkedLoading,
   } = useProfileBookmarkedPost(userId, isMyPage, bookmarkedOption);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
-  const { data: followListData, isLoading: followListLoading } = useFollowList(
-    modalTitle,
-    userId
-  );
+
+  const { data: followerListData, isLoading: followerListLoading } =
+    useFollowerList(userId);
+
+  const { data: followingListData, isLoading: followingListLoading } =
+    useFollowingList(userId);
 
   const toggleModal = () => {
     setIsModalOpen((pre) => !pre);
@@ -80,56 +89,91 @@ const Profile = () => {
   return (
     <>
       <Modal isOpen={isModalOpen} closeClick={toggleModal} title={modalTitle}>
-        {followListData?.data.map((item) => (
-          <FollowCard
-            cardClick={() => {
-              toggleModal();
-              setModalTitle('');
-              navigate(PAGE_PATH.PROFILE(item.userId));
-            }}
-            isPermission={isMyPage}
-            profileData={item}
-            key={item.userId}
-            deleteClick={() =>
-              UnFollow(item.userId, {
-                onSuccess: () => {
-                  queryClient.invalidateQueries(modalTitle, userId);
-                },
-              })
-            }
-          ></FollowCard>
-        ))}
-      </Modal>
-      <Style.UserContainer>
-        <ProfileImage
-          size="xlarge"
-          src={ImageUrlConverter(profileData?.data.profileImgURL)}
-        />
-        <Style.UserInformation>
-          <Style.Title>
-            <Style.NickName>{profileData?.data.nickname}</Style.NickName>
-            <ProfileFollowButton
-              userId={userId}
-              isFollowing={profileData?.data.isFollowing}
-              isMyPage={isMyPage}
-              UnFollow={UnFollow}
-              Follow={Follow}
+        {modalTitle === '팔로워' &&
+          followerListData?.data.map((item) => (
+            <FollowCard
+              cardClick={() => {
+                toggleModal();
+                setModalTitle('');
+                navigate(PAGE_PATH.PROFILE(item.userId));
+              }}
+              isPermission={isMyPage}
+              profileData={item}
+              key={item.userId}
+              deleteClick={() =>
+                UnFollow(item.userId, {
+                  onSuccess: () => {
+                    queryClient.invalidateQueries(modalTitle, userId);
+                  },
+                })
+              }
             />
-          </Style.Title>
-          <Style.StatusMessage>
-            {profileData?.data.statusMsg}
-          </Style.StatusMessage>
-          <Style.Information>
-            <div>작성제보 {profileData?.data.postCount}</div>
-            <div onClick={followerClick}>
-              팔로워 {profileData?.data.followerCount}
-            </div>
-            <div onClick={followingClick}>
-              팔로잉 {profileData?.data.followingCount}
-            </div>
-          </Style.Information>
-        </Style.UserInformation>
-      </Style.UserContainer>
+          ))}
+        {modalTitle === '팔로잉' &&
+          followingListData?.data.map((item) => (
+            <FollowCard
+              cardClick={() => {
+                toggleModal();
+                setModalTitle('');
+                navigate(PAGE_PATH.PROFILE(item.userId));
+              }}
+              isPermission={isMyPage}
+              profileData={item}
+              key={item.userId}
+              deleteClick={() =>
+                UnFollow(item.userId, {
+                  onSuccess: () => {
+                    queryClient.invalidateQueries(modalTitle, userId);
+                  },
+                })
+              }
+            />
+          ))}
+        {(followerListLoading || followingListLoading) && (
+          <>
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+          </>
+        )}
+      </Modal>
+      {isLoading ? (
+        <ProfileSkeleton />
+      ) : (
+        <Style.UserContainer>
+          <ProfileImage
+            size="xlarge"
+            src={ImageUrlConverter(profileData?.data.profileImgURL)}
+          />
+          <Style.UserInformation>
+            <Style.Title>
+              <Style.NickName>{profileData.data.nickname}</Style.NickName>
+              <ProfileFollowButton
+                userId={userId}
+                isFollowing={profileData.data.isFollowing}
+                isMyPage={isMyPage}
+                UnFollow={UnFollow}
+                Follow={Follow}
+              />
+            </Style.Title>
+            <Style.StatusMessage>
+              {profileData.data.statusMsg}
+            </Style.StatusMessage>
+            <Style.Information>
+              <div>작성제보 {profileData?.data.postCount}</div>
+              <div onClick={followerClick}>
+                팔로워 {profileData?.data.followerCount}
+              </div>
+              <div onClick={followingClick}>
+                팔로잉 {profileData?.data.followingCount}
+              </div>
+            </Style.Information>
+          </Style.UserInformation>
+        </Style.UserContainer>
+      )}
 
       <Line width="100%" />
 
@@ -149,6 +193,7 @@ const Profile = () => {
               isFetching={isWrittenFetching}
               data={writtenData}
               setOption={setWrittenOption}
+              isLoading={isWrittenLoading}
             />
           </Tabs.TabPanel>
 
@@ -161,6 +206,7 @@ const Profile = () => {
                 isFetching={isBoughtFetching}
                 data={boughtData}
                 setOption={setBoughtOption}
+                isLoading={isBoughtLoading}
               />
             </Tabs.TabPanel>
           )}
@@ -174,6 +220,7 @@ const Profile = () => {
                 isFetching={isBookmarkedFetching}
                 data={bookmarkedData}
                 setOption={setBookmarkedOption}
+                isLoading={isBookmarkedLoading}
               />
             </Tabs.TabPanel>
           )}

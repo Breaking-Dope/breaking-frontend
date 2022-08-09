@@ -10,9 +10,12 @@ import { postPostWrite } from 'api/postWrite';
 import MESSAGE from 'constants/message';
 import { useNavigate } from 'react-router-dom';
 import { PAGE_PATH } from 'constants/path';
+import { useTheme } from 'styled-components';
+import Button from 'components/Button/Button';
 
 const PostWrite = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
   const [isShowPriceInput, setIsShowPriceInput] = useState(false);
   const [mediaList, setMediaList] = useState([]);
   const [postWriteData, onChangePostWriteData, setPostWriteData] = useInputs({
@@ -21,21 +24,22 @@ const PostWrite = () => {
     title: '',
     content: '',
     price: 0,
-    postType: 'charged',
+    postType: 'CHARGED',
     isAnonymous: false,
     thumbnailIndex: 0,
   });
 
-  const { mutate: PostWriteMutate } = useMutation(postPostWrite, {
-    onSuccess: () => {
-      alert('작성되었습니다.');
-      navigate(PAGE_PATH.HOME);
-    },
-    onError: (error) => {
-      console.log(error);
-      //에러처리
-    },
-  });
+  const { mutate: PostWriteMutate, isLoading: isPostWriteMutating } =
+    useMutation(postPostWrite, {
+      onSuccess: () => {
+        alert('작성되었습니다.');
+        navigate(PAGE_PATH.HOME);
+      },
+      onError: (error) => {
+        console.log(error);
+        //에러처리
+      },
+    });
 
   const postWriteSubmit = (event) => {
     event.preventDefault();
@@ -90,7 +94,7 @@ const PostWrite = () => {
     }));
   };
 
-  const toggleShowPirceInput = () => {
+  const toggleShowPriceInput = () => {
     setIsShowPriceInput((pre) => !pre);
   };
 
@@ -133,33 +137,33 @@ const PostWrite = () => {
 
         <Style.PostTypeLayout>
           <Style.PostWriteTitle>제보 방식</Style.PostWriteTitle>
-          <Style.PostRadioButton
+          <Button
+            isSelected={'CHARGED' === postWriteData.postType}
             onClick={onChangePostWriteData}
             type="button"
-            value="charged"
+            value="CHARGED"
             name="postType"
-            radioControl={postWriteData.postType}
           >
             유료제보
-          </Style.PostRadioButton>
-          <Style.PostRadioButton
+          </Button>
+          <Button
+            isSelected={'FREE' === postWriteData.postType}
             type="button"
             onClick={onChangePostWriteData}
-            value="free"
+            value="FREE"
             name="postType"
-            radioControl={postWriteData.postType}
           >
             무료제보
-          </Style.PostRadioButton>
-          <Style.PostRadioButton
+          </Button>
+          <Button
+            isSelected={'EXCLUSIVE' === postWriteData.postType}
             type="button"
             onClick={onChangePostWriteData}
-            value="exclusive"
+            value="EXCLUSIVE"
             name="postType"
-            radioControl={postWriteData.postType}
           >
             단독제보
-          </Style.PostRadioButton>
+          </Button>
         </Style.PostTypeLayout>
 
         <Style.PriceLayout postType={postWriteData.postType}>
@@ -174,8 +178,8 @@ const PostWrite = () => {
                 : postWriteData.price.toLocaleString('ko-KR') + '원'
             }
             onChange={handlePrice}
-            onBlur={toggleShowPirceInput}
-            onFocus={toggleShowPirceInput}
+            onBlur={toggleShowPriceInput}
+            onFocus={toggleShowPriceInput}
             onKeyDown={(event) => {
               if (event.key === 'Enter') {
                 event.preventDefault();
@@ -189,23 +193,31 @@ const PostWrite = () => {
           <Style.PostWriteTitle>
             프로필을 공개하시겠습니까?
           </Style.PostWriteTitle>
-          <Style.PostRadioButton
+          <Button
+            isSelected={postWriteData.isAnonymous}
+            type="button"
             onClick={postPrivate}
             value={true}
-            radioControl={postWriteData.isAnonymous}
           >
             비공개
-          </Style.PostRadioButton>
-          <Style.PostRadioButton
+          </Button>
+          <Button
+            isSelected={!postWriteData.isAnonymous}
+            type="button"
             onClick={postPublic}
             value={false}
-            radioControl={postWriteData.isAnonymous}
           >
             공개
-          </Style.PostRadioButton>
+          </Button>
         </Style.AnonymousLayout>
 
-        <Style.PostSubmitButton type="submit">제보 하기</Style.PostSubmitButton>
+        {isPostWriteMutating ? (
+          <Style.Loading type="bars" color={theme.blue[900]} />
+        ) : (
+          <Style.PostSubmitButton type="submit">
+            제보 하기
+          </Style.PostSubmitButton>
+        )}
       </form>
     </Style.Container>
   );

@@ -89,7 +89,7 @@ export const profileHandlers = [
         else if (soldOption === 'sold') return item.isSold;
         else return item;
       });
-      return res(ctx.status(200), ctx.json(data));
+      return res(ctx.status(200), ctx.delay(1000), ctx.json(data));
     }
   ),
 
@@ -102,7 +102,7 @@ export const profileHandlers = [
         else if (soldOption === 'sold') return item.isSold;
         else return item;
       });
-      return res(ctx.status(200), ctx.json(data));
+      return res(ctx.status(200), ctx.delay(1000), ctx.json(data));
     }
   ),
 
@@ -115,19 +115,19 @@ export const profileHandlers = [
         else if (soldOption === 'sold') return item.isSold;
         else return item;
       });
-      return res(ctx.status(200), ctx.json(data));
+      return res(ctx.status(200), ctx.delay(1000), ctx.json(data));
     }
   ),
 
   rest.get(API_PATH.PROFILE_DATA(0), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(NORMAL_USER));
+    return res(ctx.status(200), ctx.delay(1000), ctx.json(NORMAL_USER));
   }),
 
   rest.get(API_PATH.PROFILE_FOLLOWERS('*'), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(followerList));
+    return res(ctx.status(200), ctx.delay(1000), ctx.json(followerList));
   }),
   rest.get(API_PATH.PROFILE_FOLLOWINGS('*'), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(followingList));
+    return res(ctx.status(200), ctx.delay(1000), ctx.json(followingList));
   }),
 
   rest.get(API_PATH.PROFILE_DATA(':userId'), (req, res, ctx) => {
