@@ -23,6 +23,7 @@ const ProfileFollowButton = ({ userId, isFollowing, isMyPage }) => {
           UnFollow(userId, {
             onSuccess: () => {
               queryClient.invalidateQueries('profile');
+              queryClient.invalidateQueries('followerList');
             },
             onError: () => {
               //에러처리
@@ -45,6 +46,7 @@ const ProfileFollowButton = ({ userId, isFollowing, isMyPage }) => {
           Follow(userId, {
             onSuccess: () => {
               queryClient.invalidateQueries('profile');
+              queryClient.invalidateQueries('followerList');
             },
             onError: () => {
               //에러처리
