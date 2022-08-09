@@ -1,4 +1,3 @@
-import { postFollow, deleteUnFollow } from 'api/profile';
 import FollowCard from 'components/FollowCard/FollowCard';
 import Line from 'components/Line/Line';
 import Modal from 'components/Modal/Modal';
@@ -18,7 +17,6 @@ import useProfileWrittenPost from 'hooks/queries/useProfileWrittenPost';
 import useCheckMyPage from 'hooks/useCheckMyPage';
 import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
-import { useMutation } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
 import ProfileFollowButton from './units/ProfileFollowButton';
@@ -34,9 +32,6 @@ const Profile = () => {
   const [writtenOption, setWrittenOption] = useState('all');
   const [boughtOption, setBoughtOption] = useState('all');
   const [bookmarkedOption, setBookmarkedOption] = useState('all');
-
-  const { mutate: UnFollow } = useMutation(deleteUnFollow);
-  const { mutate: Follow } = useMutation(postFollow);
 
   const {
     data: writtenData,
@@ -93,7 +88,6 @@ const Profile = () => {
             <FollowCard
               cardClick={() => {
                 toggleModal();
-                setModalTitle('');
                 navigate(PAGE_PATH.PROFILE(item.userId));
               }}
               isPermission={false}
@@ -106,14 +100,11 @@ const Profile = () => {
             <FollowCard
               cardClick={() => {
                 toggleModal();
-                setModalTitle('');
                 navigate(PAGE_PATH.PROFILE(item.userId));
               }}
               isPermission={isMyPage}
               profileData={item}
               key={item.userId}
-              followClick={Follow}
-              unFollowClick={UnFollow}
             />
           ))}
         {(followerListLoading || followingListLoading) && (
@@ -142,8 +133,6 @@ const Profile = () => {
                 userId={userId}
                 isFollowing={profileData.data.isFollowing}
                 isMyPage={isMyPage}
-                UnFollow={UnFollow}
-                Follow={Follow}
               />
             </Style.Title>
             <Style.StatusMessage>

@@ -3,15 +3,19 @@ import PropTypes from 'prop-types';
 import * as Style from 'components/FollowCard/FollowCard.styles';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
+import { useMutation, useQueryClient } from 'react-query';
+import { deleteUnFollow, postFollow } from 'api/profile';
+import { useTheme } from 'styled-components';
 
-export default function FollowCard({
-  profileData,
-  isPermission,
-  cardClick,
-  unFollowClick,
-  followClick,
-}) {
+export default function FollowCard({ profileData, isPermission, cardClick }) {
+  const theme = useTheme();
+  const queryClient = useQueryClient();
   const [isFollow, setIsFollow] = useState(profileData.isFollowing);
+  const { mutate: UnFollow, isLoading: isUnFollowLoading } =
+    useMutation(deleteUnFollow);
+  const { mutate: Follow, isLoading: isFollowLoading } =
+    useMutation(postFollow);
+
   const toggleIsFollow = () => {
     setIsFollow((pre) => !pre);
   };
@@ -33,21 +37,45 @@ export default function FollowCard({
           <Style.DeleteButton
             size="small"
             onClick={() => {
-              unFollowClick(profileData.userId);
-              toggleIsFollow();
+              !isUnFollowLoading &&
+                UnFollow(profileData.userId, {
+                  onSuccess: () => {
+                    queryClient.invalidateQueries('profile');
+                    toggleIsFollow();
+                  },
+                  onError: () => {
+                    //에러처리
+                  },
+                });
             }}
           >
-            언팔로우
+            {isUnFollowLoading ? (
+              <Style.Loading type="spin" color={theme.blue[900]} width="10px" />
+            ) : (
+              '언팔로우'
+            )}
           </Style.DeleteButton>
         ) : (
           <Style.DeleteButton
             size="small"
             onClick={() => {
-              followClick(profileData.userId);
-              toggleIsFollow();
+              !isFollowLoading &&
+                Follow(profileData.userId, {
+                  onSuccess: () => {
+                    queryClient.invalidateQueries('profile');
+                    toggleIsFollow();
+                  },
+                  onError: () => {
+                    //에러처리
+                  },
+                });
             }}
           >
-            팔로우
+            {isFollowLoading ? (
+              <Style.Loading type="spin" color={theme.blue[900]} width="10px" />
+            ) : (
+              '팔로우'
+            )}
           </Style.DeleteButton>
         ))}
     </Style.FollowCard>
@@ -58,6 +86,4 @@ FollowCard.propTypes = {
   profileData: PropTypes.object,
   isPermission: PropTypes.bool,
   cardClick: PropTypes.func,
-  unFollowClick: PropTypes.func,
-  followClick: PropTypes.func,
 };
