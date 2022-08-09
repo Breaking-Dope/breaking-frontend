@@ -10,7 +10,8 @@ export const PostSubmitButton = styled(Button)`
   display: block;
   width: 170px;
   margin: 0 auto 50px;
-  background-color: ${({ theme }) => theme.blue[400]};
+  color: ${({ theme }) => theme.white};
+  background-color: ${({ theme }) => theme.blue[500]};
 `;
 
 export const Container = styled.div`
