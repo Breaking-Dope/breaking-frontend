@@ -1,4 +1,4 @@
-import { postFollow, postUnFollow } from 'api/profile';
+import { postFollow, deleteUnFollow } from 'api/profile';
 import FollowCard from 'components/FollowCard/FollowCard';
 import Line from 'components/Line/Line';
 import Modal from 'components/Modal/Modal';
@@ -36,7 +36,7 @@ const Profile = () => {
   const [boughtOption, setBoughtOption] = useState('all');
   const [bookmarkedOption, setBookmarkedOption] = useState('all');
 
-  const { mutate: UnFollow } = useMutation(postUnFollow);
+  const { mutate: UnFollow } = useMutation(deleteUnFollow);
   const { mutate: Follow } = useMutation(postFollow);
 
   const {
