@@ -11,21 +11,22 @@ const SignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { refetch: JWTValidateRefetch } = useJWTValidate();
-  console.log(JWTValidateRefetch);
 
-  const { mutate } = useMutation(postSignUp, {
-    onSuccess: (res) => {
-      const jwtToken = res.headers.authorization;
-      console.log(res);
-      localStorage.setItem('access_token', jwtToken);
-      JWTValidateRefetch();
-      alert('환영합니다.');
-      navigate(PAGE_PATH.HOME);
-    },
-    onError: () => {
-      //에러 페이지 이동
-    },
-  });
+  const { mutate: SignUpMutate, isLoading: isSignUpLoading } = useMutation(
+    postSignUp,
+    {
+      onSuccess: (res) => {
+        const jwtToken = res.headers.authorization;
+        localStorage.setItem('access_token', jwtToken);
+        JWTValidateRefetch();
+        alert('환영합니다.');
+        navigate(PAGE_PATH.HOME);
+      },
+      onError: () => {
+        //에러 페이지 이동
+      },
+    }
+  );
 
   useEffect(() => {
     //유저가 sns 로그인하지않고 회원가입 페이지로 들어왔을 때 처리
@@ -40,7 +41,8 @@ const SignUp = () => {
       <ProfileSettingForm
         pageType="signUp"
         username={location.state?.username}
-        mutate={mutate}
+        isProfileMutateLoading={isSignUpLoading}
+        mutate={SignUpMutate}
       />
     </>
   );

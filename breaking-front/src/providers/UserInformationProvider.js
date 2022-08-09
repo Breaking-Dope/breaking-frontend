@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
-import { useQuery } from 'react-query';
-import { getJWTvalidation } from 'api/signUp';
+import useJWTValidate from 'hooks/queries/useJWTValidate';
 
 export const UserInformationContext = React.createContext();
 
 const UserInformationProvider = ({ children }) => {
   const [userInformation, setUserInformation] = useState({});
 
-  const { data, isSuccess, isError } = useQuery(
-    ['initalizeValidUser'],
-    getJWTvalidation,
-    { retry: 0 }
-  );
+  const { data, isSuccess, isError } = useJWTValidate(true);
 
   useEffect(() => {
     isSuccess && setUserInformation({ ...data?.data, isLogin: true });
