@@ -24,7 +24,7 @@ const PostWrite = () => {
     title: '',
     content: '',
     price: 0,
-    postType: 'charged',
+    postType: 'CHARGED',
     isAnonymous: false,
     thumbnailIndex: 0,
   });
@@ -138,28 +138,28 @@ const PostWrite = () => {
         <Style.PostTypeLayout>
           <Style.PostWriteTitle>제보 방식</Style.PostWriteTitle>
           <Button
-            isSelected={'charged' === postWriteData.postType}
+            isSelected={'CHARGED' === postWriteData.postType}
             onClick={onChangePostWriteData}
             type="button"
-            value="charged"
+            value="CHARGED"
             name="postType"
           >
             유료제보
           </Button>
           <Button
-            isSelected={'free' === postWriteData.postType}
+            isSelected={'FREE' === postWriteData.postType}
             type="button"
             onClick={onChangePostWriteData}
-            value="free"
+            value="FREE"
             name="postType"
           >
             무료제보
           </Button>
           <Button
-            isSelected={'exclusive' === postWriteData.postType}
+            isSelected={'EXCLUSIVE' === postWriteData.postType}
             type="button"
             onClick={onChangePostWriteData}
-            value="exclusive"
+            value="EXCLUSIVE"
             name="postType"
           >
             단독제보
