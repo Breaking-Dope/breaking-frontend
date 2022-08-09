@@ -12,6 +12,7 @@ export const PAGE_PATH = {
 };
 
 export const API_PATH = {
+  REISSUE: '/reissue',
   OAUTH2_SIGNUP: '/oauth2/sign-up',
   OAUTH2_SIGNUP_VALIDATE: (validType, profileData) =>
     `/oauth2/sign-up/validate-${validType}/${profileData}`,
