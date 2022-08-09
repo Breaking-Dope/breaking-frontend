@@ -17,7 +17,7 @@ const ProfileEdit = () => {
   const queryClient = useQueryClient();
   const { userId } = useContext(UserInformationContext);
 
-  const { data: profileData, isLoading: isProfileDataLoding } =
+  const { data: profileData, isLoading: isProfileDataLoading } =
     useProfileDetailData();
   const [isOpenWithdrawal, setIsOpenWithdrawal] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -26,7 +26,7 @@ const ProfileEdit = () => {
     useMutation(putProfileEdit, {
       onSuccess: (res) => {
         alert('변경사항을 저장하였습니다.');
-        queryClient.invalidateQueries('initalizeValidUser');
+        queryClient.invalidateQueries('jwtValidate');
         navigate(PAGE_PATH.HOME);
       },
       onError: () => {
@@ -60,7 +60,7 @@ const ProfileEdit = () => {
       <ProfileSettingForm
         pageType="profileEdit"
         userDefaultData={profileData?.data}
-        isProfileDataLoading={isProfileDataLoding}
+        isProfileDataLoading={isProfileDataLoading}
         isProfileMutateLoading={isProfileEditLoading}
         mutate={ProfileEditMutate}
       />
