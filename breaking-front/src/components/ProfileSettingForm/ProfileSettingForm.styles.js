@@ -46,17 +46,13 @@ export const Role = styled.div`
 `;
 
 export const SubmitButton = styled(Button)`
-  position: relative;
   display: block;
-  margin: 0 auto;
-  margin-bottom: 60px;
-  color: ${({ theme, isLoading }) =>
-    isLoading ? theme.blue[300] : theme.white};
+  margin: 0 auto 60px;
+  color: ${({ theme }) => theme.white};
+  background-color: ${({ theme }) => theme.blue[500]};
 `;
 
 export const Loading = styled(ReactLoading)`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: block;
+  margin: 0 auto 60px;
 `;

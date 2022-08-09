@@ -19,6 +19,6 @@ export const profileSettingHandlers = [
 
   rest.put(API_PATH.PROFILE_EDIT, (req, res, ctx) => {
     console.log(req.body);
-    return res(ctx.status(200));
+    return res(ctx.delay(2000), ctx.status(200));
   }),
 ];

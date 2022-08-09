@@ -98,10 +98,13 @@ export default function ProfileSettingForm({
   };
 
   const handlePhoneNumberChange = (event) => {
-    setForm((form) => ({
-      ...form,
-      phoneNumber: event.target.value.replace(/[^0-9]/g, ''),
-    }));
+    let phoneNumber = Number(event.target.value);
+    if (Number.isNaN(phoneNumber)) return;
+    else
+      setForm((form) => ({
+        ...form,
+        phoneNumber: phoneNumber,
+      }));
   };
 
   const handleSubmit = async (event) => {
@@ -281,21 +284,13 @@ export default function ProfileSettingForm({
             언론인
           </Button>
         </Style.Role>
-        <Style.SubmitButton
-          type="submit"
-          size="large"
-          isLoading={isProfileMutateLoading}
-        >
-          {pageType === 'signUp' ? '회원가입' : '프로필 수정'}
-          {isProfileMutateLoading && (
-            <Style.Loading
-              type="spin"
-              color={theme.blue[900]}
-              width="30px"
-              height="30px"
-            />
-          )}
-        </Style.SubmitButton>
+        {isProfileMutateLoading ? (
+          <Style.Loading type="bars" color={theme.blue[900]} />
+        ) : (
+          <Style.SubmitButton type="submit" size="large">
+            {pageType === 'signUp' ? '회원가입' : '프로필 수정'}
+          </Style.SubmitButton>
+        )}
       </Style.Form>
     </>
   );
