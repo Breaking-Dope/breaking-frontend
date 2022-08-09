@@ -90,7 +90,7 @@ const Profile = () => {
                 toggleModal();
                 navigate(PAGE_PATH.PROFILE(item.userId));
               }}
-              isPermission={false}
+              isPermission={true}
               profileData={item}
               key={item.userId}
             />
@@ -102,7 +102,7 @@ const Profile = () => {
                 toggleModal();
                 navigate(PAGE_PATH.PROFILE(item.userId));
               }}
-              isPermission={isMyPage}
+              isPermission={true}
               profileData={item}
               key={item.userId}
             />
