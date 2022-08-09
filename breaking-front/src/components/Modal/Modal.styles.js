@@ -39,7 +39,7 @@ export const Title = styled.h3`
   text-align: center;
 `;
 
-export const Content = styled(ScrollBarY)`
+export const GridContent = styled(ScrollBarY)`
   display: grid;
   height: 400px;
   margin-top: 20px;
@@ -47,6 +47,12 @@ export const Content = styled(ScrollBarY)`
   grid-gap: 40px 20px;
   align-content: start;
   justify-items: center;
+`;
+
+export const NoGridContent = styled(ScrollBarY)`
+  width: 850px;
+  margin: 0 auto;
+  margin-top: 20px;
 `;
 
 export const Div = styled.div`

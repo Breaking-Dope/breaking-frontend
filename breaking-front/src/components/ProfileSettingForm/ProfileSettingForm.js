@@ -1,22 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useTheme } from 'styled-components';
 import Button from 'components/Button/Button';
 import ProfileSettingInput from 'components/ProfileSettingForm/ProfileSettingInput';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
+import Skeleton from 'components/Skeleton/Skeleton';
 import useIsValidProfile from 'hooks/queries/useIsValidProfile';
-import { useTheme } from 'styled-components';
-import { PRODUCTION_BASE_URL } from 'constants/path';
+import ImageUrlConverter from 'utils/ImageUrlConverter';
 import MESSAGE from 'constants/message';
 import useInputs from 'hooks/useInputs';
 import fileToBase64 from 'utils/fileToBase64';
-import urlToFile from 'utils/urlToFile';
-import { ReactComponent as XMark } from 'assets/svg/x_mark.svg';
 import * as Style from 'components/ProfileSettingForm/ProfileSettingForm.styles';
+import { ReactComponent as XMark } from 'assets/svg/x_mark.svg';
 
 export default function ProfileSettingForm({
   pageType,
   username,
-  isLoading,
+  isProfileDataLoading,
+  isProfileMutateLoading,
   userDefaultData,
   mutate,
 }) {
@@ -57,8 +58,7 @@ export default function ProfileSettingForm({
     setEmailErrorMessage
   );
 
-  const handleImageUploadPreview = (event) => {
-    const imageFile = event.target.files[0];
+  const handleImageUploadPreview = (imageFile) => {
     if (!imageFile) return;
 
     setForm((form) => ({ ...form, profileImgURL: imageFile }));
@@ -75,6 +75,17 @@ export default function ProfileSettingForm({
     setForm((form) => ({ ...form, profileImgURL: '' }));
   };
 
+  const dragDropUpload = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    handleImageUploadPreview(event.dataTransfer.files[0]);
+  };
+
+  const dragOverHandler = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -84,6 +95,16 @@ export default function ProfileSettingForm({
       event.target.blur();
       form.elements[index].focus();
     }
+  };
+
+  const handlePhoneNumberChange = (event) => {
+    let phoneNumber = Number(event.target.value);
+    if (Number.isNaN(phoneNumber)) return;
+    else
+      setForm((form) => ({
+        ...form,
+        phoneNumber: phoneNumber,
+      }));
   };
 
   const handleSubmit = async (event) => {
@@ -107,48 +128,50 @@ export default function ProfileSettingForm({
       role,
     };
 
-    if (
-      pageType === 'profileEdit' &&
-      profileImg === userDefaultData.profileImgURL
-    ) {
-      const imageFile = await urlToFile(profileImg);
-      formData.append('profileImg', imageFile);
-      formData.append('updateRequest', JSON.stringify(userData));
-    } else if (pageType === 'profileEdit') {
-      formData.append('profileImg', profileImg);
+    if (pageType === 'profileEdit') {
+      userData.isProfileImgChanged =
+        profileImg !== userDefaultData.profileImgURL;
+
+      formData.append(
+        'profileImg',
+        userData.isProfileImgChanged ? profileImg : null
+      );
       formData.append('updateRequest', JSON.stringify(userData));
     } else if (pageType === 'signUp') {
       userData.username = username;
+
       formData.append('profileImg', profileImg);
       formData.append('signUpRequest', JSON.stringify(userData));
     }
-    console.log('profileImg: ', profileImg);
-    console.log('userData: ', userData);
 
     mutate(formData);
   };
 
   useEffect(() => {
     setForm(userDefaultData);
-
     userDefaultData.profileImgURL &&
-      setImageSrc(PRODUCTION_BASE_URL + userDefaultData.profileImgURL);
+      setImageSrc(ImageUrlConverter(userDefaultData.profileImgURL));
   }, [userDefaultData, pageType, setForm]);
 
   return (
     <>
       <Style.Form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
-        <Style.ProfileImageContainer>
+        <Style.ProfileImageContainer
+          onDrop={dragDropUpload}
+          onDragOver={dragOverHandler}
+        >
           <Style.ProfileImageInput
             ref={imageRef}
             type="file"
             name="profileImg"
             accept="image/*"
-            onChange={handleImageUploadPreview}
+            onChange={(event) =>
+              handleImageUploadPreview(event.target.files[0])
+            }
           />
           <Style.ProfileImage>
-            {isLoading ? (
-              <Style.Loading type="bars" color={theme.blue[900]} />
+            {isProfileDataLoading ? (
+              <Skeleton width="200px" height="200px" radius="50%" />
             ) : (
               <ProfileImage
                 size="xlarge"
@@ -207,7 +230,7 @@ export default function ProfileSettingForm({
           label="전화번호"
           errorMessage={phoneNumberErrorMessage}
           value={phoneNumber}
-          onChange={handleChange}
+          onChange={handlePhoneNumberChange}
           maxLength="11"
           onBlur={() => {
             phoneNumber === ''
@@ -234,7 +257,7 @@ export default function ProfileSettingForm({
         <ProfileSettingInput
           type="text"
           label="상태메시지(선택)"
-          placeholder="상태메시지"
+          placeholder="상태메시지(최대 60자)"
           name="statusMsg"
           value={statusMsg}
           onChange={handleChange}
@@ -261,9 +284,13 @@ export default function ProfileSettingForm({
             언론인
           </Button>
         </Style.Role>
-        <Style.SubmitButton type="submit" size="large">
-          {pageType === 'signUp' ? '회원가입' : '프로필 수정'}
-        </Style.SubmitButton>
+        {isProfileMutateLoading ? (
+          <Style.Loading type="bars" color={theme.blue[900]} />
+        ) : (
+          <Style.SubmitButton type="submit" size="large">
+            {pageType === 'signUp' ? '회원가입' : '프로필 수정'}
+          </Style.SubmitButton>
+        )}
       </Style.Form>
     </>
   );
@@ -274,7 +301,8 @@ ProfileSettingForm.propTypes = {
   username: PropTypes.string,
   userDefaultData: PropTypes.object,
   mutate: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool,
+  isProfileDataLoading: PropTypes.bool,
+  isProfileMutateLoading: PropTypes.bool,
 };
 
 ProfileSettingForm.defaultProps = {
@@ -287,5 +315,6 @@ ProfileSettingForm.defaultProps = {
     statusMsg: '',
     role: 'USER',
   },
-  isLoading: false,
+  isProfileDataLoading: false,
+  isProfileMutateLoading: false,
 };
