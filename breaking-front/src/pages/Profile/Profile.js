@@ -18,14 +18,13 @@ import useProfileWrittenPost from 'hooks/queries/useProfileWrittenPost';
 import useCheckMyPage from 'hooks/useCheckMyPage';
 import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
 import ProfileFollowButton from './units/ProfileFollowButton';
 import ProfileTabPanel from './units/ProfileTabPanel';
 
 const Profile = () => {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
   let { id: userId } = useParams();
 
@@ -97,16 +96,9 @@ const Profile = () => {
                 setModalTitle('');
                 navigate(PAGE_PATH.PROFILE(item.userId));
               }}
-              isPermission={isMyPage}
+              isPermission={false}
               profileData={item}
               key={item.userId}
-              deleteClick={() =>
-                UnFollow(item.userId, {
-                  onSuccess: () => {
-                    queryClient.invalidateQueries(modalTitle, userId);
-                  },
-                })
-              }
             />
           ))}
         {modalTitle === '팔로잉' &&
@@ -120,13 +112,8 @@ const Profile = () => {
               isPermission={isMyPage}
               profileData={item}
               key={item.userId}
-              deleteClick={() =>
-                UnFollow(item.userId, {
-                  onSuccess: () => {
-                    queryClient.invalidateQueries(modalTitle, userId);
-                  },
-                })
-              }
+              followClick={Follow}
+              unFollowClick={UnFollow}
             />
           ))}
         {(followerListLoading || followingListLoading) && (

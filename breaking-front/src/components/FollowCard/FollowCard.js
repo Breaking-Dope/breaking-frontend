@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import * as Style from 'components/FollowCard/FollowCard.styles';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
@@ -8,8 +8,13 @@ export default function FollowCard({
   profileData,
   isPermission,
   cardClick,
-  deleteClick,
+  unFollowClick,
+  followClick,
 }) {
+  const [isFollow, setIsFollow] = useState(profileData.isFollowing);
+  const toggleIsFollow = () => {
+    setIsFollow((pre) => !pre);
+  };
   return (
     <Style.FollowCard>
       <ProfileImage
@@ -23,11 +28,28 @@ export default function FollowCard({
         </Style.Nickname>
         <Style.StatusMessage>{profileData?.statusMsg}</Style.StatusMessage>
       </Style.Container>
-      {isPermission && (
-        <Style.DeleteButton size="small" onClick={deleteClick}>
-          삭제
-        </Style.DeleteButton>
-      )}
+      {isPermission &&
+        (isFollow ? (
+          <Style.DeleteButton
+            size="small"
+            onClick={() => {
+              unFollowClick(profileData.userId);
+              toggleIsFollow();
+            }}
+          >
+            언팔로우
+          </Style.DeleteButton>
+        ) : (
+          <Style.DeleteButton
+            size="small"
+            onClick={() => {
+              followClick(profileData.userId);
+              toggleIsFollow();
+            }}
+          >
+            팔로우
+          </Style.DeleteButton>
+        ))}
     </Style.FollowCard>
   );
 }
@@ -36,5 +58,6 @@ FollowCard.propTypes = {
   profileData: PropTypes.object,
   isPermission: PropTypes.bool,
   cardClick: PropTypes.func,
-  deleteClick: PropTypes.func,
+  unFollowClick: PropTypes.func,
+  followClick: PropTypes.func,
 };
