@@ -1,20 +1,17 @@
 import Button from 'components/Button/Button';
 import styled from 'styled-components';
+import ReactLoading from 'react-loading';
 
 export const PostWriteTitle = styled.h3`
   font-size: 18px;
-`;
-
-export const PostRadioButton = styled(Button)`
-  background-color: ${({ value, radioControl, theme }) =>
-    value === radioControl && theme.blue[400]};
 `;
 
 export const PostSubmitButton = styled(Button)`
   display: block;
   width: 170px;
   margin: 0 auto 50px;
-  background-color: ${({ theme }) => theme.blue[400]};
+  color: ${({ theme }) => theme.white};
+  background-color: ${({ theme }) => theme.blue[500]};
 `;
 
 export const Container = styled.div`
@@ -125,4 +122,9 @@ export const AnonymousLayout = styled.div`
   > * {
     margin-bottom: 30px;
   }
+`;
+
+export const Loading = styled(ReactLoading)`
+  display: block;
+  margin: 0 auto 50px;
 `;

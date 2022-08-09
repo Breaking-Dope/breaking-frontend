@@ -7,12 +7,7 @@ import { getJWTvalidation } from 'api/signUp';
 export const UserInformationContext = React.createContext();
 
 const UserInformationProvider = ({ children }) => {
-  const [userInformation, setUserInformation] = useState({
-    userId: null,
-    profileImgURL: '',
-    nickname: '',
-    balance: null,
-  });
+  const [userInformation, setUserInformation] = useState({});
 
   const { data, isSuccess, isError } = useQuery(
     ['initalizeValidUser'],
@@ -22,7 +17,14 @@ const UserInformationProvider = ({ children }) => {
 
   useEffect(() => {
     isSuccess && setUserInformation({ ...data?.data, isLogin: true });
-    isError && setUserInformation((pre) => ({ ...pre, isLogin: false }));
+    isError &&
+      setUserInformation(() => ({
+        userId: null,
+        profileImgURL: '',
+        nickname: '',
+        balance: null,
+        isLogin: false,
+      }));
   }, [data, isError, isSuccess]);
 
   return (

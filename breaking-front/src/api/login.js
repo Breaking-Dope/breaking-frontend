@@ -32,3 +32,10 @@ export const postSignInWithGoogle = (token) => {
     data: token,
   });
 };
+
+export const getLogout = () => {
+  return api({
+    method: 'get',
+    url: API_PATH.OAUTH2_SIGNOUT,
+  });
+};

@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import { PAGE_PATH } from 'constants/path';
+import useLogout from 'hooks/queries/useLogout';
 import Input from 'components/Input/Input';
 import Line from 'components/Line/Line';
 import Toggle from 'components/Toggle/Toggle';
@@ -19,6 +20,7 @@ export default function Header() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const userData = useContext(UserInformationContext);
+  const { refetch } = useLogout();
 
   const [searchText, setSearchText] = useState('');
   const [isOpenToggle, setIsOpenToggle] = useState(false);
@@ -42,6 +44,11 @@ export default function Header() {
   const labelClick = (path) => {
     navigate(path);
     setIsOpenToggle(false);
+  };
+
+  const logoutClick = () => {
+    let logoutConfirm = window.confirm('로그아웃 하시겠습니까?');
+    logoutConfirm && refetch();
   };
 
   const handleSubmit = (event) => {
@@ -107,7 +114,7 @@ export default function Header() {
                 labelClick={() => labelClick(PAGE_PATH.PROFILE_EDIT)}
               />
               <Line width="200" />
-              <Style.Logout>로그아웃</Style.Logout>
+              <Style.Logout onClick={logoutClick}>로그아웃</Style.Logout>
             </Toggle>
           )}
         </Style.ProfileToggle>

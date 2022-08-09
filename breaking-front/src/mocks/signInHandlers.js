@@ -29,4 +29,8 @@ export const signInHandlers = [
       ctx.json(NORMAL_USER)
     );
   }),
+
+  rest.get(API_PATH.OAUTH2_SIGNOUT, (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
 ];
