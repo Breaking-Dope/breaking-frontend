@@ -4,9 +4,10 @@ import { FollowCardSkeleton } from 'components/Skeleton/Skeleton';
 import { PAGE_PATH } from 'constants/path';
 import useFollowerList from 'hooks/queries/useFollowerList';
 import useFollowingList from 'hooks/queries/useFollowingList';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { UserInformationContext } from 'providers/UserInformationProvider';
 
 const ProfileFollowModal = ({
   isModalOpen,
@@ -15,6 +16,7 @@ const ProfileFollowModal = ({
   toggleModal,
 }) => {
   const navigate = useNavigate();
+  const myData = useContext(UserInformationContext);
   const { data: followerListData, isLoading: followerListLoading } =
     useFollowerList(userId);
 
@@ -29,7 +31,7 @@ const ProfileFollowModal = ({
               toggleModal();
               navigate(PAGE_PATH.PROFILE(item.userId));
             }}
-            isPermission={true}
+            isPermission={item.userId !== myData.userId}
             profileData={item}
             key={item.userId}
             refetchTarget="followingList"
@@ -42,7 +44,7 @@ const ProfileFollowModal = ({
               toggleModal();
               navigate(PAGE_PATH.PROFILE(item.userId));
             }}
-            isPermission={true}
+            isPermission={item.userId !== myData.userId}
             profileData={item}
             key={item.userId}
             refetchTarget="followerList"
