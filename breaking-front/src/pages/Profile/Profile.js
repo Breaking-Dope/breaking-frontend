@@ -11,9 +11,9 @@ import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
-import ProfileFollowButton from './units/ProfileFollowButton';
-import ProfileFollowModal from './units/ProfileFollowModal';
-import ProfileTabPanel from './units/ProfileTabPanel';
+import ProfileFollowButton from 'pages/Profile/units/ProfileFollowButton';
+import ProfileFollowModal from 'pages/Profile/units/ProfileFollowModal';
+import ProfileTabPanel from 'pages/Profile/units/ProfileTabPanel';
 
 const Profile = () => {
   let { id: userId } = useParams();
