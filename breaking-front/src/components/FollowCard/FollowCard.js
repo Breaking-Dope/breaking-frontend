@@ -7,14 +7,41 @@ import { useMutation, useQueryClient } from 'react-query';
 import { deleteUnFollow, postFollow } from 'api/profile';
 import { useTheme } from 'styled-components';
 
-export default function FollowCard({ profileData, isPermission, cardClick }) {
+export default function FollowCard({
+  profileData,
+  isPermission,
+  cardClick,
+  refetchTarget,
+}) {
   const theme = useTheme();
   const queryClient = useQueryClient();
   const [isFollow, setIsFollow] = useState(profileData.isFollowing);
-  const { mutate: UnFollow, isLoading: isUnFollowLoading } =
-    useMutation(deleteUnFollow);
-  const { mutate: Follow, isLoading: isFollowLoading } =
-    useMutation(postFollow);
+  const { mutate: UnFollow, isLoading: isUnFollowLoading } = useMutation(
+    deleteUnFollow,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('profile');
+        queryClient.invalidateQueries(refetchTarget);
+        toggleIsFollow();
+      },
+      onError: () => {
+        //에러처리
+      },
+    }
+  );
+  const { mutate: Follow, isLoading: isFollowLoading } = useMutation(
+    postFollow,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('profile');
+        queryClient.invalidateQueries(refetchTarget);
+        toggleIsFollow();
+      },
+      onError: () => {
+        //에러처리
+      },
+    }
+  );
 
   const toggleIsFollow = () => {
     setIsFollow((pre) => !pre);
@@ -37,16 +64,7 @@ export default function FollowCard({ profileData, isPermission, cardClick }) {
           <Style.DeleteButton
             size="small"
             onClick={() => {
-              !isUnFollowLoading &&
-                UnFollow(profileData.userId, {
-                  onSuccess: () => {
-                    queryClient.invalidateQueries('profile');
-                    toggleIsFollow();
-                  },
-                  onError: () => {
-                    //에러처리
-                  },
-                });
+              !isUnFollowLoading && UnFollow(profileData.userId);
             }}
           >
             {isUnFollowLoading ? (
@@ -59,16 +77,7 @@ export default function FollowCard({ profileData, isPermission, cardClick }) {
           <Style.DeleteButton
             size="small"
             onClick={() => {
-              !isFollowLoading &&
-                Follow(profileData.userId, {
-                  onSuccess: () => {
-                    queryClient.invalidateQueries('profile');
-                    toggleIsFollow();
-                  },
-                  onError: () => {
-                    //에러처리
-                  },
-                });
+              !isFollowLoading && Follow(profileData.userId);
             }}
           >
             {isFollowLoading ? (
@@ -86,4 +95,5 @@ FollowCard.propTypes = {
   profileData: PropTypes.object,
   isPermission: PropTypes.bool,
   cardClick: PropTypes.func,
+  refetchTarget: PropTypes.string,
 };
