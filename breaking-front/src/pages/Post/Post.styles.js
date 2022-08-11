@@ -118,7 +118,7 @@ export const Hashtag = styled.span`
 export const ContentFooter = styled.div`
   position: relative;
   display: flex;
-  padding: 0px 10px;
+  padding: 0px 5px;
   margin-top: 20px;
   justify-content: space-between;
   svg {
@@ -129,12 +129,15 @@ export const ContentFooter = styled.div`
 
 export const ContentStatus = styled.div`
   display: flex;
-  font-size: 12px;
-  align-items: center;
+  font-size: 14px;
   label {
+    display: flex;
+    align-items: center;
     margin-right: 10px;
   }
   svg {
+    width: 20px;
+    height: 20px;
     margin-right: 5px;
     vertical-align: middle;
   }

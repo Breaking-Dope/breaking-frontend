@@ -33,7 +33,6 @@ import { ReactComponent as CommentIcon } from 'assets/svg/comment.svg';
 import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
 import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
 import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
-import { ReactComponent as HideIcon } from 'assets/svg/hide.svg';
 import { ReactComponent as BookmarkIcon } from 'assets/svg/small_bookmark.svg';
 import { ReactComponent as BookmarkedIcon } from 'assets/svg/small_bookmarked.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
@@ -302,7 +301,7 @@ const Post = () => {
                 >
                   {isContentToggle && (
                     <Toggle width="100px">
-                      {postData.data.myPost ? (
+                      {postData.data.myPost && !postData.data.isSold && (
                         <>
                           <Toggle.LabelLink icon={<EditIcon />} label="수정" />
                           <Toggle.LabelLink
@@ -311,10 +310,8 @@ const Post = () => {
                             labelClick={postDeleteClick}
                           />
                         </>
-                      ) : (
-                        <Toggle.LabelLink icon={<HideIcon />} label="숨김" />
                       )}
-
+                      {/* 활성화 라벨 추가 */}
                       <Toggle.LabelLink
                         icon={
                           isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />

@@ -89,7 +89,7 @@ export const CommentToggle = styled.div`
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   position: absolute;
   right: -70px;
-  bottom: 30px;
+  bottom: 20px;
 `;
 
 export const AddComment = styled.div``;

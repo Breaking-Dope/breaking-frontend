@@ -26,7 +26,6 @@ import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
 import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
 import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
-import { ReactComponent as HideIcon } from 'assets/svg/hide.svg';
 import { ReactComponent as ThumbnailIcon } from 'assets/svg/default_thumbnail_image.svg';
 
 export default function Feed({ feedData, userId, ...props }) {
@@ -165,7 +164,7 @@ export default function Feed({ feedData, userId, ...props }) {
         <Style.FeedToggle onMouseDown={(event) => event.preventDefault()}>
           {isOpenToggle && (
             <Toggle width="100px">
-              {feedData.userId === userId ? (
+              {feedData.data.myPost && !feedData.data.isSold && (
                 <>
                   <Toggle.LabelLink icon={<EditIcon />} label="수정" />
                   <Toggle.LabelLink
@@ -174,9 +173,8 @@ export default function Feed({ feedData, userId, ...props }) {
                     labelClick={postDeleteClick}
                   />
                 </>
-              ) : (
-                <Toggle.LabelLink icon={<HideIcon />} label="숨김" />
               )}
+              {/* 활성화 라벨 추가 */}
               <Toggle.LabelLink
                 icon={isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />}
                 label="북마크"
