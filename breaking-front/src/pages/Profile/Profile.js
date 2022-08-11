@@ -14,6 +14,7 @@ import ImageUrlConverter from 'utils/ImageUrlConverter';
 import ProfileFollowButton from 'pages/Profile/units/ProfileFollowButton';
 import ProfileFollowModals from 'pages/Profile/units/ProfileFollowModals';
 import ProfileTabPanel from 'pages/Profile/units/ProfileTabPanel';
+import numberFormatter from 'utils/numberFormatter';
 
 const Profile = () => {
   let { id: userId } = useParams();
@@ -89,12 +90,12 @@ const Profile = () => {
               {profileData.data.statusMsg}
             </Style.StatusMessage>
             <Style.Information>
-              <div>작성제보 {profileData?.data.postCount}</div>
+              <div>작성제보 {numberFormatter(profileData?.data.postCount)}</div>
               <div onClick={toggleFollowerModal}>
-                팔로워 {profileData?.data.followerCount}
+                팔로워 {numberFormatter(profileData?.data.followerCount)}
               </div>
               <div onClick={toggleFollowingModal}>
-                팔로잉 {profileData?.data.followingCount}
+                팔로잉 {numberFormatter(profileData?.data.followingCount)}
               </div>
             </Style.Information>
           </Style.UserInformation>
