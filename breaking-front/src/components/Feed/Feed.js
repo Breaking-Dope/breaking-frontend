@@ -49,7 +49,7 @@ export default function Feed({ feedData, userId, ...props }) {
   };
 
   const handleProfileClick = () => {
-    navigate(PAGE_PATH.PROFILE(feedData.userId));
+    navigate(PAGE_PATH.PROFILE(feedData.user?.userId));
   };
 
   const toggleLiked = () => {
@@ -113,10 +113,10 @@ export default function Feed({ feedData, userId, ...props }) {
           <ETCIcon />
         </Style.ETCIconContainer>
         <ProfileImage
-          src={ImageUrlConverter(feedData.profileImgURL)}
+          src={ImageUrlConverter(feedData.user?.profileImgURL)}
           size="medium"
           profileClick={handleProfileClick}
-          title={feedData.nickname}
+          title={feedData.user?.nickname}
         />
         <Style.Context>
           <Style.Title onClick={handleFeedClick} title={feedData.title}>
@@ -124,7 +124,11 @@ export default function Feed({ feedData, userId, ...props }) {
           </Style.Title>
           <Style.Detail>
             <LocationIcon />
-            {feedData.region} • {timeFormatter(new Date(feedData.createdTime))}
+            {feedData.location.region_1depth_name +
+              ' ' +
+              feedData.location.region_2depth_name}
+            <Style.Dot />
+            {timeFormatter(new Date(feedData.createdDate))}
           </Style.Detail>
           <Style.ContextFooter>
             {feedData.postType === 'EXCLUSIVE' && (
