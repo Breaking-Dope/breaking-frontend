@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import PropTypes from 'prop-types';
@@ -26,6 +26,7 @@ import { ReactComponent as DropUpIcon } from 'assets/svg/drop_up.svg';
 import { ReactComponent as DropDownIcon } from 'assets/svg/drop_down.svg';
 import { ReactComponent as MoreIcon } from 'assets/svg/more_arrow.svg';
 import { useTheme } from 'styled-components';
+import timeFormatter from 'utils/timeFormatter';
 
 const Comment = ({ comment, type }) => {
   const theme = useTheme();
@@ -49,7 +50,11 @@ const Comment = ({ comment, type }) => {
 
   const { mutate: CommentLike } = useMutation(postPostCommentLike);
   const { mutate: DeleteCommentLike } = useMutation(deletePostCommentLike);
-  const { mutate: DeleteComment } = useMutation(deletePostComment);
+  const { mutate: DeleteComment } = useMutation(deletePostComment, {
+    onSuccess: () => {
+      alert('댓글을 삭제하였습니다.');
+    },
+  });
 
   const profileClick = () => {
     navigate(PAGE_PATH.PROFILE(comment.user.userId));
@@ -64,12 +69,7 @@ const Comment = ({ comment, type }) => {
   const commentDeleteClick = () => {
     let deleteConfirm = window.confirm('삭제하시겠습니까?');
 
-    deleteConfirm &&
-      DeleteComment(comment.commentId, {
-        onSuccess: () => {
-          alert('댓글을 삭제하였습니다.');
-        },
-      });
+    deleteConfirm && DeleteComment(comment.commentId);
   };
 
   const moreShowReplyClick = () => {
@@ -78,11 +78,11 @@ const Comment = ({ comment, type }) => {
 
   const toggleLiked = () => {
     if (isLiked) {
-      DeleteCommentLike(comment.commentId);
       setLikeCount((pre) => pre - 1);
+      DeleteCommentLike(comment.commentId);
     } else {
-      CommentLike(comment.commentId);
       setLikeCount((pre) => pre + 1);
+      CommentLike(comment.commentId);
     }
     setIsLiked((pre) => !pre);
   };
@@ -100,22 +100,28 @@ const Comment = ({ comment, type }) => {
     setCommentId(comment.commentId);
   };
 
+  useEffect(() => {
+    setIsLiked(comment.isLiked);
+    setLikeCount(comment.likeCount);
+  }, [comment]);
+
   return (
     <>
       <Style.Comment
         isEditing={isOpenCommentEditToggle}
-        isOpenToggle={isOpenCommentToggle}
+        isOpenCommentToggle={isOpenCommentToggle}
+        isOpenReplyToggle={isOpenReplyToggle}
       >
-        <Style.ProfileImageContainer>
-          <ProfileImage
-            size="medium"
-            src={ImageUrlConverter(comment.user.profileImgURL)}
-            profileClick={profileClick}
-          />
-        </Style.ProfileImageContainer>
+        <ProfileImage
+          size="medium"
+          src={ImageUrlConverter(comment.user.profileImgURL)}
+          profileClick={profileClick}
+        />
         <Style.ContentContainer>
           <Style.Nickname>{comment.user.nickname}</Style.Nickname>
-          <Style.CreatedTime>{comment.createdTime}</Style.CreatedTime>
+          <Style.CreatedDate>
+            {timeFormatter(new Date(comment.createdDate))}
+          </Style.CreatedDate>
           <Style.Content>
             {comment.content
               .split(/(#[^\s#]+|\n)/g)
@@ -133,10 +139,10 @@ const Comment = ({ comment, type }) => {
           </Style.Content>
           <Style.CommentFooter>
             <Style.Status>
-              <label onClick={toggleLiked}>
+              <Style.CommentLike onClick={toggleLiked}>
                 {isLiked ? <LikedIcon /> : <LikeIcon />}
                 {likeCount.toLocaleString('ko-KR')}
-              </label>
+              </Style.CommentLike>
               {type === 'comment' && (
                 <span onClick={toggleCommentForm}>답글쓰기</span>
               )}
@@ -173,23 +179,25 @@ const Comment = ({ comment, type }) => {
               )}
             </Style.CommentToggle>
           </Style.CommentFooter>
+          {isOpenCommentFormToggle && (
+            <Style.AddComment>
+              <CommentForm
+                profileImgURL={profileImgURL}
+                commentId={comment.commentId}
+                type="reply"
+                closeClick={() => setIsOpenCommentFormToggle(false)}
+              />
+            </Style.AddComment>
+          )}
+          {comment.replyCount !== 0 && (
+            <Style.ReplyCount onClick={toggleReply}>
+              {isOpenReplyToggle ? <DropUpIcon /> : <DropDownIcon />}
+              답글 {comment.replyCount}개
+            </Style.ReplyCount>
+          )}
         </Style.ContentContainer>
       </Style.Comment>
-      {isOpenCommentFormToggle && (
-        <Style.AddComment>
-          <CommentForm
-            profileImgURL={profileImgURL}
-            commentId={comment.commentId}
-            type="reply"
-          />
-        </Style.AddComment>
-      )}
-      {comment.replyCount !== 0 && (
-        <Style.ReplyCount onClick={toggleReply}>
-          {isOpenReplyToggle ? <DropUpIcon /> : <DropDownIcon />}
-          답글 {comment.replyCount}개
-        </Style.ReplyCount>
-      )}
+
       {isOpenReplyToggle && (
         <Style.Reply>
           {postReplyData?.pages.map((page) =>
@@ -198,10 +206,10 @@ const Comment = ({ comment, type }) => {
             ))
           )}
           {postReplyHasNextPage && !isPostReplyFetching && (
-            <Style.MoreChowReply onClick={moreShowReplyClick}>
+            <Style.MoreShowReply onClick={moreShowReplyClick}>
               <MoreIcon />
               더보기
-            </Style.MoreChowReply>
+            </Style.MoreShowReply>
           )}
           {isPostReplyFetching && (
             <Style.LoadingContainer>
@@ -216,7 +224,7 @@ const Comment = ({ comment, type }) => {
             profileImgURL={profileImgURL}
             commentId={comment.commentId}
             content={comment.content}
-            cancelClick={commentEditClick}
+            closeClick={commentEditClick}
             type="edit"
           />
         </Style.CommentEditForm>
