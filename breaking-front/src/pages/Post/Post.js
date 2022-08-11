@@ -79,7 +79,7 @@ const Post = () => {
   };
 
   const profileClick = () => {
-    navigate(PAGE_PATH.PROFILE(postData?.data.user.userId));
+    navigate(PAGE_PATH.PROFILE(postData?.data.user?.userId));
   };
 
   const postDeleteClick = () => {
@@ -100,9 +100,9 @@ const Post = () => {
   };
 
   const postBuyClick = () => {
-    let deleteConfirm = window.confirm('게시글을 구매하시겠습니까?');
+    let postBuyConfirm = window.confirm('게시글을 구매하시겠습니까?');
 
-    deleteConfirm &&
+    postBuyConfirm &&
       PostBuy(postId, {
         onSuccess: () => {
           alert('게시글을 구매하였습니다.');
@@ -127,8 +127,8 @@ const Post = () => {
   };
 
   useEffect(() => {
-    if (postData?.data.user.userId === userId) setPurchaseType('구매자 목록');
-    else if (postData?.data.isPurchased) setPurchaseType('구매 완료');
+    if (postData?.data.myPost) setPurchaseType('구매자 목록');
+    else if (postData?.data.isPurchased) setPurchaseType('다운로드');
     else setPurchaseType('구매 하기');
 
     setIsBookmarked(postData?.data.isBookmarked);
@@ -180,25 +180,19 @@ const Post = () => {
             )}
             <Style.ContentHeader>
               <Style.ContentWriter>
-                {postData.data.isAnonymous ? (
-                  <>
-                    <ProfileImage size="large" />
-                    <p>익명</p>
-                  </>
-                ) : (
-                  <>
-                    <ProfileImage
-                      size="large"
-                      src={ImageUrlConverter(postData.data.user.profileImgURL)}
-                      profileClick={profileClick}
-                    />
-                    <Style.ContentWriterName
-                      length={postData.data.user.nickname.length}
-                    >
-                      {postData.data.user.nickname}
-                    </Style.ContentWriterName>
-                  </>
-                )}
+                <ProfileImage
+                  size="large"
+                  src={ImageUrlConverter(postData.data.user?.profileImgURL)}
+                  profileClick={profileClick}
+                  isAnonymous={postData.data.isAnonymous}
+                />
+                <Style.ContentWriterName
+                  length={postData.data.user?.nickname.length}
+                >
+                  {postData.data.isAnonymous
+                    ? '익명'
+                    : postData.data.user?.nickname}
+                </Style.ContentWriterName>
               </Style.ContentWriter>
               <Style.Context>
                 {postData?.data.postType === 'EXCLUSIVE' && (
@@ -206,31 +200,42 @@ const Post = () => {
                     단독
                   </Button>
                 )}
-                {postData?.data.isSold ? (
+                {postData?.data.postType === 'EXCLUSIVE' &&
+                postData?.data.isSold ? (
                   <Button color="danger" size="small" disabled>
                     판매 완료
                   </Button>
-                ) : (
+                ) : postData?.data.isPurchasable ? (
                   <Button color="primary" size="small" disabled>
                     판매중
                   </Button>
+                ) : (
+                  <Button color="danger" size="small" disabled>
+                    판매 중지
+                  </Button>
                 )}
                 <Style.ContentTitle>{postData.data.title}</Style.ContentTitle>
-                <Style.ContentLocation>
-                  <LocationIcon />
-                  {postData.data.location.region_1depth_name +
-                    ' ' +
-                    postData.data.location.region_2depth_name}
-                </Style.ContentLocation>
-                <Style.ContentDetail>
-                  {dayjs(postData.data.createdTime).format(
-                    'YYYY.MM.DD HH:mm:ss'
-                  )}
+                <Style.ContentLocationContainer>
+                  <Style.ContentLocation>
+                    <LocationIcon />
+                    {postData.data.location.region_1depth_name +
+                      ' ' +
+                      postData.data.location.region_2depth_name}
+                  </Style.ContentLocation>
+                  <Style.Dot />
                   <Style.ContentViewCount>
                     조회수&nbsp;
                     {postData?.data.viewCount.toLocaleString('ko-KR')}회
                   </Style.ContentViewCount>
+                </Style.ContentLocationContainer>
+                <Style.ContentDetail>
+                  발생시간&nbsp;
+                  {dayjs(postData.data.eventTime).format('YYYY.MM.DD. HH:mm')}
                 </Style.ContentDetail>
+                <Style.ContentCreatedDate>
+                  작성시간&nbsp;
+                  {dayjs(postData.data.createdDate).format('YYYY.MM.DD. HH:mm')}
+                </Style.ContentCreatedDate>
               </Style.Context>
               <Style.ContentPriceContainer>
                 <Style.ContentPrice>
@@ -246,10 +251,9 @@ const Post = () => {
                     {purchaseType}
                   </Button>
                 )}
-                {purchaseType === '구매 완료' && (
-                  <Button color="secondary" disabled>
-                    {purchaseType}
-                  </Button>
+                {purchaseType === '다운로드' && (
+                  //다운로드 로직 추후 구현
+                  <Button color="primary">{purchaseType}</Button>
                 )}
                 <Style.ContentDetail>
                   누적 판매
@@ -298,7 +302,7 @@ const Post = () => {
                 >
                   {isContentToggle && (
                     <Toggle width="100px">
-                      {postData.data.user.userId === userId ? (
+                      {postData.data.myPost ? (
                         <>
                           <Toggle.LabelLink icon={<EditIcon />} label="수정" />
                           <Toggle.LabelLink
