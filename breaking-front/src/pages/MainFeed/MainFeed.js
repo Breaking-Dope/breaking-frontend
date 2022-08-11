@@ -24,6 +24,7 @@ const MainFeed = () => {
 
   const {
     data: mainFeedData,
+    isLoading: isMainFeedLoading,
     isFetching: isMainFeedFetching,
     fetchNextPage: FetchNextMainFeed,
     hasNextPage: mainFeedHasNextPage,
@@ -110,7 +111,7 @@ const MainFeed = () => {
             <Feed feedData={feed} key={feed.postId} userId={userId} />
           ))
         )}
-        {isMainFeedFetching && (
+        {isMainFeedLoading && (
           <>
             <FeedSkeleton />
             <FeedSkeleton />
