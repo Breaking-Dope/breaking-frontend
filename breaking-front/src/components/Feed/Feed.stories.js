@@ -22,7 +22,7 @@ const Template = (args) => {
     realName: '가나다',
     isLiked: false,
     isBookmarked: false,
-    createdTime: '2022-08-01T07:53:36.992Z',
+    createdDate: '2022-08-01T07:53:36.992Z',
   };
 
   return <Feed feedData={feedData} {...args} />;

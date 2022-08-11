@@ -117,6 +117,7 @@ export default function Feed({ feedData, userId, ...props }) {
           size="medium"
           profileClick={handleProfileClick}
           title={feedData.user?.nickname}
+          isAnonymous={feedData.isAnonymous}
         />
         <Style.Context>
           <Style.Title onClick={handleFeedClick} title={feedData.title}>
@@ -136,13 +137,17 @@ export default function Feed({ feedData, userId, ...props }) {
                 단독
               </Button>
             )}
-            {feedData.isSold ? (
+            {feedData.postType === 'EXCLUSIVE' && feedData.isSold ? (
               <Button color="danger" size="small" disabled>
                 판매 완료
               </Button>
-            ) : (
+            ) : feedData.isPurchasable ? (
               <Button color="primary" size="small" disabled>
                 판매중
+              </Button>
+            ) : (
+              <Button color="danger" size="small" disabled>
+                판매 중지
               </Button>
             )}
             <Style.ViewCount>
