@@ -49,29 +49,23 @@ const Profile = () => {
     isLoading: isBookmarkedLoading,
   } = useProfileBookmarkedPost(userId, isMyPage, bookmarkedOption);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
+  const [isFollowerModalOpen, setIsFollowerModalOpen] = useState(false);
+  const [isFollowingModalOpen, setIsFollowingModalOpen] = useState(false);
 
-  const toggleModal = () => {
-    setIsModalOpen((pre) => !pre);
+  const toggleFollowerModal = () => {
+    setIsFollowerModalOpen((pre) => !pre);
   };
-
-  const followingClick = () => {
-    setModalTitle('팔로잉');
-    toggleModal();
-  };
-
-  const followerClick = () => {
-    setModalTitle('팔로워');
-    toggleModal();
+  const toggleFollowingModal = () => {
+    setIsFollowingModalOpen((pre) => !pre);
   };
 
   return (
     <>
       <ProfileFollowModal
-        isModalOpen={isModalOpen}
-        modalTitle={modalTitle}
-        toggleModal={toggleModal}
+        isFollowerModalOpen={isFollowerModalOpen}
+        isFollowingModalOpen={isFollowingModalOpen}
+        toggleFollowerModal={toggleFollowerModal}
+        toggleFollowingModal={toggleFollowingModal}
         userId={userId}
       />
       {isLoading ? (
@@ -96,10 +90,10 @@ const Profile = () => {
             </Style.StatusMessage>
             <Style.Information>
               <div>작성제보 {profileData?.data.postCount}</div>
-              <div onClick={followerClick}>
+              <div onClick={toggleFollowerModal}>
                 팔로워 {profileData?.data.followerCount}
               </div>
-              <div onClick={followingClick}>
+              <div onClick={toggleFollowingModal}>
                 팔로잉 {profileData?.data.followingCount}
               </div>
             </Style.Information>

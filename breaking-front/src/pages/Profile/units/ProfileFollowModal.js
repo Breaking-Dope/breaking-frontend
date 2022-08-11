@@ -1,66 +1,105 @@
+/* eslint-disable react/prop-types */
 import FollowCard from 'components/FollowCard/FollowCard';
 import Modal from 'components/Modal/Modal';
 import { FollowCardSkeleton } from 'components/Skeleton/Skeleton';
 import { PAGE_PATH } from 'constants/path';
 import useFollowerList from 'hooks/queries/useFollowerList';
 import useFollowingList from 'hooks/queries/useFollowingList';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { UserInformationContext } from 'providers/UserInformationProvider';
+import { useEffect } from 'react';
 
 const ProfileFollowModal = ({
-  isModalOpen,
-  modalTitle,
+  isFollowerModalOpen,
+  isFollowingModalOpen,
+  toggleFollowerModal,
+  toggleFollowingModal,
   userId,
-  toggleModal,
 }) => {
   const navigate = useNavigate();
   const myData = useContext(UserInformationContext);
+  const [followerList, setFollowerList] = useState([]);
+  const [followingList, setFollowingList] = useState([]);
+
   const { data: followerListData, isLoading: followerListLoading } =
     useFollowerList(userId);
 
   const { data: followingListData, isLoading: followingListLoading } =
     useFollowingList(userId);
+
+  useEffect(() => {
+    setFollowingList(followingListData?.data);
+  }, [followingListData]);
+
+  useEffect(() => {
+    setFollowerList(followerListData?.data);
+  }, [followerListData]);
+
   return (
-    <Modal isOpen={isModalOpen} closeClick={toggleModal} title={modalTitle}>
-      {modalTitle === '팔로워' &&
-        followerListData?.data.map((item) => (
-          <FollowCard
-            cardClick={() => {
-              toggleModal();
-              navigate(PAGE_PATH.PROFILE(item.userId));
-            }}
-            isPermission={item.userId !== myData.userId}
-            profileData={item}
-            key={item.userId}
-            refetchTarget="followingList"
-          />
-        ))}
-      {modalTitle === '팔로잉' &&
-        followingListData?.data.map((item) => (
-          <FollowCard
-            cardClick={() => {
-              toggleModal();
-              navigate(PAGE_PATH.PROFILE(item.userId));
-            }}
-            isPermission={item.userId !== myData.userId}
-            profileData={item}
-            key={item.userId}
-            refetchTarget="followerList"
-          />
-        ))}
-      {(followerListLoading || followingListLoading) && (
-        <>
-          <FollowCardSkeleton />
-          <FollowCardSkeleton />
-          <FollowCardSkeleton />
-          <FollowCardSkeleton />
-          <FollowCardSkeleton />
-          <FollowCardSkeleton />
-        </>
-      )}
-    </Modal>
+    <>
+      <Modal
+        isOpen={isFollowerModalOpen}
+        closeClick={toggleFollowerModal}
+        title="팔로워"
+      >
+        {followerList &&
+          followerList.map((item) => (
+            <FollowCard
+              cardClick={() => {
+                toggleFollowerModal();
+                navigate(PAGE_PATH.PROFILE(item.userId));
+              }}
+              isPermission={item.userId !== myData.userId}
+              profileData={item}
+              key={`follower-${item.userId}`}
+              setFollowingList={setFollowingList}
+              setFollowerList={setFollowerList}
+            />
+          ))}
+        {followerListLoading && (
+          <>
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+          </>
+        )}
+      </Modal>
+      <Modal
+        isOpen={isFollowingModalOpen}
+        closeClick={toggleFollowingModal}
+        title="팔로잉"
+      >
+        {followingList &&
+          followingList.map((item) => (
+            <FollowCard
+              cardClick={() => {
+                toggleFollowingModal();
+                navigate(PAGE_PATH.PROFILE(item.userId));
+              }}
+              isPermission={item.userId !== myData.userId}
+              profileData={item}
+              key={`following-${item.userId}`}
+              setFollowingList={setFollowingList}
+              setFollowerList={setFollowerList}
+            />
+          ))}
+        {followingListLoading && (
+          <>
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+            <FollowCardSkeleton />
+          </>
+        )}
+      </Modal>
+    </>
   );
 };
 

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+import React from 'react';
 import PropTypes from 'prop-types';
 import * as Style from 'components/FollowCard/FollowCard.styles';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
@@ -11,18 +12,30 @@ export default function FollowCard({
   profileData,
   isPermission,
   cardClick,
-  refetchTarget,
+  setFollowerList,
+  setFollowingList,
 }) {
   const theme = useTheme();
   const queryClient = useQueryClient();
-  const [isFollow, setIsFollow] = useState(profileData.isFollowing);
+  const ChangeIsFollowFelid = (pre) => {
+    return pre.map((information) =>
+      information.userId === profileData.userId
+        ? {
+            ...information,
+            isFollowing: !information.isFollowing,
+          }
+        : information
+    );
+  };
+  // follow Following 리스트의 값을 변경해주어야함
+
   const { mutate: UnFollow, isLoading: isUnFollowLoading } = useMutation(
     deleteUnFollow,
     {
       onSuccess: () => {
         queryClient.invalidateQueries('profile');
-        queryClient.invalidateQueries(refetchTarget);
-        toggleIsFollow();
+        setFollowerList((pre) => ChangeIsFollowFelid(pre));
+        setFollowingList((pre) => ChangeIsFollowFelid(pre));
       },
       onError: () => {
         //에러처리
@@ -34,18 +47,14 @@ export default function FollowCard({
     {
       onSuccess: () => {
         queryClient.invalidateQueries('profile');
-        queryClient.invalidateQueries(refetchTarget);
-        toggleIsFollow();
+        setFollowerList((pre) => ChangeIsFollowFelid(pre));
+        setFollowingList((pre) => ChangeIsFollowFelid(pre));
       },
       onError: () => {
         //에러처리
       },
     }
   );
-
-  const toggleIsFollow = () => {
-    setIsFollow((pre) => !pre);
-  };
   return (
     <Style.FollowCard>
       <ProfileImage
@@ -60,7 +69,7 @@ export default function FollowCard({
         <Style.StatusMessage>{profileData?.statusMsg}</Style.StatusMessage>
       </Style.Container>
       {isPermission &&
-        (isFollow ? (
+        (profileData.isFollowing ? (
           <Style.DeleteButton
             size="small"
             onClick={() => {
@@ -95,5 +104,4 @@ FollowCard.propTypes = {
   profileData: PropTypes.object,
   isPermission: PropTypes.bool,
   cardClick: PropTypes.func,
-  refetchTarget: PropTypes.string,
 };
