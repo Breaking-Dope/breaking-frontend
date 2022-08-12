@@ -7,12 +7,16 @@ import PostWriteCommonForm from 'components/PostWriteCommonForm/PostWriteCommonF
 import usePostEditMutation from 'pages/PostEdit/hooks/usePostEditMutation';
 import extractHashtag from 'utils/extractHashTag';
 import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { POST_DATA } from 'mocks/dummyData/contents';
 
 const PostEdit = () => {
   const location = useLocation();
-  const [postEditData, onChangePostEditData, setPostEditData] = useInputs(
-    location.state
-  );
+  const state = POST_DATA;
+
+  const [postEditData, onChangePostEditData, setPostEditData] =
+    useInputs(state);
+  console.log(postEditData);
   /*{
     location: undefined,
     eventTime: dayjs().format('YYYY-MM-DDTHH:mm'),
@@ -50,6 +54,10 @@ const PostEdit = () => {
       eventTime: dayjs(postEditData.eventTime).format('YYYY-MM-DD HH:mm:ss'),
     });
   };
+
+  useEffect(() => {
+    //postEditData이 비어있으면 잘못된 접근처리
+  }, [location]);
 
   return (
     <Style.Container>
