@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const CommentForm = styled.form`
   display: flex;
   width: 100%;
-  margin: 20px 10px;
+  margin: 20px 10px 0px;
   flex-direction: column;
 `;
 

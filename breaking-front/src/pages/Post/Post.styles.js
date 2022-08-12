@@ -54,12 +54,6 @@ export const ContentTitle = styled.h1`
   font-size: 24px;
 `;
 
-export const ContentViewCount = styled.span`
-  &::before {
-    content: ' • ';
-  }
-`;
-
 export const ContentPrice = styled.h1`
   margin-bottom: 15px;
   font-weight: 700;
@@ -77,10 +71,30 @@ export const ContentDetail = styled.div`
   font-size: 12px;
 `;
 
-export const ContentLocation = styled(ContentDetail)`
+export const ContentLocationContainer = styled.div`
   display: flex;
+  color: ${({ theme }) => theme.gray[800]};
+  font-size: 12px;
   align-items: center;
 `;
+
+export const ContentLocation = styled.div`
+  display: inline-flex;
+  align-items: center;
+`;
+
+export const Dot = styled.span`
+  margin: 0 3px;
+  &:after {
+    content: '•';
+  }
+`;
+
+export const ContentCreatedDate = styled(ContentDetail)`
+  margin-top: 0;
+`;
+
+export const ContentViewCount = styled.span``;
 
 export const ContentPriceContainer = styled.div`
   width: 160px;
@@ -104,7 +118,7 @@ export const Hashtag = styled.span`
 export const ContentFooter = styled.div`
   position: relative;
   display: flex;
-  padding: 0px 10px;
+  padding: 0px 5px;
   margin-top: 20px;
   justify-content: space-between;
   svg {
@@ -115,12 +129,15 @@ export const ContentFooter = styled.div`
 
 export const ContentStatus = styled.div`
   display: flex;
-  font-size: 12px;
-  align-items: center;
+  font-size: 14px;
   label {
+    display: flex;
+    align-items: center;
     margin-right: 10px;
   }
   svg {
+    width: 20px;
+    height: 20px;
     margin-right: 5px;
     vertical-align: middle;
   }
@@ -134,12 +151,11 @@ export const ContentToggle = styled.div`
 
 export const Comments = styled.div`
   width: 800px;
-  margin-bottom: 30px;
 `;
 
 export const TargetDiv = styled.div`
   position: relative;
-  height: 140px;
+  height: 100px;
 `;
 
 export const Loading = styled(ReactLoading)`

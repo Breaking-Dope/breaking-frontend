@@ -15,7 +15,7 @@ const CommentForm = ({
   postId,
   commentId,
   content,
-  cancelClick,
+  closeClick,
   type,
 }) => {
   const queryClient = useQueryClient();
@@ -24,20 +24,21 @@ const CommentForm = ({
 
   const { mutate: CommentWrite } = useMutation(postPostCommentWrite, {
     onSuccess: () => {
-      queryClient.resetQueries('postComment');
+      queryClient.invalidateQueries('postComment');
     },
   });
 
   const { mutate: CommentReply } = useMutation(postPostReplyWrite, {
     onSuccess: () => {
-      queryClient.resetQueries(['postReply', commentId]);
+      queryClient.invalidateQueries('postComment');
+      queryClient.invalidateQueries('postReply');
     },
   });
 
   const { mutate: CommentEdit } = useMutation(putPostCommentEdit, {
     onSuccess: () => {
-      queryClient.resetQueries('postComment');
-      queryClient.resetQueries('postReply');
+      queryClient.invalidateQueries('postComment');
+      queryClient.invalidateQueries('postReply');
     },
   });
 
@@ -71,6 +72,7 @@ const CommentForm = ({
           content: comment,
           hashtagList: hashtagList,
         });
+        closeClick();
         break;
 
       case 'edit':
@@ -79,6 +81,7 @@ const CommentForm = ({
           content: comment,
           hashtagList: hashtagList,
         });
+        closeClick();
         break;
 
       default:
@@ -111,10 +114,8 @@ const CommentForm = ({
           />
         </Style.FlexContainer>
         <Style.CommentFormFooter>
-          {type === 'edit' && (
-            <Style.CommentButton onClick={cancelClick}>
-              취소
-            </Style.CommentButton>
+          {(type === 'edit' || type === 'reply') && (
+            <Style.CommentButton onClick={closeClick}>취소</Style.CommentButton>
           )}
           <Style.CommentButton type="submit">등록</Style.CommentButton>
         </Style.CommentFormFooter>
@@ -127,7 +128,7 @@ CommentForm.propTypes = {
   postId: PropTypes.number,
   commentId: PropTypes.number,
   content: PropTypes.string,
-  cancelClick: PropTypes.func,
+  closeClick: PropTypes.func,
   type: PropTypes.oneOf(['comment', 'reply', 'edit']),
 };
 

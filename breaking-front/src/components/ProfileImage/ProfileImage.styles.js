@@ -25,21 +25,24 @@ export const ProfileImageContainer = styled.div``;
 export const ProfileImage = styled.img`
   display: block;
   ${({ size }) => sizeCss[size]};
-  text-align: center;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.gray[200]};
+  text-align: center;
   word-wrap: break-word;
   object-fit: cover;
-  cursor: pointer;
   overflow: hidden;
+  cursor: pointer;
 `;
 
 export const DefaultImage = styled.img.attrs({
   src: `${defaultImage}`,
 })`
+  display: block;
   ${({ size }) => sizeCss[size]};
   border-radius: 50%;
-  cursor: pointer;
   background-color: ${({ theme }) => theme.gray[200]};
+  text-align: center;
+  word-wrap: break-word;
   overflow: hidden;
+  cursor: ${({ isAnonymous }) => (isAnonymous ? 'default' : 'pointer')};
 `;

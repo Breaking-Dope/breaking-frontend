@@ -13,13 +13,13 @@ const UserInformationProvider = ({ children }) => {
   useEffect(() => {
     isSuccess && setUserInformation({ ...data?.data, isLogin: true });
     isError &&
-      setUserInformation(() => ({
+      setUserInformation({
         userId: null,
         profileImgURL: '',
         nickname: '',
         balance: null,
         isLogin: false,
-      }));
+      });
   }, [data, isError, isSuccess]);
 
   return (

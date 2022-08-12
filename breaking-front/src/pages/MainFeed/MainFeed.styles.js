@@ -47,7 +47,7 @@ export const Feeds = styled.div`
 
 export const TargetDiv = styled.div`
   position: relative;
-  height: 100px;
+  height: 140px;
 `;
 
 export const Loading = styled(ReactLoading)`

@@ -26,7 +26,6 @@ import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
 import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
 import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
-import { ReactComponent as HideIcon } from 'assets/svg/hide.svg';
 import { ReactComponent as ThumbnailIcon } from 'assets/svg/default_thumbnail_image.svg';
 
 export default function Feed({ feedData, userId, ...props }) {
@@ -49,7 +48,7 @@ export default function Feed({ feedData, userId, ...props }) {
   };
 
   const handleProfileClick = () => {
-    navigate(PAGE_PATH.PROFILE(feedData.userId));
+    navigate(PAGE_PATH.PROFILE(feedData.user?.userId));
   };
 
   const toggleLiked = () => {
@@ -113,10 +112,11 @@ export default function Feed({ feedData, userId, ...props }) {
           <ETCIcon />
         </Style.ETCIconContainer>
         <ProfileImage
-          src={ImageUrlConverter(feedData.profileImgURL)}
+          src={ImageUrlConverter(feedData.user?.profileImgURL)}
           size="medium"
           profileClick={handleProfileClick}
-          title={feedData.nickname}
+          title={feedData.user?.nickname}
+          isAnonymous={feedData.isAnonymous}
         />
         <Style.Context>
           <Style.Title onClick={handleFeedClick} title={feedData.title}>
@@ -124,7 +124,11 @@ export default function Feed({ feedData, userId, ...props }) {
           </Style.Title>
           <Style.Detail>
             <LocationIcon />
-            {feedData.region} • {timeFormatter(new Date(feedData.createdTime))}
+            {feedData.location.region_1depth_name +
+              ' ' +
+              feedData.location.region_2depth_name}
+            <Style.Dot />
+            {timeFormatter(new Date(feedData.createdDate))}
           </Style.Detail>
           <Style.ContextFooter>
             {feedData.postType === 'EXCLUSIVE' && (
@@ -132,13 +136,17 @@ export default function Feed({ feedData, userId, ...props }) {
                 단독
               </Button>
             )}
-            {feedData.isSold ? (
+            {feedData.postType === 'EXCLUSIVE' && feedData.isSold ? (
               <Button color="danger" size="small" disabled>
                 판매 완료
               </Button>
-            ) : (
+            ) : feedData.isPurchasable ? (
               <Button color="primary" size="small" disabled>
                 판매중
+              </Button>
+            ) : (
+              <Button color="danger" size="small" disabled>
+                판매 중지
               </Button>
             )}
             <Style.ViewCount>
@@ -156,7 +164,7 @@ export default function Feed({ feedData, userId, ...props }) {
         <Style.FeedToggle onMouseDown={(event) => event.preventDefault()}>
           {isOpenToggle && (
             <Toggle width="100px">
-              {feedData.userId === userId ? (
+              {feedData.myPost && !feedData.isSold && (
                 <>
                   <Toggle.LabelLink icon={<EditIcon />} label="수정" />
                   <Toggle.LabelLink
@@ -165,9 +173,8 @@ export default function Feed({ feedData, userId, ...props }) {
                     labelClick={postDeleteClick}
                   />
                 </>
-              ) : (
-                <Toggle.LabelLink icon={<HideIcon />} label="숨김" />
               )}
+              {/* 활성화 라벨 추가 */}
               <Toggle.LabelLink
                 icon={isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />}
                 label="북마크"

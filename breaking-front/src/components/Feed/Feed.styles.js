@@ -69,6 +69,13 @@ export const Detail = styled.div`
   color: ${({ theme }) => theme.gray[800]};
 `;
 
+export const Dot = styled.span`
+  margin: 0 3px;
+  &:after {
+    content: '•';
+  }
+`;
+
 export const ViewCount = styled(Detail)`
   display: inline-block;
 `;

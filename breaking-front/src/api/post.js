@@ -17,7 +17,7 @@ export const getPostCommentData = async ({ queryKey, pageParam = 0 }) => {
   });
   return {
     result: data,
-    cursor: data[data.length - 1].commentId,
+    cursor: data[data.length - 1]?.commentId,
   };
 };
 
@@ -29,7 +29,7 @@ export const getPostReplyData = async ({ queryKey, pageParam = 0 }) => {
   });
   return {
     result: data,
-    cursor: data[data.length - 1].commentId,
+    cursor: data[data.length - 1]?.commentId,
   };
 };
 
