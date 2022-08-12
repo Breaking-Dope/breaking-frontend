@@ -164,7 +164,7 @@ export default function Feed({ feedData, userId, ...props }) {
         <Style.FeedToggle onMouseDown={(event) => event.preventDefault()}>
           {isOpenToggle && (
             <Toggle width="100px">
-              {feedData.data.myPost && !feedData.data.isSold && (
+              {feedData.myPost && !feedData.isSold && (
                 <>
                   <Toggle.LabelLink icon={<EditIcon />} label="수정" />
                   <Toggle.LabelLink
