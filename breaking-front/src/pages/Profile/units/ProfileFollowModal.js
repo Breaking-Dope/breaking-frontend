@@ -41,7 +41,7 @@ const ProfileFollowModal = ({
         isOpen={isFollowerModalOpen}
         toggleModal={toggleFollowerModal}
         title="팔로워"
-        List={followerList}
+        followList={followerList}
         setFollowingList={setFollowingList}
         setFollowerList={setFollowerList}
       />
@@ -50,7 +50,7 @@ const ProfileFollowModal = ({
         isOpen={isFollowingModalOpen}
         toggleModal={toggleFollowingModal}
         title="팔로잉"
-        List={followingList}
+        followList={followingList}
         setFollowingList={setFollowingList}
         setFollowerList={setFollowerList}
       />
@@ -63,7 +63,7 @@ const FollowCommonModal = ({
   isOpen,
   toggleModal,
   title,
-  List,
+  followList,
   setFollowingList,
   setFollowerList,
 }) => {
@@ -71,8 +71,8 @@ const FollowCommonModal = ({
   const userData = useContext(UserInformationContext);
   return (
     <Modal isOpen={isOpen} closeClick={toggleModal} title={title}>
-      {List &&
-        List.map((item) => (
+      {followList &&
+        followList.map((item) => (
           <FollowCard
             cardClick={() => {
               toggleModal();
@@ -112,7 +112,7 @@ FollowCommonModal.propTypes = {
   isOpen: PropTypes.bool,
   toggleModal: PropTypes.func,
   title: PropTypes.string,
-  List: PropTypes.array,
+  followList: PropTypes.array,
   setFollowingList: PropTypes.func,
   setFollowerList: PropTypes.func,
 };
