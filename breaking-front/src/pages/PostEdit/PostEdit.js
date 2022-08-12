@@ -61,6 +61,7 @@ const PostEdit = () => {
 
   return (
     <Style.Container>
+      <Style.Title>※ 이미지 동영상 파일은 수정할수 없습니다 ※</Style.Title>
       <form onSubmit={postWriteSubmit}>
         <PostWriteCommonForm
           isMutateLoading={isPostEditMutateLoading}
