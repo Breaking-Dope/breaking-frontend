@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import * as Style from 'pages/PostWrite/units/PostWriteUploadMediaForm.styles';
+import * as Style from 'pages/PostWrite/components/PostWriteUploadMediaForm.styles';
 import { ReactComponent as PlusIcon } from 'assets/svg/Plus.svg';
 import { ReactComponent as LeftArrowIcon } from 'assets/svg/left_arrow_line.svg';
 import { ReactComponent as RightArrowIcon } from 'assets/svg/right_arrow_line.svg';

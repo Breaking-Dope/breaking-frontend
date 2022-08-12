@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import { ReactComponent as SearchIcon } from 'assets/svg/search.svg';
-import * as Style from 'pages/PostWrite/units/PostWriteSearchLocation.styles';
+import * as Style from 'components/PostWriteCommonForm/SearchLocation/PostWriteSearchLocation.styles';
 import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
-import PostWriteModal from 'pages/PostWrite/units/PostWriteModal';
+import PostWriteModal from 'components/PostWriteCommonForm/SearchLocation/PostWriteModal';
 import PropTypes from 'prop-types';
 import parseAddressName from 'utils/parseAddressName';
 
-const PostWriteSearchLocation = ({ setPostWriteData }) => {
+const PostWriteSearchLocation = ({ setData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
@@ -103,7 +103,7 @@ const PostWriteSearchLocation = ({ setPostWriteData }) => {
     // parent의 form state를 받아와 결과값을 추가
     setLocationInputValue(markerInformation.addressName);
     setIsModalOpen(false);
-    setPostWriteData((pre) => ({
+    setData((pre) => ({
       ...pre,
       location: {
         latitude: markerInformation.lat,
@@ -281,7 +281,7 @@ const PostWriteSearchLocation = ({ setPostWriteData }) => {
 };
 
 PostWriteSearchLocation.propTypes = {
-  setPostWriteData: PropTypes.func,
+  setData: PropTypes.func,
 };
 
 export default PostWriteSearchLocation;
