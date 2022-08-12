@@ -9,6 +9,7 @@ export const PAGE_PATH = {
   PROFILE_EDIT: '/profile/edit',
   POST: (postId) => `/post/${postId}`,
   POST_WRITE: '/post/write',
+  POST_EDIT: '/post/edit',
 };
 
 export const API_PATH = {
