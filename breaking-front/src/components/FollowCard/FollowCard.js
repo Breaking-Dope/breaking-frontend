@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as Style from 'components/FollowCard/FollowCard.styles';
@@ -17,7 +16,7 @@ export default function FollowCard({
 }) {
   const theme = useTheme();
   const queryClient = useQueryClient();
-  const ChangeIsFollowFelid = (pre) => {
+  const ChangeIsFollowField = (pre) => {
     return pre.map((information) =>
       information.userId === profileData.userId
         ? {
@@ -34,8 +33,8 @@ export default function FollowCard({
     {
       onSuccess: () => {
         queryClient.invalidateQueries('profile');
-        setFollowerList((pre) => ChangeIsFollowFelid(pre));
-        setFollowingList((pre) => ChangeIsFollowFelid(pre));
+        setFollowerList((pre) => ChangeIsFollowField(pre));
+        setFollowingList((pre) => ChangeIsFollowField(pre));
       },
       onError: () => {
         //에러처리
@@ -47,8 +46,8 @@ export default function FollowCard({
     {
       onSuccess: () => {
         queryClient.invalidateQueries('profile');
-        setFollowerList((pre) => ChangeIsFollowFelid(pre));
-        setFollowingList((pre) => ChangeIsFollowFelid(pre));
+        setFollowerList((pre) => ChangeIsFollowField(pre));
+        setFollowingList((pre) => ChangeIsFollowField(pre));
       },
       onError: () => {
         //에러처리
@@ -104,4 +103,6 @@ FollowCard.propTypes = {
   profileData: PropTypes.object,
   isPermission: PropTypes.bool,
   cardClick: PropTypes.func,
+  setFollowerList: PropTypes.func,
+  setFollowingList: PropTypes.func,
 };
