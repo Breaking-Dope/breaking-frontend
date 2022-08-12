@@ -36,7 +36,7 @@ const ProfileFollowModal = ({
 
   return (
     <>
-      <FollowModal
+      <FollowCommonModal
         isLoading={followerListLoading}
         isOpen={isFollowerModalOpen}
         toggleModal={toggleFollowerModal}
@@ -45,7 +45,7 @@ const ProfileFollowModal = ({
         setFollowingList={setFollowingList}
         setFollowerList={setFollowerList}
       />
-      <FollowModal
+      <FollowCommonModal
         isLoading={followingListLoading}
         isOpen={isFollowingModalOpen}
         toggleModal={toggleFollowingModal}
@@ -58,7 +58,7 @@ const ProfileFollowModal = ({
   );
 };
 
-const FollowModal = ({
+const FollowCommonModal = ({
   isLoading,
   isOpen,
   toggleModal,
@@ -68,7 +68,7 @@ const FollowModal = ({
   setFollowerList,
 }) => {
   const navigate = useNavigate();
-  const myData = useContext(UserInformationContext);
+  const userData = useContext(UserInformationContext);
   return (
     <Modal isOpen={isOpen} closeClick={toggleModal} title={title}>
       {List &&
@@ -78,7 +78,7 @@ const FollowModal = ({
               toggleModal();
               navigate(PAGE_PATH.PROFILE(item.userId));
             }}
-            isPermission={item.userId !== myData.userId}
+            isPermission={item.userId !== userData.userId}
             profileData={item}
             key={`${title}-${item.userId}`}
             setFollowingList={setFollowingList}
@@ -107,7 +107,7 @@ ProfileFollowModal.propTypes = {
   userId: PropTypes.number,
 };
 
-FollowModal.propTypes = {
+FollowCommonModal.propTypes = {
   isLoading: PropTypes.bool,
   isOpen: PropTypes.bool,
   toggleModal: PropTypes.func,

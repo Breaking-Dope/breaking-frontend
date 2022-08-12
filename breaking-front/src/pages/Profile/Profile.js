@@ -12,7 +12,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
 import ProfileFollowButton from 'pages/Profile/units/ProfileFollowButton';
-import ProfileFollowModals from 'pages/Profile/units/ProfileFollowModals';
+import ProfileFollowModal from 'pages/Profile/units/ProfileFollowModal';
 import ProfileTabPanel from 'pages/Profile/units/ProfileTabPanel';
 import numberFormatter from 'utils/numberFormatter';
 
@@ -62,7 +62,7 @@ const Profile = () => {
 
   return (
     <>
-      <ProfileFollowModals
+      <ProfileFollowModal
         isFollowerModalOpen={isFollowerModalOpen}
         isFollowingModalOpen={isFollowingModalOpen}
         toggleFollowerModal={toggleFollowerModal}
