@@ -114,8 +114,8 @@ export const POST_DATA = {
   ],
   location: {
     address: '서울 중구 장충동 2가 산 14-102',
-    longitude: 12.1234,
-    latitude: 12.12345,
+    latitude: 37.55453653562958,
+    longitude: 126.99981609553,
     region_1depth_name: '서울',
     region_2depth_name: '중구',
   },

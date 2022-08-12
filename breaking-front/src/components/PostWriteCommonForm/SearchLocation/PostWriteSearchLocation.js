@@ -7,7 +7,7 @@ import PostWriteModal from 'components/PostWriteCommonForm/SearchLocation/PostWr
 import PropTypes from 'prop-types';
 import parseAddressName from 'utils/parseAddressName';
 
-const PostWriteSearchLocation = ({ setData }) => {
+const PostWriteSearchLocation = ({ location, setData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
@@ -126,9 +126,21 @@ const PostWriteSearchLocation = ({ setData }) => {
       map.setCenter(
         new kakao.maps.LatLng(mapCenterPosition.lat, mapCenterPosition.lng)
       );
-
     // modal과 같이 display의 값이 바뀌는 곳에서는  map.relayout() 가 필요
-  }, [isModalOpen, map]);
+  }, [isModalOpen, map, mapCenterPosition]);
+
+  useEffect(() => {
+    if (location) {
+      setLocationInputValue(location.address);
+      setMapCenterPosition({ lat: location.latitude, lng: location.longitude });
+      setIsCustomMarker(true);
+      setMarkerInformation({
+        lat: location.latitude,
+        lng: location.longitude,
+        addressName: location.address,
+      });
+    }
+  }, [location]);
 
   return (
     <>
@@ -281,6 +293,7 @@ const PostWriteSearchLocation = ({ setData }) => {
 };
 
 PostWriteSearchLocation.propTypes = {
+  location: PropTypes.object,
   setData: PropTypes.func,
 };
 
