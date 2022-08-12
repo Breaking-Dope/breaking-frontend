@@ -1,16 +1,7 @@
-import { postFollow, postUnFollow } from 'api/profile';
-import FollowCard from 'components/FollowCard/FollowCard';
 import Line from 'components/Line/Line';
-import Modal from 'components/Modal/Modal';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import {
-  FollowCardSkeleton,
-  ProfileSkeleton,
-} from 'components/Skeleton/Skeleton';
+import { ProfileSkeleton } from 'components/Skeleton/Skeleton';
 import Tabs from 'components/Tabs/Tabs';
-import { PAGE_PATH } from 'constants/path';
-import useFollowerList from 'hooks/queries/useFollowerList';
-import useFollowingList from 'hooks/queries/useFollowingList';
 import useProfile from 'hooks/queries/useProfile';
 import useProfileBookmarkedPost from 'hooks/queries/useProfileBookmarkedPost';
 import useProfileBoughtPost from 'hooks/queries/useProfileBoughtPost';
@@ -18,15 +9,14 @@ import useProfileWrittenPost from 'hooks/queries/useProfileWrittenPost';
 import useCheckMyPage from 'hooks/useCheckMyPage';
 import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
-import ProfileFollowButton from './units/ProfileFollowButton';
-import ProfileTabPanel from './units/ProfileTabPanel';
+import ProfileFollowButton from 'pages/Profile/units/ProfileFollowButton';
+import ProfileFollowModal from 'pages/Profile/units/ProfileFollowModal';
+import ProfileTabPanel from 'pages/Profile/units/ProfileTabPanel';
+import numberFormatter from 'utils/numberFormatter';
 
 const Profile = () => {
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
   let { id: userId } = useParams();
 
   const isMyPage = useCheckMyPage(userId);
@@ -35,9 +25,6 @@ const Profile = () => {
   const [writtenOption, setWrittenOption] = useState('all');
   const [boughtOption, setBoughtOption] = useState('all');
   const [bookmarkedOption, setBookmarkedOption] = useState('all');
-
-  const { mutate: UnFollow } = useMutation(postUnFollow);
-  const { mutate: Follow } = useMutation(postFollow);
 
   const {
     data: writtenData,
@@ -63,83 +50,25 @@ const Profile = () => {
     isLoading: isBookmarkedLoading,
   } = useProfileBookmarkedPost(userId, isMyPage, bookmarkedOption);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
+  const [isFollowerModalOpen, setIsFollowerModalOpen] = useState(false);
+  const [isFollowingModalOpen, setIsFollowingModalOpen] = useState(false);
 
-  const { data: followerListData, isLoading: followerListLoading } =
-    useFollowerList(userId);
-
-  const { data: followingListData, isLoading: followingListLoading } =
-    useFollowingList(userId);
-
-  const toggleModal = () => {
-    setIsModalOpen((pre) => !pre);
+  const toggleFollowerModal = () => {
+    setIsFollowerModalOpen((pre) => !pre);
   };
-
-  const followingClick = () => {
-    setModalTitle('팔로잉');
-    toggleModal();
-  };
-
-  const followerClick = () => {
-    setModalTitle('팔로워');
-    toggleModal();
+  const toggleFollowingModal = () => {
+    setIsFollowingModalOpen((pre) => !pre);
   };
 
   return (
     <>
-      <Modal isOpen={isModalOpen} closeClick={toggleModal} title={modalTitle}>
-        {modalTitle === '팔로워' &&
-          followerListData?.data.map((item) => (
-            <FollowCard
-              cardClick={() => {
-                toggleModal();
-                setModalTitle('');
-                navigate(PAGE_PATH.PROFILE(item.userId));
-              }}
-              isPermission={isMyPage}
-              profileData={item}
-              key={item.userId}
-              deleteClick={() =>
-                UnFollow(item.userId, {
-                  onSuccess: () => {
-                    queryClient.invalidateQueries(modalTitle, userId);
-                  },
-                })
-              }
-            />
-          ))}
-        {modalTitle === '팔로잉' &&
-          followingListData?.data.map((item) => (
-            <FollowCard
-              cardClick={() => {
-                toggleModal();
-                setModalTitle('');
-                navigate(PAGE_PATH.PROFILE(item.userId));
-              }}
-              isPermission={isMyPage}
-              profileData={item}
-              key={item.userId}
-              deleteClick={() =>
-                UnFollow(item.userId, {
-                  onSuccess: () => {
-                    queryClient.invalidateQueries(modalTitle, userId);
-                  },
-                })
-              }
-            />
-          ))}
-        {(followerListLoading || followingListLoading) && (
-          <>
-            <FollowCardSkeleton />
-            <FollowCardSkeleton />
-            <FollowCardSkeleton />
-            <FollowCardSkeleton />
-            <FollowCardSkeleton />
-            <FollowCardSkeleton />
-          </>
-        )}
-      </Modal>
+      <ProfileFollowModal
+        isFollowerModalOpen={isFollowerModalOpen}
+        isFollowingModalOpen={isFollowingModalOpen}
+        toggleFollowerModal={toggleFollowerModal}
+        toggleFollowingModal={toggleFollowingModal}
+        userId={userId}
+      />
       {isLoading ? (
         <ProfileSkeleton />
       ) : (
@@ -155,20 +84,18 @@ const Profile = () => {
                 userId={userId}
                 isFollowing={profileData.data.isFollowing}
                 isMyPage={isMyPage}
-                UnFollow={UnFollow}
-                Follow={Follow}
               />
             </Style.Title>
             <Style.StatusMessage>
               {profileData.data.statusMsg}
             </Style.StatusMessage>
             <Style.Information>
-              <div>작성제보 {profileData?.data.postCount}</div>
-              <div onClick={followerClick}>
-                팔로워 {profileData?.data.followerCount}
+              <div>작성제보 {numberFormatter(profileData?.data.postCount)}</div>
+              <div onClick={toggleFollowerModal}>
+                팔로워 {numberFormatter(profileData?.data.followerCount)}
               </div>
-              <div onClick={followingClick}>
-                팔로잉 {profileData?.data.followingCount}
+              <div onClick={toggleFollowingModal}>
+                팔로잉 {numberFormatter(profileData?.data.followingCount)}
               </div>
             </Style.Information>
           </Style.UserInformation>

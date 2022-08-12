@@ -68,7 +68,7 @@ export const postFollow = (userId) => {
   });
 };
 
-export const postUnFollow = (userId) => {
+export const deleteUnFollow = (userId) => {
   return api({
     method: 'delete',
     url: API_PATH.PROFILE_UNFOLLOW(userId),

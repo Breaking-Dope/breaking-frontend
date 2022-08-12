@@ -1,5 +1,6 @@
 import Button from 'components/Button/Button';
 import styled from 'styled-components';
+import ReactLoading from 'react-loading';
 
 export const FollowCard = styled.div`
   display: flex;
@@ -28,6 +29,13 @@ export const StatusMessage = styled.p`
 
 export const DeleteButton = styled(Button)`
   padding: 5px 10px;
+  width: 60px;
+  height: 20px;
   color: ${({ theme }) => theme.black};
   background-color: ${({ theme }) => theme.white};
+  text-align: center;
+`;
+
+export const Loading = styled(ReactLoading)`
+  display: inline-block;
 `;
