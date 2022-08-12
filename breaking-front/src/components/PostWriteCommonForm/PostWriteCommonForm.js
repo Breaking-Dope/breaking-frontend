@@ -52,13 +52,14 @@ const PostWriteCommonForm = ({
       </Style.OccurTimeLayout>
 
       <Style.LocationLayout>
-        <PostWriteSearchLocation setData={setData} />
+        <PostWriteSearchLocation location={data.location} setData={setData} />
       </Style.LocationLayout>
 
       <Style.ContextLayout>
         <Style.ContextTitleInput
           type="text"
           placeholder="제목을 입력하세요"
+          value={data.title}
           onChange={onChangeData}
           name="title"
         ></Style.ContextTitleInput>
@@ -66,6 +67,7 @@ const PostWriteCommonForm = ({
           placeholder="상황을 최대한 상세하게 기록해 주세요&#13;(상황, 시간, 사건 전개과정, 경과상태 등)&#13;&#10;최대 2000자"
           onChange={onChangeData}
           name="content"
+          value={data.content}
         ></Style.ContextBodyTextArea>
       </Style.ContextLayout>
 
