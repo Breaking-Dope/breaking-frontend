@@ -16,7 +16,6 @@ const PostEdit = () => {
 
   const [postEditData, onChangePostEditData, setPostEditData] =
     useInputs(state);
-  console.log(postEditData);
   /*{
     location: undefined,
     eventTime: dayjs().format('YYYY-MM-DDTHH:mm'),
@@ -56,12 +55,17 @@ const PostEdit = () => {
   };
 
   useEffect(() => {
-    //postEditData이 비어있으면 잘못된 접근처리
+    //postEditData이 비어있으면 잘못된 접근처리 게시글 페이지에서 연동할때 작성
   }, [location]);
 
   return (
     <Style.Container>
-      <Style.Title>※ 이미지 동영상 파일은 수정할수 없습니다 ※</Style.Title>
+      <Style.UploadTitle>사진/동영상 업로드</Style.UploadTitle>
+      <Style.UploadForm>
+        <Style.Message>
+          ※ 이미지 동영상 파일은 수정할수 없습니다 ※
+        </Style.Message>
+      </Style.UploadForm>
       <form onSubmit={postWriteSubmit}>
         <PostWriteCommonForm
           isMutateLoading={isPostEditMutateLoading}
