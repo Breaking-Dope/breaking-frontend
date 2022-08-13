@@ -3,7 +3,9 @@ import * as Style from 'pages/PostEdit/PostEdit.styles';
 import dayjs from 'dayjs';
 import useInputs from 'hooks/useInputs';
 import MESSAGE from 'constants/message';
-import PostWriteCommonForm from 'components/PostWriteCommonForm/PostWriteCommonForm';
+import PostWriteCommonForm, {
+  PostSubmitButton,
+} from 'components/PostWriteCommonForm/PostWriteCommonForm';
 import usePostEditMutation from 'pages/PostEdit/hooks/usePostEditMutation';
 import extractHashtag from 'utils/extractHashTag';
 import { useLocation } from 'react-router-dom';
@@ -82,6 +84,9 @@ const PostEdit = () => {
           data={postEditData}
           setData={setPostEditData}
         />
+        <PostSubmitButton isMutateLoading={isPostEditMutateLoading}>
+          수정하기
+        </PostSubmitButton>
       </form>
     </Style.Container>
   );

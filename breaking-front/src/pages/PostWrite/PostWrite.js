@@ -5,7 +5,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
 import useInputs from 'hooks/useInputs';
 import MESSAGE from 'constants/message';
-import PostWriteCommonForm from 'components/PostWriteCommonForm/PostWriteCommonForm';
+import PostWriteCommonForm, {
+  PostSubmitButton,
+} from 'components/PostWriteCommonForm/PostWriteCommonForm';
 import usePostWriteMutation from './hooks/usePostWriteMutation';
 
 const PostWrite = () => {
@@ -70,6 +72,9 @@ const PostWrite = () => {
           data={postWriteData}
           setData={setPostWriteData}
         />
+        <PostSubmitButton isMutateLoading={isPostWriteMutateLoading}>
+          제보 하기
+        </PostSubmitButton>
       </form>
     </Style.Container>
   );

@@ -5,13 +5,7 @@ import { useTheme } from 'styled-components';
 import Button from 'components/Button/Button';
 import PropTypes from 'prop-types';
 
-const PostWriteCommonForm = ({
-  isMutateLoading,
-  onChangeData,
-  data,
-  setData,
-}) => {
-  const theme = useTheme();
+const PostWriteCommonForm = ({ onChangeData, data, setData }) => {
   const [isShowPriceInput, setIsShowPriceInput] = useState(false);
   const postPrivate = () => {
     setData((pre) => ({ ...pre, isAnonymous: true }));
@@ -144,21 +138,28 @@ const PostWriteCommonForm = ({
           공개
         </Button>
       </Style.AnonymousLayout>
-
-      {isMutateLoading ? (
-        <Style.Loading type="bars" color={theme.blue[900]} />
-      ) : (
-        <Style.PostSubmitButton type="submit">제보 하기</Style.PostSubmitButton>
-      )}
     </>
   );
 };
 
+export const PostSubmitButton = ({ isMutateLoading, children }) => {
+  const theme = useTheme();
+  return isMutateLoading ? (
+    <Style.Loading type="bars" color={theme.blue[900]} />
+  ) : (
+    <Style.PostSubmitButton type="submit">{children}</Style.PostSubmitButton>
+  );
+};
+
 PostWriteCommonForm.propTypes = {
-  isMutateLoading: PropTypes.bool,
   onChangeData: PropTypes.func,
   data: PropTypes.object,
   setData: PropTypes.func,
+};
+
+PostSubmitButton.propTypes = {
+  isMutateLoading: PropTypes.bool,
+  children: PropTypes.node,
 };
 
 export default PostWriteCommonForm;
