@@ -8,7 +8,7 @@ import MESSAGE from 'constants/message';
 import PostWriteCommonForm, {
   PostSubmitButton,
 } from 'components/PostWriteCommonForm/PostWriteCommonForm';
-import usePostWriteMutation from './hooks/usePostWriteMutation';
+import usePostWriteMutation from 'pages/PostWrite/hooks/usePostWriteMutation';
 
 const PostWrite = () => {
   const [mediaList, setMediaList] = useState([]);
