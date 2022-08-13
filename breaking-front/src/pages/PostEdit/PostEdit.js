@@ -13,6 +13,12 @@ import { POST_DATA } from 'mocks/dummyData/contents';
 const PostEdit = () => {
   const location = useLocation();
   const state = POST_DATA;
+  /*
+  state:{
+    postId:number,
+    data:data
+  }
+  */
 
   const [postEditData, onChangePostEditData, setPostEditData] =
     useInputs(state);
@@ -47,10 +53,13 @@ const PostEdit = () => {
     const hashtagList = extractHashtag(postEditData.content);
 
     PostEditMutate({
-      ...postEditData,
-      hashtagList: hashtagList === undefined ? null : hashtagList,
-      price: postEditData.postType === 'free' ? 0 : postEditData.price,
-      eventTime: dayjs(postEditData.eventTime).format('YYYY-MM-DD HH:mm:ss'),
+      data: {
+        ...postEditData,
+        hashtagList: hashtagList === undefined ? null : hashtagList,
+        price: postEditData.postType === 'free' ? 0 : postEditData.price,
+        eventTime: dayjs(postEditData.eventTime).format('YYYY-MM-DD HH:mm:ss'),
+      },
+      postId: 0,
     });
   };
 
