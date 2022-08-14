@@ -9,6 +9,7 @@ import PostWriteCommonForm, {
   PostSubmitButton,
 } from 'components/PostWriteCommonForm/PostWriteCommonForm';
 import usePostWriteMutation from 'pages/PostWrite/hooks/usePostWriteMutation';
+import extractHashtag from 'utils/extractHashtag';
 
 const PostWrite = () => {
   const [mediaList, setMediaList] = useState([]);
@@ -42,9 +43,7 @@ const PostWrite = () => {
 
     const formData = new FormData();
 
-    const hashtagList = postWriteData.content
-      .match(/#[^\s#]+/g)
-      ?.map((hashtag) => hashtag.replace('#', ''));
+    const hashtagList = extractHashtag(postWriteData.content);
 
     for (let i = 0; i < mediaList.length; i++) {
       formData.append('mediaList', mediaList[i]);
