@@ -7,7 +7,7 @@ import PostWriteCommonForm, {
   PostSubmitButton,
 } from 'components/PostWriteCommonForm/PostWriteCommonForm';
 import usePostEditMutation from 'pages/PostEdit/hooks/usePostEditMutation';
-import extractHashtag from 'utils/extractHashTag';
+import extractHashtag from 'utils/extractHashtag';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { POST_DATA } from 'mocks/dummyData/contents';
