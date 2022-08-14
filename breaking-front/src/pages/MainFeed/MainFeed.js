@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
 import { useTheme } from 'styled-components';
@@ -11,10 +11,10 @@ import * as Style from 'pages/MainFeed/MainFeed.styles';
 import { ReactComponent as PenIcon } from 'assets/svg/pen.svg';
 import { FeedSkeleton } from 'components/Skeleton/Skeleton';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
+import useInfiniteScroll from 'hooks/useInfiniteScroll';
 
 const MainFeed = () => {
   const queryClient = useQueryClient();
-  const targetRef = useRef();
   const theme = useTheme();
   const navigate = useNavigate();
   const { userId } = useContext(UserInformationContext);
@@ -27,8 +27,9 @@ const MainFeed = () => {
     isLoading: isMainFeedLoading,
     isFetching: isMainFeedFetching,
     fetchNextPage: FetchNextMainFeed,
-    hasNextPage: mainFeedHasNextPage,
   } = useMainFeedOption(sort, option);
+
+  const { targetRef } = useInfiniteScroll(mainFeedData, FetchNextMainFeed);
 
   const handleFilter = (sortType) => {
     queryClient.resetQueries('mainFeedOption');
@@ -43,25 +44,6 @@ const MainFeed = () => {
   const handleUploadClick = () => {
     navigate(PAGE_PATH.POST_WRITE);
   };
-
-  useEffect(() => {
-    let observer;
-    const onIntersect = async ([entry], observer) => {
-      if (entry.isIntersecting) {
-        observer.unobserve(entry.target);
-        FetchNextMainFeed();
-        observer.observe(entry.target);
-      }
-    };
-
-    if (mainFeedHasNextPage && !isMainFeedFetching) {
-      observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.8,
-      });
-      observer.observe(targetRef.current);
-    }
-    return () => observer && observer.disconnect();
-  }, [FetchNextMainFeed, isMainFeedFetching, mainFeedHasNextPage]);
 
   return (
     <Style.MainFeed>

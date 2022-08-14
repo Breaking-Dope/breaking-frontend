@@ -122,13 +122,13 @@ export const ContentFooter = styled.div`
   margin-top: 20px;
   justify-content: space-between;
   svg {
+    margin-top: auto;
     outline: none;
     cursor: pointer;
   }
 `;
 
 export const ContentStatus = styled.div`
-  display: flex;
   font-size: 14px;
   label {
     display: flex;
@@ -151,6 +151,12 @@ export const ContentToggle = styled.div`
 
 export const Comments = styled.div`
   width: 800px;
+`;
+
+export const CommentCount = styled.div`
+  margin-top: 20px;
+  margin-left: 10px;
+  font-size: 18px;
 `;
 
 export const TargetDiv = styled.div`
