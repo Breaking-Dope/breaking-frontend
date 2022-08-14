@@ -1,14 +1,14 @@
 import { putPostEdit } from 'api/postEdit';
+import { PAGE_PATH } from 'constants/path';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 
 const usePostEditMutation = () => {
   const navigate = useNavigate();
   return useMutation(putPostEdit, {
-    onSuccess: () => {
+    onSuccess: (res) => {
       alert('수정 되었습니다.');
-      navigate(-1);
-      //redirect 위치 생각해보기
+      navigate(PAGE_PATH.POST(res.data.postId));
     },
     onError: (error) => {
       console.log(error);
