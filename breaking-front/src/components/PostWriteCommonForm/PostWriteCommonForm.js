@@ -42,7 +42,7 @@ const PostWriteCommonForm = ({ onChangeData, data, setData }) => {
           name="eventDate"
           value={data.eventDate}
           onChange={onChangeData}
-        ></Style.DatePicker>
+        />
       </Style.OccurTimeLayout>
 
       <Style.LocationLayout>
@@ -56,13 +56,13 @@ const PostWriteCommonForm = ({ onChangeData, data, setData }) => {
           value={data.title}
           onChange={onChangeData}
           name="title"
-        ></Style.ContextTitleInput>
+        />
         <Style.ContextBodyTextArea
           placeholder="상황을 최대한 상세하게 기록해 주세요&#13;(상황, 시간, 사건 전개과정, 경과상태 등)&#13;&#10;최대 2000자"
           onChange={onChangeData}
           name="content"
           value={data.content}
-        ></Style.ContextBodyTextArea>
+        />
       </Style.ContextLayout>
 
       <Style.PostTypeLayout>
@@ -116,7 +116,7 @@ const PostWriteCommonForm = ({ onChangeData, data, setData }) => {
               event.target.blur();
             }
           }}
-        ></Style.PostPriceInput>
+        />
       </Style.PriceLayout>
 
       <Style.AnonymousLayout>
