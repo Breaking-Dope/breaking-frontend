@@ -39,8 +39,8 @@ const PostWriteCommonForm = ({ onChangeData, data, setData }) => {
         <Style.PostWriteTitle>제보 발생 시간</Style.PostWriteTitle>
         <Style.DatePicker
           type="datetime-local"
-          name="eventTime"
-          value={data.eventTime}
+          name="eventDate"
+          value={data.eventDate}
           onChange={onChangeData}
         ></Style.DatePicker>
       </Style.OccurTimeLayout>

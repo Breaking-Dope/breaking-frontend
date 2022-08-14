@@ -26,7 +26,7 @@ const PostEdit = () => {
     useInputs(state);
   /*{
     location: undefined,
-    eventTime: dayjs().format('YYYY-MM-DDTHH:mm'),
+    eventDate: dayjs().format('YYYY-MM-DDTHH:mm'),
     title: '',
     content: '',
     price: 0,
@@ -59,7 +59,7 @@ const PostEdit = () => {
         ...postEditData,
         hashtagList: hashtagList === undefined ? null : hashtagList,
         price: postEditData.postType === 'free' ? 0 : postEditData.price,
-        eventTime: dayjs(postEditData.eventTime).format('YYYY-MM-DD HH:mm:ss'),
+        eventDate: dayjs(postEditData.eventDate).format('YYYY-MM-DD HH:mm:ss'),
       },
       postId: 0,
     });

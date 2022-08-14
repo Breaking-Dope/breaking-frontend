@@ -229,7 +229,7 @@ const Post = () => {
                 </Style.ContentLocationContainer>
                 <Style.ContentDetail>
                   발생시간&nbsp;
-                  {dayjs(postData.data.eventTime).format('YYYY.MM.DD. HH:mm')}
+                  {dayjs(postData.data.eventDate).format('YYYY.MM.DD. HH:mm')}
                 </Style.ContentDetail>
                 <Style.ContentCreatedDate>
                   작성시간&nbsp;

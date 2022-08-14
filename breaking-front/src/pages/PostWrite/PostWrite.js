@@ -15,7 +15,7 @@ const PostWrite = () => {
   const [mediaList, setMediaList] = useState([]);
   const [postWriteData, onChangePostWriteData, setPostWriteData] = useInputs({
     location: undefined,
-    eventTime: dayjs().format('YYYY-MM-DDTHH:mm'),
+    eventDate: dayjs().format('YYYY-MM-DDTHH:mm'),
     title: '',
     content: '',
     price: 0,
@@ -55,7 +55,7 @@ const PostWrite = () => {
         ...postWriteData,
         hashtagList: hashtagList === undefined ? null : hashtagList,
         price: postWriteData.postType === 'free' ? 0 : postWriteData.price,
-        eventTime: dayjs(postWriteData.eventTime).format('YYYY-MM-DD HH:mm:ss'),
+        eventDate: dayjs(postWriteData.eventDate).format('YYYY-MM-DD HH:mm:ss'),
       })
     );
     PostWriteMutate(formData);

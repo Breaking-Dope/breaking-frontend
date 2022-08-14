@@ -124,7 +124,7 @@ export const POST_DATA = {
   isPurchasable: true,
   shareCount: 0,
   postType: 'CHARGED',
-  eventTime: '2020-01-01T14:01:01',
+  eventDate: '2020-01-01T14:01:01',
   createdDate: new Date(Date.now() - 24 * 60 * 60 * 1000),
   modifiedDate: new Date(Date.now() - 24 * 60 * 60 * 1000),
   viewCount: 1000000,
