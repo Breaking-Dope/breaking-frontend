@@ -1,20 +1,20 @@
 import { useEffect, useRef } from 'react';
 
-const useInfiniteScroll = (data, Fetch) => {
+const useInfiniteScroll = (data, FetchNextPage) => {
   const targetRef = useRef();
 
   const observer = new IntersectionObserver(
     ([entry], observer) => {
       if (entry.isIntersecting) {
         observer.unobserve(entry.target);
-        Fetch();
+        FetchNextPage();
       }
     },
     { threshold: 0.8 }
   );
 
   useEffect(() => {
-    if (!data) Fetch();
+    if (!data) FetchNextPage();
 
     if (targetRef.current) observer.observe(targetRef.current);
   }, [data]);
