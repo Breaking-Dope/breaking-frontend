@@ -4,16 +4,20 @@ import { NORMAL_USER } from 'mocks/dummyData/users';
 
 export const signInHandlers = [
   rest.get(API_PATH.OAUTH2_VALIDATE_JWT, (req, res, ctx) => {
-    // return res(ctx.json(NORMAL_USER), ctx.status(200));
-    return res(
+    return res.once(
       ctx.json({ code: 'BSE002', message: 'Access Token이 만료되었습니다.' }),
       ctx.status(401)
     );
   }),
 
+  rest.get(API_PATH.OAUTH2_VALIDATE_JWT, (req, res, ctx) => {
+    return res(ctx.json(NORMAL_USER), ctx.status(200));
+  }),
+
   rest.get(API_PATH.REISSUE, (req, res, ctx) => {
     return res(
       ctx.status(200),
+      ctx.cookie('authorization-refresh', '12312312312312312312e'),
       ctx.set({ Authorization: '1231901238102381209' })
     );
   }),
@@ -36,7 +40,11 @@ export const signInHandlers = [
   rest.post(API_PATH.OAUTH2_SIGNIN_GOOGLE, (req, res, ctx) => {
     return res(
       ctx.status(200),
-      ctx.set('Authorization', 'a2bcd412ed1!n32op'),
+      ctx.set('authorization', 'a2bcd412ed1!n32op'),
+      ctx.cookie(
+        'authorization-refresh',
+        'asidjf98u2398ejsoijfd923hersacoiqwh98e'
+      ),
       ctx.json(NORMAL_USER)
     );
   }),
