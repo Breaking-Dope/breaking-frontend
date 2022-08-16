@@ -91,7 +91,7 @@ export const PostTypeLayout = styled.div`
 `;
 
 export const PriceLayout = styled.div`
-  display: ${({ postType }) => (postType === 'free' ? 'none' : 'block')};
+  display: ${({ postType }) => (postType === 'FREE' ? 'none' : 'block')};
   margin-top: 40px;
   > * {
     margin-bottom: 30px;
