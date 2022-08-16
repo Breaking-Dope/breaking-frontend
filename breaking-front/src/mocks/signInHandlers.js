@@ -18,7 +18,7 @@ export const signInHandlers = [
     return res(
       ctx.status(200),
       ctx.cookie('authorization-refresh', '12312312312312312312e'),
-      ctx.set({ Authorization: '1231901238102381209' })
+      ctx.set({ authorization: '1231901238102381209' })
     );
   }),
 
