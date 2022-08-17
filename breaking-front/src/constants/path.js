@@ -63,6 +63,8 @@ export const API_PATH = {
   POST_LIKE_DELETE: (postId) => `/post/${postId}/like`,
   POST_BOOKMARK: (postId) => `/post/${postId}/bookmark`,
   POST_BOOKMARK_DELETE: (postId) => `/post/${postId}/bookmark`,
+  POST_ACTIVATE_PURCHASE: (postId) => `/post/${postId}/activate-purchase`,
+  POST_DEACTIVATE_PURCHASE: (postId) => `/post/${postId}/deactivate-purchase`,
   POST_LIKE_LIST: (postId, cursor, size = '10') =>
     `/post/${postId}/like-list?cursor=${cursor}&size=${size}`,
   POST_BOUGHT_LIST: (postId, cursor, size = '10') =>
