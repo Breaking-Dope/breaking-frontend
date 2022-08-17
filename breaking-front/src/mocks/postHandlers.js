@@ -7,14 +7,16 @@ import {
   NO_POSTCOUNT_USER,
   NO_PROFILEIMGURL_USER,
   NO_STATUSMSG_USER,
+  USER6,
 } from 'mocks/dummyData/users';
 
-const boughtUserList = [
+const USER_LIST = [
   NO_STATUSMSG_USER,
   NO_PROFILEIMGURL_USER,
   NO_POSTCOUNT_USER,
   NO_FOLLOW_USER,
   FOLLOWING_USER,
+  USER6,
 ];
 
 export const postHandlers = [
@@ -31,7 +33,11 @@ export const postHandlers = [
   }),
 
   rest.get(API_PATH.POST_BOUGHT_LIST(':postId'), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(boughtUserList));
+    return res(ctx.status(200), ctx.json(USER_LIST));
+  }),
+
+  rest.get(API_PATH.POST_LIKE_LIST(':postId'), (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(USER_LIST));
   }),
 
   rest.delete(API_PATH.POST_DELETE(':postId'), (req, res, ctx) => {
