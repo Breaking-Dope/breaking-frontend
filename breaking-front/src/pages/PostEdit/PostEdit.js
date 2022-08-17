@@ -39,10 +39,10 @@ const PostEdit = () => {
       data: {
         ...postEditData,
         hashtagList: hashtagList === undefined ? null : hashtagList,
-        price: postEditData.postType === 'free' ? 0 : postEditData.price,
+        price: postEditData.postType === 'FREE' ? 0 : postEditData.price,
         eventDate: dayjs(postEditData.eventDate).format('YYYY-MM-DD HH:mm:ss'),
       },
-      postId: 0,
+      postId: postId,
     });
   };
   useEffect(() => {

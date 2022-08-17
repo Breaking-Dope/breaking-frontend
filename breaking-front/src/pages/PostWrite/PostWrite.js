@@ -54,7 +54,7 @@ const PostWrite = () => {
       JSON.stringify({
         ...postWriteData,
         hashtagList: hashtagList === undefined ? null : hashtagList,
-        price: postWriteData.postType === 'free' ? 0 : postWriteData.price,
+        price: postWriteData.postType === 'FREE' ? 0 : postWriteData.price,
         eventDate: dayjs(postWriteData.eventDate).format('YYYY-MM-DD HH:mm:ss'),
       })
     );
