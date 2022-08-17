@@ -23,9 +23,30 @@ export const getPostCommentData = async ({ queryKey, pageParam = 0 }) => {
 
 export const getPostReplyData = async ({ queryKey, pageParam = 0 }) => {
   const [, commentId] = queryKey;
+  let hasNextReply = false;
+
   const { data } = await api({
     method: 'get',
     url: API_PATH.POST_REPLY_DATA(commentId, pageParam),
+  });
+
+  if (data.length === 11) {
+    data.pop();
+    hasNextReply = true;
+  }
+
+  return {
+    result: data,
+    cursor: data[data.length - 1]?.commentId,
+    hasNextReply: hasNextReply,
+  };
+};
+
+export const getPostBoughtList = async ({ queryKey, pageParam = 0 }) => {
+  const [, postId] = queryKey;
+  const { data } = await api({
+    method: 'get',
+    url: API_PATH.POST_BOUGHT_LIST(postId, pageParam),
   });
   return {
     result: data,
@@ -33,12 +54,16 @@ export const getPostReplyData = async ({ queryKey, pageParam = 0 }) => {
   };
 };
 
-export const getPostBoughtList = ({ queryKey }) => {
+export const getPostLikeList = async ({ queryKey, pageParam = 0 }) => {
   const [, postId] = queryKey;
-  return api({
+  const { data } = await api({
     method: 'get',
-    url: API_PATH.POST_BOUGHT_LIST(postId),
+    url: API_PATH.POST_LIKE_LIST(postId, pageParam),
   });
+  return {
+    result: data,
+    cursor: data[data.length - 1]?.commentId,
+  };
 };
 
 export const deletePost = (postId) => {

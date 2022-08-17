@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import { useTheme } from 'styled-components';
@@ -39,12 +39,12 @@ import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { PostSkeleton } from 'components/Skeleton/Skeleton';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import dayjs from 'dayjs';
+import useInfiniteScroll from 'hooks/useInfiniteScroll';
 
 const Post = () => {
   let { id: postId } = useParams();
   postId = Number(postId);
   const theme = useTheme();
-  const targetRef = useRef();
   const navigate = useNavigate();
   const { userId, profileImgURL } = useContext(UserInformationContext);
   const queryClient = useQueryClient();
@@ -63,8 +63,12 @@ const Post = () => {
     data: postCommentData,
     isFetching: isPostCommentFetching,
     fetchNextPage: FetchNextPostComment,
-    hasNextPage: postCommentHasNextPage,
   } = usePostComment(postId);
+
+  const { targetRef } = useInfiniteScroll(
+    postCommentData,
+    FetchNextPostComment
+  );
 
   const { mutate: PostLike } = useMutation(postPostLike);
   const { mutate: DeletePostLike } = useMutation(deletePostLike);
@@ -135,24 +139,6 @@ const Post = () => {
     setLikeCount(postData?.data.likeCount);
   }, [postData, userId]);
 
-  useEffect(() => {
-    let observer;
-    const onIntersect = async ([entry], observer) => {
-      if (entry.isIntersecting) {
-        observer.unobserve(entry.target);
-        FetchNextPostComment();
-        observer.observe(entry.target);
-      }
-    };
-    if (postCommentHasNextPage && !isPostCommentFetching) {
-      observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.8,
-      });
-      observer.observe(targetRef.current);
-    }
-    return () => observer && observer.disconnect();
-  }, [FetchNextPostComment, isPostCommentFetching, postCommentHasNextPage]);
-
   return (
     <>
       <ScrollToTop />
@@ -170,8 +156,8 @@ const Post = () => {
           <PostSkeleton />
         ) : (
           <>
-            {postData.data.mediaList.length !== 0 ? (
-              <Carousel mediaList={postData.data.mediaList} />
+            {postData?.data.mediaList.length !== 0 ? (
+              <Carousel mediaList={postData?.data.mediaList} />
             ) : (
               <Style.DefaultCarousel>
                 <Style.DefaultThumbnailImage />
@@ -181,16 +167,16 @@ const Post = () => {
               <Style.ContentWriter>
                 <ProfileImage
                   size="large"
-                  src={ImageUrlConverter(postData.data.user?.profileImgURL)}
+                  src={ImageUrlConverter(postData?.data.user?.profileImgURL)}
                   profileClick={profileClick}
                   isAnonymous={postData.data.isAnonymous}
                 />
                 <Style.ContentWriterName
-                  length={postData.data.user?.nickname.length}
+                  length={postData?.data.user?.nickname.length}
                 >
-                  {postData.data.isAnonymous
+                  {postData?.data.isAnonymous
                     ? '익명'
-                    : postData.data.user?.nickname}
+                    : postData?.data.user?.nickname}
                 </Style.ContentWriterName>
               </Style.ContentWriter>
               <Style.Context>
@@ -213,13 +199,13 @@ const Post = () => {
                     판매 중지
                   </Button>
                 )}
-                <Style.ContentTitle>{postData.data.title}</Style.ContentTitle>
+                <Style.ContentTitle>{postData?.data.title}</Style.ContentTitle>
                 <Style.ContentLocationContainer>
                   <Style.ContentLocation>
                     <LocationIcon />
-                    {postData.data.location.region_1depth_name +
+                    {postData?.data.location.region_1depth_name +
                       ' ' +
-                      postData.data.location.region_2depth_name}
+                      postData?.data.location.region_2depth_name}
                   </Style.ContentLocation>
                   <Style.Dot />
                   <Style.ContentViewCount>
@@ -229,11 +215,13 @@ const Post = () => {
                 </Style.ContentLocationContainer>
                 <Style.ContentDetail>
                   발생시간&nbsp;
-                  {dayjs(postData.data.eventDate).format('YYYY.MM.DD. HH:mm')}
+                  {dayjs(postData?.data.eventDate).format('YYYY.MM.DD. HH:mm')}
                 </Style.ContentDetail>
                 <Style.ContentCreatedDate>
                   작성시간&nbsp;
-                  {dayjs(postData.data.createdDate).format('YYYY.MM.DD. HH:mm')}
+                  {dayjs(postData?.data.createdDate).format(
+                    'YYYY.MM.DD. HH:mm'
+                  )}
                 </Style.ContentCreatedDate>
               </Style.Context>
               <Style.ContentPriceContainer>
@@ -265,7 +253,7 @@ const Post = () => {
             <Line width="800px" />
             <Style.ContentContainer>
               <Style.Content>
-                {postData.data.content
+                {postData?.data.content
                   .split(/(#[^\s#]+|\n|\s)/g)
                   .map((contentSlice, index) => {
                     if (contentSlice === ' ') return '\u00a0';
@@ -282,14 +270,14 @@ const Post = () => {
               </Style.Content>
               <Style.ContentFooter>
                 <Style.ContentStatus>
-                  <label onClick={toggleLiked}>
+                  <span onClick={toggleLiked}>
                     {isLiked ? <LikedIcon /> : <LikeIcon />}
-                    {likeCount?.toLocaleString('ko-KR')}
-                  </label>
-                  <label>
+                  </span>
+                  <span>{likeCount?.toLocaleString('ko-KR')}</span>
+                  <div>
                     <CommentIcon />
-                    {postData?.data.totalCommentCount.toLocaleString('ko-KR')}
-                  </label>
+                    {postData?.data.commentCount.toLocaleString('ko-KR')}
+                  </div>
                 </Style.ContentStatus>
                 <ETCIcon
                   onClick={toggleComment}
@@ -301,7 +289,7 @@ const Post = () => {
                 >
                   {isContentToggle && (
                     <Toggle width="100px">
-                      {postData.data.myPost && !postData.data.isSold && (
+                      {postData?.data.myPost && !postData?.data.isSold && (
                         <>
                           <Toggle.LabelLink icon={<EditIcon />} label="수정" />
                           <Toggle.LabelLink
