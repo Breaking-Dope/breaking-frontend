@@ -1,99 +1,75 @@
-import React, { useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useContext, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import dayjs from 'dayjs';
 import { postDeposit, postWithdraw } from 'api/financial';
-import useTransaction from 'hooks/queries/useTransaction';
-import Line from 'components/Line/Line';
 import * as Style from 'pages/Financial/Financial.styles';
+import { UserInformationContext } from 'providers/UserInformationProvider';
+import Tabs from 'components/Tabs/Tabs';
+import TransactionForm from 'pages/Financial/components/TransactionForm/TransactionForm';
+import Transaction from 'pages/Financial/components/Transaction/Transaction';
 
 const Financial = () => {
   const queryClient = useQueryClient();
-  const [depositValue, setDepositValue] = useState('');
-  const [withdrawValue, setWithdrawValue] = useState('');
+  const { balance } = useContext(UserInformationContext);
 
-  const { data: transactionData } = useTransaction();
-  const { mutate: Deposit } = useMutation(postDeposit);
-  const { mutate: Withdraw } = useMutation(postWithdraw);
+  const { mutate: Deposit } = useMutation(postDeposit, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('transaction');
+      queryClient.invalidateQueries('jwtValidate');
+    },
+  });
+  const { mutate: Withdraw } = useMutation(postWithdraw, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('transaction');
+      queryClient.invalidateQueries('jwtValidate');
+    },
+  });
 
-  const handleDepositChange = (event) => {
-    setDepositValue(event.target.value.replace(/[^0-9]/g, ''));
-  };
-
-  const handleWithdrawChange = (event) => {
-    setWithdrawValue(event.target.value.replace(/[^0-9]/g, ''));
-  };
-
-  const handleDepositSubmit = (event) => {
-    event.preventDefault();
-    let depositConfirm = window.confirm(
-      `${depositValue}원을 입금하시겠습니까?`
-    );
+  const handleDepositSubmit = ({ amount }) => {
+    let depositConfirm = window.confirm(`${amount}원을 충전하시겠습니까?`);
 
     depositConfirm &&
-      Deposit(depositValue, {
+      Deposit(amount, {
         onSuccess: () => {
-          queryClient.invalidateQueries('transaction');
-          queryClient.invalidateQueries('jwtValidate');
+          alert(`${amount}원이 충전되었습니다.`);
         },
       });
-    setDepositValue('');
   };
 
-  const handleWithdrawSubmit = (event) => {
-    event.preventDefault();
-    let withdrawConfirm = window.confirm(
-      `${withdrawValue}원을 출금하시겠습니까?`
-    );
+  const handleWithdrawSubmit = ({ amount }) => {
+    let withdrawConfirm = window.confirm(`${amount}원을 출금하시겠습니까?`);
 
     withdrawConfirm &&
-      Withdraw(withdrawValue, {
+      Withdraw(amount, {
         onSuccess: () => {
-          queryClient.invalidateQueries('transaction');
-          queryClient.invalidateQueries('jwtValidate');
+          alert(`${amount}원이 출금되었습니다.`);
         },
       });
-    setWithdrawValue('');
   };
 
   return (
     <Style.Financial>
-      입출금 내역
-      <Line width="100%" />
-      <form onSubmit={handleDepositSubmit}>
-        <input
-          type="text"
-          onChange={handleDepositChange}
-          value={depositValue}
-        />
-        <button type="submit">충전</button>
-      </form>
-      <form onSubmit={handleWithdrawSubmit}>
-        <input
-          type="text"
-          onChange={handleWithdrawChange}
-          value={withdrawValue}
-        />
-        <button type="submit">출금</button>
-      </form>
-      {transactionData?.data.map((item, index) => (
-        <div key={'transaction-' + index}>
-          <p>
-            시간: {dayjs(item.transactionTime).format('YYYY.MM.DD HH:mm:ss')}
-          </p>
-          {item.transactionType === 'deposit' ? (
-            <>
-              <p>입금 {item.amount}원</p>
-              <p>잔액 {item.balance}원</p>
-            </>
-          ) : (
-            <>
-              <p>출금 {item.amount}원</p>
-              <p>잔액 {item.balance}원</p>
-            </>
-          )}
-          <Line width="100%" />
-        </div>
-      ))}
+      <Style.BalanceBox>
+        보유한 금액
+        <Style.Balance>{balance.toLocaleString('ko-KR')} 원</Style.Balance>
+      </Style.BalanceBox>
+      <Tabs>
+        <Tabs.TabList>
+          <Tabs.TabItem>충전하기</Tabs.TabItem>
+          <Tabs.TabItem>출금하기</Tabs.TabItem>
+          <Tabs.TabItem>입출금 내역</Tabs.TabItem>
+        </Tabs.TabList>
+
+        <Tabs.TabPanel>
+          <TransactionForm type="deposit" onSubmit={handleDepositSubmit} />
+        </Tabs.TabPanel>
+        <Tabs.TabPanel>
+          <TransactionForm type="withdraw" onSubmit={handleWithdrawSubmit} />
+        </Tabs.TabPanel>
+        <Tabs.TabPanel>
+          <Transaction />
+        </Tabs.TabPanel>
+      </Tabs>
     </Style.Financial>
   );
 };
