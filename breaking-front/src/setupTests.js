@@ -3,11 +3,17 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
-import { worker } from 'mocks/worker';
+import { server } from 'mocks/server';
 
-beforeAll(() => worker.listen());
-afterEach(() => worker.resetHandlers());
-afterAll(() => worker.close());
+beforeAll(() => {
+  server.listen();
+});
+afterEach(() => {
+  server.resetHandlers();
+});
+afterAll(() => {
+  server.close();
+});
 global.matchMedia =
   global.matchMedia ||
   function () {
