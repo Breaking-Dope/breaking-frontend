@@ -70,6 +70,16 @@ export const postHandlers = [
     return res(ctx.status(200));
   }),
 
+  rest.post(API_PATH.POST_ACTIVATE_PURCHASE(':postId'), (req, res, ctx) => {
+    console.log('게시글 활성화');
+    return res(ctx.status(200));
+  }),
+
+  rest.post(API_PATH.POST_DEACTIVATE_PURCHASE(':postId'), (req, res, ctx) => {
+    console.log('게시글 비활성화');
+    return res(ctx.status(200));
+  }),
+
   rest.post(API_PATH.POST_COMMENT_WRITE(':postId'), (req, res, ctx) => {
     console.log('댓글 등록 성공');
     return res(ctx.status(200));

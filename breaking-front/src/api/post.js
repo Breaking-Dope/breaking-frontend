@@ -101,6 +101,20 @@ export const deletePostBookmark = (postId) => {
   });
 };
 
+export const postPostActivatePurchase = (postId) => {
+  return api({
+    method: 'post',
+    url: API_PATH.POST_ACTIVATE_PURCHASE(postId),
+  });
+};
+
+export const postPostDeactivatePurchase = (postId) => {
+  return api({
+    method: 'post',
+    url: API_PATH.POST_DEACTIVATE_PURCHASE(postId),
+  });
+};
+
 export const postPostBuy = (postId) => {
   return api({
     method: 'post',

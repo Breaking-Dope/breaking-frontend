@@ -2,194 +2,158 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import PropTypes from 'prop-types';
-import {
-  deletePost,
-  deletePostBookmark,
-  deletePostLike,
-  postPostBookmark,
-  postPostLike,
-} from 'api/post';
+import { deletePostBookmark, postPostBookmark } from 'api/post';
 import { PAGE_PATH } from 'constants/path';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import Button from 'components/Button/Button';
 import Toggle from 'components/Toggle/Toggle';
+import Tag from 'components/Tag/Tag';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
 import numberFormatter from 'utils/numberFormatter';
 import timeFormatter from 'utils/timeFormatter';
 import * as Style from 'components/Feed/Feed.styles';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
-import { ReactComponent as LikedIcon } from 'assets/svg/liked.svg';
-import { ReactComponent as BookmarkIcon } from 'assets/svg/small_bookmark.svg';
-import { ReactComponent as BookmarkedIcon } from 'assets/svg/small_bookmarked.svg';
+import { ReactComponent as CommentIcon } from 'assets/svg/comment.svg';
+import { ReactComponent as BookmarkIcon } from 'assets/svg/bookmark.svg';
+import { ReactComponent as BookmarkedIcon } from 'assets/svg/bookmarked.svg';
 import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
-import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
-import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as ThumbnailIcon } from 'assets/svg/default_thumbnail_image.svg';
 
-export default function Feed({ feedData, userId, ...props }) {
+export default function Feed({ feedData, ...props }) {
   const navigate = useNavigate();
 
-  const [isDeleted, setIsDeleted] = useState(false);
-  const [isLiked, setIsLiked] = useState(feedData.isLiked);
   const [isBookmarked, setIsBookmarked] = useState(feedData.isBookmarked);
-  const [likeCount, setLikeCount] = useState(feedData.likeCount);
   const [isOpenToggle, setIsOpenToggle] = useState(false);
 
-  const { mutate: PostLike } = useMutation(postPostLike);
-  const { mutate: DeletePostLike } = useMutation(deletePostLike);
-  const { mutate: PostBookmark } = useMutation(postPostBookmark);
-  const { mutate: DeletePostBookmark } = useMutation(deletePostBookmark);
-  const { mutate: DeletePost } = useMutation(deletePost);
-
-  const handleFeedClick = () => {
-    navigate(PAGE_PATH.POST(feedData.postId));
-  };
+  const { mutate: PostBookmark } = useMutation(postPostBookmark, {
+    onSuccess: () => {
+      setIsBookmarked(true);
+    },
+    onError: (error) => {
+      if (error.response.data.code === 'BSE000') {
+        alert('로그인이 필요합니다.');
+        navigate(PAGE_PATH.LOGIN);
+      }
+    },
+  });
+  const { mutate: DeletePostBookmark } = useMutation(deletePostBookmark, {
+    onSuccess: () => {
+      setIsBookmarked(false);
+    },
+    onError: (error) => {
+      if (error.response.data.code === 'BSE000') {
+        alert('로그인이 필요합니다.');
+        navigate(PAGE_PATH.LOGIN);
+      }
+    },
+  });
 
   const handleProfileClick = () => {
     navigate(PAGE_PATH.PROFILE(feedData.user?.userId));
   };
 
-  const toggleLiked = () => {
-    if (isLiked) {
-      DeletePostLike(feedData.postId);
-      setLikeCount((pre) => pre - 1);
-    } else {
-      PostLike(feedData.postId);
-      setLikeCount((pre) => pre + 1);
-    }
-
-    setIsLiked((pre) => !pre);
-  };
   const toggleBookmarked = () => {
     isBookmarked
       ? DeletePostBookmark(feedData.postId)
       : PostBookmark(feedData.postId);
-    setIsBookmarked((pre) => !pre);
   };
 
   const toggleETC = () => {
     setIsOpenToggle((pre) => !pre);
   };
 
-  const postDeleteClick = () => {
-    let deleteConfirm = window.confirm('게시글을 삭제하시겠습니까?');
-
-    deleteConfirm &&
-      DeletePost(feedData.postId, {
-        onSuccess: () => {
-          alert('게시글을 삭제하였습니다.');
-          setIsDeleted(true);
-        },
-      });
-  };
-
   useEffect(() => {
-    setLikeCount(feedData.likeCount);
-    setIsLiked(feedData.isLiked);
     setIsBookmarked(feedData.isBookmarked);
   }, [feedData]);
 
   return (
-    <Style.Feed isDeleted={isDeleted} {...props}>
-      {feedData.thumbnailImgURL ? (
-        <Style.ThumbnailImage
-          src={ImageUrlConverter(feedData.thumbnailImgURL)}
-          onClick={handleFeedClick}
-        />
-      ) : (
-        <Style.DefaultThumbnailImage onClick={handleFeedClick}>
-          <ThumbnailIcon />
-        </Style.DefaultThumbnailImage>
-      )}
-      <Style.Content>
-        <Style.ETCIconContainer
-          onClick={toggleETC}
-          tabIndex="0"
-          onBlur={() => setIsOpenToggle(false)}
-        >
-          <ETCIcon />
-        </Style.ETCIconContainer>
+    <Style.Feed {...props}>
+      <Style.FeedHeader>
         <ProfileImage
           src={ImageUrlConverter(feedData.user?.profileImgURL)}
-          size="medium"
+          size="small"
           profileClick={handleProfileClick}
           title={feedData.user?.nickname}
           isAnonymous={feedData.isAnonymous}
         />
-        <Style.Context>
-          <Style.Title onClick={handleFeedClick} title={feedData.title}>
-            {feedData.title}
-          </Style.Title>
-          <Style.Detail>
+        <Style.FeedProfile>
+          <Style.WriterNickName>
+            {feedData.isAnonymous ? '익명' : feedData.user?.nickname}
+          </Style.WriterNickName>
+          <Style.Location>
             <LocationIcon />
             {feedData.location.region_1depth_name +
               ' ' +
               feedData.location.region_2depth_name}
-            <Style.Dot />
-            {timeFormatter(new Date(feedData.createdDate))}
-          </Style.Detail>
-          <Style.ContextFooter>
-            {feedData.postType === 'EXCLUSIVE' && (
-              <Button color="dark" size="small" disabled>
-                단독
-              </Button>
-            )}
-            {feedData.postType === 'EXCLUSIVE' && feedData.isSold ? (
-              <Button color="danger" size="small" disabled>
-                판매 완료
-              </Button>
-            ) : feedData.isPurchasable ? (
-              <Button color="primary" size="small" disabled>
-                판매중
-              </Button>
-            ) : (
-              <Button color="danger" size="small" disabled>
-                판매 중지
-              </Button>
-            )}
-            <Style.ViewCount>
-              조회수 {numberFormatter(feedData.viewCount)}회
-            </Style.ViewCount>
-          </Style.ContextFooter>
-        </Style.Context>
-        <Style.ContentStatus>
-          <Style.Price>{feedData.price.toLocaleString('ko-KR')} 원</Style.Price>
-          <Style.LikeIconContainer onClick={toggleLiked}>
-            {isLiked ? <LikedIcon /> : <LikeIcon />}
-            <Style.LikeCount>{numberFormatter(likeCount)}</Style.LikeCount>
-          </Style.LikeIconContainer>
-        </Style.ContentStatus>
+          </Style.Location>
+        </Style.FeedProfile>
+        <ETCIcon
+          onClick={toggleETC}
+          tabIndex="0"
+          onBlur={() => setIsOpenToggle(false)}
+        />
         <Style.FeedToggle onMouseDown={(event) => event.preventDefault()}>
           {isOpenToggle && (
             <Toggle width="100px">
-              {feedData.myPost && !feedData.isSold && (
-                <>
-                  <Toggle.LabelLink icon={<EditIcon />} label="수정" />
-                  <Toggle.LabelLink
-                    icon={<RemoveIcon />}
-                    label="삭제"
-                    labelClick={postDeleteClick}
-                  />
-                </>
-              )}
-              {/* 활성화 라벨 추가 */}
-              <Toggle.LabelLink
-                icon={isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />}
-                label="북마크"
-                labelClick={toggleBookmarked}
-              />
               <Toggle.LabelLink icon={<ShareIcon />} label="공유" />
             </Toggle>
           )}
         </Style.FeedToggle>
-      </Style.Content>
+      </Style.FeedHeader>
+      <Style.FeedThumbnailContainer to={PAGE_PATH.POST(feedData.postId)}>
+        {feedData.thumbnailImgURL ? (
+          <Style.ThumbnailImage
+            src={ImageUrlConverter(feedData.thumbnailImgURL)}
+          />
+        ) : (
+          <Style.DefaultThumbnailImage as="div">
+            <ThumbnailIcon />
+          </Style.DefaultThumbnailImage>
+        )}
+      </Style.FeedThumbnailContainer>
+      <Style.FeedContentContainer>
+        <Style.FeedContentHeader>
+          <Tag
+            postType={feedData.postType}
+            isSold={feedData.isSold}
+            isPurchasable={feedData.isPurchasable}
+          />
+          <Style.Bookmark onClick={toggleBookmarked}>
+            {isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />}
+          </Style.Bookmark>
+        </Style.FeedContentHeader>
+        <Style.FeedContent to={PAGE_PATH.POST(feedData.postId)}>
+          <Style.FeedTitle>{feedData.title}</Style.FeedTitle>
+          <Style.FeedPrice>
+            {feedData.price.toLocaleString('ko-KR')} 원
+          </Style.FeedPrice>
+        </Style.FeedContent>
+        <Style.FeedContentFooter>
+          <div>
+            <Style.ViewCount>
+              조회수 {numberFormatter(feedData.viewCount)}회
+            </Style.ViewCount>
+            <Style.CreatedDate>
+              {timeFormatter(new Date(feedData.createdDate))}
+            </Style.CreatedDate>
+          </div>
+          <div>
+            <Style.LikeCount>
+              <LikeIcon />
+              {numberFormatter(feedData.likeCount)}
+            </Style.LikeCount>
+            <Style.CommentCount>
+              <CommentIcon />
+              {feedData.commentCount}
+            </Style.CommentCount>
+          </div>
+        </Style.FeedContentFooter>
+      </Style.FeedContentContainer>
     </Style.Feed>
   );
 }
 
 Feed.propTypes = {
   feedData: PropTypes.object.isRequired,
-  userId: PropTypes.number,
 };

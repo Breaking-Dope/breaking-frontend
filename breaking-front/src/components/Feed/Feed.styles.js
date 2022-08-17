@@ -1,12 +1,51 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Feed = styled.div`
-  display: ${({ isDeleted }) => (isDeleted ? 'none' : 'block')};
+  display: flex;
   width: 400px;
-  height: 400px;
-  background-color: ${({ theme }) => theme.gray[50]};
-  filter: drop-shadow(2px 2px 2px ${({ theme }) => theme.gray[300]});
+  height: 480px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.white};
+  flex-direction: column;
+  filter: drop-shadow(0px 0px 5px ${({ theme }) => theme.gray[300]});
 `;
+
+export const FeedHeader = styled.div`
+  position: relative;
+  display: flex;
+  height: 56px;
+  padding-left: 10px;
+  padding-right: 15px;
+  justify-content: center;
+  align-items: center;
+  svg {
+    outline: none;
+    cursor: pointer;
+  }
+`;
+
+export const FeedProfile = styled.div`
+  margin-left: 5px;
+  flex-grow: 1;
+`;
+
+export const WriterNickName = styled.p`
+  margin-bottom: 3px;
+  font-size: 14px;
+`;
+
+export const Location = styled.div`
+  display: flex;
+  color: ${({ theme }) => theme.gray[800]};
+  font-size: 12px;
+  align-items: center;
+  svg {
+    margin-right: 2px;
+  }
+`;
+
+export const FeedThumbnailContainer = styled(Link)``;
 
 export const ThumbnailImage = styled.img`
   width: 100%;
@@ -16,110 +55,98 @@ export const ThumbnailImage = styled.img`
   cursor: pointer;
 `;
 
-export const DefaultThumbnailImage = styled.div`
+export const DefaultThumbnailImage = styled(ThumbnailImage)`
   display: flex;
-  width: 100%;
-  height: 300px;
-  background-color: ${({ theme }) => theme.gray[200]};
   align-items: center;
   justify-content: center;
-  object-fit: cover;
-  cursor: pointer;
 `;
 
-export const Content = styled.div`
+export const FeedContentContainer = styled.div`
   display: flex;
-  position: relative;
-  width: 100%;
-  height: 100px;
-  padding: 0px 10px;
-  align-items: center;
+  padding: 15px 20px;
+  flex-direction: column;
+  flex-grow: 1;
 `;
 
-export const ETCIconContainer = styled.div`
-  position: absolute;
-  top: 0;
-  right: 5px;
+export const FeedContentHeader = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: space-between;
+`;
+
+export const Bookmark = styled.div`
   cursor: pointer;
+  svg {
+    path {
+      fill: ${({ theme }) => theme.blue[900]};
+    }
+  }
 `;
 
-export const Context = styled.div`
-  width: 200px;
-  margin-left: 12px;
-  font-size: 12px;
+export const FeedContent = styled(Link)`
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
 `;
 
-export const Title = styled.a`
-  display: -webkit-box;
-  margin-bottom: 5px;
-  font-size: 16px;
-  font-weight: 700;
+export const FeedTitle = styled.div`
+  width: 65%;
+  font-size: 18px;
   text-overflow: ellipsis;
   word-break: break-word;
+  white-space: nowrap;
   overflow: hidden;
-  cursor: pointer;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 `;
 
-export const Detail = styled.div`
-  display: flex;
-  margin-bottom: 10px;
-  font-size: 12px;
-  color: ${({ theme }) => theme.gray[800]};
-`;
-
-export const Dot = styled.span`
-  margin: 0 3px;
-  &:after {
-    content: '•';
-  }
-`;
-
-export const ViewCount = styled(Detail)`
-  display: inline-block;
-`;
-
-export const ContextFooter = styled.div`
-  > * {
-    margin-right: 5px;
-  }
-`;
-
-export const ContentStatus = styled.div`
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-export const Price = styled.h3`
-  margin-bottom: 10px;
+export const FeedPrice = styled.div`
+  width: 35%;
   color: ${({ theme }) => theme.blue[900]};
   font-size: 18px;
-  font-weight: 700;
-  text-align: center;
+  text-align: end;
 `;
 
-export const LikeIconContainer = styled.div`
+export const FeedContentFooter = styled.div`
   display: flex;
-  margin-left: 8px;
-  font-size: 14px;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+  color: ${({ theme }) => theme.gray[800]};
+  font-size: 12px;
+  justify-content: space-between;
   svg {
     width: 14px;
     height: 14px;
   }
 `;
 
+export const ViewCount = styled.span`
+  &:after {
+    content: ' • ';
+  }
+`;
+
+export const CreatedDate = styled.span``;
+
 export const LikeCount = styled.span`
+  display: inline-flex;
+  align-items: center;
+  svg {
+    margin-right: 2px;
+    path {
+      fill: ${({ theme }) => theme.gray[800]};
+    }
+  }
+`;
+
+export const CommentCount = styled(LikeCount)`
   margin-left: 5px;
+  svg {
+    path {
+      fill: none;
+      stroke: ${({ theme }) => theme.gray[800]};
+    }
+  }
 `;
 
 export const FeedToggle = styled.div`
   position: absolute;
-  right: -65px;
-  bottom: 100px;
+  right: -50px;
+  bottom: 45px;
 `;
