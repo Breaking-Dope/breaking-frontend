@@ -12,7 +12,7 @@ export const Transaction = styled.div`
 export const TransactionBox = styled.div`
   display: flex;
   width: 100%;
-  height: 80px;
+  height: 100px;
   margin-bottom: 20px;
   padding: 20px;
   border-radius: 10px;
@@ -20,7 +20,18 @@ export const TransactionBox = styled.div`
   justify-content: space-between;
 `;
 
-export const Time = styled.p`
+export const TransactionInformation = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const TransactionType = styled.h3`
+  font-size: 18px;
+  font-weight: 700;
+`;
+
+export const TransactionTime = styled.p`
   font-size: 14px;
 `;
 
@@ -33,7 +44,9 @@ export const TransactionStatus = styled.div`
 
 export const Amount = styled.h3`
   color: ${({ theme, type }) =>
-    type === 'deposit' ? theme.blue[900] : theme.red[500]};
+    type === 'deposit' || type === 'sell_post'
+      ? theme.blue[900]
+      : theme.red[500]};
   font-size: 18px;
   font-weight: 700;
 `;
