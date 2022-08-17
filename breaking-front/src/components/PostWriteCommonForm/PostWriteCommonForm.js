@@ -28,11 +28,6 @@ const PostWriteCommonForm = ({ onChangeData, data, setData }) => {
     setIsShowPriceInput((pre) => !pre);
   };
 
-  const maxLengthCheck = ({ target }) => {
-    if (target.value.length > target.maxLength) {
-      target.value = target.value.slice(0, target.maxLength);
-    }
-  };
   return (
     <>
       <Style.OccurTimeLayout>
@@ -100,7 +95,6 @@ const PostWriteCommonForm = ({ onChangeData, data, setData }) => {
         <Style.PostWriteTitle>제보 가격</Style.PostWriteTitle>
         <Style.PostPriceInput
           type="text"
-          onInput={maxLengthCheck}
           maxLength="15"
           value={
             isShowPriceInput
