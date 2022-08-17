@@ -1,36 +1,17 @@
-/* eslint-disable no-unused-vars */
-import React, { useContext, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
-import { postDeposit, postWithdraw } from 'api/financial';
-import * as Style from 'pages/Financial/Financial.styles';
+import React, { useContext } from 'react';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import Tabs from 'components/Tabs/Tabs';
+import useDeposit from 'pages/Financial/hooks/useDeposit';
+import useWithdraw from 'pages/Financial/hooks/useWithdraw';
 import TransactionForm from 'pages/Financial/components/TransactionForm/TransactionForm';
 import Transaction from 'pages/Financial/components/Transaction/Transaction';
+import * as Style from 'pages/Financial/Financial.styles';
 
 const Financial = () => {
-  const queryClient = useQueryClient();
   const { balance } = useContext(UserInformationContext);
 
-  const { mutate: Deposit } = useMutation(postDeposit, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('transaction');
-      queryClient.invalidateQueries('jwtValidate');
-    },
-    onError: (error) => {
-      if (error.response.data.code === 'BSE600')
-        alert('결제에 실패하였습니다.');
-    },
-  });
-  const { mutate: Withdraw } = useMutation(postWithdraw, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('transaction');
-      queryClient.invalidateQueries('jwtValidate');
-    },
-    onError: (error) => {
-      if (error.response.data.code === 'BSE601') alert('잔액이 부족합니다.');
-    },
-  });
+  const { mutate: Deposit } = useDeposit();
+  const { mutate: Withdraw } = useWithdraw();
 
   const handleDepositSubmit = ({ amount }) => {
     let depositConfirm = window.confirm(`${amount}원을 충전하시겠습니까?`);
