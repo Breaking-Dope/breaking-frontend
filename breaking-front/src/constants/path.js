@@ -12,6 +12,7 @@ export const PAGE_PATH = {
 };
 
 export const API_PATH = {
+  REISSUE: '/reissue',
   OAUTH2_SIGNUP: '/oauth2/sign-up',
   OAUTH2_SIGNUP_VALIDATE: (validType, profileData) =>
     `/oauth2/sign-up/validate-${validType}/${profileData}`,
@@ -62,12 +63,14 @@ export const API_PATH = {
   POST_LIKE_DELETE: (postId) => `/post/${postId}/like`,
   POST_BOOKMARK: (postId) => `/post/${postId}/bookmark`,
   POST_BOOKMARK_DELETE: (postId) => `/post/${postId}/bookmark`,
-  POST_LIKE_LIST: (postId) => `/post/${postId}/like-list`,
-  POST_BOUGHT_LIST: (postId) => `/post/${postId}/buy-list`,
+  POST_LIKE_LIST: (postId, cursor, size = '10') =>
+    `/post/${postId}/like-list?cursor=${cursor}&size=${size}`,
+  POST_BOUGHT_LIST: (postId, cursor, size = '10') =>
+    `/post/${postId}/buy-list?cursor=${cursor}&size=${size}`,
   POST_BUY: (postId) => `/post/${postId}/purchase`,
   POST_COMMENT_DATA: (postId, cursor, size = '10') =>
     `/post/${postId}/comment?cursor=${cursor}&size=${size}`,
-  POST_REPLY_DATA: (commentId, cursor, size = '10') =>
+  POST_REPLY_DATA: (commentId, cursor, size = '11') =>
     `/post/comment/${commentId}/reply?cursor=${cursor}&size=${size}`,
   POST_COMMENT_WRITE: (postId) => `/post/${postId}/comment`,
   POST_REPLY_WRITE: (commentId) => `/post/comment/${commentId}/reply`,
@@ -75,7 +78,6 @@ export const API_PATH = {
   POST_COMMENT_DELETE: (commentId) => `/post/comment/${commentId}`,
   POST_COMMENT_LIKE: (commentId) => `/post/comment/${commentId}/like`,
   POST_COMMENT_LIKE_DELETE: (commentId) => `/post/comment/${commentId}/like`,
-  POST_COMMENT_LIKED_LIST: (commentId) => `/post/comment/${commentId}like-list`,
   BREAKING_MISSION: '/breaking-mission',
   BREAKING_SPOT: '/breaking-spot',
 };
