@@ -17,11 +17,18 @@ const Financial = () => {
       queryClient.invalidateQueries('transaction');
       queryClient.invalidateQueries('jwtValidate');
     },
+    onError: (error) => {
+      if (error.response.data.code === 'BSE600')
+        alert('결제에 실패하였습니다.');
+    },
   });
   const { mutate: Withdraw } = useMutation(postWithdraw, {
     onSuccess: () => {
       queryClient.invalidateQueries('transaction');
       queryClient.invalidateQueries('jwtValidate');
+    },
+    onError: (error) => {
+      if (error.response.data.code === 'BSE601') alert('잔액이 부족합니다.');
     },
   });
 
