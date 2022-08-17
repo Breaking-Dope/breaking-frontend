@@ -8,33 +8,14 @@ import PostWriteCommonForm, {
 } from 'components/PostWriteCommonForm/PostWriteCommonForm';
 import usePostEditMutation from 'pages/PostEdit/hooks/usePostEditMutation';
 import extractHashtag from 'utils/extractHashtag';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { POST_DATA } from 'mocks/dummyData/contents';
+import usePost from 'hooks/queries/usePost';
 
 const PostEdit = () => {
-  const location = useLocation();
-  const state = POST_DATA;
-  /*
-  state:{
-    postId:number,
-    data:data
-  }
-  */
-
-  const [postEditData, onChangePostEditData, setPostEditData] =
-    useInputs(state);
-  /*{
-    location: undefined,
-    eventDate: dayjs().format('YYYY-MM-DDTHH:mm'),
-    title: '',
-    content: '',
-    price: 0,
-    postType: 'CHARGED',
-    isAnonymous: false,
-    thumbnailIndex: 0,
-  }*/
-
+  let { id: postId } = useParams();
+  const { data: postData } = usePost(postId);
+  const [postEditData, onChangePostEditData, setPostEditData] = useInputs();
   const { mutate: PostEditMutate, isLoading: isPostEditMutateLoading } =
     usePostEditMutation();
 
@@ -64,10 +45,19 @@ const PostEdit = () => {
       postId: 0,
     });
   };
-
   useEffect(() => {
-    //postEditData이 비어있으면 잘못된 접근처리 게시글 페이지에서 연동할때 작성
-  }, [location]);
+    postData &&
+      setPostEditData({
+        location: postData.data.location,
+        eventDate: dayjs(postData.data.eventDate).format('YYYY-MM-DDTHH:mm'),
+        title: postData.data.title,
+        content: postData.data.content,
+        price: postData.data.price,
+        postType: postData.data.postType,
+        isAnonymous: postData.data.isAnonymous,
+        thumbnailIndex: 0,
+      });
+  }, [postData]);
 
   return (
     <Style.Container>
@@ -77,17 +67,19 @@ const PostEdit = () => {
           ※ 이미지 동영상 파일은 수정할수 없습니다 ※
         </Style.Message>
       </Style.UploadForm>
-      <form onSubmit={postWriteSubmit}>
-        <PostWriteCommonForm
-          isMutateLoading={isPostEditMutateLoading}
-          onChangeData={onChangePostEditData}
-          data={postEditData}
-          setData={setPostEditData}
-        />
-        <PostSubmitButton isMutateLoading={isPostEditMutateLoading}>
-          수정하기
-        </PostSubmitButton>
-      </form>
+      {postEditData && (
+        <form onSubmit={postWriteSubmit}>
+          <PostWriteCommonForm
+            isMutateLoading={isPostEditMutateLoading}
+            onChangeData={onChangePostEditData}
+            data={postEditData}
+            setData={setPostEditData}
+          />
+          <PostSubmitButton isMutateLoading={isPostEditMutateLoading}>
+            수정하기
+          </PostSubmitButton>
+        </form>
+      )}
     </Style.Container>
   );
 };
