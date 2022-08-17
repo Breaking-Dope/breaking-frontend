@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { UserInformationContext } from 'providers/UserInformationProvider';
-import Tabs from 'components/Tabs/Tabs';
 import useDeposit from 'pages/Financial/hooks/useDeposit';
+import Tabs from 'components/Tabs/Tabs';
 import useWithdraw from 'pages/Financial/hooks/useWithdraw';
 import TransactionForm from 'pages/Financial/components/TransactionForm/TransactionForm';
 import Transaction from 'pages/Financial/components/Transaction/Transaction';
