@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import PropTypes from 'prop-types';
-import { deletePost, deletePostBookmark, postPostBookmark } from 'api/post';
+import { deletePostBookmark, postPostBookmark } from 'api/post';
 import { PAGE_PATH } from 'constants/path';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import Button from 'components/Button/Button';
 import Toggle from 'components/Toggle/Toggle';
+import Tag from 'components/Tag/Tag';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
 import numberFormatter from 'utils/numberFormatter';
 import timeFormatter from 'utils/timeFormatter';
@@ -14,24 +14,40 @@ import * as Style from 'components/Feed/Feed.styles';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
 import { ReactComponent as CommentIcon } from 'assets/svg/comment.svg';
-import { ReactComponent as BookmarkIcon } from 'assets/svg/small_bookmark.svg';
-import { ReactComponent as BookmarkedIcon } from 'assets/svg/small_bookmarked.svg';
+import { ReactComponent as BookmarkIcon } from 'assets/svg/bookmark.svg';
+import { ReactComponent as BookmarkedIcon } from 'assets/svg/bookmarked.svg';
 import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
-import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
-import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as ThumbnailIcon } from 'assets/svg/default_thumbnail_image.svg';
 
 export default function Feed({ feedData, ...props }) {
   const navigate = useNavigate();
 
-  const [isDeleted, setIsDeleted] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(feedData.isBookmarked);
   const [isOpenToggle, setIsOpenToggle] = useState(false);
 
-  const { mutate: PostBookmark } = useMutation(postPostBookmark);
-  const { mutate: DeletePostBookmark } = useMutation(deletePostBookmark);
-  const { mutate: DeletePost } = useMutation(deletePost);
+  const { mutate: PostBookmark } = useMutation(postPostBookmark, {
+    onSuccess: () => {
+      setIsBookmarked(true);
+    },
+    onError: (error) => {
+      if (error.response.data.code === 'BSE000') {
+        alert('로그인이 필요합니다.');
+        navigate(PAGE_PATH.LOGIN);
+      }
+    },
+  });
+  const { mutate: DeletePostBookmark } = useMutation(deletePostBookmark, {
+    onSuccess: () => {
+      setIsBookmarked(false);
+    },
+    onError: (error) => {
+      if (error.response.data.code === 'BSE000') {
+        alert('로그인이 필요합니다.');
+        navigate(PAGE_PATH.LOGIN);
+      }
+    },
+  });
 
   const handleProfileClick = () => {
     navigate(PAGE_PATH.PROFILE(feedData.user?.userId));
@@ -41,23 +57,10 @@ export default function Feed({ feedData, ...props }) {
     isBookmarked
       ? DeletePostBookmark(feedData.postId)
       : PostBookmark(feedData.postId);
-    setIsBookmarked((pre) => !pre);
   };
 
   const toggleETC = () => {
     setIsOpenToggle((pre) => !pre);
-  };
-
-  const postDeleteClick = () => {
-    let deleteConfirm = window.confirm('게시글을 삭제하시겠습니까?');
-
-    deleteConfirm &&
-      DeletePost(feedData.postId, {
-        onSuccess: () => {
-          alert('게시글을 삭제하였습니다.');
-          setIsDeleted(true);
-        },
-      });
   };
 
   useEffect(() => {
@@ -65,7 +68,7 @@ export default function Feed({ feedData, ...props }) {
   }, [feedData]);
 
   return (
-    <Style.Feed Feed isDeleted={isDeleted} {...props}>
+    <Style.Feed {...props}>
       <Style.FeedHeader>
         <ProfileImage
           src={ImageUrlConverter(feedData.user?.profileImgURL)}
@@ -93,22 +96,6 @@ export default function Feed({ feedData, ...props }) {
         <Style.FeedToggle onMouseDown={(event) => event.preventDefault()}>
           {isOpenToggle && (
             <Toggle width="100px">
-              {feedData.isMyPost && !feedData.isSold && (
-                <>
-                  <Toggle.LabelLink icon={<EditIcon />} label="수정" />
-                  <Toggle.LabelLink
-                    icon={<RemoveIcon />}
-                    label="삭제"
-                    labelClick={postDeleteClick}
-                  />
-                </>
-              )}
-              {/* 활성화 라벨 추가 */}
-              <Toggle.LabelLink
-                icon={isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />}
-                label="북마크"
-                labelClick={toggleBookmarked}
-              />
               <Toggle.LabelLink icon={<ShareIcon />} label="공유" />
             </Toggle>
           )}
@@ -125,28 +112,18 @@ export default function Feed({ feedData, ...props }) {
           </Style.DefaultThumbnailImage>
         )}
       </Style.FeedThumbnailContainer>
-      <Style.FeedContentContainer to={PAGE_PATH.POST(feedData.postId)}>
-        <Style.Tag>
-          {feedData.postType === 'EXCLUSIVE' && (
-            <Button color="dark" size="small" disabled>
-              단독
-            </Button>
-          )}
-          {feedData.postType === 'EXCLUSIVE' && feedData.isSold ? (
-            <Button color="danger" size="small" disabled>
-              판매 완료
-            </Button>
-          ) : feedData.isPurchasable ? (
-            <Button color="primary" size="small" disabled>
-              판매중
-            </Button>
-          ) : (
-            <Button color="danger" size="small" disabled>
-              판매 중지
-            </Button>
-          )}
-        </Style.Tag>
-        <Style.FeedContent>
+      <Style.FeedContentContainer>
+        <Style.FeedContentHeader>
+          <Tag
+            postType={feedData.postType}
+            isSold={feedData.isSold}
+            isPurchasable={feedData.isPurchasable}
+          />
+          <Style.Bookmark onClick={toggleBookmarked}>
+            {isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />}
+          </Style.Bookmark>
+        </Style.FeedContentHeader>
+        <Style.FeedContent to={PAGE_PATH.POST(feedData.postId)}>
           <Style.FeedTitle>{feedData.title}</Style.FeedTitle>
           <Style.FeedPrice>
             {feedData.price.toLocaleString('ko-KR')} 원
@@ -161,7 +138,7 @@ export default function Feed({ feedData, ...props }) {
               {timeFormatter(new Date(feedData.createdDate))}
             </Style.CreatedDate>
           </div>
-          <Style.FeedStatus>
+          <div>
             <Style.LikeCount>
               <LikeIcon />
               {numberFormatter(feedData.likeCount)}
@@ -170,7 +147,7 @@ export default function Feed({ feedData, ...props }) {
               <CommentIcon />
               {feedData.commentCount}
             </Style.CommentCount>
-          </Style.FeedStatus>
+          </div>
         </Style.FeedContentFooter>
       </Style.FeedContentContainer>
     </Style.Feed>

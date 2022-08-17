@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Feed = styled.div`
-  display: ${({ isDeleted }) => (isDeleted ? 'none' : 'flex')};
+  display: flex;
   width: 400px;
   height: 480px;
   border-radius: 10px;
@@ -61,21 +61,29 @@ export const DefaultThumbnailImage = styled(ThumbnailImage)`
   justify-content: center;
 `;
 
-export const FeedContentContainer = styled(Link)`
+export const FeedContentContainer = styled.div`
   display: flex;
   padding: 15px 20px;
   flex-direction: column;
   flex-grow: 1;
 `;
 
-export const Tag = styled.div`
+export const FeedContentHeader = styled.div`
+  display: flex;
   margin-bottom: 10px;
-  button {
-    margin-right: 5px;
+  justify-content: space-between;
+`;
+
+export const Bookmark = styled.div`
+  cursor: pointer;
+  svg {
+    path {
+      fill: ${({ theme }) => theme.blue[900]};
+    }
   }
 `;
 
-export const FeedContent = styled.div`
+export const FeedContent = styled(Link)`
   display: flex;
   width: 100%;
   flex-grow: 1;
@@ -116,29 +124,22 @@ export const ViewCount = styled.span`
 
 export const CreatedDate = styled.span``;
 
-export const FeedStatus = styled.div`
-  display: flex;
-  div {
-    display: flex;
-    margin-left: 5px;
-    align-items: center;
-    svg {
-      margin-right: 2px;
-    }
-  }
-`;
-
-export const LikeCount = styled.div`
+export const LikeCount = styled.span`
+  display: inline-flex;
+  align-items: center;
   svg {
+    margin-right: 2px;
     path {
       fill: ${({ theme }) => theme.gray[800]};
     }
   }
 `;
 
-export const CommentCount = styled.div`
+export const CommentCount = styled(LikeCount)`
+  margin-left: 5px;
   svg {
     path {
+      fill: none;
       stroke: ${({ theme }) => theme.gray[800]};
     }
   }
@@ -146,6 +147,6 @@ export const CommentCount = styled.div`
 
 export const FeedToggle = styled.div`
   position: absolute;
-  right: 0px;
-  top: 45px;
+  right: -50px;
+  bottom: 45px;
 `;
