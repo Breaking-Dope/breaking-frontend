@@ -34,13 +34,20 @@ const ProfileFollowModal = ({
   } = useFollowingList(userId);
 
   useEffect(() => {
-    setFollowingList(followingListData?.pages);
+    followingListData &&
+      setFollowingList((pre) => [
+        ...pre,
+        ...followingListData.pages[followingListData.pages.length - 1].result,
+      ]);
   }, [followingListData]);
 
   useEffect(() => {
-    setFollowerList(followerListData?.pages);
+    followerListData &&
+      setFollowerList((pre) => [
+        ...pre,
+        ...followerListData.pages[followerListData.pages.length - 1].result,
+      ]);
   }, [followerListData]);
-
   return (
     <>
       <Modal
@@ -92,21 +99,19 @@ const FollowCardList = ({
   const userData = useContext(UserInformationContext);
   return (
     <>
-      {followList.map((page) =>
-        page?.result.map((item) => (
-          <FollowCard
-            cardClick={() => {
-              toggleModal();
-              navigate(PAGE_PATH.PROFILE(item.userId));
-            }}
-            isPermission={item.userId !== userData.userId}
-            profileData={item}
-            key={`follow-${item.userId}`}
-            setFollowingList={setFollowingList}
-            setFollowerList={setFollowerList}
-          />
-        ))
-      )}
+      {followList.map((item) => (
+        <FollowCard
+          cardClick={() => {
+            toggleModal();
+            navigate(PAGE_PATH.PROFILE(item.userId));
+          }}
+          isPermission={item.userId !== userData.userId}
+          profileData={item}
+          key={`follow-${item.userId}`}
+          setFollowingList={setFollowingList}
+          setFollowerList={setFollowerList}
+        />
+      ))}
       {isLoading && (
         <>
           <FollowCardSkeleton />
