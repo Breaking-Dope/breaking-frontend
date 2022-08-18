@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Filter from 'components/Filter/Filter';
-import * as Style from 'pages/Profile/units/ProfileTabPanel.styles';
+import * as Style from 'pages/Profile/components/ProfileTabPanel/ProfileTabPanel.styles';
 import Feed from 'components/Feed/Feed';
 import PropTypes from 'prop-types';
 import { useContext } from 'react';

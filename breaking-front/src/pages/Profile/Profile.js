@@ -11,9 +11,9 @@ import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
-import ProfileFollowButton from 'pages/Profile/units/ProfileFollowButton';
-import ProfileFollowModal from 'pages/Profile/units/ProfileFollowModal';
-import ProfileTabPanel from 'pages/Profile/units/ProfileTabPanel';
+import ProfileFollowButton from 'pages/Profile/components/ProfileFollowButton/ProfileFollowButton';
+import ProfileFollowModal from 'pages/Profile/components/ProfileFollowModal/ProfileFollowModal';
+import ProfileTabPanel from 'pages/Profile/components/ProfileTabPanel/ProfileTabPanel';
 import numberFormatter from 'utils/numberFormatter';
 
 const Profile = () => {

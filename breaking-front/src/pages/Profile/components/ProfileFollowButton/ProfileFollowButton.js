@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Style from 'pages/Profile/units/ProfileFollowButton.styles';
+import * as Style from 'pages/Profile/components/ProfileFollowButton/ProfileFollowButton.styles';
 import PropTypes from 'prop-types';
 import { useMutation, useQueryClient } from 'react-query';
 import { postFollow, deleteUnFollow } from 'api/profile';
