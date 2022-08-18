@@ -8,28 +8,37 @@ import { useTheme } from 'styled-components';
 const ProfileFollowButton = ({ userId, isFollowing, isMyPage }) => {
   const queryClient = useQueryClient();
   const theme = useTheme();
-  const { mutate: UnFollow, isLoading: isUnFollowLoading } =
-    useMutation(deleteUnFollow);
-  const { mutate: Follow, isLoading: isFollowLoading } =
-    useMutation(postFollow);
+  const { mutate: UnFollow, isLoading: isUnFollowLoading } = useMutation(
+    deleteUnFollow,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('profile');
+        queryClient.invalidateQueries('followerList');
+      },
+      onError: () => {
+        //에러처리
+      },
+    }
+  );
+  const { mutate: Follow, isLoading: isFollowLoading } = useMutation(
+    postFollow,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('profile');
+        queryClient.invalidateQueries('followerList');
+      },
+      onError: () => {
+        //에러처리
+      },
+    }
+  );
 
   if (isMyPage) {
     return <></>;
   } else if (isFollowing) {
     return (
       <Style.FollowButton
-        onClick={() =>
-          !isUnFollowLoading &&
-          UnFollow(userId, {
-            onSuccess: () => {
-              queryClient.invalidateQueries('profile');
-              queryClient.invalidateQueries('followerList');
-            },
-            onError: () => {
-              //에러처리
-            },
-          })
-        }
+        onClick={() => !isUnFollowLoading && UnFollow(userId)}
       >
         {isUnFollowLoading ? (
           <Style.Loading type="spin" color={theme.blue[900]} width="30px" />
@@ -40,20 +49,7 @@ const ProfileFollowButton = ({ userId, isFollowing, isMyPage }) => {
     );
   } else {
     return (
-      <Style.FollowButton
-        onClick={() =>
-          !isFollowLoading &&
-          Follow(userId, {
-            onSuccess: () => {
-              queryClient.invalidateQueries('profile');
-              queryClient.invalidateQueries('followerList');
-            },
-            onError: () => {
-              //에러처리
-            },
-          })
-        }
-      >
+      <Style.FollowButton onClick={() => !isFollowLoading && Follow(userId)}>
         {isFollowLoading ? (
           <Style.Loading type="spin" color={theme.blue[900]} width="30px" />
         ) : (
