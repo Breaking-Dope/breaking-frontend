@@ -43,31 +43,73 @@ const bookmarkedContents = [
 ];
 
 const followerList = [
-  NORMAL_USER,
-  NO_STATUSMSG_USER,
-  NO_PROFILEIMGURL_USER,
-  NO_POSTCOUNT_USER,
-  NO_FOLLOW_USER,
-  FOLLOWING_USER,
+  {
+    cursorId: 0,
+    ...NORMAL_USER,
+  },
+  {
+    cursorId: 1,
+    ...NO_STATUSMSG_USER,
+  },
+  {
+    cursorId: 2,
+    ...NO_PROFILEIMGURL_USER,
+  },
+  {
+    cursorId: 3,
+    ...NO_POSTCOUNT_USER,
+  },
+  {
+    cursorId: 4,
+    ...NO_FOLLOW_USER,
+  },
+  {
+    cursorId: 4,
+    ...FOLLOWING_USER,
+  },
 ];
 
 const followingList = [
-  NORMAL_USER,
-  NO_STATUSMSG_USER,
-  NO_PROFILEIMGURL_USER,
-  NO_POSTCOUNT_USER,
-  NO_FOLLOW_USER,
-  FOLLOWING_USER,
-  NORMAL_USER,
-  NORMAL_USER,
-  NORMAL_USER,
-  NORMAL_USER,
-  NORMAL_USER,
-  NORMAL_USER,
-  NORMAL_USER,
-  NORMAL_USER,
-  NORMAL_USER,
-  NORMAL_USER,
+  {
+    cursorId: 0,
+    ...NORMAL_USER,
+  },
+  {
+    cursorId: 1,
+    ...NO_STATUSMSG_USER,
+  },
+  {
+    cursorId: 2,
+    ...NO_PROFILEIMGURL_USER,
+  },
+  {
+    cursorId: 3,
+    ...NO_POSTCOUNT_USER,
+  },
+  {
+    cursorId: 4,
+    ...NO_FOLLOW_USER,
+  },
+  {
+    cursorId: 4,
+    ...FOLLOWING_USER,
+  },
+  {
+    cursorId: 4,
+    ...FOLLOWING_USER,
+  },
+  {
+    cursorId: 4,
+    ...FOLLOWING_USER,
+  },
+  {
+    cursorId: 4,
+    ...FOLLOWING_USER,
+  },
+  {
+    cursorId: 4,
+    ...FOLLOWING_USER,
+  },
 ];
 
 const userList = [
@@ -123,13 +165,16 @@ export const profileHandlers = [
     return res(ctx.status(200), ctx.delay(1000), ctx.json(NORMAL_USER));
   }),
 
-  rest.get(API_PATH.PROFILE_FOLLOWERS('*'), (req, res, ctx) => {
+  rest.get(API_PATH.PROFILE_FOLLOWERS(':userId', '*', '*'), (req, res, ctx) => {
     return res(ctx.status(200), ctx.delay(1000), ctx.json(followerList));
   }),
 
-  rest.get(API_PATH.PROFILE_FOLLOWINGS('*'), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.delay(1000), ctx.json(followingList));
-  }),
+  rest.get(
+    API_PATH.PROFILE_FOLLOWINGS(':userId', '*', '*'),
+    (req, res, ctx) => {
+      return res(ctx.status(200), ctx.delay(1000), ctx.json(followingList));
+    }
+  ),
 
   rest.get(API_PATH.PROFILE_DATA(':userId'), (req, res, ctx) => {
     const { userId } = req.params;
