@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import { useEffect } from 'react';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
-import InfiniteTargetDiv from 'pages/Profile/components/TargetDiv/InfiniteTargetDiv';
+import InfiniteTargetDiv from 'pages/Profile/components/InfiniteTargetDiv/InfiniteTargetDiv';
 import * as Style from 'pages/Profile/components/ProfileFollowModal/ProfileFollowModal.styles';
 
 const ProfileFollowModal = ({

@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import { useQueryClient } from 'react-query';
-import { useTheme } from 'styled-components';
 import { FeedSkeleton } from 'components/Skeleton/Skeleton';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
+import InfiniteTargetDiv from '../InfiniteTargetDiv/InfiniteTargetDiv';
 
 const ProfileTabPanel = ({
   type,
@@ -20,7 +20,6 @@ const ProfileTabPanel = ({
 }) => {
   const { userId } = useContext(UserInformationContext);
   const queryClient = useQueryClient();
-  const theme = useTheme();
 
   const { targetRef } = useInfiniteScroll(data, nextFetch);
 
@@ -70,11 +69,7 @@ const ProfileTabPanel = ({
             ))
           )}
         </Style.FeedContainer>
-        <Style.TargetDiv ref={targetRef}>
-          {isFetching && (
-            <Style.Loading type="spin" color={theme.blue[900]} width="40px" />
-          )}
-        </Style.TargetDiv>
+        <InfiniteTargetDiv targetRef={targetRef} isFetching={isFetching} />
       </Style.PanelContainer>
     </>
   );
