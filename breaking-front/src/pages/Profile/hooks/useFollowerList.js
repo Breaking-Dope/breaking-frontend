@@ -1,6 +1,10 @@
 import { getFollowers } from 'api/profile';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 
 const useFollowerList = (userId) =>
-  useQuery(['followerList', userId], getFollowers);
+  useInfiniteQuery(['followerList', userId], getFollowers, {
+    getNextPageParam: (lastPage) => {
+      return lastPage.cursor;
+    },
+  });
 export default useFollowerList;

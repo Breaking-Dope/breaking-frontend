@@ -35,8 +35,10 @@ export const API_PATH = {
     `/feed/user/${userId}/bookmark?cursor=${cursor}&size=${size}&sold-option=${option}`,
   PROFILE_FOLLOW: (userId) => `/follow/${userId}`,
   PROFILE_UNFOLLOW: (userId) => `/follow/${userId}`,
-  PROFILE_FOLLOWINGS: (userId) => `/follow/following/${userId}`,
-  PROFILE_FOLLOWERS: (userId) => `/follow/follower/${userId}`,
+  PROFILE_FOLLOWINGS: (userId, cursor, size = 10) =>
+    `/follow/following/${userId}?cursor=${cursor}&size=${size}`,
+  PROFILE_FOLLOWERS: (userId, cursor, size = 10) =>
+    `/follow/follower/${userId}?cursor=${cursor}&size=${size}`,
   PROFILE_WITHDRAWAL: (userId) => `/profile/${userId}`,
   FEEDS: (cursor, sort = 'chronological', option = 'all', size = '10') =>
     `/feed?cursor=${cursor}&size=${size}&sort=${sort}&sold-option=${option}`,

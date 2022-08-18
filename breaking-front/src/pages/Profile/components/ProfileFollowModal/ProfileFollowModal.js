@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import { useEffect } from 'react';
+import useInfiniteScroll from 'hooks/useInfiniteScroll';
 
 const ProfileFollowModal = ({
   isFollowerModalOpen,
@@ -20,59 +21,79 @@ const ProfileFollowModal = ({
   const [followerList, setFollowerList] = useState([]);
   const [followingList, setFollowingList] = useState([]);
 
-  const { data: followerListData, isLoading: followerListLoading } =
-    useFollowerList(userId);
+  const {
+    data: followerListData,
+    isLoading: followerListLoading,
+    fetchNextPage: FetchNextFollowerList,
+  } = useFollowerList(userId);
 
-  const { data: followingListData, isLoading: followingListLoading } =
-    useFollowingList(userId);
+  const {
+    data: followingListData,
+    isLoading: followingListLoading,
+    fetchNextPage: FetchNextFollowingList,
+  } = useFollowingList(userId);
 
   useEffect(() => {
-    setFollowingList(followingListData?.data);
+    setFollowingList(followingListData?.pages);
   }, [followingListData]);
 
   useEffect(() => {
-    setFollowerList(followerListData?.data);
+    setFollowerList(followerListData?.pages);
   }, [followerListData]);
 
   return (
     <>
-      <FollowCommonModal
-        isLoading={followerListLoading}
+      <Modal
         isOpen={isFollowerModalOpen}
-        toggleModal={toggleFollowerModal}
+        closeClick={toggleFollowerModal}
         title="팔로워"
-        followList={followerList}
-        setFollowingList={setFollowingList}
-        setFollowerList={setFollowerList}
-      />
-      <FollowCommonModal
-        isLoading={followingListLoading}
+      >
+        {followerList && (
+          <FollowCardList
+            isLoading={followerListLoading}
+            toggleModal={toggleFollowerModal}
+            followList={followerList}
+            nextFetch={FetchNextFollowerList}
+            setFollowingList={setFollowingList}
+            setFollowerList={setFollowerList}
+          />
+        )}
+      </Modal>
+      <Modal
         isOpen={isFollowingModalOpen}
-        toggleModal={toggleFollowingModal}
-        title="팔로잉"
-        followList={followingList}
-        setFollowingList={setFollowingList}
-        setFollowerList={setFollowerList}
-      />
+        closeClick={toggleFollowingModal}
+        title="팔로워"
+      >
+        {followingList && (
+          <FollowCardList
+            isLoading={followingListLoading}
+            toggleModal={toggleFollowingModal}
+            followList={followingList}
+            nextFetch={FetchNextFollowingList}
+            setFollowingList={setFollowingList}
+            setFollowerList={setFollowerList}
+          />
+        )}
+      </Modal>
     </>
   );
 };
 
-const FollowCommonModal = ({
+const FollowCardList = ({
   isLoading,
-  isOpen,
   toggleModal,
-  title,
   followList,
+  nextFetch,
   setFollowingList,
   setFollowerList,
 }) => {
+  const { targetRef } = useInfiniteScroll(followList, nextFetch);
   const navigate = useNavigate();
   const userData = useContext(UserInformationContext);
   return (
-    <Modal isOpen={isOpen} closeClick={toggleModal} title={title}>
-      {followList &&
-        followList.map((item) => (
+    <>
+      {followList.map((page) =>
+        page?.result.map((item) => (
           <FollowCard
             cardClick={() => {
               toggleModal();
@@ -80,11 +101,12 @@ const FollowCommonModal = ({
             }}
             isPermission={item.userId !== userData.userId}
             profileData={item}
-            key={`${title}-${item.userId}`}
+            key={`follow-${item.userId}`}
             setFollowingList={setFollowingList}
             setFollowerList={setFollowerList}
           />
-        ))}
+        ))
+      )}
       {isLoading && (
         <>
           <FollowCardSkeleton />
@@ -95,7 +117,8 @@ const FollowCommonModal = ({
           <FollowCardSkeleton />
         </>
       )}
-    </Modal>
+      <div ref={targetRef} />
+    </>
   );
 };
 
@@ -107,12 +130,11 @@ ProfileFollowModal.propTypes = {
   userId: PropTypes.number,
 };
 
-FollowCommonModal.propTypes = {
+FollowCardList.propTypes = {
   isLoading: PropTypes.bool,
-  isOpen: PropTypes.bool,
   toggleModal: PropTypes.func,
-  title: PropTypes.string,
   followList: PropTypes.array,
+  nextFetch: PropTypes.func,
   setFollowingList: PropTypes.func,
   setFollowerList: PropTypes.func,
 };
