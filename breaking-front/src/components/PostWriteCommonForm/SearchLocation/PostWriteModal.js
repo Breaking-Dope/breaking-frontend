@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Style from 'pages/PostWrite/units/PostWriteModal.styles';
+import * as Style from 'components/PostWriteCommonForm/SearchLocation/PostWriteModal.styles';
 import { ReactComponent as CloseIcon } from 'assets/svg/x_mark.svg';
 
 const PostWriteModal = ({ isOpen, closeClick, children }) => {

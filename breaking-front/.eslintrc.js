@@ -22,7 +22,9 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react'],
-  rules: {},
+  rules: {
+    'react/self-closing-comp': 'warn', // 셀프 클로징 태그 가능하면 적용
+  },
   ignorePatterns: ['*.config.js', 'node_modules'],
   overrides: [
     {

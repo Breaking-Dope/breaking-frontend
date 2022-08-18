@@ -6,6 +6,7 @@ import { signUpHandlers } from 'mocks/signUpHandlers';
 import { mainFeedHandlers } from 'mocks/mainFeedHandlers';
 import { postHandlers } from 'mocks/postHandlers';
 import { postWriteHandlers } from 'mocks/postWriteHandlers';
+import { postEditHandlers } from 'mocks/postEditHandlers';
 
 export const handlers = [
   ...profileSettingHandlers,
@@ -16,4 +17,5 @@ export const handlers = [
   ...signUpHandlers,
   ...mainFeedHandlers,
   ...postWriteHandlers,
+  ...postEditHandlers,
 ];

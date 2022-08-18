@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import { ReactComponent as SearchIcon } from 'assets/svg/search.svg';
-import * as Style from 'pages/PostWrite/units/PostWriteSearchLocation.styles';
+import * as Style from 'components/PostWriteCommonForm/SearchLocation/PostWriteSearchLocation.styles';
 import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
-import PostWriteModal from 'pages/PostWrite/units/PostWriteModal';
+import PostWriteModal from 'components/PostWriteCommonForm/SearchLocation/PostWriteModal';
 import PropTypes from 'prop-types';
 import parseAddressName from 'utils/parseAddressName';
 
-const PostWriteSearchLocation = ({ setPostWriteData }) => {
+const PostWriteSearchLocation = ({ location, setData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
@@ -103,7 +103,7 @@ const PostWriteSearchLocation = ({ setPostWriteData }) => {
     // parent의 form state를 받아와 결과값을 추가
     setLocationInputValue(markerInformation.addressName);
     setIsModalOpen(false);
-    setPostWriteData((pre) => ({
+    setData((pre) => ({
       ...pre,
       location: {
         latitude: markerInformation.lat,
@@ -126,9 +126,21 @@ const PostWriteSearchLocation = ({ setPostWriteData }) => {
       map.setCenter(
         new kakao.maps.LatLng(mapCenterPosition.lat, mapCenterPosition.lng)
       );
-
     // modal과 같이 display의 값이 바뀌는 곳에서는  map.relayout() 가 필요
-  }, [isModalOpen, map]);
+  }, [isModalOpen, map, mapCenterPosition]);
+
+  useEffect(() => {
+    if (location) {
+      setLocationInputValue(location.address);
+      setMapCenterPosition({ lat: location.latitude, lng: location.longitude });
+      setIsCustomMarker(true);
+      setMarkerInformation({
+        lat: location.latitude,
+        lng: location.longitude,
+        addressName: location.address,
+      });
+    }
+  }, [location]);
 
   return (
     <>
@@ -281,7 +293,8 @@ const PostWriteSearchLocation = ({ setPostWriteData }) => {
 };
 
 PostWriteSearchLocation.propTypes = {
-  setPostWriteData: PropTypes.func,
+  location: PropTypes.object,
+  setData: PropTypes.func,
 };
 
 export default PostWriteSearchLocation;
