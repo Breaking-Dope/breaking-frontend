@@ -30,7 +30,6 @@ const Profile = () => {
     data: writtenData,
     fetchNextPage: FetchNextWritten,
     isFetching: isWrittenFetching,
-    hasNextPage: writtenHasNextPage,
     isLoading: isWrittenLoading,
   } = useProfileWrittenPost(userId, writtenOption);
 
@@ -38,7 +37,6 @@ const Profile = () => {
     data: boughtData,
     fetchNextPage: FetchNextBought,
     isFetching: isBoughtFetching,
-    hasNextPage: boughtHasNextPage,
     isLoading: isBoughtLoading,
   } = useProfileBoughtPost(userId, isMyPage, boughtOption);
 
@@ -46,7 +44,6 @@ const Profile = () => {
     data: bookmarkedData,
     fetchNextPage: FetchNextBookmarked,
     isFetching: isBookmarkedFetching,
-    hasNextPage: bookmarkedHasNextPage,
     isLoading: isBookmarkedLoading,
   } = useProfileBookmarkedPost(userId, isMyPage, bookmarkedOption);
 
@@ -115,7 +112,6 @@ const Profile = () => {
           <Tabs.TabPanel>
             <ProfileTabPanel
               type="written"
-              hasNextPage={writtenHasNextPage}
               nextFetch={FetchNextWritten}
               isFetching={isWrittenFetching}
               data={writtenData}
@@ -128,7 +124,6 @@ const Profile = () => {
             <Tabs.TabPanel>
               <ProfileTabPanel
                 type="bought"
-                hasNextPage={boughtHasNextPage}
                 nextFetch={FetchNextBought}
                 isFetching={isBoughtFetching}
                 data={boughtData}
@@ -142,7 +137,6 @@ const Profile = () => {
             <Tabs.TabPanel>
               <ProfileTabPanel
                 type="bookmarked"
-                hasNextPage={bookmarkedHasNextPage}
                 nextFetch={FetchNextBookmarked}
                 isFetching={isBookmarkedFetching}
                 data={bookmarkedData}
