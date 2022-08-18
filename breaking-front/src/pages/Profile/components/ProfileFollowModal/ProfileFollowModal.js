@@ -10,6 +10,8 @@ import PropTypes from 'prop-types';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import { useEffect } from 'react';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
+import InfiniteTargetDiv from 'pages/Profile/components/TargetDiv/InfiniteTargetDiv';
+import * as Style from 'pages/Profile/components/ProfileFollowModal/ProfileFollowModal.styles';
 
 const ProfileFollowModal = ({
   isFollowerModalOpen,
@@ -23,15 +25,26 @@ const ProfileFollowModal = ({
 
   const {
     data: followerListData,
-    isLoading: followerListLoading,
+    isLoading: isFollowerListLoading,
+    isFetching: isFollowerListFetching,
     fetchNextPage: FetchNextFollowerList,
   } = useFollowerList(userId);
 
   const {
     data: followingListData,
-    isLoading: followingListLoading,
+    isLoading: isFollowingListLoading,
+    isFetching: isFollowingListFetching,
     fetchNextPage: FetchNextFollowingList,
   } = useFollowingList(userId);
+
+  const { targetRef: followerTargetRef } = useInfiniteScroll(
+    followerListData,
+    FetchNextFollowerList
+  );
+  const { targetRef: followingTargetRef } = useInfiniteScroll(
+    followingListData,
+    FetchNextFollowingList
+  );
 
   useEffect(() => {
     followingListData &&
@@ -48,6 +61,7 @@ const ProfileFollowModal = ({
         ...followerListData.pages[followerListData.pages.length - 1].result,
       ]);
   }, [followerListData]);
+
   return (
     <>
       <Modal
@@ -56,14 +70,21 @@ const ProfileFollowModal = ({
         title="팔로워"
       >
         {followerList && (
-          <FollowCardList
-            isLoading={followerListLoading}
-            toggleModal={toggleFollowerModal}
-            followList={followerList}
-            nextFetch={FetchNextFollowerList}
-            setFollowingList={setFollowingList}
-            setFollowerList={setFollowerList}
-          />
+          <>
+            <FollowCardList
+              isLoading={isFollowerListLoading}
+              toggleModal={toggleFollowerModal}
+              followList={followerList}
+              setFollowingList={setFollowingList}
+              setFollowerList={setFollowerList}
+            />
+            <Style.TargetDivWrapper>
+              <InfiniteTargetDiv
+                targetRef={followerTargetRef}
+                isFetching={isFollowerListFetching}
+              />
+            </Style.TargetDivWrapper>
+          </>
         )}
       </Modal>
       <Modal
@@ -73,14 +94,19 @@ const ProfileFollowModal = ({
       >
         {followingList && (
           <FollowCardList
-            isLoading={followingListLoading}
+            isLoading={isFollowingListLoading}
             toggleModal={toggleFollowingModal}
             followList={followingList}
-            nextFetch={FetchNextFollowingList}
             setFollowingList={setFollowingList}
             setFollowerList={setFollowerList}
           />
         )}
+        <Style.TargetDivWrapper>
+          <InfiniteTargetDiv
+            targetRef={followingTargetRef}
+            isFetching={isFollowingListFetching}
+          />
+        </Style.TargetDivWrapper>
       </Modal>
     </>
   );
@@ -90,13 +116,12 @@ const FollowCardList = ({
   isLoading,
   toggleModal,
   followList,
-  nextFetch,
   setFollowingList,
   setFollowerList,
 }) => {
-  const { targetRef } = useInfiniteScroll(followList, nextFetch);
   const navigate = useNavigate();
   const userData = useContext(UserInformationContext);
+
   return (
     <>
       {followList.map((item) => (
@@ -122,7 +147,6 @@ const FollowCardList = ({
           <FollowCardSkeleton />
         </>
       )}
-      <div ref={targetRef} />
     </>
   );
 };
@@ -139,7 +163,6 @@ FollowCardList.propTypes = {
   isLoading: PropTypes.bool,
   toggleModal: PropTypes.func,
   followList: PropTypes.array,
-  nextFetch: PropTypes.func,
   setFollowingList: PropTypes.func,
   setFollowerList: PropTypes.func,
 };
