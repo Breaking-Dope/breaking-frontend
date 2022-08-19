@@ -64,7 +64,7 @@ const followerList = [
     ...NO_FOLLOW_USER,
   },
   {
-    cursorId: 4,
+    cursorId: 5,
     ...FOLLOWING_USER,
   },
 ];
@@ -87,27 +87,27 @@ const followingList = [
     ...NO_POSTCOUNT_USER,
   },
   {
-    cursorId: 4,
+    cursorId: 5,
     ...NO_FOLLOW_USER,
   },
   {
-    cursorId: 4,
+    cursorId: 6,
     ...FOLLOWING_USER,
   },
   {
-    cursorId: 4,
+    cursorId: 7,
     ...FOLLOWING_USER,
   },
   {
-    cursorId: 4,
+    cursorId: 8,
     ...FOLLOWING_USER,
   },
   {
-    cursorId: 4,
+    cursorId: 9,
     ...FOLLOWING_USER,
   },
   {
-    cursorId: 4,
+    cursorId: 10,
     ...FOLLOWING_USER,
   },
 ];
