@@ -69,38 +69,32 @@ const ProfileFollowModal = ({
         closeClick={toggleFollowerModal}
         title="팔로워"
       >
-        {followerList && (
-          <>
-            <FollowCardList
-              isLoading={isFollowerListLoading}
-              toggleModal={toggleFollowerModal}
-              followList={followerList}
-              setFollowingList={setFollowingList}
-              setFollowerList={setFollowerList}
-            />
-            <Style.TargetDivWrapper>
-              <InfiniteTargetDiv
-                targetRef={followerTargetRef}
-                isFetching={isFollowerListFetching}
-              />
-            </Style.TargetDivWrapper>
-          </>
-        )}
+        <FollowCardList
+          isLoading={isFollowerListLoading}
+          toggleModal={toggleFollowerModal}
+          followList={followerList}
+          setFollowingList={setFollowingList}
+          setFollowerList={setFollowerList}
+        />
+        <Style.TargetDivWrapper>
+          <InfiniteTargetDiv
+            targetRef={followerTargetRef}
+            isFetching={isFollowerListFetching}
+          />
+        </Style.TargetDivWrapper>
       </Modal>
       <Modal
         isOpen={isFollowingModalOpen}
         closeClick={toggleFollowingModal}
         title="팔로워"
       >
-        {followingList && (
-          <FollowCardList
-            isLoading={isFollowingListLoading}
-            toggleModal={toggleFollowingModal}
-            followList={followingList}
-            setFollowingList={setFollowingList}
-            setFollowerList={setFollowerList}
-          />
-        )}
+        <FollowCardList
+          isLoading={isFollowingListLoading}
+          toggleModal={toggleFollowingModal}
+          followList={followingList}
+          setFollowingList={setFollowingList}
+          setFollowerList={setFollowerList}
+        />
         <Style.TargetDivWrapper>
           <InfiniteTargetDiv
             targetRef={followingTargetRef}
@@ -124,19 +118,20 @@ const FollowCardList = ({
 
   return (
     <>
-      {followList.map((item) => (
-        <FollowCard
-          cardClick={() => {
-            toggleModal();
-            navigate(PAGE_PATH.PROFILE(item.userId));
-          }}
-          isPermission={item.userId !== userData.userId}
-          profileData={item}
-          key={`follow-${item.userId}`}
-          setFollowingList={setFollowingList}
-          setFollowerList={setFollowerList}
-        />
-      ))}
+      {followList &&
+        followList.map((item) => (
+          <FollowCard
+            cardClick={() => {
+              toggleModal();
+              navigate(PAGE_PATH.PROFILE(item.userId));
+            }}
+            isPermission={item.userId !== userData.userId}
+            profileData={item}
+            key={`follow-${item.userId}`}
+            setFollowingList={setFollowingList}
+            setFollowerList={setFollowerList}
+          />
+        ))}
       {isLoading && (
         <>
           <FollowCardSkeleton />

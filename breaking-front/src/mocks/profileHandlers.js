@@ -166,13 +166,13 @@ export const profileHandlers = [
   }),
 
   rest.get(API_PATH.PROFILE_FOLLOWERS(':userId', '*', '*'), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.delay(1000), ctx.json(followerList));
+    return res(ctx.status(200), ctx.delay(2000), ctx.json(followerList));
   }),
 
   rest.get(
     API_PATH.PROFILE_FOLLOWINGS(':userId', '*', '*'),
     (req, res, ctx) => {
-      return res(ctx.status(200), ctx.delay(1000), ctx.json(followingList));
+      return res(ctx.status(200), ctx.delay(2000), ctx.json(followingList));
     }
   ),
 
