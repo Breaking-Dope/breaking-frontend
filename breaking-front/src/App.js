@@ -20,6 +20,7 @@ import Financial from 'pages/Financial/Financial';
 import theme from 'styles/theme';
 import GlobalStyle from 'styles/GlobalStyle';
 import PostEdit from 'pages/PostEdit/PostEdit';
+import SearchUnified from 'pages/Search/SearchUnified/SearchUnified';
 
 function App() {
   const queryClient = new QueryClient({
@@ -62,6 +63,10 @@ function App() {
                     element={<PostEdit />}
                   />
                   <Route path={PAGE_PATH.FINANCIAL} element={<Financial />} />
+                  <Route
+                    path={PAGE_PATH.SEARCH('unified')}
+                    element={<SearchUnified />}
+                  />
                 </Routes>
               </Layout>
             </UserInformationProvider>
