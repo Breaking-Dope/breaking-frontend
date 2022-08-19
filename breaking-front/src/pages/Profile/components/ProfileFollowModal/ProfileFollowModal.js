@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import { useEffect } from 'react';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
-import InfiniteTargetDiv from 'pages/Profile/components/InfiniteTargetDiv/InfiniteTargetDiv';
 import * as Style from 'pages/Profile/components/ProfileFollowModal/ProfileFollowModal.styles';
 
 const ProfileFollowModal = ({
@@ -77,7 +76,7 @@ const ProfileFollowModal = ({
           setFollowerList={setFollowerList}
         />
         <Style.TargetDivWrapper>
-          <InfiniteTargetDiv
+          <Style.TargetDiv
             targetRef={followerTargetRef}
             isFetching={isFollowerListFetching}
           />
@@ -86,7 +85,7 @@ const ProfileFollowModal = ({
       <Modal
         isOpen={isFollowingModalOpen}
         closeClick={toggleFollowingModal}
-        title="팔로워"
+        title="팔로잉"
       >
         <FollowCardList
           isLoading={isFollowingListLoading}
@@ -96,7 +95,7 @@ const ProfileFollowModal = ({
           setFollowerList={setFollowerList}
         />
         <Style.TargetDivWrapper>
-          <InfiniteTargetDiv
+          <Style.TargetDiv
             targetRef={followingTargetRef}
             isFetching={isFollowingListFetching}
           />
