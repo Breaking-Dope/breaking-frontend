@@ -19,6 +19,7 @@ import PostWrite from 'pages/PostWrite/PostWrite';
 import Financial from 'pages/Financial/Financial';
 import theme from 'styles/theme';
 import GlobalStyle from 'styles/GlobalStyle';
+import PostEdit from 'pages/PostEdit/PostEdit';
 
 function App() {
   const queryClient = new QueryClient({
@@ -56,6 +57,10 @@ function App() {
                   />
                   <Route path={PAGE_PATH.POST(':id')} element={<Post />} />
                   <Route path={PAGE_PATH.POST_WRITE} element={<PostWrite />} />
+                  <Route
+                    path={PAGE_PATH.POST_EDIT(':id')}
+                    element={<PostEdit />}
+                  />
                   <Route path={PAGE_PATH.FINANCIAL} element={<Financial />} />
                 </Routes>
               </Layout>
