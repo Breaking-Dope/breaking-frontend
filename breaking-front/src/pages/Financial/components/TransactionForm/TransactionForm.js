@@ -20,7 +20,7 @@ const TransactionForm = ({ type, onSubmit }) => {
     event.preventDefault();
     if (amount === 0) return alert('금액을 입력해주세요.');
 
-    onSubmit({ amount, setAmount });
+    onSubmit({ amount });
     setAmount(0);
   };
 
