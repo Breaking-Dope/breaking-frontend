@@ -53,6 +53,7 @@ export default function Header() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    navigate(PAGE_PATH.SEARCH('unified') + `?query=${searchText}`);
   };
 
   return (
