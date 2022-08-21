@@ -3,9 +3,10 @@ import { rest } from 'msw';
 import { NORMAL_USER, NO_STATUSMSG_USER } from 'mocks/dummyData/users';
 
 export const financialHandlers = [
-  rest.get(API_PATH.PROFILE_TRANSACTION, (req, res, ctx) => {
+  rest.get(API_PATH.PROFILE_TRANSACTION('*'), (req, res, ctx) => {
     return res(
       ctx.status(200),
+      ctx.delay(1000),
       ctx.json([
         {
           cursorId: 1,

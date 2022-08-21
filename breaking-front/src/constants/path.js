@@ -23,7 +23,8 @@ export const API_PATH = {
   OAUTH2_VALIDATE_JWT: '/oauth2/validate-jwt',
   FINANCIAL_DEPOSIT: '/financial/deposit',
   FINANCIAL_WITHDRAW: '/financial/withdraw',
-  PROFILE_TRANSACTION: '/profile/transaction',
+  PROFILE_TRANSACTION: (cursor, size = 10) =>
+    `/profile/transaction?cursor=${cursor}&size=${size}`,
   PROFILE_DETAIL_DATA: '/profile/detail',
   PROFILE_EDIT: '/profile',
   PROFILE_DATA: (userId) => `/profile/${userId}`,
