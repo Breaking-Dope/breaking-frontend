@@ -22,6 +22,7 @@ import GlobalStyle from 'styles/GlobalStyle';
 import PostEdit from 'pages/PostEdit/PostEdit';
 import SearchUnified from 'pages/Search/SearchUnified/SearchUnified';
 import SearchPost from 'pages/Search/SearchPost/SearchPost';
+import SearchHashtag from 'pages/Search/SearchHashtag/SearchHashtag';
 
 function App() {
   const queryClient = new QueryClient({
@@ -71,6 +72,10 @@ function App() {
                   <Route
                     path={PAGE_PATH.SEARCH('post')}
                     element={<SearchPost />}
+                  />
+                  <Route
+                    path={PAGE_PATH.SEARCH('hashtag')}
+                    element={<SearchHashtag />}
                   />
                 </Routes>
               </Layout>
