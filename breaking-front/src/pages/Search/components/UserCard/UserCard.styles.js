@@ -17,6 +17,7 @@ export const UserInformationContainer = styled.div`
 export const UserName = styled.div`
   font-size: 12px;
   font-weight: bold;
+  cursor: pointer;
 `;
 export const UserStatusMsg = styled.div`
   width: 100%;

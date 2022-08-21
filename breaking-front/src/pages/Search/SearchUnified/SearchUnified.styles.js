@@ -32,6 +32,7 @@ export const ViewAllButton = styled.button`
   background-color: ${({ theme }) => theme.blue[100]};
   border: none;
   border-radius: 10px;
+  cursor: pointer;
 `;
 
 export const PostResultLayout = styled.div`
