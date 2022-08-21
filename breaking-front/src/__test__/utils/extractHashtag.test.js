@@ -1,7 +1,7 @@
 import { default as extractHashtag } from 'utils/extractHashtag';
 
 describe('extractHashtag 테스트 코드를 작성한다.', () => {
-  test('해시태그가 없으면 undefine을 return해야한다.', () => {
+  test('해시태그가 없으면 undefined를 return해야한다.', () => {
     expect(extractHashtag('해시태그가 없는 글 입니다.')).toEqual(undefined);
   });
   test('해시태그가 있으면 해시태그를 추출한다.', () => {
