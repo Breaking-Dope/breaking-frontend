@@ -44,6 +44,7 @@ const KakaoRedirect = () => {
         client_id: process.env.REACT_APP_REST_API_KEY,
         redirect_uri: KAKAO_PATH.REDIRECT_URL,
         code: accessCode,
+        client_secret: process.env.REACT_APP_KAKAO_CLIENT_SECRET,
       },
     });
   }, []);
