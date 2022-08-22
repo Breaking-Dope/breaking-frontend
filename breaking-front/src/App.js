@@ -65,16 +65,13 @@ function App() {
                     element={<PostEdit />}
                   />
                   <Route path={PAGE_PATH.FINANCIAL} element={<Financial />} />
+                  <Route path={PAGE_PATH.SEARCH} element={<SearchUnified />} />
                   <Route
-                    path={PAGE_PATH.SEARCH('unified')}
-                    element={<SearchUnified />}
-                  />
-                  <Route
-                    path={PAGE_PATH.SEARCH('post')}
+                    path={PAGE_PATH.SEARCH_POST}
                     element={<SearchPost />}
                   />
                   <Route
-                    path={PAGE_PATH.SEARCH('hashtag')}
+                    path={PAGE_PATH.SEARCH_HASHTAG}
                     element={<SearchHashtag />}
                   />
                 </Routes>

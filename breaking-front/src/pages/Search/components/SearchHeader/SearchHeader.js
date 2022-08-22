@@ -7,19 +7,19 @@ import { PAGE_PATH } from 'constants/path';
 const SearchHeader = ({ focusTab, children }) => {
   const navigate = useNavigate();
   const SearchUnifiedClick = () => {
-    navigate(PAGE_PATH.SEARCH('unified'));
+    navigate(PAGE_PATH.SEARCH);
   };
 
   const SearchPostClick = () => {
-    navigate(PAGE_PATH.SEARCH('post'));
+    navigate(PAGE_PATH.SEARCH_POST);
   };
 
   const SearchHashtagClick = () => {
-    navigate(PAGE_PATH.SEARCH('hashtag'));
+    navigate(PAGE_PATH.SEARCH_HASHTAG);
   };
 
   const SearchUserClick = () => {
-    navigate(PAGE_PATH.SEARCH('user'));
+    navigate(PAGE_PATH.SEARCH_USER);
   };
   return (
     <>
