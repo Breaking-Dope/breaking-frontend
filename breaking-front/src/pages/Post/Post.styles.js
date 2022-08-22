@@ -1,4 +1,3 @@
-import ReactLoading from 'react-loading';
 import styled from 'styled-components';
 import defaultThumbnail from 'assets/svg/default_thumbnail_image.svg';
 
@@ -157,16 +156,4 @@ export const CommentCount = styled.div`
   margin-top: 20px;
   margin-left: 10px;
   font-size: 18px;
-`;
-
-export const TargetDiv = styled.div`
-  position: relative;
-  height: 100px;
-`;
-
-export const Loading = styled(ReactLoading)`
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translate(-50%, -50%);
 `;

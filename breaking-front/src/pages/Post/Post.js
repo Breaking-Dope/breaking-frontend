@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { useTheme } from 'styled-components';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import usePostBoughtList from 'pages/Post/hooks/queries/usePostBoughtList';
 import usePostBookmark from 'hooks/mutations/usePostBookmark';
 import useDeletePostBookmark from 'hooks/mutations/useDeletePostBookmark';
-import usePost from 'pages/Post/hooks/queries/usePost';
+import usePost from 'hooks/queries/usePost';
 import usePostComment from 'pages/Post/hooks/queries/usePostComment';
-import usePostLike from '/hooks/mutations/usePostLike';
+import usePostLike from 'pages/Post/hooks/mutations/usePostLike';
 import useDeletePostLike from 'pages/Post/hooks/mutations/useDeletePostLike';
 import useDeletePost from 'pages/Post/hooks/mutations/useDeletePost';
+import usePostActivatePurchase from 'pages/Post/hooks/mutations/usePostActivatePurchase';
+import usePostDeactivatePurchase from 'pages/Post/hooks/mutations/usePostDeactivatePurchase';
 import usePostBuy from 'pages/Post/hooks/mutations/usePostBuy';
 import { PAGE_PATH } from 'constants/path';
 import { PostSkeleton } from 'components/Skeleton/Skeleton';
@@ -22,6 +23,7 @@ import Button from 'components/Button/Button';
 import Modal from 'components/Modal/Modal';
 import FollowCard from 'components/FollowCard/FollowCard';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
+import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
 import Carousel from 'pages/Post/components/Carousel/Carousel';
 import Comment from 'pages/Post/components/Comment/Comment';
 import CommentForm from 'pages/Post/components/CommentForm/CommentForm';
@@ -37,11 +39,12 @@ import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
 import { ReactComponent as BookmarkIcon } from 'assets/svg/small_bookmark.svg';
 import { ReactComponent as BookmarkedIcon } from 'assets/svg/small_bookmarked.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
+import { ReactComponent as ActivateIcon } from 'assets/svg/activate_purchase.svg';
+import { ReactComponent as DeactivateIcon } from 'assets/svg/deactivate_purchase.svg';
 
 const Post = () => {
   let { id: postId } = useParams();
   postId = Number(postId);
-  const theme = useTheme();
   const navigate = useNavigate();
   const { userId, profileImgURL } = useContext(UserInformationContext);
 
@@ -50,6 +53,7 @@ const Post = () => {
   const [isContentToggle, setIsContentToggle] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const [isPurchasable, setIsPurchasable] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
 
   const { data: postData, isLoading: isPostDataLoading } = usePost(postId);
@@ -71,20 +75,12 @@ const Post = () => {
   const { mutate: PostBookmark } = usePostBookmark();
   const { mutate: DeletePostBookmark } = useDeletePostBookmark();
   const { mutate: DeletePost } = useDeletePost();
+  const { mutate: PostActivatePurchase } = usePostActivatePurchase();
+  const { mutate: PostDeactivatePurchase } = usePostDeactivatePurchase();
   const { mutate: PostBuy } = usePostBuy();
 
   const toggleModal = () => {
     setIsModalOpen((pre) => !pre);
-  };
-
-  const profileClick = () => {
-    navigate(PAGE_PATH.PROFILE(postData?.data.user?.userId));
-  };
-
-  const postDeleteClick = () => {
-    let deleteConfirm = window.confirm('게시글을 삭제하시겠습니까?');
-
-    deleteConfirm && DeletePost(postId);
   };
 
   const postBuyListClick = () => {
@@ -92,8 +88,18 @@ const Post = () => {
     toggleModal();
   };
 
+  const profileClick = () => {
+    navigate(PAGE_PATH.PROFILE(postData?.data.user?.userId));
+  };
+
+  const postDeleteClick = () => {
+    const deleteConfirm = window.confirm('게시글을 삭제하시겠습니까?');
+
+    deleteConfirm && DeletePost(postId);
+  };
+
   const postBuyClick = () => {
-    let postBuyConfirm = window.confirm('게시글을 구매하시겠습니까?');
+    const postBuyConfirm = window.confirm('게시글을 구매하시겠습니까?');
 
     postBuyConfirm && PostBuy(postId);
   };
@@ -109,17 +115,25 @@ const Post = () => {
     setIsBookmarked((pre) => !pre);
   };
 
+  const togglePurchasable = () => {
+    isPurchasable
+      ? PostDeactivatePurchase(postId)
+      : PostActivatePurchase(postId);
+    setIsPurchasable((pre) => !pre);
+  };
+
   const toggleComment = () => {
     setIsContentToggle((pre) => !pre);
   };
 
   useEffect(() => {
-    if (postData?.data.myPost) setPurchaseType('구매자 목록');
+    if (postData?.data.isMyPost) setPurchaseType('구매자 목록');
     else if (postData?.data.isPurchased) setPurchaseType('다운로드');
     else setPurchaseType('구매 하기');
 
     setIsBookmarked(postData?.data.isBookmarked);
     setIsLiked(postData?.data.isLiked);
+    setIsPurchasable(postData?.data.isPurchasable);
     setLikeCount(postData?.data.likeCount);
   }, [postData, userId]);
 
@@ -273,7 +287,7 @@ const Post = () => {
                 >
                   {isContentToggle && (
                     <Toggle width="100px">
-                      {postData?.data.myPost && !postData?.data.isSold && (
+                      {postData?.data.isMyPost && !postData?.data.isSold && (
                         <>
                           <Toggle.LabelLink icon={<EditIcon />} label="수정" />
                           <Toggle.LabelLink
@@ -283,7 +297,19 @@ const Post = () => {
                           />
                         </>
                       )}
-                      {/* 활성화 라벨 추가 */}
+                      {postData?.data.isMyPost && (
+                        <Toggle.LabelLink
+                          icon={
+                            isPurchasable ? (
+                              <ActivateIcon />
+                            ) : (
+                              <DeactivateIcon />
+                            )
+                          }
+                          label={isPurchasable ? '비활성화' : '활성화'}
+                          labelClick={togglePurchasable}
+                        />
+                      )}
                       <Toggle.LabelLink
                         icon={
                           isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />
@@ -319,11 +345,10 @@ const Post = () => {
               />
             ))
           )}
-          <Style.TargetDiv ref={targetRef}>
-            {isPostCommentFetching && (
-              <Style.Loading type="spin" color={theme.blue[900]} width="40px" />
-            )}
-          </Style.TargetDiv>
+          <InfiniteTargetDiv
+            targetRef={targetRef}
+            isFetching={isPostCommentFetching}
+          />
         </Style.Comments>
       </Style.Post>
     </>
