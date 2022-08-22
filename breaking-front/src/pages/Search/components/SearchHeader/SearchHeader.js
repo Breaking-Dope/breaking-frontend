@@ -1,25 +1,26 @@
 import * as Style from 'pages/Search/components/SearchHeader/SearchHeader.styles';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PAGE_PATH } from 'constants/path';
 
 const SearchHeader = ({ focusTab, children }) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const SearchUnifiedClick = () => {
-    navigate(PAGE_PATH.SEARCH);
+    navigate(PAGE_PATH.SEARCH + `?query=${searchParams.get('query')}`);
   };
 
   const SearchPostClick = () => {
-    navigate(PAGE_PATH.SEARCH_POST);
+    navigate(PAGE_PATH.SEARCH_POST + `?query=${searchParams.get('query')}`);
   };
 
   const SearchHashtagClick = () => {
-    navigate(PAGE_PATH.SEARCH_HASHTAG);
+    navigate(PAGE_PATH.SEARCH_HASHTAG + `?query=${searchParams.get('query')}`);
   };
 
   const SearchUserClick = () => {
-    navigate(PAGE_PATH.SEARCH_USER);
+    navigate(PAGE_PATH.SEARCH_USER + `?query=${searchParams.get('query')}`);
   };
   return (
     <>
