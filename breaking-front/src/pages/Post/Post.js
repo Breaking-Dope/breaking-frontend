@@ -129,6 +129,7 @@ const Post = () => {
   useEffect(() => {
     if (postData?.data.isMyPost) setPurchaseType('구매자 목록');
     else if (postData?.data.isPurchased) setPurchaseType('다운로드');
+    else if (!postData?.data.isPurchasable) setPurchaseType('판매 중지');
     else setPurchaseType('구매 하기');
 
     setIsBookmarked(postData?.data.isBookmarked);
@@ -233,6 +234,11 @@ const Post = () => {
                 )}
                 {purchaseType === '구매 하기' && (
                   <Button color="primary" onClick={postBuyClick}>
+                    {purchaseType}
+                  </Button>
+                )}
+                {purchaseType === '판매 중지' && (
+                  <Button color="secondary" disabled>
                     {purchaseType}
                   </Button>
                 )}
