@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Style from 'pages/Profile/components/InfiniteTargetDiv/InfiniteTargetDiv.styles';
+import * as Style from 'components/InfiniteTargetDiv/InfiniteTargetDiv.styles';
 import { useTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 
