@@ -45,20 +45,28 @@ export const getProfileBookmarked = async ({ queryKey, pageParam = 0 }) => {
   };
 };
 
-export const getFollowers = ({ queryKey }) => {
+export const getFollowers = async ({ queryKey, pageParam = 0 }) => {
   const [, userId] = queryKey;
-  return api({
+  const { data } = await api({
     method: 'get',
-    url: API_PATH.PROFILE_FOLLOWERS(userId),
+    url: API_PATH.PROFILE_FOLLOWERS(userId, pageParam),
   });
+  return {
+    result: data,
+    cursor: data[data.length - 1]?.cursorId,
+  };
 };
 
-export const getFollowings = ({ queryKey }) => {
+export const getFollowings = async ({ queryKey, pageParam = 0 }) => {
   const [, userId] = queryKey;
-  return api({
+  const { data } = await api({
     method: 'get',
-    url: API_PATH.PROFILE_FOLLOWINGS(userId),
+    url: API_PATH.PROFILE_FOLLOWINGS(userId, pageParam),
   });
+  return {
+    result: data,
+    cursor: data[data.length - 1]?.cursorId,
+  };
 };
 
 export const postFollow = (userId) => {

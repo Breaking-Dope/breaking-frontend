@@ -1,45 +1,27 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Filter from 'components/Filter/Filter';
-import * as Style from 'pages/Profile/units/ProfileTabPanel.styles';
+import * as Style from 'pages/Profile/components/ProfileTabPanel/ProfileTabPanel.styles';
 import Feed from 'components/Feed/Feed';
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { UserInformationContext } from 'providers/UserInformationProvider';
-import { useRef } from 'react';
 import { useQueryClient } from 'react-query';
-import { useTheme } from 'styled-components';
 import { FeedSkeleton } from 'components/Skeleton/Skeleton';
+import useInfiniteScroll from 'hooks/useInfiniteScroll';
+import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
 
 const ProfileTabPanel = ({
   type,
   data,
-  hasNextPage,
   isFetching,
   isLoading,
   nextFetch,
   setOption,
 }) => {
-  const targetRef = useRef();
   const { userId } = useContext(UserInformationContext);
   const queryClient = useQueryClient();
-  const theme = useTheme();
-  useEffect(() => {
-    let observer;
-    const onIntersect = async ([entry], observer) => {
-      if (entry.isIntersecting) {
-        observer.unobserve(entry.target);
-        nextFetch();
-        observer.observe(entry.target);
-      }
-    };
-    if (hasNextPage && !isFetching) {
-      observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.8,
-      });
-      observer.observe(targetRef.current);
-    }
-    return () => observer && observer.disconnect();
-  }, [hasNextPage, nextFetch, isFetching]);
+
+  const { targetRef } = useInfiniteScroll(data, nextFetch);
 
   return (
     <>
@@ -87,11 +69,7 @@ const ProfileTabPanel = ({
             ))
           )}
         </Style.FeedContainer>
-        <Style.TargetDiv ref={targetRef}>
-          {isFetching && (
-            <Style.Loading type="spin" color={theme.blue[900]} width="40px" />
-          )}
-        </Style.TargetDiv>
+        <InfiniteTargetDiv targetRef={targetRef} isFetching={isFetching} />
       </Style.PanelContainer>
     </>
   );
@@ -100,7 +78,6 @@ const ProfileTabPanel = ({
 ProfileTabPanel.propTypes = {
   type: PropTypes.string,
   data: PropTypes.object,
-  hasNextPage: PropTypes.bool,
   isFetching: PropTypes.bool,
   isLoading: PropTypes.bool,
   nextFetch: PropTypes.func,

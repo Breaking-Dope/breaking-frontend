@@ -2,18 +2,18 @@ import Line from 'components/Line/Line';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import { ProfileSkeleton } from 'components/Skeleton/Skeleton';
 import Tabs from 'components/Tabs/Tabs';
-import useProfile from 'hooks/queries/useProfile';
-import useProfileBookmarkedPost from 'hooks/queries/useProfileBookmarkedPost';
-import useProfileBoughtPost from 'hooks/queries/useProfileBoughtPost';
-import useProfileWrittenPost from 'hooks/queries/useProfileWrittenPost';
+import useProfile from 'pages/Profile/hooks/queries/useProfile';
+import useProfileBookmarkedPost from 'pages/Profile/hooks/queries/useProfileBookmarkedPost';
+import useProfileBoughtPost from 'pages/Profile/hooks/queries/useProfileBoughtPost';
+import useProfileWrittenPost from 'pages/Profile/hooks/queries/useProfileWrittenPost';
 import useCheckMyPage from 'hooks/useCheckMyPage';
 import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
-import ProfileFollowButton from 'pages/Profile/units/ProfileFollowButton';
-import ProfileFollowModal from 'pages/Profile/units/ProfileFollowModal';
-import ProfileTabPanel from 'pages/Profile/units/ProfileTabPanel';
+import ProfileFollowButton from 'pages/Profile/components/ProfileFollowButton/ProfileFollowButton';
+import ProfileFollowModal from 'pages/Profile/components/ProfileFollowModal/ProfileFollowModal';
+import ProfileTabPanel from 'pages/Profile/components/ProfileTabPanel/ProfileTabPanel';
 import numberFormatter from 'utils/numberFormatter';
 
 const Profile = () => {
@@ -30,7 +30,6 @@ const Profile = () => {
     data: writtenData,
     fetchNextPage: FetchNextWritten,
     isFetching: isWrittenFetching,
-    hasNextPage: writtenHasNextPage,
     isLoading: isWrittenLoading,
   } = useProfileWrittenPost(userId, writtenOption);
 
@@ -38,7 +37,6 @@ const Profile = () => {
     data: boughtData,
     fetchNextPage: FetchNextBought,
     isFetching: isBoughtFetching,
-    hasNextPage: boughtHasNextPage,
     isLoading: isBoughtLoading,
   } = useProfileBoughtPost(userId, isMyPage, boughtOption);
 
@@ -46,7 +44,6 @@ const Profile = () => {
     data: bookmarkedData,
     fetchNextPage: FetchNextBookmarked,
     isFetching: isBookmarkedFetching,
-    hasNextPage: bookmarkedHasNextPage,
     isLoading: isBookmarkedLoading,
   } = useProfileBookmarkedPost(userId, isMyPage, bookmarkedOption);
 
@@ -115,7 +112,6 @@ const Profile = () => {
           <Tabs.TabPanel>
             <ProfileTabPanel
               type="written"
-              hasNextPage={writtenHasNextPage}
               nextFetch={FetchNextWritten}
               isFetching={isWrittenFetching}
               data={writtenData}
@@ -128,7 +124,6 @@ const Profile = () => {
             <Tabs.TabPanel>
               <ProfileTabPanel
                 type="bought"
-                hasNextPage={boughtHasNextPage}
                 nextFetch={FetchNextBought}
                 isFetching={isBoughtFetching}
                 data={boughtData}
@@ -142,7 +137,6 @@ const Profile = () => {
             <Tabs.TabPanel>
               <ProfileTabPanel
                 type="bookmarked"
-                hasNextPage={bookmarkedHasNextPage}
                 nextFetch={FetchNextBookmarked}
                 isFetching={isBookmarkedFetching}
                 data={bookmarkedData}
