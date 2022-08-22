@@ -2,7 +2,7 @@ import { useMutation } from 'react-query';
 import { deletePostComment } from 'api/post';
 
 const useDeleteComment = () => {
-  useMutation(deletePostComment, {
+  return useMutation(deletePostComment, {
     onSuccess: () => {
       alert('댓글을 삭제하였습니다.');
     },

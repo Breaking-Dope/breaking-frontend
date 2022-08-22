@@ -2,7 +2,7 @@ import { postPostLike } from 'api/post';
 import { useMutation } from 'react-query';
 
 const usePostLike = () => {
-  useMutation(postPostLike);
+  return useMutation(postPostLike);
 };
 
 export default usePostLike;
