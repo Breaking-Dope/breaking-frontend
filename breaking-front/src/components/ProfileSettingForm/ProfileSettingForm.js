@@ -98,16 +98,13 @@ export default function ProfileSettingForm({
   };
 
   const handlePhoneNumberChange = (event) => {
-    let phoneNumber = Number(event.target.value);
-    if (Number.isNaN(phoneNumber)) return;
-    else
-      setForm((form) => ({
-        ...form,
-        phoneNumber: phoneNumber,
-      }));
+    setForm((form) => ({
+      ...form,
+      phoneNumber: event.target.value.replace(/[^0-9]/g, ''),
+    }));
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     if (nicknameErrorMessage)

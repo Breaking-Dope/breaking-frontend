@@ -1,39 +1,25 @@
 import React, { useContext, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { UserInformationContext } from 'providers/UserInformationProvider';
 import ProfileSettingForm from 'components/ProfileSettingForm/ProfileSettingForm';
-import useProfileDetailData from 'hooks/queries/useProfileDetailData';
-import { putProfileEdit } from 'api/profileEdit';
-import { PAGE_PATH } from 'constants/path';
-import * as Style from 'pages/ProfileEdit/ProfileEdit.styles';
+import useProfileDetailData from 'pages/ProfileEdit/hooks/queries/useProfileDetailData';
+import useProfileEdit from 'pages/ProfileEdit/hooks/mutations/useProfileEdit';
+import useProfileWithdrawal from 'pages/ProfileEdit/hooks/mutations/useProfileWithdrawal';
 import Line from 'components/Line/Line';
 import Modal from 'components/Modal/Modal';
 import Button from 'components/Button/Button';
-import { deleteProfileWithdrawal } from 'api/profile';
-import { UserInformationContext } from 'providers/UserInformationProvider';
+import * as Style from 'pages/ProfileEdit/ProfileEdit.styles';
 
 const ProfileEdit = () => {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const { userId } = useContext(UserInformationContext);
 
-  const { data: profileData, isLoading: isProfileDataLoading } =
-    useProfileDetailData();
   const [isOpenWithdrawal, setIsOpenWithdrawal] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
+  const { data: profileData, isLoading: isProfileDataLoading } =
+    useProfileDetailData();
   const { mutate: ProfileEditMutate, isLoading: isProfileEditLoading } =
-    useMutation(putProfileEdit, {
-      onSuccess: (res) => {
-        alert('변경사항을 저장하였습니다.');
-        queryClient.invalidateQueries('jwtValidate');
-        navigate(PAGE_PATH.HOME);
-      },
-      onError: () => {
-        //에러 페이지 이동
-      },
-    });
-  const { mutate: ProfileWithdrawal } = useMutation(deleteProfileWithdrawal);
+    useProfileEdit();
+  const { mutate: ProfileWithdrawal } = useProfileWithdrawal();
 
   const toggleModal = () => {
     setIsOpenWithdrawal((pre) => !pre);
@@ -43,16 +29,9 @@ const ProfileEdit = () => {
     setIsChecked((pre) => !pre);
   };
 
-  const handleSubmit = (event) => {
+  const handleWithdrawalSubmit = (event) => {
     event.preventDefault();
-    isChecked
-      ? ProfileWithdrawal(userId, {
-          onSuccess: () => {
-            alert('탈퇴 완료되었습니다.');
-            navigate(PAGE_PATH.HOME);
-          },
-        })
-      : alert('동의하지 않았습니다.');
+    isChecked ? ProfileWithdrawal(userId) : alert('동의하지 않았습니다.');
   };
 
   return (
@@ -78,7 +57,7 @@ const ProfileEdit = () => {
             title="탈퇴"
             grid={false}
           >
-            <Style.ProfileWithdrawalForm onSubmit={handleSubmit}>
+            <Style.ProfileWithdrawalForm onSubmit={handleWithdrawalSubmit}>
               <Style.WithdrawalCaution>
                 탈퇴 시 Breaking에서 활동했던 모든 정보가 사라집니다.
                 <Style.Check>

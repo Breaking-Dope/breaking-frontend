@@ -1,32 +1,15 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useMutation } from 'react-query';
-import { postSignUp } from 'api/signUp';
 import { PAGE_PATH } from 'constants/path';
 import ProfileSettingForm from 'components/ProfileSettingForm/ProfileSettingForm';
-import useJWTValidate from 'hooks/queries/useJWTValidate';
 import MESSAGE from 'constants/message';
+import useSignUp from 'pages/SignUp/hooks/mutations/useSignUp';
 
 const SignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { refetch: JWTValidateRefetch } = useJWTValidate();
 
-  const { mutate: SignUpMutate, isLoading: isSignUpLoading } = useMutation(
-    postSignUp,
-    {
-      onSuccess: (res) => {
-        const jwtToken = res.headers.authorization;
-        localStorage.setItem('access_token', jwtToken);
-        JWTValidateRefetch();
-        alert('환영합니다.');
-        navigate(PAGE_PATH.HOME);
-      },
-      onError: () => {
-        //에러 페이지 이동
-      },
-    }
-  );
+  const { mutate: SignUpMutate, isLoading: isSignUpLoading } = useSignUp();
 
   useEffect(() => {
     //유저가 sns 로그인하지않고 회원가입 페이지로 들어왔을 때 처리
