@@ -3,7 +3,7 @@ import ReactLoading from 'react-loading';
 
 export const TargetDiv = styled.div`
   position: relative;
-  height: 100px;
+  height: ${({ height }) => height};
 `;
 
 export const Loading = styled(ReactLoading)`
