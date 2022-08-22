@@ -3,7 +3,7 @@ import { PAGE_PATH } from 'constants/path';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 
-const usePostWriteMutation = () => {
+const useProfileEdit = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -19,4 +19,4 @@ const usePostWriteMutation = () => {
   });
 };
 
-export default usePostWriteMutation;
+export default useProfileEdit;

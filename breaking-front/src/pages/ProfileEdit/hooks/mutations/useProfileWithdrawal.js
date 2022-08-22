@@ -3,7 +3,7 @@ import { PAGE_PATH } from 'constants/path';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 
-const usePostWriteMutation = () => {
+const useProfileWithdrawal = () => {
   const navigate = useNavigate();
 
   return useMutation(deleteProfileWithdrawal, {
@@ -14,4 +14,4 @@ const usePostWriteMutation = () => {
   });
 };
 
-export default usePostWriteMutation;
+export default useProfileWithdrawal;
