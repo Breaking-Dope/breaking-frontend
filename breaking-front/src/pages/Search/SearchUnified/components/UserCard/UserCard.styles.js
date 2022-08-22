@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 export const UserInformationContainer = styled.div`
   display: flex;
-  padding: 10px;
   width: 150px;
   height: 170px;
+  padding: 10px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.blue[50]};
   text-align: center;

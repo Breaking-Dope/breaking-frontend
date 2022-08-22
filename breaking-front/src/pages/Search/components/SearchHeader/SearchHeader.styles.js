@@ -20,9 +20,9 @@ export const SearchTabPanel = styled(TabPanel)``;
 
 export const SearchResultContent = styled.div`
   display: flex;
-  margin-top: 30px;
   width: 100%;
   height: 140px;
+  margin-top: 30px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.gray[100]};
   justify-content: center;

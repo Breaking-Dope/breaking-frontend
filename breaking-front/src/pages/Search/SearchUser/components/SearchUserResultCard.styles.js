@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 export const ResultCard = styled.div`
   display: flex;
-  padding: 20px;
   width: 100%;
   height: 140px;
+  padding: 20px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.blue[50]};
   align-items: center;
@@ -12,9 +12,9 @@ export const ResultCard = styled.div`
 
 export const UserInformationContainer = styled.div`
   display: flex;
-  flex-direction: column;
   width: 660px;
   margin-left: 30px;
+  flex-direction: column;
   > * {
     margin-top: 5px;
   }
