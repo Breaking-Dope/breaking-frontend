@@ -15,6 +15,7 @@ import { ReactComponent as DropDownIcon } from 'assets/svg/drop_down.svg';
 import { ReactComponent as MoneyIcon } from 'assets/svg/money.svg';
 import { ReactComponent as SettingIcon } from 'assets/svg/setting.svg';
 import { ReactComponent as MyPageIcon } from 'assets/svg/mypage.svg';
+import extractHashtag from 'utils/extractHashtag';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -53,7 +54,12 @@ export default function Header() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate(PAGE_PATH.SEARCH + `?query=${searchText}`);
+    if (searchText[0] === '#') {
+      const hashtagKeyWord = extractHashtag(searchText);
+      navigate(PAGE_PATH.SEARCH_HASHTAG + `?query=${hashtagKeyWord[0]}`);
+    } else {
+      navigate(PAGE_PATH.SEARCH + `?query=${searchText}`);
+    }
   };
 
   return (

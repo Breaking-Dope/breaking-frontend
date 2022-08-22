@@ -4,7 +4,6 @@ import SearchHeader from 'pages/Search/components/SearchHeader/SearchHeader';
 import Feed from 'components/Feed/Feed';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import { NORMAL_USER } from 'mocks/dummyData/users';
-import { useSearchParams } from 'react-router-dom';
 
 const SearchHashtag = () => {
   const FeedList = [
@@ -114,22 +113,14 @@ const SearchHashtag = () => {
     },
   ];
   const { userId } = useContext(UserInformationContext);
-  const [searchParams] = useSearchParams();
   return (
     <>
       <SearchHeader focusTab={2} />
-      <Style.SearchHashtagLayout>
-        <Style.SearchHashtagContainer>
-          <Style.Hashtag>
-            #{searchParams.get('query').replaceAll(' ', '')}
-          </Style.Hashtag>
-        </Style.SearchHashtagContainer>
-        <Style.PostResultList>
-          {FeedList.map((feed) => (
-            <Feed feedData={feed} key={feed.postId} userId={userId} />
-          ))}
-        </Style.PostResultList>
-      </Style.SearchHashtagLayout>
+      <Style.PostResultList>
+        {FeedList.map((feed) => (
+          <Feed feedData={feed} key={feed.postId} userId={userId} />
+        ))}
+      </Style.PostResultList>
     </>
   );
 };

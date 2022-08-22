@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const ResultCard = styled.div`
   display: flex;
   padding: 20px;
-  width: 700px;
+  width: 100%;
   height: 140px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.blue[50]};
@@ -13,7 +13,7 @@ export const ResultCard = styled.div`
 export const UserInformationContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 450px;
+  width: 660px;
   margin-left: 30px;
   > * {
     margin-top: 5px;

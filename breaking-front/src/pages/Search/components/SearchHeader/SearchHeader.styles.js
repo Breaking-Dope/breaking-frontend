@@ -17,3 +17,24 @@ export const SearchTabItem = styled(Tab)`
 `;
 
 export const SearchTabPanel = styled(TabPanel)``;
+
+export const SearchResultContent = styled.div`
+  display: flex;
+  margin-top: 30px;
+  width: 100%;
+  height: 140px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.gray[100]};
+  justify-content: center;
+  align-items: center;
+`;
+
+export const SearchContent = styled.h3`
+  font-size: 20px;
+  font-weight: bold;
+  ::after {
+    content: ' (으)로 검색한 결과입니다.';
+    font-size: 16px;
+    font-weight: 300;
+  }
+`;
