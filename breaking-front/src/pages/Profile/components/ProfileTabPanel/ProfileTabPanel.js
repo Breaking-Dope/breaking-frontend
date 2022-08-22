@@ -8,7 +8,7 @@ import { UserInformationContext } from 'providers/UserInformationProvider';
 import { useQueryClient } from 'react-query';
 import { FeedSkeleton } from 'components/Skeleton/Skeleton';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
-import InfiniteTargetDiv from '../../../../components/InfiniteTargetDiv/InfiniteTargetDiv';
+import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
 
 const ProfileTabPanel = ({
   type,
