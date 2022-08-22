@@ -1,29 +1,30 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useMutation, useQueryClient } from 'react-query';
+import dayjs from 'dayjs';
 import { useTheme } from 'styled-components';
-import {
-  deletePost,
-  deletePostBookmark,
-  deletePostLike,
-  postPostBookmark,
-  postPostBuy,
-  postPostLike,
-} from 'api/post';
 import { UserInformationContext } from 'providers/UserInformationProvider';
-import usePost from 'hooks/queries/usePost';
-import usePostComment from 'hooks/queries/usePostComment';
-import usePostBoughtList from 'hooks/queries/usePostBoughtList';
+import useInfiniteScroll from 'hooks/useInfiniteScroll';
+import usePostBoughtList from 'pages/Post/hooks/queries/usePostBoughtList';
+import usePostBookmark from 'hooks/mutations/usePostBookmark';
+import useDeletePostBookmark from 'hooks/mutations/useDeletePostBookmark';
+import usePost from 'pages/Post/hooks/queries/usePost';
+import usePostComment from 'pages/Post/hooks/queries/usePostComment';
+import usePostLike from '/hooks/mutations/usePostLike';
+import useDeletePostLike from 'pages/Post/hooks/mutations/useDeletePostLike';
+import useDeletePost from 'pages/Post/hooks/mutations/useDeletePost';
+import usePostBuy from 'pages/Post/hooks/mutations/usePostBuy';
 import { PAGE_PATH } from 'constants/path';
+import { PostSkeleton } from 'components/Skeleton/Skeleton';
+import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import Toggle from 'components/Toggle/Toggle';
 import Line from 'components/Line/Line';
 import Button from 'components/Button/Button';
 import Modal from 'components/Modal/Modal';
 import FollowCard from 'components/FollowCard/FollowCard';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import Carousel from 'pages/Post/units/Carousel';
-import Comment from 'pages/Post/units/Comment';
-import CommentForm from 'pages/Post/units/CommentForm';
+import Carousel from 'pages/Post/components/Carousel/Carousel';
+import Comment from 'pages/Post/components/Comment/Comment';
+import CommentForm from 'pages/Post/components/CommentForm/CommentForm';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
 import * as Style from 'pages/Post/Post.styles';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
@@ -36,10 +37,6 @@ import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
 import { ReactComponent as BookmarkIcon } from 'assets/svg/small_bookmark.svg';
 import { ReactComponent as BookmarkedIcon } from 'assets/svg/small_bookmarked.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
-import { PostSkeleton } from 'components/Skeleton/Skeleton';
-import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
-import dayjs from 'dayjs';
-import useInfiniteScroll from 'hooks/useInfiniteScroll';
 
 const Post = () => {
   let { id: postId } = useParams();
@@ -47,7 +44,6 @@ const Post = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const { userId, profileImgURL } = useContext(UserInformationContext);
-  const queryClient = useQueryClient();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [purchaseType, setPurchaseType] = useState('구매하기');
@@ -70,12 +66,12 @@ const Post = () => {
     FetchNextPostComment
   );
 
-  const { mutate: PostLike } = useMutation(postPostLike);
-  const { mutate: DeletePostLike } = useMutation(deletePostLike);
-  const { mutate: PostBookmark } = useMutation(postPostBookmark);
-  const { mutate: DeletePostBookmark } = useMutation(deletePostBookmark);
-  const { mutate: DeletePost } = useMutation(deletePost);
-  const { mutate: PostBuy } = useMutation(postPostBuy);
+  const { mutate: PostLike } = usePostLike();
+  const { mutate: DeletePostLike } = useDeletePostLike();
+  const { mutate: PostBookmark } = usePostBookmark();
+  const { mutate: DeletePostBookmark } = useDeletePostBookmark();
+  const { mutate: DeletePost } = useDeletePost();
+  const { mutate: PostBuy } = usePostBuy();
 
   const toggleModal = () => {
     setIsModalOpen((pre) => !pre);
@@ -88,13 +84,7 @@ const Post = () => {
   const postDeleteClick = () => {
     let deleteConfirm = window.confirm('게시글을 삭제하시겠습니까?');
 
-    deleteConfirm &&
-      DeletePost(postId, {
-        onSuccess: () => {
-          alert('게시글을 삭제하였습니다.');
-          navigate(-1);
-        },
-      });
+    deleteConfirm && DeletePost(postId);
   };
 
   const postBuyListClick = () => {
@@ -105,13 +95,7 @@ const Post = () => {
   const postBuyClick = () => {
     let postBuyConfirm = window.confirm('게시글을 구매하시겠습니까?');
 
-    postBuyConfirm &&
-      PostBuy(postId, {
-        onSuccess: () => {
-          alert('게시글을 구매하였습니다.');
-          queryClient.invalidateQueries('post');
-        },
-      });
+    postBuyConfirm && PostBuy(postId);
   };
 
   const toggleLiked = () => {

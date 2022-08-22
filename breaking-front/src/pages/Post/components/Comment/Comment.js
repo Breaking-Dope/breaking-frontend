@@ -1,20 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from 'react-query';
 import PropTypes from 'prop-types';
+import { useTheme } from 'styled-components';
 import { UserInformationContext } from 'providers/UserInformationProvider';
-import {
-  deletePostComment,
-  deletePostCommentLike,
-  postPostCommentLike,
-} from 'api/post';
-import usePostReply from 'hooks/queries/usePostReply';
 import { PAGE_PATH } from 'constants/path';
+import timeFormatter from 'utils/timeFormatter';
+import ImageUrlConverter from 'utils/ImageUrlConverter';
 import Toggle from 'components/Toggle/Toggle';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import CommentForm from 'pages/Post/units/CommentForm';
-import * as Style from 'pages/Post/units/Comment.styles';
-import ImageUrlConverter from 'utils/ImageUrlConverter';
+import CommentForm from 'pages/Post/components/CommentForm/CommentForm';
+import usePostReply from 'pages/Post/hooks/queries/usePostReply';
+import useCommentLike from 'pages/Post/hooks/mutations/useCommentLike';
+import useDeleteCommentLike from 'pages/Post/hooks/mutations/useDeleteCommentLike';
+import useDeleteComment from 'pages/Post/hooks/mutations/useDeleteComment';
+import * as Style from 'pages/Post/components/Comment/Comment.styles';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
 import { ReactComponent as LikedIcon } from 'assets/svg/liked.svg';
 import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
@@ -25,8 +24,6 @@ import { ReactComponent as BlockIcon } from 'assets/svg/block.svg';
 import { ReactComponent as DropUpIcon } from 'assets/svg/drop_up.svg';
 import { ReactComponent as DropDownIcon } from 'assets/svg/drop_down.svg';
 import { ReactComponent as MoreIcon } from 'assets/svg/more_arrow.svg';
-import { useTheme } from 'styled-components';
-import timeFormatter from 'utils/timeFormatter';
 
 const Comment = ({ comment, type }) => {
   const theme = useTheme();
@@ -47,13 +44,9 @@ const Comment = ({ comment, type }) => {
     fetchNextPage: FetchNextPostReply,
   } = usePostReply(commentId);
 
-  const { mutate: CommentLike } = useMutation(postPostCommentLike);
-  const { mutate: DeleteCommentLike } = useMutation(deletePostCommentLike);
-  const { mutate: DeleteComment } = useMutation(deletePostComment, {
-    onSuccess: () => {
-      alert('댓글을 삭제하였습니다.');
-    },
-  });
+  const { mutate: CommentLike } = useCommentLike();
+  const { mutate: DeleteCommentLike } = useDeleteCommentLike();
+  const { mutate: DeleteComment } = useDeleteComment();
 
   const profileClick = () => {
     navigate(PAGE_PATH.PROFILE(comment.user.userId));

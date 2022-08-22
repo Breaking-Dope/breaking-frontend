@@ -1,14 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
 import PropTypes from 'prop-types';
-import {
-  postPostCommentWrite,
-  postPostReplyWrite,
-  putPostCommentEdit,
-} from 'api/post';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import * as Style from 'pages/Post/units/CommentForm.styles';
+import useCommentWrite from 'pages/Post/hooks/mutations/useCommentWrite';
+import useCommentReplyWrite from 'pages/Post/hooks/mutations/useCommentReplyWrite';
+import useCommentEdit from 'pages/Post/hooks/mutations/useCommentEdit';
+import * as Style from 'pages/Post/components/CommentForm/CommentForm.styles';
 
 const CommentForm = ({
   profileImgURL,
@@ -18,29 +15,12 @@ const CommentForm = ({
   closeClick,
   type,
 }) => {
-  const queryClient = useQueryClient();
   const textareaRef = useRef();
   const [comment, setComment] = useState(content);
 
-  const { mutate: CommentWrite } = useMutation(postPostCommentWrite, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('postComment');
-    },
-  });
-
-  const { mutate: CommentReply } = useMutation(postPostReplyWrite, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('postComment');
-      queryClient.invalidateQueries('postReply');
-    },
-  });
-
-  const { mutate: CommentEdit } = useMutation(putPostCommentEdit, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('postComment');
-      queryClient.invalidateQueries('postReply');
-    },
-  });
+  const { mutate: CommentWrite } = useCommentWrite();
+  const { mutate: CommentReply } = useCommentReplyWrite();
+  const { mutate: CommentEdit } = useCommentEdit();
 
   const handleChange = (event) => {
     textareaRef.current.style.height = '27px';
@@ -123,6 +103,7 @@ const CommentForm = ({
     </>
   );
 };
+
 CommentForm.propTypes = {
   profileImgURL: PropTypes.string,
   postId: PropTypes.number,

@@ -10,7 +10,7 @@ import usePostEditMutation from 'pages/PostEdit/hooks/usePostEditMutation';
 import extractHashtag from 'utils/extractHashtag';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import usePost from 'hooks/queries/usePost';
+import usePost from 'pages/Post/hooks/queries/usePost';
 
 const PostEdit = () => {
   let { id: postId } = useParams();
