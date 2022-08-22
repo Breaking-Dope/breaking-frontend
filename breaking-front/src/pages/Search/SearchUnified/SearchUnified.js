@@ -10,7 +10,7 @@ import {
   NO_FOLLOW_USER,
   NO_PROFILEIMGURL_USER,
 } from 'mocks/dummyData/users';
-import UserCard from '../components/UserCard/UserCard';
+import UserCard from './components/UserCard/UserCard';
 const SearchUnified = () => {
   const FeedList = [
     {

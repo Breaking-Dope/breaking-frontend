@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import * as Style from 'pages/Search/components/UserCard/UserCard.styles';
+import * as Style from 'pages/Search/SearchUnified/components/UserCard/UserCard.styles';
 import Button from 'components/Button/Button';
 
 const UserCard = ({ user }) => {
