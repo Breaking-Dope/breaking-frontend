@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as Style from 'pages/Search/SearchUser/components/SearchUserResultCard.styles';
 import numberFormatter from 'utils/numberFormatter';
-import ProfileFollowButton from 'pages/Profile/components/ProfileFollowButton/ProfileFollowButton';
+import FollowButton from 'components/FollowButton/FollowButton';
 
 const SearchUserResultCard = ({ user }) => {
   return (
@@ -19,10 +19,7 @@ const SearchUserResultCard = ({ user }) => {
         </Style.UserFollowers>
         <Style.UserStatusMSG>{user.statusMsg}</Style.UserStatusMSG>
       </Style.UserInformationContainer>
-      <ProfileFollowButton
-        userId={user.userId}
-        isFollowing={user.isFollowing}
-      />
+      <FollowButton userId={user.userId} isFollowing={user.isFollowing} />
     </Style.ResultCard>
   );
 };

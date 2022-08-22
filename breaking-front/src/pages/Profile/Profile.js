@@ -11,7 +11,7 @@ import * as Style from 'pages/Profile/Profile.styles';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
-import ProfileFollowButton from 'pages/Profile/components/ProfileFollowButton/ProfileFollowButton';
+import FollowButton from 'components/FollowButton/FollowButton';
 import ProfileFollowModal from 'pages/Profile/components/ProfileFollowModal/ProfileFollowModal';
 import ProfileTabPanel from 'pages/Profile/components/ProfileTabPanel/ProfileTabPanel';
 import numberFormatter from 'utils/numberFormatter';
@@ -77,7 +77,7 @@ const Profile = () => {
           <Style.UserInformation>
             <Style.Title>
               <Style.NickName>{profileData.data.nickname}</Style.NickName>
-              <ProfileFollowButton
+              <FollowButton
                 userId={userId}
                 isFollowing={profileData.data.isFollowing}
                 isMyPage={isMyPage}

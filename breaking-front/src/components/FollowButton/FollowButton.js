@@ -1,11 +1,11 @@
 import React from 'react';
-import * as Style from 'pages/Profile/components/ProfileFollowButton/ProfileFollowButton.styles';
+import * as Style from 'components/FollowButton/FollowButton.styles';
 import PropTypes from 'prop-types';
 import { useTheme } from 'styled-components';
 import useUnFollow from 'pages/Profile/hooks/mutations/useUnFollow';
 import useFollow from 'pages/Profile/hooks/mutations/useFollow';
 
-const ProfileFollowButton = ({ userId, isFollowing, isMyPage }) => {
+const FollowButton = ({ userId, isFollowing, isMyPage }) => {
   const theme = useTheme();
   const { mutate: UnFollow, isLoading: isUnFollowLoading } = useUnFollow();
   const { mutate: Follow, isLoading: isFollowLoading } = useFollow();
@@ -37,10 +37,10 @@ const ProfileFollowButton = ({ userId, isFollowing, isMyPage }) => {
   }
 };
 
-ProfileFollowButton.propTypes = {
+FollowButton.propTypes = {
   userId: PropTypes.number,
   isFollowing: PropTypes.bool,
   isMyPage: PropTypes.bool,
 };
 
-export default ProfileFollowButton;
+export default FollowButton;
