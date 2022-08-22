@@ -1,4 +1,3 @@
-import ReactLoading from 'react-loading';
 import styled from 'styled-components';
 
 export const MainFeed = styled.div`
@@ -43,16 +42,4 @@ export const Feeds = styled.div`
   grid-template-columns: 400px 400px;
   row-gap: 60px;
   justify-content: space-between;
-`;
-
-export const TargetDiv = styled.div`
-  position: relative;
-  height: 140px;
-`;
-
-export const Loading = styled(ReactLoading)`
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translate(-50%, -50%);
 `;
