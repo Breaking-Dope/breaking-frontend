@@ -1,37 +1,14 @@
 import React from 'react';
 import * as Style from 'pages/Profile/components/ProfileFollowButton/ProfileFollowButton.styles';
 import PropTypes from 'prop-types';
-import { useMutation, useQueryClient } from 'react-query';
-import { postFollow, deleteUnFollow } from 'api/profile';
 import { useTheme } from 'styled-components';
+import useUnFollow from 'pages/Profile/hooks/mutations/useUnFollow';
+import useFollow from 'pages/Profile/hooks/mutations/useFollow';
 
 const ProfileFollowButton = ({ userId, isFollowing, isMyPage }) => {
-  const queryClient = useQueryClient();
   const theme = useTheme();
-  const { mutate: UnFollow, isLoading: isUnFollowLoading } = useMutation(
-    deleteUnFollow,
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('profile');
-        queryClient.invalidateQueries('followerList');
-      },
-      onError: () => {
-        //에러처리
-      },
-    }
-  );
-  const { mutate: Follow, isLoading: isFollowLoading } = useMutation(
-    postFollow,
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('profile');
-        queryClient.invalidateQueries('followerList');
-      },
-      onError: () => {
-        //에러처리
-      },
-    }
-  );
+  const { mutate: UnFollow, isLoading: isUnFollowLoading } = useUnFollow();
+  const { mutate: Follow, isLoading: isFollowLoading } = useFollow();
 
   if (isMyPage) {
     return <></>;
