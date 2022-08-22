@@ -1,17 +1,13 @@
-import FollowCard from 'components/FollowCard/FollowCard';
 import Modal from 'components/Modal/Modal';
-import { FollowCardSkeleton } from 'components/Skeleton/Skeleton';
-import { PAGE_PATH } from 'constants/path';
 import useFollowerList from 'pages/Profile/hooks/queries/useFollowerList';
 import useFollowingList from 'pages/Profile/hooks/queries/useFollowingList';
-import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { UserInformationContext } from 'providers/UserInformationProvider';
 import { useEffect } from 'react';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import * as Style from 'pages/Profile/components/ProfileFollowModal/ProfileFollowModal.styles';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
+import FollowCardList from 'pages/Profile/components/FollowCardList/FollowCardList';
 
 const ProfileFollowModal = ({
   isFollowerModalOpen,
@@ -108,60 +104,12 @@ const ProfileFollowModal = ({
   );
 };
 
-const FollowCardList = ({
-  isLoading,
-  toggleModal,
-  followList,
-  setFollowingList,
-  setFollowerList,
-}) => {
-  const navigate = useNavigate();
-  const userData = useContext(UserInformationContext);
-
-  return (
-    <>
-      {followList &&
-        followList.map((item) => (
-          <FollowCard
-            cardClick={() => {
-              toggleModal();
-              navigate(PAGE_PATH.PROFILE(item.userId));
-            }}
-            isPermission={item.userId !== userData.userId}
-            profileData={item}
-            key={`follow-${item.userId}`}
-            setFollowingList={setFollowingList}
-            setFollowerList={setFollowerList}
-          />
-        ))}
-      {isLoading && (
-        <>
-          <FollowCardSkeleton />
-          <FollowCardSkeleton />
-          <FollowCardSkeleton />
-          <FollowCardSkeleton />
-          <FollowCardSkeleton />
-          <FollowCardSkeleton />
-        </>
-      )}
-    </>
-  );
-};
-
 ProfileFollowModal.propTypes = {
   isFollowerModalOpen: PropTypes.bool,
   isFollowingModalOpen: PropTypes.bool,
   toggleFollowerModal: PropTypes.func,
   toggleFollowingModal: PropTypes.func,
   userId: PropTypes.number,
-};
-
-FollowCardList.propTypes = {
-  isLoading: PropTypes.bool,
-  toggleModal: PropTypes.func,
-  followList: PropTypes.array,
-  setFollowingList: PropTypes.func,
-  setFollowerList: PropTypes.func,
 };
 
 export default ProfileFollowModal;
