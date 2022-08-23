@@ -115,24 +115,6 @@ export const Loading = styled(ReactLoading)`
   transform: translate(-50%, -50%);
 `;
 
-export const Reply = styled.div`
-  position: relative;
-  width: 730px;
-  margin-left: auto;
-  margin-bottom: 40px;
-  min-height: 100px;
-`;
-
-export const MoreShowReply = styled(ReplyCount)`
-  position: absolute;
-  bottom: -25px;
-  left: 80px;
-  svg {
-    margin-right: 3px;
-    vertical-align: bottom;
-  }
-`;
-
 export const CommentEditForm = styled.div`
   margin: 30px 0px;
   padding: 10px 0px;

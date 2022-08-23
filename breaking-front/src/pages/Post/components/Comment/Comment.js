@@ -1,18 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useTheme } from 'styled-components';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import { PAGE_PATH } from 'constants/path';
 import timeFormatter from 'utils/timeFormatter';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
 import Toggle from 'components/Toggle/Toggle';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
+import Reply from 'pages/Post/components/Reply/Reply';
 import CommentForm from 'pages/Post/components/CommentForm/CommentForm';
-import usePostReply from 'pages/Post/hooks/queries/usePostReply';
 import useCommentLike from 'pages/Post/hooks/mutations/useCommentLike';
 import useDeleteCommentLike from 'pages/Post/hooks/mutations/useDeleteCommentLike';
 import useDeleteComment from 'pages/Post/hooks/mutations/useDeleteComment';
+import usePostReply from 'pages/Post/hooks/queries/usePostReply';
 import * as Style from 'pages/Post/components/Comment/Comment.styles';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
 import { ReactComponent as LikedIcon } from 'assets/svg/liked.svg';
@@ -23,10 +23,8 @@ import { ReactComponent as ChatIcon } from 'assets/svg/chat.svg';
 import { ReactComponent as BlockIcon } from 'assets/svg/block.svg';
 import { ReactComponent as DropUpIcon } from 'assets/svg/drop_up.svg';
 import { ReactComponent as DropDownIcon } from 'assets/svg/drop_down.svg';
-import { ReactComponent as MoreIcon } from 'assets/svg/more_arrow.svg';
 
 const Comment = ({ comment, type }) => {
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const { userId, profileImgURL } = useContext(UserInformationContext);
@@ -37,7 +35,6 @@ const Comment = ({ comment, type }) => {
   const [isLiked, setIsLiked] = useState(comment.isLiked);
   const [likeCount, setLikeCount] = useState(comment.likeCount);
   const [commentId, setCommentId] = useState('');
-
   const {
     data: postReplyData,
     isFetching: isPostReplyFetching,
@@ -62,10 +59,6 @@ const Comment = ({ comment, type }) => {
     let deleteConfirm = window.confirm('삭제하시겠습니까?');
 
     deleteConfirm && DeleteComment(comment.commentId);
-  };
-
-  const moreShowReplyClick = () => {
-    FetchNextPostReply();
   };
 
   const toggleLiked = () => {
@@ -190,26 +183,11 @@ const Comment = ({ comment, type }) => {
         </Style.ContentContainer>
       </Style.Comment>
       {isOpenReplyToggle && (
-        <Style.Reply>
-          {postReplyData?.pages.map((page) =>
-            page.result.map((reply) => (
-              <Comment comment={reply} type="reply" key={reply.commentId} />
-            ))
-          )}
-          {console.log(postReplyData?.pages.slice(-1)[0])}
-          {postReplyData?.pages.slice(-1)[0].hasNextReply &&
-            !isPostReplyFetching && (
-              <Style.MoreShowReply onClick={moreShowReplyClick}>
-                <MoreIcon />
-                더보기
-              </Style.MoreShowReply>
-            )}
-          {isPostReplyFetching && (
-            <Style.LoadingContainer>
-              <Style.Loading type="spin" color={theme.blue[900]} width="40px" />
-            </Style.LoadingContainer>
-          )}
-        </Style.Reply>
+        <Reply
+          replyData={postReplyData}
+          isFetching={isPostReplyFetching}
+          FetchNextReply={FetchNextPostReply}
+        />
       )}
       {isOpenCommentEditToggle && (
         <Style.CommentEditForm>
