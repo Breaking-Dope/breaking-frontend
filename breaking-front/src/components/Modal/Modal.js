@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { ReactComponent as CloseIcon } from 'assets/svg/x_mark.svg';
 import * as Style from 'components/Modal/Modal.styles';
@@ -10,6 +10,21 @@ export default function Modal({ isOpen, closeClick, title, grid, children }) {
   const modalOverlayClick = (event) => {
     if (event.target === modalRef.current) closeClick();
   };
+  const scrollY = window.scrollY;
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.cssText = `
+      position: fixed; 
+      top: -${scrollY}px;
+      width: 100%;
+      `;
+    }
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = '';
+      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+    };
+  }, [isOpen]);
 
   return (
     <Style.ModalOverlay
