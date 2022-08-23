@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from 'react-query';
 import PropTypes from 'prop-types';
-import { deletePostBookmark, postPostBookmark } from 'api/post';
 import { PAGE_PATH } from 'constants/path';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import Toggle from 'components/Toggle/Toggle';
@@ -19,6 +17,8 @@ import { ReactComponent as BookmarkedIcon } from 'assets/svg/bookmarked.svg';
 import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as ThumbnailIcon } from 'assets/svg/default_thumbnail_image.svg';
+import usePostBookmark from 'hooks/mutations/usePostBookmark';
+import useDeletePostBookmark from 'hooks/mutations/useDeletePostBookmark';
 
 export default function Feed({ feedData, ...props }) {
   const navigate = useNavigate();
@@ -26,28 +26,8 @@ export default function Feed({ feedData, ...props }) {
   const [isBookmarked, setIsBookmarked] = useState(feedData.isBookmarked);
   const [isOpenToggle, setIsOpenToggle] = useState(false);
 
-  const { mutate: PostBookmark } = useMutation(postPostBookmark, {
-    onSuccess: () => {
-      setIsBookmarked(true);
-    },
-    onError: (error) => {
-      if (error.response.data.code === 'BSE000') {
-        alert('로그인이 필요합니다.');
-        navigate(PAGE_PATH.LOGIN);
-      }
-    },
-  });
-  const { mutate: DeletePostBookmark } = useMutation(deletePostBookmark, {
-    onSuccess: () => {
-      setIsBookmarked(false);
-    },
-    onError: (error) => {
-      if (error.response.data.code === 'BSE000') {
-        alert('로그인이 필요합니다.');
-        navigate(PAGE_PATH.LOGIN);
-      }
-    },
-  });
+  const { mutate: PostBookmark } = usePostBookmark();
+  const { mutate: DeletePostBookmark } = useDeletePostBookmark();
 
   const handleProfileClick = () => {
     navigate(PAGE_PATH.PROFILE(feedData.user?.userId));
@@ -57,6 +37,7 @@ export default function Feed({ feedData, ...props }) {
     isBookmarked
       ? DeletePostBookmark(feedData.postId)
       : PostBookmark(feedData.postId);
+    setIsBookmarked((pre) => !pre);
   };
 
   const toggleETC = () => {
