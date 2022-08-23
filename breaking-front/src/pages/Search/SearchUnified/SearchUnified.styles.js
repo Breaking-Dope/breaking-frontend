@@ -2,16 +2,17 @@ import { default as styled } from 'styled-components';
 
 export const UserResultLayout = styled.div`
   width: 100%;
-  height: 300px;
   margin-top: 20px;
   padding: 30px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.gray[50]};
+  text-align: center;
 `;
 
 export const UserResultTitle = styled.h3`
   margin-bottom: 10px;
   font-size: 16px;
+  text-align: left;
 `;
 
 export const UserInformationList = styled.div`
@@ -22,30 +23,29 @@ export const UserInformationList = styled.div`
 `;
 
 export const ViewAllButton = styled.button`
-  position: absolute;
-  left: 50%;
-  width: 300px;
-  height: 22px;
+  width: 250px;
+  height: 30px;
   margin-top: 30px;
   border: none;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.blue[100]};
   font-size: 12px;
-  transform: translate(-50%, -50%);
   cursor: pointer;
 `;
 
 export const PostResultLayout = styled.div`
   width: 100%;
   margin: 20px 0px 100px 0px;
-  padding: 20px 20px 60px 20px;
+  padding: 20px 20px 30px 20px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.gray[50]};
+  text-align: center;
 `;
 
 export const PostResultTitle = styled.h3`
   padding: 10px;
   font-size: 16px;
+  text-align: left;
 `;
 
 export const PostResultList = styled.div`
