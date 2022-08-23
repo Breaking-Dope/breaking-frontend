@@ -79,15 +79,6 @@ export const CommentFooter = styled.div`
   }
 `;
 
-export const CommentToggle = styled.div`
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
-  position: absolute;
-  right: -70px;
-  bottom: 20px;
-`;
-
-export const AddComment = styled.div``;
-
 export const ReplyCount = styled.div`
   display: inline-flex;
   margin: 10px 0px 0px;

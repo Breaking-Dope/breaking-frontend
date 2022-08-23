@@ -5,11 +5,11 @@ import { UserInformationContext } from 'providers/UserInformationProvider';
 import { PAGE_PATH } from 'constants/path';
 import timeFormatter from 'utils/timeFormatter';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
-import Toggle from 'components/Toggle/Toggle';
 import ContentSlice from 'components/ContentSlice/ContentSlice';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import Reply from 'pages/Post/components/Reply/Reply';
 import CommentForm from 'pages/Post/components/CommentForm/CommentForm';
+import CommentToggle from 'pages/Post/components/CommentToggle/CommentToggle';
 import useCommentLike from 'pages/Post/hooks/mutations/useCommentLike';
 import useDeleteCommentLike from 'pages/Post/hooks/mutations/useDeleteCommentLike';
 import useDeleteComment from 'pages/Post/hooks/mutations/useDeleteComment';
@@ -18,10 +18,6 @@ import * as Style from 'pages/Post/components/Comment/Comment.styles';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
 import { ReactComponent as LikedIcon } from 'assets/svg/liked.svg';
 import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
-import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
-import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
-import { ReactComponent as ChatIcon } from 'assets/svg/chat.svg';
-import { ReactComponent as BlockIcon } from 'assets/svg/block.svg';
 import { ReactComponent as DropUpIcon } from 'assets/svg/drop_up.svg';
 import { ReactComponent as DropDownIcon } from 'assets/svg/drop_down.svg';
 
@@ -47,7 +43,7 @@ const Comment = ({ comment, type }) => {
   const { mutate: DeleteComment } = useDeleteComment();
 
   const profileClick = () => {
-    navigate(PAGE_PATH.PROFILE(comment.user.userId));
+    navigate(PAGE_PATH.PROFILE(comment.user?.userId));
   };
 
   const commentEditClick = () => {
@@ -100,11 +96,11 @@ const Comment = ({ comment, type }) => {
       >
         <ProfileImage
           size="medium"
-          src={ImageUrlConverter(comment.user.profileImgURL)}
+          src={ImageUrlConverter(comment.user?.profileImgURL)}
           profileClick={profileClick}
         />
         <Style.ContentContainer>
-          <Style.Nickname>{comment.user.nickname}</Style.Nickname>
+          <Style.Nickname>{comment.user?.nickname}</Style.Nickname>
           <Style.CreatedDate>
             {timeFormatter(new Date(comment.createdDate))}
           </Style.CreatedDate>
@@ -128,40 +124,20 @@ const Comment = ({ comment, type }) => {
             >
               <ETCIcon />
             </Style.ETCIconContainer>
-            <Style.CommentToggle
+            <CommentToggle
               isOpen={isOpenCommentToggle}
-              onMouseDown={(event) => event.preventDefault()}
-            >
-              {comment.user.userId === userId ? (
-                <Toggle width="100px">
-                  <Toggle.LabelLink
-                    icon={<EditIcon />}
-                    label="수정"
-                    labelClick={commentEditClick}
-                  />
-                  <Toggle.LabelLink
-                    icon={<RemoveIcon />}
-                    label="삭제"
-                    labelClick={commentDeleteClick}
-                  />
-                </Toggle>
-              ) : (
-                <Toggle width="100px">
-                  <Toggle.LabelLink icon={<ChatIcon />} label="채팅" />
-                  <Toggle.LabelLink icon={<BlockIcon />} label="차단" />
-                </Toggle>
-              )}
-            </Style.CommentToggle>
+              isMyComment={comment.user?.userId === userId}
+              editClick={commentEditClick}
+              deleteClick={commentDeleteClick}
+            />
           </Style.CommentFooter>
           {isOpenCommentFormToggle && (
-            <Style.AddComment>
-              <CommentForm
-                profileImgURL={profileImgURL}
-                commentId={comment.commentId}
-                type="reply"
-                closeClick={() => setIsOpenCommentFormToggle(false)}
-              />
-            </Style.AddComment>
+            <CommentForm
+              profileImgURL={profileImgURL}
+              commentId={comment.commentId}
+              type="reply"
+              closeClick={() => setIsOpenCommentFormToggle(false)}
+            />
           )}
           {comment.replyCount !== 0 && (
             <Style.ReplyCount onClick={toggleReply}>
