@@ -136,12 +136,6 @@ export const ContentStatus = styled.div`
   }
 `;
 
-export const ContentToggle = styled.div`
-  position: absolute;
-  right: -60px;
-  bottom: 30px;
-`;
-
 export const Comments = styled.div`
   width: 800px;
 `;

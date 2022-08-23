@@ -4,28 +4,25 @@ import dayjs from 'dayjs';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import usePostBoughtList from 'pages/Post/hooks/queries/usePostBoughtList';
-import usePostBookmark from 'hooks/mutations/usePostBookmark';
-import useDeletePostBookmark from 'hooks/mutations/useDeletePostBookmark';
 import usePost from 'hooks/queries/usePost';
 import usePostComment from 'pages/Post/hooks/queries/usePostComment';
 import usePostLike from 'pages/Post/hooks/mutations/usePostLike';
 import useDeletePostLike from 'pages/Post/hooks/mutations/useDeletePostLike';
-import useDeletePost from 'pages/Post/hooks/mutations/useDeletePost';
-import usePostActivatePurchase from 'pages/Post/hooks/mutations/usePostActivatePurchase';
-import usePostDeactivatePurchase from 'pages/Post/hooks/mutations/usePostDeactivatePurchase';
 import usePostBuy from 'pages/Post/hooks/mutations/usePostBuy';
 import { PAGE_PATH } from 'constants/path';
 import { PostSkeleton } from 'components/Skeleton/Skeleton';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
-import Toggle from 'components/Toggle/Toggle';
+import Tag from 'components/Tag/Tag';
 import Line from 'components/Line/Line';
 import Button from 'components/Button/Button';
 import Modal from 'components/Modal/Modal';
 import FollowCard from 'components/FollowCard/FollowCard';
+import ContentSlice from 'components/ContentSlice/ContentSlice';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
 import Carousel from 'pages/Post/components/Carousel/Carousel';
 import Comment from 'pages/Post/components/Comment/Comment';
+import ContentToggle from 'pages/Post/components/ContentToggle/ContentToggle';
 import CommentForm from 'pages/Post/components/CommentForm/CommentForm';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
 import * as Style from 'pages/Post/Post.styles';
@@ -34,15 +31,6 @@ import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
 import { ReactComponent as LikedIcon } from 'assets/svg/liked.svg';
 import { ReactComponent as CommentIcon } from 'assets/svg/comment.svg';
 import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
-import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
-import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
-import { ReactComponent as BookmarkIcon } from 'assets/svg/small_bookmark.svg';
-import { ReactComponent as BookmarkedIcon } from 'assets/svg/small_bookmarked.svg';
-import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
-import { ReactComponent as ActivateIcon } from 'assets/svg/activate_purchase.svg';
-import { ReactComponent as DeactivateIcon } from 'assets/svg/deactivate_purchase.svg';
-import Tag from 'components/Tag/Tag';
-import ContentSlice from 'components/ContentSlice/ContentSlice';
 
 const Post = () => {
   let { id: postId } = useParams();
@@ -52,10 +40,10 @@ const Post = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [purchaseType, setPurchaseType] = useState('구매하기');
-  const [isContentToggle, setIsContentToggle] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isOpenContentToggle, setIsOpenContentToggle] = useState(false);
+
   const [isLiked, setIsLiked] = useState(false);
-  const [isPurchasable, setIsPurchasable] = useState(false);
+
   const [likeCount, setLikeCount] = useState(0);
 
   const { data: postData, isLoading: isPostDataLoading } = usePost(postId);
@@ -74,30 +62,16 @@ const Post = () => {
 
   const { mutate: PostLike } = usePostLike();
   const { mutate: DeletePostLike } = useDeletePostLike();
-  const { mutate: PostBookmark } = usePostBookmark();
-  const { mutate: DeletePostBookmark } = useDeletePostBookmark();
-  const { mutate: DeletePost } = useDeletePost();
-  const { mutate: PostActivatePurchase } = usePostActivatePurchase();
-  const { mutate: PostDeactivatePurchase } = usePostDeactivatePurchase();
+
   const { mutate: PostBuy } = usePostBuy();
 
-  const toggleModal = () => {
-    setIsModalOpen((pre) => !pre);
-  };
-
-  const postBuyListClick = () => {
+  const toggleButListModal = () => {
     PostBoughtListReFetch();
-    toggleModal();
+    setIsModalOpen((pre) => !pre);
   };
 
   const profileClick = () => {
     navigate(PAGE_PATH.PROFILE(postData?.data.user?.userId));
-  };
-
-  const postDeleteClick = () => {
-    const deleteConfirm = window.confirm('게시글을 삭제하시겠습니까?');
-
-    deleteConfirm && DeletePost(postId);
   };
 
   const postBuyClick = () => {
@@ -112,20 +86,8 @@ const Post = () => {
     setIsLiked((pre) => !pre);
   };
 
-  const toggleBookmarked = () => {
-    isBookmarked ? DeletePostBookmark(postId) : PostBookmark(postId);
-    setIsBookmarked((pre) => !pre);
-  };
-
-  const togglePurchasable = () => {
-    isPurchasable
-      ? PostDeactivatePurchase(postId)
-      : PostActivatePurchase(postId);
-    setIsPurchasable((pre) => !pre);
-  };
-
   const toggleComment = () => {
-    setIsContentToggle((pre) => !pre);
+    setIsOpenContentToggle((pre) => !pre);
   };
 
   useEffect(() => {
@@ -134,16 +96,18 @@ const Post = () => {
     else if (!postData?.data.isPurchasable) setPurchaseType('판매 중지');
     else setPurchaseType('구매 하기');
 
-    setIsBookmarked(postData?.data.isBookmarked);
     setIsLiked(postData?.data.isLiked);
-    setIsPurchasable(postData?.data.isPurchasable);
     setLikeCount(postData?.data.likeCount);
   }, [postData, userId]);
 
   return (
     <>
       <ScrollToTop />
-      <Modal isOpen={isModalOpen} closeClick={toggleModal} title="구매자 목록">
+      <Modal
+        isOpen={isModalOpen}
+        closeClick={toggleButListModal}
+        title="구매자 목록"
+      >
         {postBoughtList?.data.map((item) => (
           <FollowCard
             cardClick={() => navigate(PAGE_PATH.PROFILE(item.userId))}
@@ -184,7 +148,7 @@ const Post = () => {
                 <Tag
                   postType={postData?.data.postType}
                   isSold={postData?.data.isSold}
-                  isPurchasable={isPurchasable}
+                  isPurchasable={postData?.data.isPurchasable}
                 />
                 <Style.ContentTitle>{postData?.data.title}</Style.ContentTitle>
                 <Style.ContentLocationContainer>
@@ -216,7 +180,7 @@ const Post = () => {
                   {postData?.data.price.toLocaleString('ko-KR')}&nbsp;원
                 </Style.ContentPrice>
                 {purchaseType === '구매자 목록' && (
-                  <Button color="primary" onClick={postBuyListClick}>
+                  <Button color="primary" onClick={toggleButListModal}>
                     {purchaseType}
                   </Button>
                 )}
@@ -261,47 +225,13 @@ const Post = () => {
                 <ETCIcon
                   onClick={toggleComment}
                   tabIndex="0"
-                  onBlur={() => setIsContentToggle(false)}
+                  onBlur={() => setIsOpenContentToggle(false)}
                 />
-                <Style.ContentToggle
-                  onMouseDown={(event) => event.preventDefault()}
-                >
-                  {isContentToggle && (
-                    <Toggle width="100px">
-                      {postData?.data.isMyPost && !postData?.data.isSold && (
-                        <>
-                          <Toggle.LabelLink icon={<EditIcon />} label="수정" />
-                          <Toggle.LabelLink
-                            icon={<RemoveIcon />}
-                            label="삭제"
-                            labelClick={postDeleteClick}
-                          />
-                        </>
-                      )}
-                      {postData?.data.isMyPost && (
-                        <Toggle.LabelLink
-                          icon={
-                            isPurchasable ? (
-                              <ActivateIcon />
-                            ) : (
-                              <DeactivateIcon />
-                            )
-                          }
-                          label={isPurchasable ? '비활성화' : '활성화'}
-                          labelClick={togglePurchasable}
-                        />
-                      )}
-                      <Toggle.LabelLink
-                        icon={
-                          isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />
-                        }
-                        label="북마크"
-                        labelClick={toggleBookmarked}
-                      />
-                      <Toggle.LabelLink icon={<ShareIcon />} label="공유" />
-                    </Toggle>
-                  )}
-                </Style.ContentToggle>
+                <ContentToggle
+                  isOpen={isOpenContentToggle}
+                  postData={postData?.data}
+                  postId={postId}
+                />
               </Style.ContentFooter>
             </Style.ContentContainer>
           </>
