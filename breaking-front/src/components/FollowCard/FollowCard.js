@@ -16,6 +16,24 @@ export default function FollowCard({
   const theme = useTheme();
   const [isLoading, setIsLoading] = useState(false);
 
+  const UnFollow = () => {
+    if (!UnFollowMutation.isLoading) {
+      UnFollowMutation.mutate(profileData.userId, {
+        onSuccess: () => setIsLoading(false),
+      });
+      setIsLoading(true);
+    }
+  };
+
+  const Follow = () => {
+    if (!FollowMutation.isLoading) {
+      FollowMutation.mutate(profileData.userId, {
+        onSuccess: () => setIsLoading(false),
+      });
+      setIsLoading(true);
+    }
+  };
+
   return (
     <Style.FollowCard>
       <ProfileImage
@@ -29,44 +47,20 @@ export default function FollowCard({
         </Style.Nickname>
         <Style.StatusMessage>{profileData?.statusMsg}</Style.StatusMessage>
       </Style.Container>
-      {isPermission &&
-        (profileData.isFollowing ? (
-          <Style.DeleteButton
-            size="small"
-            onClick={() => {
-              if (!UnFollowMutation.isLoading) {
-                UnFollowMutation.mutate(profileData.userId, {
-                  onSuccess: () => setIsLoading(false),
-                });
-                setIsLoading(true);
-              }
-            }}
-          >
-            {isLoading ? (
-              <Style.Loading type="spin" color={theme.blue[900]} width="10px" />
-            ) : (
-              '언팔로우'
-            )}
-          </Style.DeleteButton>
-        ) : (
-          <Style.DeleteButton
-            size="small"
-            onClick={() => {
-              if (!FollowMutation.isLoading) {
-                FollowMutation.mutate(profileData.userId, {
-                  onSuccess: () => setIsLoading(false),
-                });
-                setIsLoading(true);
-              }
-            }}
-          >
-            {isLoading ? (
-              <Style.Loading type="spin" color={theme.blue[900]} width="10px" />
-            ) : (
-              '팔로우'
-            )}
-          </Style.DeleteButton>
-        ))}
+      {isPermission && (
+        <Style.DeleteButton
+          size="small"
+          onClick={profileData.isFollowing ? UnFollow : Follow}
+        >
+          {isLoading ? (
+            <Style.Loading type="spin" color={theme.blue[900]} width="10px" />
+          ) : profileData.isFollowing ? (
+            '언팔로우'
+          ) : (
+            '팔로우'
+          )}
+        </Style.DeleteButton>
+      )}
     </Style.FollowCard>
   );
 }
