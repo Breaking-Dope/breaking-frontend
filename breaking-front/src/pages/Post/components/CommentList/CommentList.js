@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
 import useCommentWrite from 'pages/Post/hooks/mutations/useCommentWrite';
 import usePostComment from 'pages/Post/hooks/queries/usePostComment';
 import CommentForm from 'pages/Post/components/CommentForm/CommentForm';
 import Comment from 'pages/Post/components/Comment/Comment';
-import * as Style from 'pages/Post/components/CommentContainer/CommentContainer.styles';
+import * as Style from 'pages/Post/components/CommentList/CommentList.styles';
 
-const CommentContainer = ({ postId }) => {
+const CommentList = ({ postId }) => {
   const {
     data: postCommentData,
     isFetching: isPostCommentFetching,
@@ -31,7 +30,7 @@ const CommentContainer = ({ postId }) => {
   };
 
   return (
-    <Style.CommentContainer>
+    <Style.CommentList>
       <CommentForm onSubmit={handleSubmit} />
       {postCommentData?.pages.map((page) =>
         page.result.map((comment) => (
@@ -42,12 +41,12 @@ const CommentContainer = ({ postId }) => {
         targetRef={targetRef}
         isFetching={isPostCommentFetching}
       />
-    </Style.CommentContainer>
+    </Style.CommentList>
   );
 };
 
-CommentContainer.propTypes = {
+CommentList.propTypes = {
   postId: PropTypes.number,
 };
 
-export default CommentContainer;
+export default CommentList;
