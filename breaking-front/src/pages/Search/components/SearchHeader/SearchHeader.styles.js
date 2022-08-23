@@ -4,7 +4,7 @@ import {
   TabPanel,
   TabsContainer,
 } from 'components/Tabs/Tabs.styles';
-import { default as styled } from 'styled-components';
+import styled from 'styled-components';
 
 export const SearchTabs = styled(TabsContainer)`
   margin-top: 30px;

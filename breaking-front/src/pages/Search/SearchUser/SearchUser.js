@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchHeader from 'pages/Search/components/SearchHeader/SearchHeader';
-import SearchUserResultCard from './components/SearchUserResultCard';
+import SearchUserResultCard from 'pages/Search/SearchUser/components/SearchUserResultCard';
 import * as Style from 'pages/Search/SearchUser//SearchUser.styles';
 import {
   FOLLOWING_USER,

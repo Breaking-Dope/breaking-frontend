@@ -10,7 +10,7 @@ import {
   NO_FOLLOW_USER,
   NO_PROFILEIMGURL_USER,
 } from 'mocks/dummyData/users';
-import UserCard from './components/UserCard/UserCard';
+import UserCard from 'pages/Search/SearchUnified/components/UserCard/UserCard';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PAGE_PATH } from 'constants/path';
 import {
@@ -19,6 +19,7 @@ import {
   NORMAL_CONTENT,
   SOLDOUT_CONTENT,
 } from 'mocks/dummyData/contents';
+
 const SearchUnified = () => {
   const { userId } = useContext(UserInformationContext);
   const navigate = useNavigate();
