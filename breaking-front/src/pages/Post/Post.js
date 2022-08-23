@@ -2,25 +2,21 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { UserInformationContext } from 'providers/UserInformationProvider';
-import useInfiniteScroll from 'hooks/useInfiniteScroll';
-import usePost from 'hooks/queries/usePost';
-import usePostComment from 'pages/Post/hooks/queries/usePostComment';
-import usePostLike from 'pages/Post/hooks/mutations/usePostLike';
-import useDeletePostLike from 'pages/Post/hooks/mutations/useDeletePostLike';
 import { PAGE_PATH } from 'constants/path';
-import { PostSkeleton } from 'components/Skeleton/Skeleton';
-import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
+import ImageUrlConverter from 'utils/ImageUrlConverter';
 import Tag from 'components/Tag/Tag';
 import Line from 'components/Line/Line';
+import { PostSkeleton } from 'components/Skeleton/Skeleton';
+import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import ContentSlice from 'components/ContentSlice/ContentSlice';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
+import usePost from 'hooks/queries/usePost';
+import usePostLike from 'pages/Post/hooks/mutations/usePostLike';
+import useDeletePostLike from 'pages/Post/hooks/mutations/useDeletePostLike';
 import Carousel from 'pages/Post/components/Carousel/Carousel';
-import Comment from 'pages/Post/components/Comment/Comment';
+import CommentContainer from 'pages/Post/components/CommentContainer/CommentContainer';
 import ContentToggle from 'pages/Post/components/ContentToggle/ContentToggle';
-import CommentForm from 'pages/Post/components/CommentForm/CommentForm';
 import PurchaseButton from 'pages/Post/components/PurchaseButton/PurchaseButton';
-import ImageUrlConverter from 'utils/ImageUrlConverter';
 import * as Style from 'pages/Post/Post.styles';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
@@ -32,26 +28,13 @@ const Post = () => {
   let { id: postId } = useParams();
   postId = Number(postId);
   const navigate = useNavigate();
-  const { userId, profileImgURL } = useContext(UserInformationContext);
+  const { userId } = useContext(UserInformationContext);
 
   const [isOpenContentToggle, setIsOpenContentToggle] = useState(false);
-
   const [isLiked, setIsLiked] = useState(false);
-
   const [likeCount, setLikeCount] = useState(0);
 
   const { data: postData, isLoading: isPostDataLoading } = usePost(postId);
-
-  const {
-    data: postCommentData,
-    isFetching: isPostCommentFetching,
-    fetchNextPage: FetchNextPostComment,
-  } = usePostComment(postId);
-
-  const { targetRef } = useInfiniteScroll(
-    postCommentData,
-    FetchNextPostComment
-  );
 
   const { mutate: PostLike } = usePostLike();
   const { mutate: DeletePostLike } = useDeletePostLike();
@@ -185,31 +168,8 @@ const Post = () => {
             </Style.ContentContainer>
           </>
         )}
-
         <Line width="800px" />
-
-        <Style.Comments>
-          <CommentForm
-            profileImgURL={profileImgURL}
-            userId={userId}
-            postId={postId}
-            type="comment"
-          />
-          {postCommentData?.pages.map((page) =>
-            page.result.map((comment) => (
-              <Comment
-                comment={comment}
-                type="comment"
-                postId={postId}
-                key={comment.commentId}
-              />
-            ))
-          )}
-          <InfiniteTargetDiv
-            targetRef={targetRef}
-            isFetching={isPostCommentFetching}
-          />
-        </Style.Comments>
+        <CommentContainer postId={postId} />
       </Style.Post>
     </>
   );
