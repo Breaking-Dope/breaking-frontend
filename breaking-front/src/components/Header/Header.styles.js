@@ -6,6 +6,7 @@ export const HeaderContainer = styled.header`
   position: sticky;
   top: 0;
   z-index: 100;
+  min-width: 950px;
   height: 65px;
   background-color: ${({ theme }) => theme.blue[900]};
 `;
@@ -13,11 +14,12 @@ export const HeaderContainer = styled.header`
 export const HeaderContent = styled.div`
   display: flex;
   position: relative;
-  justify-content: space-between;
-  max-width: 950px;
+  width: 950px;
   height: 100%;
   padding: 0px 13px;
   margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const SearchContent = styled.div`
@@ -28,10 +30,8 @@ export const ProfileContent = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  svg {
-    > path {
-      fill: ${({ theme }) => theme.blue[300]};
-    }
+  svg > path {
+    fill: ${({ theme }) => theme.blue[300]};
   }
 `;
 
@@ -65,7 +65,7 @@ export const BlueLabel = styled.span`
 `;
 
 export const Logout = styled.p`
-  text-align: center;
   margin: 10px;
+  text-align: center;
   cursor: pointer;
 `;
