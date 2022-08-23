@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { PAGE_PATH } from 'constants/path';
 import extractHashtag from 'utils/extractHashtag';
-import * as Style from 'components/ContentSlice/ContentSlice.styles';
+import * as Style from 'components/ContentHashtag/ContentHashtag.styles';
 
-export default function ContentSlice({ content }) {
+export default function ContentHashtag({ content }) {
   return (
     <Style.Content>
       {content.split(/(#[^\s#]+)/g).map((contentSlice, index) => {
@@ -26,6 +26,6 @@ export default function ContentSlice({ content }) {
   );
 }
 
-ContentSlice.propTypes = {
+ContentHashtag.propTypes = {
   content: PropTypes.string.isRequired,
 };
