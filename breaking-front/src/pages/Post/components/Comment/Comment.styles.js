@@ -45,12 +45,6 @@ export const CreatedDate = styled.span`
 export const Content = styled.div`
   padding-right: 30px;
   font-size: 14px;
-  line-height: 1.5;
-`;
-
-export const Hashtag = styled.span`
-  color: ${({ theme }) => theme.blue[900]};
-  cursor: pointer;
 `;
 
 export const Status = styled.div`

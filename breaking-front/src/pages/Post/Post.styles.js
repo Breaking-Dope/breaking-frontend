@@ -106,12 +106,6 @@ export const ContentContainer = styled.div`
 
 export const Content = styled.div`
   min-height: 100px;
-  line-height: 1.5;
-`;
-
-export const Hashtag = styled.span`
-  color: ${({ theme }) => theme.blue[900]};
-  cursor: pointer;
 `;
 
 export const ContentFooter = styled.div`

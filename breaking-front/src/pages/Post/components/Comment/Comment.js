@@ -6,6 +6,7 @@ import { PAGE_PATH } from 'constants/path';
 import timeFormatter from 'utils/timeFormatter';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
 import Toggle from 'components/Toggle/Toggle';
+import ContentSlice from 'components/ContentSlice/ContentSlice';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import Reply from 'pages/Post/components/Reply/Reply';
 import CommentForm from 'pages/Post/components/CommentForm/CommentForm';
@@ -108,19 +109,7 @@ const Comment = ({ comment, type }) => {
             {timeFormatter(new Date(comment.createdDate))}
           </Style.CreatedDate>
           <Style.Content>
-            {comment.content
-              .split(/(#[^\s#]+|\n)/g)
-              .map((contentSlice, index) => {
-                if (contentSlice === '\n')
-                  return <br key={'comment-br-' + index} />;
-                else if (contentSlice[0] === '#')
-                  return (
-                    <Style.Hashtag key={'comment-hashtag-' + index}>
-                      {contentSlice}
-                    </Style.Hashtag>
-                  );
-                else return contentSlice;
-              })}
+            <ContentSlice content={comment.content} />
           </Style.Content>
           <Style.CommentFooter>
             <Style.Status>

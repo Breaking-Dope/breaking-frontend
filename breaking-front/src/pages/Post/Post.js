@@ -41,6 +41,8 @@ import { ReactComponent as BookmarkedIcon } from 'assets/svg/small_bookmarked.sv
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as ActivateIcon } from 'assets/svg/activate_purchase.svg';
 import { ReactComponent as DeactivateIcon } from 'assets/svg/deactivate_purchase.svg';
+import Tag from 'components/Tag/Tag';
+import ContentSlice from 'components/ContentSlice/ContentSlice';
 
 const Post = () => {
   let { id: postId } = useParams();
@@ -179,25 +181,11 @@ const Post = () => {
                 </Style.ContentWriterName>
               </Style.ContentWriter>
               <Style.Context>
-                {postData?.data.postType === 'EXCLUSIVE' && (
-                  <Button color="dark" size="small" disabled>
-                    단독
-                  </Button>
-                )}
-                {postData?.data.postType === 'EXCLUSIVE' &&
-                postData?.data.isSold ? (
-                  <Button color="danger" size="small" disabled>
-                    판매 완료
-                  </Button>
-                ) : postData?.data.isPurchasable ? (
-                  <Button color="primary" size="small" disabled>
-                    판매중
-                  </Button>
-                ) : (
-                  <Button color="danger" size="small" disabled>
-                    판매 중지
-                  </Button>
-                )}
+                <Tag
+                  postType={postData?.data.postType}
+                  isSold={postData?.data.isSold}
+                  isPurchasable={isPurchasable}
+                />
                 <Style.ContentTitle>{postData?.data.title}</Style.ContentTitle>
                 <Style.ContentLocationContainer>
                   <Style.ContentLocation>
@@ -257,20 +245,7 @@ const Post = () => {
             <Line width="800px" />
             <Style.ContentContainer>
               <Style.Content>
-                {postData?.data.content
-                  .split(/(#[^\s#]+|\n|\s)/g)
-                  .map((contentSlice, index) => {
-                    if (contentSlice === ' ') return '\u00a0';
-                    if (contentSlice === '\n')
-                      return <br key={'post-br-' + index} />;
-                    if (contentSlice[0] === '#')
-                      return (
-                        <Style.Hashtag key={'comment-hashtag-' + index}>
-                          {contentSlice}
-                        </Style.Hashtag>
-                      );
-                    return contentSlice;
-                  })}
+                <ContentSlice content={postData?.data.content} />
               </Style.Content>
               <Style.ContentFooter>
                 <Style.ContentStatus>
