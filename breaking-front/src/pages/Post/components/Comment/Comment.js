@@ -5,7 +5,7 @@ import { UserInformationContext } from 'providers/UserInformationProvider';
 import { PAGE_PATH } from 'constants/path';
 import timeFormatter from 'utils/timeFormatter';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
-import ContentSlice from 'components/ContentSlice/ContentSlice';
+import ContentHashtag from 'components/ContentHashtag/ContentHashtag';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import useCommentLike from 'pages/Post/hooks/mutations/useCommentLike';
 import useDeleteCommentLike from 'pages/Post/hooks/mutations/useDeleteCommentLike';
@@ -117,7 +117,7 @@ const Comment = ({ comment, type }) => {
             {timeFormatter(new Date(comment.createdDate))}
           </Style.CreatedDate>
           <Style.Content>
-            <ContentSlice content={comment.content} />
+            <ContentHashtag content={comment.content} />
           </Style.Content>
           <Style.CommentFooter>
             <Style.Status>

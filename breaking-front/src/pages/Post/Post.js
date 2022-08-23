@@ -8,13 +8,13 @@ import Tag from 'components/Tag/Tag';
 import Line from 'components/Line/Line';
 import { PostSkeleton } from 'components/Skeleton/Skeleton';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
-import ContentSlice from 'components/ContentSlice/ContentSlice';
+import ContentHashtag from 'components/ContentHashtag/ContentHashtag';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import usePost from 'hooks/queries/usePost';
 import usePostLike from 'pages/Post/hooks/mutations/usePostLike';
 import useDeletePostLike from 'pages/Post/hooks/mutations/useDeletePostLike';
 import Carousel from 'pages/Post/components/Carousel/Carousel';
-import CommentContainer from 'pages/Post/components/CommentContainer/CommentContainer';
+import CommentList from 'pages/Post/components/CommentList/CommentList';
 import ContentToggle from 'pages/Post/components/ContentToggle/ContentToggle';
 import PurchaseButton from 'pages/Post/components/PurchaseButton/PurchaseButton';
 import * as Style from 'pages/Post/Post.styles';
@@ -141,7 +141,7 @@ const Post = () => {
             <Line width="800px" />
             <Style.ContentContainer>
               <Style.Content>
-                <ContentSlice content={postData?.data.content} />
+                <ContentHashtag content={postData?.data.content} />
               </Style.Content>
               <Style.ContentFooter>
                 <Style.ContentStatus>
@@ -169,7 +169,7 @@ const Post = () => {
           </>
         )}
         <Line width="800px" />
-        <CommentContainer postId={postId} />
+        <CommentList postId={postId} />
       </Style.Post>
     </>
   );
