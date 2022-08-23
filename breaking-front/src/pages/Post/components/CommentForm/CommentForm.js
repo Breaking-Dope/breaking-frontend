@@ -1,26 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { UserInformationContext } from 'providers/UserInformationProvider';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
+import extractHashtag from 'utils/extractHashtag';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import useCommentWrite from 'pages/Post/hooks/mutations/useCommentWrite';
-import useCommentReplyWrite from 'pages/Post/hooks/mutations/useCommentReplyWrite';
-import useCommentEdit from 'pages/Post/hooks/mutations/useCommentEdit';
 import * as Style from 'pages/Post/components/CommentForm/CommentForm.styles';
 
-const CommentForm = ({
-  profileImgURL,
-  postId,
-  commentId,
-  content,
-  closeClick,
-  type,
-}) => {
+const CommentForm = ({ content, closeClick, onSubmit }) => {
+  const { profileImgURL } = useContext(UserInformationContext);
   const textareaRef = useRef();
   const [comment, setComment] = useState(content);
-
-  const { mutate: CommentWrite } = useCommentWrite();
-  const { mutate: CommentReply } = useCommentReplyWrite();
-  const { mutate: CommentEdit } = useCommentEdit();
 
   const handleChange = (event) => {
     textareaRef.current.style.height = '27px';
@@ -33,40 +22,9 @@ const CommentForm = ({
     event.preventDefault();
     if (!comment) return;
 
-    const hashtagList = comment
-      .match(/#[^\s#]+/g)
-      ?.map((hashtag) => hashtag.replace('#', ''));
+    const hashtagList = extractHashtag(comment);
+    onSubmit({ comment, hashtagList });
 
-    switch (type) {
-      case 'comment':
-        CommentWrite({
-          postId: postId,
-          content: comment,
-          hashtagList: hashtagList,
-        });
-        break;
-
-      case 'reply':
-        CommentReply({
-          commentId: commentId,
-          content: comment,
-          hashtagList: hashtagList,
-        });
-        closeClick();
-        break;
-
-      case 'edit':
-        CommentEdit({
-          commentId: commentId,
-          content: comment,
-          hashtagList: hashtagList,
-        });
-        closeClick();
-        break;
-
-      default:
-        break;
-    }
     setComment('');
     textareaRef.current.style.height = '27px';
   };
@@ -94,7 +52,7 @@ const CommentForm = ({
           />
         </Style.FlexContainer>
         <Style.CommentFormFooter>
-          {(type === 'edit' || type === 'reply') && (
+          {closeClick && (
             <Style.CommentButton onClick={closeClick}>취소</Style.CommentButton>
           )}
           <Style.CommentButton type="submit">등록</Style.CommentButton>
@@ -105,12 +63,9 @@ const CommentForm = ({
 };
 
 CommentForm.propTypes = {
-  profileImgURL: PropTypes.string,
-  postId: PropTypes.number,
-  commentId: PropTypes.number,
   content: PropTypes.string,
   closeClick: PropTypes.func,
-  type: PropTypes.oneOf(['comment', 'reply', 'edit']),
+  onSubmit: PropTypes.func,
 };
 
 CommentForm.defaultProps = {
