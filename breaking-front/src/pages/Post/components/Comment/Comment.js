@@ -7,13 +7,14 @@ import timeFormatter from 'utils/timeFormatter';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
 import ContentSlice from 'components/ContentSlice/ContentSlice';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import Reply from 'pages/Post/components/Reply/Reply';
-import CommentForm from 'pages/Post/components/CommentForm/CommentForm';
-import CommentToggle from 'pages/Post/components/CommentToggle/CommentToggle';
 import useCommentLike from 'pages/Post/hooks/mutations/useCommentLike';
 import useDeleteCommentLike from 'pages/Post/hooks/mutations/useDeleteCommentLike';
 import useDeleteComment from 'pages/Post/hooks/mutations/useDeleteComment';
-import usePostReply from 'pages/Post/hooks/queries/usePostReply';
+import useCommentReplyWrite from 'pages/Post/hooks/mutations/useCommentReplyWrite';
+import useCommentEdit from 'pages/Post/hooks/mutations/useCommentEdit';
+import Reply from 'pages/Post/components/Reply/Reply';
+import CommentForm from 'pages/Post/components/CommentForm/CommentForm';
+import CommentToggle from 'pages/Post/components/CommentToggle/CommentToggle';
 import * as Style from 'pages/Post/components/Comment/Comment.styles';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
 import { ReactComponent as LikedIcon } from 'assets/svg/liked.svg';
@@ -24,7 +25,7 @@ import { ReactComponent as DropDownIcon } from 'assets/svg/drop_down.svg';
 const Comment = ({ comment, type }) => {
   const navigate = useNavigate();
 
-  const { userId, profileImgURL } = useContext(UserInformationContext);
+  const { userId } = useContext(UserInformationContext);
   const [isOpenCommentToggle, setIsOpenCommentToggle] = useState(false);
   const [isOpenCommentFormToggle, setIsOpenCommentFormToggle] = useState(false);
   const [isOpenCommentEditToggle, setIsOpenCommentEditToggle] = useState(false);
@@ -32,15 +33,12 @@ const Comment = ({ comment, type }) => {
   const [isLiked, setIsLiked] = useState(comment.isLiked);
   const [likeCount, setLikeCount] = useState(comment.likeCount);
   const [commentId, setCommentId] = useState('');
-  const {
-    data: postReplyData,
-    isFetching: isPostReplyFetching,
-    fetchNextPage: FetchNextPostReply,
-  } = usePostReply(commentId);
 
   const { mutate: CommentLike } = useCommentLike();
   const { mutate: DeleteCommentLike } = useDeleteCommentLike();
   const { mutate: DeleteComment } = useDeleteComment();
+  const { mutate: CommentReplyWrite } = useCommentReplyWrite();
+  const { mutate: CommentEdit } = useCommentEdit();
 
   const profileClick = () => {
     navigate(PAGE_PATH.PROFILE(comment.user?.userId));
@@ -54,18 +52,14 @@ const Comment = ({ comment, type }) => {
 
   const commentDeleteClick = () => {
     let deleteConfirm = window.confirm('삭제하시겠습니까?');
-
     deleteConfirm && DeleteComment(comment.commentId);
   };
 
   const toggleLiked = () => {
-    if (isLiked) {
-      setLikeCount((pre) => pre - 1);
-      DeleteCommentLike(comment.commentId);
-    } else {
-      setLikeCount((pre) => pre + 1);
-      CommentLike(comment.commentId);
-    }
+    isLiked
+      ? DeleteCommentLike(comment.commentId)
+      : CommentLike(comment.commentId);
+    setLikeCount((pre) => (isLiked ? pre - 1 : pre + 1));
     setIsLiked((pre) => !pre);
   };
 
@@ -80,6 +74,24 @@ const Comment = ({ comment, type }) => {
   const toggleReply = () => {
     setIsOpenReplyToggle((pre) => !pre);
     setCommentId(comment.commentId);
+  };
+
+  const handleCommentReplySubmit = ({ comment, hashtagList }) => {
+    CommentReplyWrite({
+      commentId: comment.commentId,
+      content: comment,
+      hashtagList: hashtagList,
+    });
+    setIsOpenCommentFormToggle(false);
+  };
+
+  const handleCommentEditSubmit = ({ comment, hashtagList }) => {
+    CommentEdit({
+      commentId: comment.commentId,
+      content: comment,
+      hashtagList: hashtagList,
+    });
+    setIsOpenCommentEditToggle((pre) => !pre);
   };
 
   useEffect(() => {
@@ -133,10 +145,8 @@ const Comment = ({ comment, type }) => {
           </Style.CommentFooter>
           {isOpenCommentFormToggle && (
             <CommentForm
-              profileImgURL={profileImgURL}
-              commentId={comment.commentId}
-              type="reply"
               closeClick={() => setIsOpenCommentFormToggle(false)}
+              onSubmit={handleCommentReplySubmit}
             />
           )}
           {comment.replyCount !== 0 && (
@@ -147,21 +157,13 @@ const Comment = ({ comment, type }) => {
           )}
         </Style.ContentContainer>
       </Style.Comment>
-      {isOpenReplyToggle && (
-        <Reply
-          replyData={postReplyData}
-          isFetching={isPostReplyFetching}
-          FetchNextReply={FetchNextPostReply}
-        />
-      )}
+      <Reply isOpen={isOpenReplyToggle} commentId={commentId} />
       {isOpenCommentEditToggle && (
         <Style.CommentEditForm>
           <CommentForm
-            profileImgURL={profileImgURL}
-            commentId={comment.commentId}
             content={comment.content}
             closeClick={commentEditClick}
-            type="edit"
+            onSubmit={handleCommentEditSubmit}
           />
         </Style.CommentEditForm>
       )}
