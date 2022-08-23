@@ -72,6 +72,7 @@ export default function Header() {
           <Style.Form onSubmit={handleSubmit}>
             <Input
               icon={<SearchIcon />}
+              iconClick={handleSubmit}
               onChange={onChange}
               value={searchText}
             />
