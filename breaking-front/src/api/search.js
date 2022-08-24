@@ -9,7 +9,7 @@ export const getSearch = async ({ queryKey, pageParam = 0 }) => {
   });
   return {
     result: data,
-    cursor: data[data.length - 1]?.cursorId,
+    cursor: data[data.length - 1]?.postId,
   };
 };
 
@@ -21,7 +21,7 @@ export const getSearchHashtag = async ({ queryKey, pageParam = 0 }) => {
   });
   return {
     result: data,
-    cursor: data[data.length - 1]?.cursorId,
+    cursor: data[data.length - 1]?.postId,
   };
 };
 
@@ -33,6 +33,6 @@ export const getSearchUser = async ({ queryKey, pageParam = 0 }) => {
   });
   return {
     result: data,
-    cursor: data[data.length - 1]?.cursorId,
+    cursor: data[data.length - 1]?.userId,
   };
 };
