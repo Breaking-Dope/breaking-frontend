@@ -18,6 +18,7 @@ export const UserResultTitle = styled.h3`
 export const UserInformationList = styled.div`
   display: grid;
   margin-top: 20px;
+  text-align: left;
   grid-template-columns: 150px 150px 150px 150px 150px;
   justify-content: space-between;
 `;
@@ -53,6 +54,7 @@ export const PostResultList = styled.div`
   min-height: 50vh;
   padding: 10px;
   margin-top: 10px;
+  text-align: left;
   grid-template-columns: 400px 400px;
   row-gap: 60px;
   justify-content: space-between;
