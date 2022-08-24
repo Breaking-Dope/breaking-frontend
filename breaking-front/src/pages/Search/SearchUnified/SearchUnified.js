@@ -29,6 +29,7 @@ const SearchUnified = () => {
   const viewAllPostClick = () => {
     navigate(PAGE_PATH.SEARCH_POST + `?query=${searchParams.get('query')}`);
   };
+  console.log(searchUserResult);
   return (
     <>
       <SearchHeader focusTab={0} />
@@ -44,9 +45,11 @@ const SearchUnified = () => {
               <UserCardSkeleton />
             </>
           ) : (
-            searchUserResult?.pages[0].result.map((user) => (
-              <UserCard user={user} key={user.userId} />
-            ))
+            searchUserResult?.pages.map((page) =>
+              page.result.map((user) => (
+                <UserCard user={user} key={user.userId} />
+              ))
+            )
           )}
         </Style.UserInformationList>
         <Style.ViewAllButton onClick={viewAllUserClick}>
@@ -64,9 +67,11 @@ const SearchUnified = () => {
               <FeedSkeleton />
             </>
           ) : (
-            searchPostResult?.pages[0].result.map((feed) => (
-              <Feed feedData={feed} key={feed.postId} userId={userId} />
-            ))
+            searchPostResult?.pages.map((page) =>
+              page.result.map((feed) => (
+                <Feed feedData={feed} key={feed.postId} userId={userId} />
+              ))
+            )
           )}
         </Style.PostResultList>
         <Style.ViewAllButton onClick={viewAllPostClick}>
