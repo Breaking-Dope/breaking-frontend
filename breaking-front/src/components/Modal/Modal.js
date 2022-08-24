@@ -10,20 +10,20 @@ export default function Modal({ isOpen, closeClick, title, grid, children }) {
   const modalOverlayClick = (event) => {
     if (event.target === modalRef.current) closeClick();
   };
-  const scrollY = window.scrollY;
+  const windowScrollY = window.scrollY;
   useEffect(() => {
     if (isOpen) {
       document.body.style.cssText = `
       position: fixed; 
-      top: -${scrollY}px;
+      top: -${windowScrollY}px;
       width: 100%;
       `;
+      return () => {
+        const bodyScrollY = document.body.style.top;
+        document.body.style.cssText = '';
+        window.scrollTo(0, parseInt(bodyScrollY || '0', 10) * -1);
+      };
     }
-    return () => {
-      const scrollY = document.body.style.top;
-      document.body.style.cssText = '';
-      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
-    };
   }, [isOpen]);
 
   return (
