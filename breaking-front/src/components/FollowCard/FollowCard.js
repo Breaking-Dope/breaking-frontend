@@ -16,7 +16,7 @@ export default function FollowCard({
   const theme = useTheme();
   const [isLoading, setIsLoading] = useState(false);
 
-  const UnFollow = () => {
+  const unFollowClick = () => {
     if (!UnFollowMutation.isLoading) {
       UnFollowMutation.mutate(profileData.userId, {
         onSuccess: () => setIsLoading(false),
@@ -25,7 +25,7 @@ export default function FollowCard({
     }
   };
 
-  const Follow = () => {
+  const followClick = () => {
     if (!FollowMutation.isLoading) {
       FollowMutation.mutate(profileData.userId, {
         onSuccess: () => setIsLoading(false),
@@ -50,7 +50,7 @@ export default function FollowCard({
       {isPermission && (
         <Style.DeleteButton
           size="small"
-          onClick={profileData.isFollowing ? UnFollow : Follow}
+          onClick={profileData.isFollowing ? unFollowClick : followClick}
         >
           {isLoading ? (
             <Style.Loading type="spin" color={theme.blue[900]} width="10px" />
