@@ -12,6 +12,7 @@ import useSearchUser from 'pages/Search/hooks/queries/useSearchUser';
 import { FeedSkeleton } from 'components/Skeleton/Skeleton';
 import UserCardSkeleton from 'pages/Search/SearchUnified/components/UserCardSkeleton/UserCardSkeleton';
 import ConvertCurrentURLQuery from 'pages/Search/utils/ConvertCurrentURLQuery';
+import NoData from 'components/NoData/NoData';
 
 const SearchUnified = () => {
   const { userId } = useContext(UserInformationContext);
@@ -55,6 +56,12 @@ const SearchUnified = () => {
             )
           )}
         </Style.UserInformationList>
+        {searchUserResult?.pages[0].result.length === 0 && (
+          <Style.NoDataContainer>
+            <NoData message="검색결과 없음" />
+          </Style.NoDataContainer>
+        )}
+
         <Style.ViewAllButton onClick={viewAllUserClick}>
           모두 보기
         </Style.ViewAllButton>
@@ -77,6 +84,11 @@ const SearchUnified = () => {
             )
           )}
         </Style.PostResultList>
+        {searchPostResult?.pages[0].result.length === 0 && (
+          <Style.NoDataContainer>
+            <NoData message="검색결과 없음" />
+          </Style.NoDataContainer>
+        )}
         <Style.ViewAllButton onClick={viewAllPostClick}>
           모두 보기
         </Style.ViewAllButton>

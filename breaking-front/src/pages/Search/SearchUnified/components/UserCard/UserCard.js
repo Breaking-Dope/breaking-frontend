@@ -5,6 +5,7 @@ import * as Style from 'pages/Search/SearchUnified/components/UserCard/UserCard.
 import Button from 'components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { PAGE_PATH } from 'constants/path';
+import ImageUrlConverter from 'utils/ImageUrlConverter';
 
 const UserCard = ({ user }) => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const UserCard = ({ user }) => {
     <Style.UserInformationContainer>
       <ProfileImage
         size="medium"
-        src={user.profileImgURL}
+        src={ImageUrlConverter(user.profileImgURL)}
         onClick={CardClick}
       />
       <Style.UserName onClick={CardClick}>{user.nickname}</Style.UserName>

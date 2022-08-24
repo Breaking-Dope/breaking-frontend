@@ -20,6 +20,11 @@ export const UserInformationList = styled.div`
   justify-content: space-between;
 `;
 
+export const NoDataContainer = styled.div`
+  position: relative;
+  height: 300px;
+`;
+
 export const ViewAllButton = styled.button`
   display: block;
   width: 250px;
@@ -35,7 +40,7 @@ export const ViewAllButton = styled.button`
 
 export const PostResultLayout = styled.div`
   width: 100%;
-  margin: 20px 0px 100px 0px;
+  margin: 20px 0px 30px 0px;
   padding: 20px 20px 30px 20px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.gray[50]};
@@ -48,7 +53,6 @@ export const PostResultTitle = styled.h3`
 
 export const PostResultList = styled.div`
   display: grid;
-  min-height: 50vh;
   padding: 10px;
   margin-top: 10px;
   grid-template-columns: 400px 400px;
