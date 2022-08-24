@@ -4,42 +4,25 @@ import * as Style from 'pages/Search/SearchUnified/SearchUnified.styles';
 import Feed from 'components/Feed/Feed';
 import { useContext } from 'react';
 import { UserInformationContext } from 'providers/UserInformationProvider';
-import {
-  FOLLOWING_USER,
-  NORMAL_USER,
-  NO_FOLLOW_USER,
-  NO_PROFILEIMGURL_USER,
-} from 'mocks/dummyData/users';
 import UserCard from 'pages/Search/SearchUnified/components/UserCard/UserCard';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PAGE_PATH } from 'constants/path';
-import {
-  EMPTY_PICTURE_CONTENT,
-  EXCLUSIVE_CONTENT,
-  NORMAL_CONTENT,
-  SOLDOUT_CONTENT,
-} from 'mocks/dummyData/contents';
+import useSearch from 'pages/Search/hooks/queries/useSearch';
+import useSearchUser from 'pages/Search/hooks/queries/useSearchUser';
+import { FeedSkeleton } from 'components/Skeleton/Skeleton';
+import UserCardSkeleton from 'pages/Search/SearchUnified/components/UserCardSkeleton/UserCardSkeleton';
 
 const SearchUnified = () => {
   const { userId } = useContext(UserInformationContext);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const FeedList = [
-    NORMAL_CONTENT,
-    EXCLUSIVE_CONTENT,
-    EMPTY_PICTURE_CONTENT,
-    SOLDOUT_CONTENT,
-  ];
-
-  const users = [
-    NORMAL_USER,
-    NO_PROFILEIMGURL_USER,
-    FOLLOWING_USER,
-    NO_PROFILEIMGURL_USER,
-    NO_FOLLOW_USER,
-  ];
-
+  const { data: searchPostResult, isLoading: searchPostLoading } = useSearch(
+    searchParams.get('query'),
+    4
+  );
+  const { data: searchUserResult, isLoading: searchUserLoading } =
+    useSearchUser(searchParams.get('query'), 5);
   const viewAllUserClick = () => {
     navigate(PAGE_PATH.SEARCH_USER + `?query=${searchParams.get('query')}`);
   };
@@ -52,9 +35,19 @@ const SearchUnified = () => {
       <Style.UserResultLayout>
         <Style.UserResultTitle>사람</Style.UserResultTitle>
         <Style.UserInformationList>
-          {users.map((user) => (
-            <UserCard user={user} key={user.userId} />
-          ))}
+          {searchPostLoading ? (
+            <>
+              <UserCardSkeleton />
+              <UserCardSkeleton />
+              <UserCardSkeleton />
+              <UserCardSkeleton />
+              <UserCardSkeleton />
+            </>
+          ) : (
+            searchUserResult?.pages[0].result.map((user) => (
+              <UserCard user={user} key={user.userId} />
+            ))
+          )}
         </Style.UserInformationList>
         <Style.ViewAllButton onClick={viewAllUserClick}>
           모두 보기
@@ -63,9 +56,18 @@ const SearchUnified = () => {
       <Style.PostResultLayout>
         <Style.PostResultTitle>게시글</Style.PostResultTitle>
         <Style.PostResultList>
-          {FeedList.map((feed) => (
-            <Feed feedData={feed} key={feed.postId} userId={userId} />
-          ))}
+          {searchUserLoading ? (
+            <>
+              <FeedSkeleton />
+              <FeedSkeleton />
+              <FeedSkeleton />
+              <FeedSkeleton />
+            </>
+          ) : (
+            searchPostResult?.pages[0].result.map((feed) => (
+              <Feed feedData={feed} key={feed.postId} userId={userId} />
+            ))
+          )}
         </Style.PostResultList>
         <Style.ViewAllButton onClick={viewAllPostClick}>
           모두 보기
