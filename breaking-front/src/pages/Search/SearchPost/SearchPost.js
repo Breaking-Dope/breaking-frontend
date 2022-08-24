@@ -4,21 +4,21 @@ import SearchHeader from 'pages/Search/components/SearchHeader/SearchHeader';
 import Feed from 'components/Feed/Feed';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import useSearch from '../hooks/queries/useSearch';
-import { useSearchParams } from 'react-router-dom';
 import { FeedSkeleton } from 'components/Skeleton/Skeleton';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
+import ConvertCurrentURLQuery from 'pages/Search/utils/ConvertCurrentURLQuery';
 
 const SearchPost = () => {
   const { userId } = useContext(UserInformationContext);
-  const [searchParams] = useSearchParams();
+  const currentQuery = ConvertCurrentURLQuery();
 
   const {
     data: searchPostResult,
     isLoading: searchPostLoading,
     fetchNextPage: FetchNextSearchPost,
     isFetching: isFetchSearchPost,
-  } = useSearch(searchParams, 10);
+  } = useSearch(currentQuery, 10);
 
   const { targetRef } = useInfiniteScroll(
     searchPostResult,

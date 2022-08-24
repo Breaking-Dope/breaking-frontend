@@ -3,19 +3,21 @@ import SearchHeader from 'pages/Search/components/SearchHeader/SearchHeader';
 import SearchUserResultCard from 'pages/Search/SearchUser/components/SearchUserResultCard/SearchUserResultCard';
 import * as Style from 'pages/Search/SearchUser//SearchUser.styles';
 import SearchUserResultCardSkeleton from 'pages/Search/SearchUser/components/SearchUserResultCardSkeleton/SearchUserResultCardSkeleton';
-import { useSearchParams } from 'react-router-dom';
 import useSearchUser from 'pages/Search/hooks/queries/useSearchUser';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
+import ConvertCurrentURLQuery from 'pages/Search/utils/ConvertCurrentURLQuery';
 
 const SearchUser = () => {
-  const [searchParams] = useSearchParams();
+  const currentQuery = ConvertCurrentURLQuery();
+
   const {
     data: searchUserResult,
     isLoading: isSearchUserLoading,
     isFetching: isSearchUserFetching,
     fetchNextPage: FetchNextSearchUser,
-  } = useSearchUser(searchParams.get('query'), 10);
+  } = useSearchUser(currentQuery, 10);
+
   const { targetRef } = useInfiniteScroll(
     searchUserResult,
     FetchNextSearchUser

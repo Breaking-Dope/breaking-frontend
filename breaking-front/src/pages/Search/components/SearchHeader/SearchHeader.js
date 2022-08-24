@@ -3,24 +3,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PAGE_PATH } from 'constants/path';
+import ConvertCurrentURLQuery from 'pages/Search/utils/ConvertCurrentURLQuery';
 
 const SearchHeader = ({ focusTab, children }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const currentQuery = ConvertCurrentURLQuery();
   const SearchUnifiedClick = () => {
-    navigate(PAGE_PATH.SEARCH + `?query=${searchParams.get('query')}`);
+    navigate(PAGE_PATH.SEARCH + `?query=${currentQuery}`);
   };
 
   const SearchPostClick = () => {
-    navigate(PAGE_PATH.SEARCH_POST + `?query=${searchParams.get('query')}`);
+    navigate(PAGE_PATH.SEARCH_POST + `?query=${currentQuery}`);
   };
 
   const SearchHashtagClick = () => {
-    navigate(PAGE_PATH.SEARCH_HASHTAG + `?query=${searchParams.get('query')}`);
+    navigate(PAGE_PATH.SEARCH_HASHTAG + `?query=${currentQuery}`);
   };
 
   const SearchUserClick = () => {
-    navigate(PAGE_PATH.SEARCH_USER + `?query=${searchParams.get('query')}`);
+    navigate(PAGE_PATH.SEARCH_USER + `?query=${currentQuery}`);
   };
   return (
     <>
@@ -55,7 +57,7 @@ const SearchHeader = ({ focusTab, children }) => {
       <Style.SearchResultContent>
         <Style.SearchContent>
           {focusTab === 2 && '#'}
-          {searchParams.get('query').replaceAll('+', ' ')}
+          {searchParams.get('query')}
         </Style.SearchContent>
       </Style.SearchResultContent>
       {children}

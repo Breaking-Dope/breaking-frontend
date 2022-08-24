@@ -5,31 +5,34 @@ import Feed from 'components/Feed/Feed';
 import { useContext } from 'react';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import UserCard from 'pages/Search/SearchUnified/components/UserCard/UserCard';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PAGE_PATH } from 'constants/path';
 import useSearch from 'pages/Search/hooks/queries/useSearch';
 import useSearchUser from 'pages/Search/hooks/queries/useSearchUser';
 import { FeedSkeleton } from 'components/Skeleton/Skeleton';
 import UserCardSkeleton from 'pages/Search/SearchUnified/components/UserCardSkeleton/UserCardSkeleton';
+import ConvertCurrentURLQuery from 'pages/Search/utils/ConvertCurrentURLQuery';
 
 const SearchUnified = () => {
   const { userId } = useContext(UserInformationContext);
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+
+  const currentQuery = ConvertCurrentURLQuery();
 
   const { data: searchPostResult, isLoading: searchPostLoading } = useSearch(
-    searchParams.get('query'),
+    currentQuery,
     4
   );
   const { data: searchUserResult, isLoading: searchUserLoading } =
-    useSearchUser(searchParams.get('query'), 5);
+    useSearchUser(currentQuery, 5);
+
   const viewAllUserClick = () => {
-    navigate(PAGE_PATH.SEARCH_USER + `?query=${searchParams.get('query')}`);
+    navigate(PAGE_PATH.SEARCH_USER + `?query=${currentQuery}`);
   };
   const viewAllPostClick = () => {
-    navigate(PAGE_PATH.SEARCH_POST + `?query=${searchParams.get('query')}`);
+    navigate(PAGE_PATH.SEARCH_POST + `?query=${currentQuery}`);
   };
-  console.log(searchUserResult);
+
   return (
     <>
       <SearchHeader focusTab={0} />
