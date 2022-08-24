@@ -3,6 +3,8 @@ import { useInfiniteQuery } from 'react-query';
 
 const useFollowerList = (userId) =>
   useInfiniteQuery(['followerList', userId], getFollowers, {
+    cacheTime: 0,
+    staleTime: 0,
     getNextPageParam: (lastPage) => {
       return lastPage.cursor;
     },

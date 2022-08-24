@@ -37,10 +37,23 @@ const ProfileFollowModal = ({
     followerListData,
     FetchNextFollowerList
   );
+
   const { targetRef: followingTargetRef } = useInfiniteScroll(
     followingListData,
     FetchNextFollowingList
   );
+
+  useEffect(() => {
+    if (isFollowerListLoading) {
+      setFollowerList([]);
+    }
+  }, [isFollowerListLoading]);
+
+  useEffect(() => {
+    if (isFollowingListLoading) {
+      setFollowingList([]);
+    }
+  }, [isFollowingListLoading]);
 
   useEffect(() => {
     followingListData &&
