@@ -55,7 +55,7 @@ const SearchHeader = ({ focusTab, children }) => {
       <Style.SearchResultContent>
         <Style.SearchContent>
           {focusTab === 2 && '#'}
-          {searchParams.get('query').replaceAll(' ', '')}
+          {searchParams.get('query').replaceAll('+', ' ')}
         </Style.SearchContent>
       </Style.SearchResultContent>
       {children}
