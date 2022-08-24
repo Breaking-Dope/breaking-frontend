@@ -1,7 +1,7 @@
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Style from 'pages/Search/SearchUser/components/SearchUserResultCard.styles';
+import * as Style from 'pages/Search/SearchUser/components/SearchUserResultCard/SearchUserResultCard.styles';
 import numberFormatter from 'utils/numberFormatter';
 import FollowButton from 'components/FollowButton/FollowButton';
 
