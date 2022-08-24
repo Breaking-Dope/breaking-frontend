@@ -20,6 +20,10 @@ import Financial from 'pages/Financial/Financial';
 import theme from 'styles/theme';
 import GlobalStyle from 'styles/GlobalStyle';
 import PostEdit from 'pages/PostEdit/PostEdit';
+import SearchUnified from 'pages/Search/SearchUnified/SearchUnified';
+import SearchPost from 'pages/Search/SearchPost/SearchPost';
+import SearchHashtag from 'pages/Search/SearchHashtag/SearchHashtag';
+import SearchUser from 'pages/Search/SearchUser/SearchUser';
 
 function App() {
   const queryClient = new QueryClient({
@@ -62,6 +66,19 @@ function App() {
                     element={<PostEdit />}
                   />
                   <Route path={PAGE_PATH.FINANCIAL} element={<Financial />} />
+                  <Route path={PAGE_PATH.SEARCH} element={<SearchUnified />} />
+                  <Route
+                    path={PAGE_PATH.SEARCH_POST}
+                    element={<SearchPost />}
+                  />
+                  <Route
+                    path={PAGE_PATH.SEARCH_HASHTAG}
+                    element={<SearchHashtag />}
+                  />
+                  <Route
+                    path={PAGE_PATH.SEARCH_USER}
+                    element={<SearchUser />}
+                  />
                 </Routes>
               </Layout>
             </UserInformationProvider>
