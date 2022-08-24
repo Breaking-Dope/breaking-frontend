@@ -1,4 +1,3 @@
-import ReactLoading from 'react-loading';
 import styled from 'styled-components';
 import defaultThumbnail from 'assets/svg/default_thumbnail_image.svg';
 
@@ -107,12 +106,6 @@ export const ContentContainer = styled.div`
 
 export const Content = styled.div`
   min-height: 100px;
-  line-height: 1.5;
-`;
-
-export const Hashtag = styled.span`
-  color: ${({ theme }) => theme.blue[900]};
-  cursor: pointer;
 `;
 
 export const ContentFooter = styled.div`
@@ -143,12 +136,6 @@ export const ContentStatus = styled.div`
   }
 `;
 
-export const ContentToggle = styled.div`
-  position: absolute;
-  right: -60px;
-  bottom: 30px;
-`;
-
 export const Comments = styled.div`
   width: 800px;
 `;
@@ -157,16 +144,4 @@ export const CommentCount = styled.div`
   margin-top: 20px;
   margin-left: 10px;
   font-size: 18px;
-`;
-
-export const TargetDiv = styled.div`
-  position: relative;
-  height: 100px;
-`;
-
-export const Loading = styled(ReactLoading)`
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translate(-50%, -50%);
 `;

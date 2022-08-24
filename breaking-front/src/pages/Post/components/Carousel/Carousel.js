@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import * as Style from 'pages/Post/units/Carousel.styles';
+import * as Style from 'pages/Post/components/Carousel/Carousel.styles';
 import { ReactComponent as LeftIcon } from 'assets/svg/carousel_left.svg';
 import { ReactComponent as RightIcon } from 'assets/svg/carousel_right.svg';
 import { ReactComponent as SlideDotIcon } from 'assets/svg/slide_dot.svg';
-import { ReactComponent as SildeDotFillIcon } from 'assets/svg/slide_dot_fill.svg';
+import { ReactComponent as SlideDotFillIcon } from 'assets/svg/slide_dot_fill.svg';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
 
 const Carousel = ({ mediaList }) => {
@@ -79,7 +79,7 @@ const Carousel = ({ mediaList }) => {
             key={'dot-' + index}
             onClick={() => setCurrentSlide(index)}
           >
-            {currentSlide === index ? <SildeDotFillIcon /> : <SlideDotIcon />}
+            {currentSlide === index ? <SlideDotFillIcon /> : <SlideDotIcon />}
           </Style.SlideDot>
         ))}
       </Style.SlideDotContainer>

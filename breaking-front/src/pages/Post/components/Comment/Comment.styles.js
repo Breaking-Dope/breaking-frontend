@@ -45,12 +45,6 @@ export const CreatedDate = styled.span`
 export const Content = styled.div`
   padding-right: 30px;
   font-size: 14px;
-  line-height: 1.5;
-`;
-
-export const Hashtag = styled.span`
-  color: ${({ theme }) => theme.blue[900]};
-  cursor: pointer;
 `;
 
 export const Status = styled.div`
@@ -85,15 +79,6 @@ export const CommentFooter = styled.div`
   }
 `;
 
-export const CommentToggle = styled.div`
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
-  position: absolute;
-  right: -70px;
-  bottom: 20px;
-`;
-
-export const AddComment = styled.div``;
-
 export const ReplyCount = styled.div`
   display: inline-flex;
   margin: 10px 0px 0px;
@@ -113,24 +98,6 @@ export const Loading = styled(ReactLoading)`
   left: 50%;
   bottom: 0;
   transform: translate(-50%, -50%);
-`;
-
-export const Reply = styled.div`
-  position: relative;
-  width: 730px;
-  margin-left: auto;
-  margin-bottom: 40px;
-  min-height: 100px;
-`;
-
-export const MoreShowReply = styled(ReplyCount)`
-  position: absolute;
-  bottom: -25px;
-  left: 80px;
-  svg {
-    margin-right: 3px;
-    vertical-align: bottom;
-  }
 `;
 
 export const CommentEditForm = styled.div`

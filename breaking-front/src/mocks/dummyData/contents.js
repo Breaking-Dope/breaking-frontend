@@ -165,12 +165,13 @@ export const POST_DATA = {
   isAnonymous: true,
   isSold: false,
   isHidden: false,
-  myPost: false,
+  isMyPost: true,
   shareCount: 0,
   viewCount: 1000000,
   soldCount: 5,
   likeCount: 1004,
   commentCount: 5,
+  bookmarkedCount: 1,
 };
 
 export const COMMENT_DATA = [

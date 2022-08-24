@@ -25,7 +25,7 @@ export const postHandlers = [
   }),
 
   rest.get(API_PATH.POST_COMMENT_DATA(':postId', '*'), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(COMMENT_DATA));
+    return res(ctx.status(200), ctx.delay(1000), ctx.json(COMMENT_DATA));
   }),
 
   rest.get(API_PATH.POST_REPLY_DATA(':commentId', '*'), (req, res, ctx) => {
