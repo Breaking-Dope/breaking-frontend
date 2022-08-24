@@ -1,4 +1,4 @@
-import { default as styled } from 'styled-components';
+import styled from 'styled-components';
 
 export const UserResultLayout = styled.div`
   width: 100%;
@@ -6,26 +6,25 @@ export const UserResultLayout = styled.div`
   padding: 30px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.gray[50]};
-  text-align: center;
 `;
 
 export const UserResultTitle = styled.h3`
   margin-bottom: 10px;
   font-size: 16px;
-  text-align: left;
 `;
 
 export const UserInformationList = styled.div`
   display: grid;
   margin-top: 20px;
-  text-align: left;
   grid-template-columns: 150px 150px 150px 150px 150px;
   justify-content: space-between;
 `;
 
 export const ViewAllButton = styled.button`
+  display: block;
   width: 250px;
   height: 30px;
+  margin: 0 auto;
   margin-top: 30px;
   border: none;
   border-radius: 10px;
@@ -40,13 +39,11 @@ export const PostResultLayout = styled.div`
   padding: 20px 20px 30px 20px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.gray[50]};
-  text-align: center;
 `;
 
 export const PostResultTitle = styled.h3`
   padding: 10px;
   font-size: 16px;
-  text-align: left;
 `;
 
 export const PostResultList = styled.div`
@@ -54,7 +51,6 @@ export const PostResultList = styled.div`
   min-height: 50vh;
   padding: 10px;
   margin-top: 10px;
-  text-align: left;
   grid-template-columns: 400px 400px;
   row-gap: 60px;
   justify-content: space-between;
