@@ -3,7 +3,7 @@ import * as Style from 'pages/Search/SearchPost/SearchPost.styles';
 import SearchHeader from 'pages/Search/components/SearchHeader/SearchHeader';
 import Feed from 'components/Feed/Feed';
 import { UserInformationContext } from 'providers/UserInformationProvider';
-import useSearch from '../hooks/queries/useSearch';
+import useSearch from 'pages/Search/hooks/queries/useSearch';
 import { FeedSkeleton } from 'components/Skeleton/Skeleton';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';

@@ -5,7 +5,7 @@ import {
   EXCLUSIVE_CONTENT,
   NORMAL_CONTENT,
   SOLDOUT_CONTENT,
-} from './dummyData/contents';
+} from 'mocks/dummyData/contents';
 import {
   FOLLOWING_USER,
   NORMAL_USER,
@@ -13,7 +13,7 @@ import {
   NO_POSTCOUNT_USER,
   NO_PROFILEIMGURL_USER,
   USER6,
-} from './dummyData/users';
+} from 'mocks/dummyData/users';
 
 const searchPostResult = [
   NORMAL_CONTENT,

@@ -7,7 +7,7 @@ import {
   UserNickName,
   UserStatusMSG,
   UserTitleContainer,
-} from '../SearchUserResultCard/SearchUserResultCard.styles';
+} from 'pages/Search/SearchUser/components/SearchUserResultCard/SearchUserResultCard.styles';
 
 export const ResultCardSkeleton = styled(ResultCard)``;
 
