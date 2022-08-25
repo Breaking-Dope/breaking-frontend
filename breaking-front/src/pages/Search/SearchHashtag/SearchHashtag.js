@@ -8,6 +8,7 @@ import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
 import { FeedSkeleton } from 'components/Skeleton/Skeleton';
 import ConvertCurrentURLQuery from 'pages/Search/utils/ConvertCurrentURLQuery';
+import NoData from 'components/NoData/NoData';
 
 const SearchHashtag = () => {
   const { userId } = useContext(UserInformationContext);
@@ -27,26 +28,35 @@ const SearchHashtag = () => {
   return (
     <>
       <SearchHeader focusTab={2} />
-      <Style.PostResultList>
-        {searchHashtagLoading ? (
-          <>
-            <FeedSkeleton />
-            <FeedSkeleton />
-            <FeedSkeleton />
-            <FeedSkeleton />
-          </>
-        ) : (
-          searchHashtagResult.pages.map((page) =>
-            page.result.map((feed) => (
-              <Feed feedData={feed} key={feed.postId} userId={userId} />
-            ))
-          )
-        )}
-      </Style.PostResultList>
-      <InfiniteTargetDiv
-        targetRef={targetRef}
-        isFetching={isFetchSearchHashtag}
-      />
+
+      {searchHashtagLoading && (
+        <Style.PostResultList>
+          <FeedSkeleton />
+          <FeedSkeleton />
+          <FeedSkeleton />
+          <FeedSkeleton />
+        </Style.PostResultList>
+      )}
+      {searchHashtagResult?.pages[0].result.length === 0 ? (
+        <Style.NoDataContainer>
+          <NoData message="검색결과 없음" />
+        </Style.NoDataContainer>
+      ) : (
+        <>
+          <Style.PostResultList>
+            {searchHashtagResult?.pages.map((page) =>
+              page.result.map((feed) => (
+                <Feed feedData={feed} key={feed.postId} userId={userId} />
+              ))
+            )}
+          </Style.PostResultList>
+          <InfiniteTargetDiv
+            targetRef={targetRef}
+            isFetching={isFetchSearchHashtag}
+            height="80px"
+          />
+        </>
+      )}
     </>
   );
 };

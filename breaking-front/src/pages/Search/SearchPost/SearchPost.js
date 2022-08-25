@@ -8,6 +8,7 @@ import { FeedSkeleton } from 'components/Skeleton/Skeleton';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import ConvertCurrentURLQuery from 'pages/Search/utils/ConvertCurrentURLQuery';
+import NoData from 'components/NoData/NoData';
 
 const SearchPost = () => {
   const { userId } = useContext(UserInformationContext);
@@ -28,27 +29,35 @@ const SearchPost = () => {
   return (
     <>
       <SearchHeader focusTab={1} />
-      <Style.PostResultList>
-        {searchPostLoading ? (
-          <>
-            <FeedSkeleton />
-            <FeedSkeleton />
-            <FeedSkeleton />
-            <FeedSkeleton />
-          </>
-        ) : (
-          searchPostResult.pages.map((page) =>
-            page.result.map((feed) => (
-              <Feed feedData={feed} key={feed.postId} userId={userId} />
-            ))
-          )
-        )}
-      </Style.PostResultList>
-      <InfiniteTargetDiv
-        targetRef={targetRef}
-        isFetching={isFetchSearchPost}
-        height="80px"
-      />
+      {searchPostLoading && (
+        <Style.PostResultList>
+          <FeedSkeleton />
+          <FeedSkeleton />
+          <FeedSkeleton />
+          <FeedSkeleton />
+        </Style.PostResultList>
+      )}
+
+      {searchPostResult?.pages[0].result.length === 0 ? (
+        <Style.NoDataContainer>
+          <NoData message="검색결과 없음" />
+        </Style.NoDataContainer>
+      ) : (
+        <>
+          <Style.PostResultList>
+            {searchPostResult?.pages.map((page) =>
+              page.result.map((feed) => (
+                <Feed feedData={feed} key={feed.postId} userId={userId} />
+              ))
+            )}
+          </Style.PostResultList>
+          <InfiniteTargetDiv
+            targetRef={targetRef}
+            isFetching={isFetchSearchPost}
+            height="80px"
+          />
+        </>
+      )}
     </>
   );
 };

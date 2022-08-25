@@ -39,59 +39,62 @@ const SearchUnified = () => {
       <SearchHeader focusTab={0} />
       <Style.UserResultLayout>
         <Style.UserResultTitle>사람</Style.UserResultTitle>
-        <Style.UserInformationList>
-          {searchPostLoading ? (
-            <>
-              <UserCardSkeleton />
-              <UserCardSkeleton />
-              <UserCardSkeleton />
-              <UserCardSkeleton />
-              <UserCardSkeleton />
-            </>
-          ) : (
-            searchUserResult?.pages.map((page) =>
-              page.result.map((user) => (
-                <UserCard user={user} key={user.userId} />
-              ))
-            )
-          )}
-        </Style.UserInformationList>
-        {searchUserResult?.pages[0].result.length === 0 && (
+        {searchPostLoading && (
+          <Style.UserInformationList>
+            <UserCardSkeleton />
+            <UserCardSkeleton />
+            <UserCardSkeleton />
+            <UserCardSkeleton />
+            <UserCardSkeleton />
+          </Style.UserInformationList>
+        )}
+        {searchUserResult?.pages[0].result.length === 0 ? (
           <Style.NoDataContainer>
             <NoData message="검색결과 없음" />
           </Style.NoDataContainer>
+        ) : (
+          <>
+            <Style.UserInformationList>
+              {searchUserResult?.pages.map((page) =>
+                page.result.map((user) => (
+                  <UserCard user={user} key={user.userId} />
+                ))
+              )}
+            </Style.UserInformationList>
+            <Style.ViewAllButton onClick={viewAllUserClick}>
+              모두 보기
+            </Style.ViewAllButton>
+          </>
         )}
-
-        <Style.ViewAllButton onClick={viewAllUserClick}>
-          모두 보기
-        </Style.ViewAllButton>
       </Style.UserResultLayout>
       <Style.PostResultLayout>
         <Style.PostResultTitle>게시글</Style.PostResultTitle>
-        <Style.PostResultList>
-          {searchUserLoading ? (
-            <>
-              <FeedSkeleton />
-              <FeedSkeleton />
-              <FeedSkeleton />
-              <FeedSkeleton />
-            </>
-          ) : (
-            searchPostResult?.pages.map((page) =>
-              page.result.map((feed) => (
-                <Feed feedData={feed} key={feed.postId} userId={userId} />
-              ))
-            )
-          )}
-        </Style.PostResultList>
-        {searchPostResult?.pages[0].result.length === 0 && (
+        {searchUserLoading && (
+          <Style.PostResultList>
+            <FeedSkeleton />
+            <FeedSkeleton />
+            <FeedSkeleton />
+            <FeedSkeleton />
+          </Style.PostResultList>
+        )}
+        {searchPostResult?.pages[0].result.length === 0 ? (
           <Style.NoDataContainer>
             <NoData message="검색결과 없음" />
           </Style.NoDataContainer>
+        ) : (
+          <>
+            <Style.PostResultList>
+              {searchPostResult?.pages.map((page) =>
+                page.result.map((feed) => (
+                  <Feed feedData={feed} key={feed.postId} userId={userId} />
+                ))
+              )}
+            </Style.PostResultList>
+            <Style.ViewAllButton onClick={viewAllPostClick}>
+              모두 보기
+            </Style.ViewAllButton>
+          </>
         )}
-        <Style.ViewAllButton onClick={viewAllPostClick}>
-          모두 보기
-        </Style.ViewAllButton>
       </Style.PostResultLayout>
     </>
   );
