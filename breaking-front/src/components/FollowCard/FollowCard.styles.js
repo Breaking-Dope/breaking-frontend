@@ -27,7 +27,7 @@ export const StatusMessage = styled.p`
   color: ${({ theme }) => theme.gray[700]};
 `;
 
-export const DeleteButton = styled(Button)`
+export const FollowButton = styled(Button)`
   padding: 5px 10px;
   width: 60px;
   height: 20px;

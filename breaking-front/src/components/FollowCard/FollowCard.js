@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as Style from 'components/FollowCard/FollowCard.styles';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
@@ -15,11 +15,15 @@ export default function FollowCard({
 }) {
   const theme = useTheme();
   const [isLoading, setIsLoading] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(profileData.isFollowing);
 
   const unFollowClick = () => {
     if (!UnFollowMutation.isLoading) {
       UnFollowMutation.mutate(profileData.userId, {
-        onSuccess: () => setIsLoading(false),
+        onSuccess: () => {
+          setIsLoading(false);
+          setIsFollowing(false);
+        },
       });
       setIsLoading(true);
     }
@@ -28,11 +32,18 @@ export default function FollowCard({
   const followClick = () => {
     if (!FollowMutation.isLoading) {
       FollowMutation.mutate(profileData.userId, {
-        onSuccess: () => setIsLoading(false),
+        onSuccess: () => {
+          setIsLoading(false);
+          setIsFollowing(true);
+        },
       });
       setIsLoading(true);
     }
   };
+
+  useEffect(() => {
+    setIsFollowing(profileData.isFollowing);
+  }, [profileData]);
 
   return (
     <Style.FollowCard>
@@ -48,18 +59,18 @@ export default function FollowCard({
         <Style.StatusMessage>{profileData?.statusMsg}</Style.StatusMessage>
       </Style.Container>
       {isPermission && (
-        <Style.DeleteButton
+        <Style.FollowButton
           size="small"
-          onClick={profileData.isFollowing ? unFollowClick : followClick}
+          onClick={isFollowing ? unFollowClick : followClick}
         >
           {isLoading ? (
             <Style.Loading type="spin" color={theme.blue[900]} width="10px" />
-          ) : profileData.isFollowing ? (
+          ) : isFollowing ? (
             '언팔로우'
           ) : (
             '팔로우'
           )}
-        </Style.DeleteButton>
+        </Style.FollowButton>
       )}
     </Style.FollowCard>
   );
