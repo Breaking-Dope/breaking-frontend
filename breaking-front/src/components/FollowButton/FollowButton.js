@@ -2,22 +2,24 @@ import React from 'react';
 import * as Style from 'components/FollowButton/FollowButton.styles';
 import PropTypes from 'prop-types';
 import { useTheme } from 'styled-components';
-import useUnFollow from 'pages/Profile/hooks/mutations/useUnFollow';
-import useFollow from 'pages/Profile/hooks/mutations/useFollow';
 
-const FollowButton = ({ userId, isFollowing, isMyPage }) => {
+const FollowButton = ({
+  userId,
+  isFollowing,
+  isMyPage,
+  useUnFollow,
+  useFollow,
+}) => {
   const theme = useTheme();
-  const { mutate: UnFollow, isLoading: isUnFollowLoading } = useUnFollow();
-  const { mutate: Follow, isLoading: isFollowLoading } = useFollow();
 
   if (isMyPage) {
     return <></>;
   } else if (isFollowing) {
     return (
       <Style.FollowButton
-        onClick={() => !isUnFollowLoading && UnFollow(userId)}
+        onClick={() => !useUnFollow.isLoading && useUnFollow.mutate(userId)}
       >
-        {isUnFollowLoading ? (
+        {useUnFollow.isLoading ? (
           <Style.Loading type="spin" color={theme.blue[900]} width="30px" />
         ) : (
           '언팔로우'
@@ -26,8 +28,10 @@ const FollowButton = ({ userId, isFollowing, isMyPage }) => {
     );
   } else {
     return (
-      <Style.FollowButton onClick={() => !isFollowLoading && Follow(userId)}>
-        {isFollowLoading ? (
+      <Style.FollowButton
+        onClick={() => !useFollow.isLoading && useFollow.mutate(userId)}
+      >
+        {useFollow.isLoading ? (
           <Style.Loading type="spin" color={theme.blue[900]} width="30px" />
         ) : (
           '팔로우'
@@ -41,6 +45,8 @@ FollowButton.propTypes = {
   userId: PropTypes.number,
   isFollowing: PropTypes.bool,
   isMyPage: PropTypes.bool,
+  useUnFollow: PropTypes.object,
+  useFollow: PropTypes.object,
 };
 
 export default FollowButton;
