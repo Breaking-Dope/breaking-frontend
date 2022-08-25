@@ -1,17 +1,28 @@
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import * as Style from 'pages/Search/SearchUser/components/SearchUserResultCard/SearchUserResultCard.styles';
 import numberFormatter from 'utils/numberFormatter';
 import FollowButton from 'components/FollowButton/FollowButton';
+import { UserInformationContext } from 'providers/UserInformationProvider';
+import ImageUrlConverter from 'utils/ImageUrlConverter';
+import useUserCard from 'pages/Search/hooks/useUserCard';
 
 const SearchUserResultCard = ({ user }) => {
+  const userData = useContext(UserInformationContext);
+  const [isFollowing, follow, unFollow, CardClick] = useUserCard(user);
   return (
     <Style.ResultCard>
-      <ProfileImage size="large" src={user.profileImgURL} />
+      <ProfileImage
+        size="large"
+        src={ImageUrlConverter(user.profileImgURL)}
+        onClick={CardClick}
+      />
       <Style.UserInformationContainer>
         <Style.UserTitleContainer>
-          <Style.UserNickName>{user.nickname}</Style.UserNickName>
+          <Style.UserNickName onClick={CardClick}>
+            {user.nickname}
+          </Style.UserNickName>
           <Style.UserEmail>{user.email}</Style.UserEmail>
         </Style.UserTitleContainer>
         <Style.UserFollowers>
@@ -19,7 +30,13 @@ const SearchUserResultCard = ({ user }) => {
         </Style.UserFollowers>
         <Style.UserStatusMSG>{user.statusMsg}</Style.UserStatusMSG>
       </Style.UserInformationContainer>
-      <FollowButton userId={user.userId} isFollowing={user.isFollowing} />
+      <FollowButton
+        userId={user.userId}
+        isFollowing={isFollowing}
+        useFollow={follow}
+        useUnFollow={unFollow}
+        isMe={userData.userId === user.userId}
+      />
     </Style.ResultCard>
   );
 };
