@@ -15,9 +15,23 @@ import FollowButton from 'components/FollowButton/FollowButton';
 import ProfileFollowModal from 'pages/Profile/components/ProfileFollowModal/ProfileFollowModal';
 import ProfileTabPanel from 'pages/Profile/components/ProfileTabPanel/ProfileTabPanel';
 import numberFormatter from 'utils/numberFormatter';
+import useFollow from 'hooks/mutations/useFollow';
+import useUnFollow from 'hooks/mutations/useUnFollow';
+import { useQueryClient } from 'react-query';
 
 const Profile = () => {
   let { id: userId } = useParams();
+  const queryClient = useQueryClient();
+  const follow = useFollow({
+    onSuccess: () => {
+      queryClient.invalidateQueries('profile');
+    },
+  });
+  const unFollow = useUnFollow({
+    onSuccess: () => {
+      queryClient.invalidateQueries('profile');
+    },
+  });
 
   const isMyPage = useCheckMyPage(userId);
   const { profileData, isLoading } = useProfile(userId);
@@ -81,6 +95,8 @@ const Profile = () => {
                 userId={userId}
                 isFollowing={profileData.data.isFollowing}
                 isMyPage={isMyPage}
+                useFollow={follow}
+                useUnFollow={unFollow}
               />
             </Style.Title>
             <Style.StatusMessage>
