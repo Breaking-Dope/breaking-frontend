@@ -6,13 +6,13 @@ import { useTheme } from 'styled-components';
 const FollowButton = ({
   userId,
   isFollowing,
-  isMyPage,
+  isMe,
   useUnFollow,
   useFollow,
 }) => {
   const theme = useTheme();
 
-  if (isMyPage) {
+  if (isMe) {
     return <></>;
   } else if (isFollowing) {
     return (
@@ -44,7 +44,7 @@ const FollowButton = ({
 FollowButton.propTypes = {
   userId: PropTypes.number,
   isFollowing: PropTypes.bool,
-  isMyPage: PropTypes.bool,
+  isMe: PropTypes.bool,
   useUnFollow: PropTypes.object,
   useFollow: PropTypes.object,
 };
