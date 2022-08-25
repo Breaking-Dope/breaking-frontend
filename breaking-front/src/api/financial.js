@@ -1,11 +1,16 @@
 import { API_PATH } from 'constants/path';
 import api from 'api/api';
 
-export const getTransaction = () => {
-  return api({
+export const getTransaction = async ({ pageParam = 0 }) => {
+  const { data } = await api({
     method: 'get',
-    url: API_PATH.PROFILE_TRANSACTION,
+    url: API_PATH.PROFILE_TRANSACTION(pageParam),
   });
+
+  return {
+    result: data,
+    cursor: data[data.length - 1]?.cursorId,
+  };
 };
 
 export const postDeposit = (data) => {
