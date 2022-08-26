@@ -50,19 +50,19 @@ export const getPostBoughtList = async ({ queryKey, pageParam = 0 }) => {
   });
   return {
     result: data,
-    cursor: data[data.length - 1]?.commentId,
+    cursor: data[data.length - 1]?.cursorId,
   };
 };
 
 export const getPostLikeList = async ({ queryKey, pageParam = 0 }) => {
-  const [, postId] = queryKey;
+  const [, postId, size = 10] = queryKey;
   const { data } = await api({
     method: 'get',
-    url: API_PATH.POST_LIKE_LIST(postId, pageParam),
+    url: API_PATH.POST_LIKE_LIST(postId, pageParam, size),
   });
   return {
     result: data,
-    cursor: data[data.length - 1]?.commentId,
+    cursor: data[data.length - 1]?.cursorId,
   };
 };
 

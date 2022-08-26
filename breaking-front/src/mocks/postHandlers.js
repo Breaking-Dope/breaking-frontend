@@ -3,20 +3,38 @@ import { rest } from 'msw';
 import { COMMENT_DATA, POST_DATA, REPLY_DATA } from 'mocks/dummyData/contents';
 import {
   FOLLOWING_USER,
+  NORMAL_USER,
   NO_FOLLOW_USER,
   NO_POSTCOUNT_USER,
   NO_PROFILEIMGURL_USER,
   NO_STATUSMSG_USER,
-  USER6,
 } from 'mocks/dummyData/users';
 
-const USER_LIST = [
-  NO_STATUSMSG_USER,
-  NO_PROFILEIMGURL_USER,
-  NO_POSTCOUNT_USER,
-  NO_FOLLOW_USER,
-  FOLLOWING_USER,
-  USER6,
+const userList = [
+  {
+    cursorId: 0,
+    ...NORMAL_USER,
+  },
+  {
+    cursorId: 1,
+    ...NO_STATUSMSG_USER,
+  },
+  {
+    cursorId: 2,
+    ...NO_PROFILEIMGURL_USER,
+  },
+  {
+    cursorId: 3,
+    ...NO_POSTCOUNT_USER,
+  },
+  {
+    cursorId: 4,
+    ...NO_FOLLOW_USER,
+  },
+  {
+    cursorId: 5,
+    ...FOLLOWING_USER,
+  },
 ];
 
 export const postHandlers = [
@@ -33,11 +51,11 @@ export const postHandlers = [
   }),
 
   rest.get(API_PATH.POST_BOUGHT_LIST(':postId'), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(USER_LIST));
+    return res(ctx.status(200), ctx.delay(1000), ctx.json(userList));
   }),
 
   rest.get(API_PATH.POST_LIKE_LIST(':postId'), (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(USER_LIST));
+    return res(ctx.status(200), ctx.json(userList));
   }),
 
   rest.delete(API_PATH.POST_DELETE(':postId'), (req, res, ctx) => {

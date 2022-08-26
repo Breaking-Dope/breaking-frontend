@@ -96,8 +96,10 @@ export const ContentCreatedDate = styled(ContentDetail)`
 export const ContentViewCount = styled.span``;
 
 export const ContentPriceContainer = styled.div`
+  display: flex;
   width: 160px;
-  text-align: center;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const ContentContainer = styled.div`
@@ -134,6 +136,10 @@ export const ContentStatus = styled.div`
     margin-right: 5px;
     vertical-align: middle;
   }
+`;
+
+export const LikeCount = styled.span`
+  cursor: pointer;
 `;
 
 export const Comments = styled.div`
