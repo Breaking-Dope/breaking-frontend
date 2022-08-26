@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { PAGE_PATH } from 'constants/path';
+import { useEffect } from 'react';
 
 const useUserCard = (user) => {
+  console.log(user);
   const navigate = useNavigate();
   const [isFollowing, setIsFollowing] = useState(user.isFollowing);
   const follow = useFollow({
@@ -22,6 +24,9 @@ const useUserCard = (user) => {
     navigate(PAGE_PATH.PROFILE(user.userId));
   };
 
+  useEffect(() => {
+    setIsFollowing(user.isFollowing);
+  }, [user]);
   return [isFollowing, follow, unFollow, CardClick];
 };
 
