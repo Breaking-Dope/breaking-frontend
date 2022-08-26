@@ -1,9 +1,11 @@
 import { getPostBoughtList } from 'api/post';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 
 const usePostBoughtList = (postId) => {
-  return useQuery(['boughtUserList', postId], getPostBoughtList, {
-    enabled: false,
+  return useInfiniteQuery(['postBoughtList', postId], getPostBoughtList, {
+    getNextPageParam: (lastPage) => {
+      return lastPage.cursor;
+    },
   });
 };
 
