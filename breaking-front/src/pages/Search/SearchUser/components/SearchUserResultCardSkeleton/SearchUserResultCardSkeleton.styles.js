@@ -24,3 +24,8 @@ export const UserEmailSkeleton = styled(UserEmail)``;
 export const UserFollowersSkeleton = styled(UserFollowers)``;
 
 export const UserStatusMSGSkeleton = styled(UserStatusMSG)``;
+
+export const UserFollowContainerSkeleton = styled.div`
+  margin-left: 20px;
+  padding: 5px;
+`;

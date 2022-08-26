@@ -22,7 +22,9 @@ const SearchUserResultCardSkeleton = () => {
           <Skeleton width="240px" height="15px" />
         </Style.UserStatusMSGSkeleton>
       </Style.UserInformationContainerSkeleton>
-      <Skeleton width="80px" height="40px" />
+      <Style.UserFollowContainerSkeleton>
+        <Skeleton width="80px" height="40px" />
+      </Style.UserFollowContainerSkeleton>
     </Style.ResultCardSkeleton>
   );
 };
