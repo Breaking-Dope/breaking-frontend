@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchHeader from '../components/SearchHeader/SearchHeader';
+import SearchHeader from 'pages/Search/components/SearchHeader/SearchHeader';
 import * as Style from 'pages/Search/SearchUnified/SearchUnified.styles';
 import Feed from 'components/Feed/Feed';
 import { useContext } from 'react';
