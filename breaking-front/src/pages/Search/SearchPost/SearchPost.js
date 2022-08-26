@@ -7,12 +7,12 @@ import useSearch from 'pages/Search/hooks/queries/useSearch';
 import { FeedSkeleton } from 'components/Skeleton/Skeleton';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
-import ConvertCurrentURLQuery from 'pages/Search/utils/ConvertCurrentURLQuery';
+import useConvertURLQuery from 'pages/Search/hooks/useConvertURLQuery';
 import NoData from 'components/NoData/NoData';
 
 const SearchPost = () => {
   const { userId } = useContext(UserInformationContext);
-  const currentQuery = ConvertCurrentURLQuery();
+  const currentQuery = useConvertURLQuery();
 
   const {
     data: searchPostResult,

@@ -7,12 +7,12 @@ import useSearchHashtag from 'pages/Search/hooks/queries/useSearchHashtag';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
 import { FeedSkeleton } from 'components/Skeleton/Skeleton';
-import ConvertCurrentURLQuery from 'pages/Search/utils/ConvertCurrentURLQuery';
+import useConvertURLQuery from 'pages/Search/hooks/useConvertURLQuery';
 import NoData from 'components/NoData/NoData';
 
 const SearchHashtag = () => {
   const { userId } = useContext(UserInformationContext);
-  const currentQuery = ConvertCurrentURLQuery();
+  const currentQuery = useConvertURLQuery();
 
   const {
     data: searchHashtagResult,

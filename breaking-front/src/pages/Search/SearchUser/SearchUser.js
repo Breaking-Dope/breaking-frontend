@@ -6,11 +6,11 @@ import SearchUserResultCardSkeleton from 'pages/Search/SearchUser/components/Sea
 import useSearchUser from 'pages/Search/hooks/queries/useSearchUser';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
-import ConvertCurrentURLQuery from 'pages/Search/utils/ConvertCurrentURLQuery';
+import useConvertURLQuery from 'pages/Search/hooks/useConvertURLQuery';
 import NoData from 'components/NoData/NoData';
 
 const SearchUser = () => {
-  const currentQuery = ConvertCurrentURLQuery();
+  const currentQuery = useConvertURLQuery();
 
   const {
     data: searchUserResult,

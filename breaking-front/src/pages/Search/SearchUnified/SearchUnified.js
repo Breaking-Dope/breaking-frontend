@@ -11,14 +11,14 @@ import useSearch from 'pages/Search/hooks/queries/useSearch';
 import useSearchUser from 'pages/Search/hooks/queries/useSearchUser';
 import { FeedSkeleton } from 'components/Skeleton/Skeleton';
 import UserCardSkeleton from 'pages/Search/SearchUnified/components/UserCardSkeleton/UserCardSkeleton';
-import ConvertCurrentURLQuery from 'pages/Search/utils/ConvertCurrentURLQuery';
+import useConvertURLQuery from 'pages/Search/hooks/useConvertURLQuery';
 import NoData from 'components/NoData/NoData';
 
 const SearchUnified = () => {
   const { userId } = useContext(UserInformationContext);
   const navigate = useNavigate();
 
-  const currentQuery = ConvertCurrentURLQuery();
+  const currentQuery = useConvertURLQuery();
 
   const { data: searchPostResult, isLoading: searchPostLoading } = useSearch(
     currentQuery,

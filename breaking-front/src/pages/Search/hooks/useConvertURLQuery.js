@@ -1,8 +1,8 @@
 import { useSearchParams } from 'react-router-dom';
 
-const ConvertCurrentURLQuery = () => {
+const useConvertURLQuery = () => {
   const [searchParams] = useSearchParams();
   return searchParams.get('query').replaceAll(' ', '+');
 };
 
-export default ConvertCurrentURLQuery;
+export default useConvertURLQuery;

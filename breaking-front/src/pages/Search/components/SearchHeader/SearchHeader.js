@@ -3,12 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PAGE_PATH } from 'constants/path';
-import ConvertCurrentURLQuery from 'pages/Search/utils/ConvertCurrentURLQuery';
+import useConvertURLQuery from 'pages/Search/hooks/useConvertURLQuery.js';
 
 const SearchHeader = ({ focusTab, children }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const currentQuery = ConvertCurrentURLQuery();
+  const currentQuery = useConvertURLQuery();
   const SearchUnifiedClick = () => {
     navigate(PAGE_PATH.SEARCH + `?query=${currentQuery}`);
   };
