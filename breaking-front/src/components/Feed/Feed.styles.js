@@ -30,7 +30,7 @@ export const FeedProfile = styled.div`
   flex-grow: 1;
 `;
 
-export const WriterNickName = styled.p`
+export const WriterNickname = styled.p`
   margin-bottom: 3px;
   font-size: 14px;
 `;
@@ -77,6 +77,7 @@ export const FeedContentHeader = styled.div`
 export const Bookmark = styled.div`
   cursor: pointer;
   svg {
+    width: 12px;
     path {
       fill: ${({ theme }) => theme.blue[900]};
     }
@@ -85,13 +86,14 @@ export const Bookmark = styled.div`
 
 export const FeedContent = styled(Link)`
   display: flex;
-  width: 100%;
   flex-grow: 1;
+  justify-content: space-between;
 `;
 
 export const FeedTitle = styled.div`
-  width: 65%;
-  font-size: 18px;
+  width: 250px;
+  font-size: 16px;
+  font-weight: 700;
   text-overflow: ellipsis;
   word-break: break-word;
   white-space: nowrap;
@@ -99,10 +101,8 @@ export const FeedTitle = styled.div`
 `;
 
 export const FeedPrice = styled.div`
-  width: 35%;
   color: ${({ theme }) => theme.blue[900]};
-  font-size: 18px;
-  text-align: end;
+  font-size: 16px;
 `;
 
 export const FeedContentFooter = styled.div`

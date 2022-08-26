@@ -1,5 +1,6 @@
 import React from 'react';
 import Feed from 'components/Feed/Feed';
+import { NORMAL_CONTENT } from 'mocks/dummyData/contents';
 
 export default {
   title: 'components/Feed',
@@ -7,25 +8,7 @@ export default {
 };
 
 const Template = (args) => {
-  const feedData = {
-    postId: '1',
-    title: '~~~사건',
-    region: '중구',
-    thumbnailImgURL: '',
-    likeCount: 999,
-    postType: 'EXCLUSIVE',
-    isSold: false,
-    price: 10000,
-    viewCount: 1000,
-    userId: 123,
-    profileImgURL: '',
-    realName: '가나다',
-    isLiked: false,
-    isBookmarked: false,
-    createdDate: '2022-08-01T07:53:36.992Z',
-  };
-
-  return <Feed feedData={feedData} {...args} />;
+  return <Feed feedData={NORMAL_CONTENT} {...args} />;
 };
 
 export const ItIsMyFeed = Template.bind({});

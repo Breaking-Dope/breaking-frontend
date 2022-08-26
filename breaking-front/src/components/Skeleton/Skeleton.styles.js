@@ -8,58 +8,68 @@ export const Skeleton = styled.div`
 `;
 
 export const FeedSkeleton = styled.div`
-  width: 400px;
-  height: 400px;
-  background-color: ${({ theme }) => theme.gray[200]};
-  filter: drop-shadow(2px 2px 2px ${({ theme }) => theme.gray[300]});
-`;
-export const FeedThumbnailImage = styled.div`
-  width: 100%;
-  height: 300px;
-  background-color: ${({ theme }) => theme.gray[200]};
-`;
-export const FeedContent = styled.div`
   display: flex;
-  width: 100%;
-  height: 100px;
-  padding: 0px 10px;
+  width: 400px;
+  height: 480px;
+  border-radius: 10px;
   background-color: ${({ theme }) => theme.white};
+  flex-direction: column;
+  filter: drop-shadow(0px 0px 5px ${({ theme }) => theme.gray[300]});
+`;
+
+export const FeedThumbnailImage = styled(Skeleton)``;
+
+export const FeedHeader = styled.div`
+  display: flex;
+  height: 56px;
+  padding-left: 10px;
+  padding-right: 15px;
+  justify-content: center;
   align-items: center;
 `;
 
 export const FeedProfileImage = styled(Skeleton)``;
 
-export const FeedContext = styled.div`
-  margin-left: 12px;
+export const FeedProfile = styled.div`
+  margin-left: 5px;
   flex-grow: 1;
-  > * {
-    margin: 4px;
-  }
 `;
 
-export const FeedTitle = styled(Skeleton)``;
+export const WriterNickname = styled(Skeleton)`
+  margin-bottom: 3px;
+`;
+
 export const FeedLocation = styled(Skeleton)``;
-export const FeedTime = styled(Skeleton)``;
 
-export const FeedPostType = styled(Skeleton)`
-  display: inline-block;
-`;
-
-export const FeedViewCount = styled(Skeleton)`
-  display: inline-block;
-`;
-
-export const FeedContentStatus = styled.div`
+export const FeedContentContainer = styled.div`
   display: flex;
+  padding: 15px 20px;
   flex-direction: column;
+  flex-grow: 1;
 `;
 
-export const FeedPrice = styled(Skeleton)`
-  margin: 0 auto;
+export const Tag = styled(Skeleton)`
   margin-bottom: 10px;
 `;
 
-export const FeedIcons = styled(Skeleton)``;
+export const FeedContent = styled.div`
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+`;
+
+export const FeedTitle = styled(Skeleton)``;
+
+export const FeedPrice = styled(Skeleton)``;
+
+export const FeedContentFooter = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const FeedViewCount = styled(Skeleton)``;
+
+export const FeedStatus = styled(Skeleton)``;
 
 export const FollowCardSkeleton = styled.div`
   display: flex;

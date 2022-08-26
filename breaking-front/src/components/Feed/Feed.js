@@ -59,9 +59,9 @@ export default function Feed({ feedData, ...props }) {
           isAnonymous={feedData.isAnonymous}
         />
         <Style.FeedProfile>
-          <Style.WriterNickName>
+          <Style.WriterNickname>
             {feedData.isAnonymous ? '익명' : feedData.user?.nickname}
-          </Style.WriterNickName>
+          </Style.WriterNickname>
           <Style.Location>
             <LocationIcon />
             {feedData.location.region_1depth_name +
