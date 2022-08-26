@@ -1,17 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/Button/Button';
 import usePostBuy from 'pages/Post/hooks/mutations/usePostBuy';
+import PostBoughtListModal from 'pages/Post/components/PostBoughtListModal/PostBoughtListModal';
 
 const PurchaseButton = ({ postId, isMyPost, isPurchased, isPurchasable }) => {
+  const [isOpenBoughtListModal, setIsOpenBoughtListModal] = useState(false);
   const { mutate: PostBuy } = usePostBuy();
+
+  const toggleBoughtListModal = () => {
+    setIsOpenBoughtListModal((pre) => !pre);
+  };
 
   const postBuyClick = () => {
     const postBuyConfirm = window.confirm('게시글을 구매하시겠습니까?');
     postBuyConfirm && PostBuy(postId);
   };
 
-  if (isMyPost) return <Button color="primary">구매자 목록</Button>;
+  if (isMyPost)
+    return (
+      <>
+        <PostBoughtListModal
+          postId={postId}
+          isOpen={isOpenBoughtListModal}
+          closeClick={toggleBoughtListModal}
+        />
+        <Button color="primary" onClick={toggleBoughtListModal}>
+          구매자 목록
+        </Button>
+      </>
+    );
   else if (isPurchased) return <Button color="primary">다운로드</Button>;
   else if (!isPurchasable)
     return (
