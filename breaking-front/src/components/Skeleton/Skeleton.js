@@ -10,21 +10,25 @@ export default function Skeleton({ width, height, radius }) {
 export function FeedSkeleton() {
   return (
     <Style.FeedSkeleton>
-      <Style.FeedThumbnailImage />
-      <Style.FeedContent>
-        <Style.FeedProfileImage width="51px" height="51px" radius="50%" />
-        <Style.FeedContext>
-          <Style.FeedTitle width="120px" height="21px" />
+      <Style.FeedHeader>
+        <Style.FeedProfileImage width="40px" height="40px" radius="50%" />
+        <Style.FeedProfile>
+          <Style.WriterNickname width="40px" height="14px" />
           <Style.FeedLocation width="80px" height="12px" />
-          <Style.FeedTime width="50px" height="12px" />
-          <Style.FeedPostType width="30px" height="20px" />
-          <Style.FeedViewCount width="30px" height="20px" />
-        </Style.FeedContext>
-        <Style.FeedContentStatus>
+        </Style.FeedProfile>
+      </Style.FeedHeader>
+      <Style.FeedThumbnailImage width="400px" height="300px" radius="0px" />
+      <Style.FeedContentContainer>
+        <Style.Tag width="40px" height="16px" />
+        <Style.FeedContent>
+          <Style.FeedTitle width="170px" height="18px" />
           <Style.FeedPrice width="100px" height="18px" />
-          <Style.FeedIcons width="120px" height="24px" />
-        </Style.FeedContentStatus>
-      </Style.FeedContent>
+        </Style.FeedContent>
+        <Style.FeedContentFooter>
+          <Style.FeedViewCount width="120px" height="12px" />
+          <Style.FeedStatus width="100px" height="12px" />
+        </Style.FeedContentFooter>
+      </Style.FeedContentContainer>
     </Style.FeedSkeleton>
   );
 }
