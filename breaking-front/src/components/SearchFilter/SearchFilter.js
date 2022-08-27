@@ -4,7 +4,13 @@ import Filter from 'components/Filter/Filter';
 import * as Style from 'components/SearchFilter/SearchFilter.styles';
 import { useQueryClient } from 'react-query';
 
-export default function SearchFilter({ setSort, option, setOption, queryKey }) {
+export default function SearchFilter({
+  setSort,
+  option,
+  setOption,
+  queryKey,
+  ...props
+}) {
   const queryClient = useQueryClient();
 
   const handleFilter = (sortType) => {
@@ -18,7 +24,7 @@ export default function SearchFilter({ setSort, option, setOption, queryKey }) {
   };
 
   return (
-    <Style.FilterContainer>
+    <Style.FilterContainer {...props}>
       <Filter>
         <Filter.FilterDetail
           onClick={() => {

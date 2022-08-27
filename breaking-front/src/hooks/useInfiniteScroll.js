@@ -17,6 +17,7 @@ const useInfiniteScroll = (data, FetchNextPage) => {
     if (!data) FetchNextPage();
 
     if (targetRef.current) observer.observe(targetRef.current);
+    return () => observer && observer.disconnect();
   }, [data]);
 
   return { targetRef };
