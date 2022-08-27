@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { PAGE_PATH } from 'constants/path';
+import { UserInformationContext } from 'providers/UserInformationProvider';
 
 const PrivateRoute = ({
   redirectPath = PAGE_PATH.LOGIN,
   restricted,
   children,
 }) => {
-  const accessToken = localStorage.getItem('access_token');
+  const { isLogin } = useContext(UserInformationContext);
 
-  if (!accessToken && !restricted) {
+  if (!isLogin && !restricted) {
     alert('로그인이 필요합니다.');
     return <Navigate to={redirectPath} replace />;
   }
 
-  if (accessToken && restricted) return <Navigate to={redirectPath} replace />;
+  if (isLogin && restricted) return <Navigate to={redirectPath} replace />;
 
   return children ? children : <Outlet />;
 };
