@@ -73,12 +73,12 @@ function App() {
                     element={<SearchUser />}
                   />
                   <Route path={PAGE_PATH.POST(':id')} element={<Post />} />
+                  <Route
+                    path={PAGE_PATH.PROFILE(':id')}
+                    element={<Profile />}
+                  />
 
                   <Route element={<PrivateRoute />}>
-                    <Route
-                      path={PAGE_PATH.PROFILE(':id')}
-                      element={<Profile />}
-                    />
                     <Route
                       path={PAGE_PATH.PROFILE_EDIT}
                       element={<ProfileEdit />}
