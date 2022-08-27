@@ -6,6 +6,8 @@ const useSearchHashtag = (content, size, sort, option) =>
     ['searchHashtag', { content, size, sort, option }],
     getSearchHashtag,
     {
+      staleTime: 0,
+      cacheTime: 0,
       getNextPageParam: (lastPage) => {
         return lastPage.cursor;
       },
