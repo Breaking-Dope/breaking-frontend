@@ -24,13 +24,14 @@ import SearchUnified from 'pages/Search/SearchUnified/SearchUnified';
 import SearchPost from 'pages/Search/SearchPost/SearchPost';
 import SearchHashtag from 'pages/Search/SearchHashtag/SearchHashtag';
 import SearchUser from 'pages/Search/SearchUser/SearchUser';
-
+import PrivateRoute from 'PrivateRoute';
 function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: { refetchOnWindowFocus: false },
     },
   });
+
   return (
     <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_KEY}>
       <QueryClientProvider client={queryClient}>
@@ -41,7 +42,15 @@ function App() {
               <Layout>
                 <Routes>
                   <Route path={PAGE_PATH.HOME} element={<MainFeed />} />
-                  <Route path={PAGE_PATH.LOGIN} element={<SocialLogin />} />
+                  <Route
+                    path={PAGE_PATH.LOGIN}
+                    element={
+                      <PrivateRoute redirectPath={PAGE_PATH.HOME} restricted>
+                        <SocialLogin />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route path={PAGE_PATH.SIGNUP} element={<SignUp />} />
                   <Route
                     path={PAGE_PATH.KAKAO_LOGIN}
                     element={<KakaoRedirect />}
@@ -50,22 +59,6 @@ function App() {
                     path={PAGE_PATH.GOOGLE_LOGIN}
                     element={<GoogleRedirect />}
                   />
-                  <Route path={PAGE_PATH.SIGNUP} element={<SignUp />} />
-                  <Route
-                    path={PAGE_PATH.PROFILE(':id')}
-                    element={<Profile />}
-                  />
-                  <Route
-                    path={PAGE_PATH.PROFILE_EDIT}
-                    element={<ProfileEdit />}
-                  />
-                  <Route path={PAGE_PATH.POST(':id')} element={<Post />} />
-                  <Route path={PAGE_PATH.POST_WRITE} element={<PostWrite />} />
-                  <Route
-                    path={PAGE_PATH.POST_EDIT(':id')}
-                    element={<PostEdit />}
-                  />
-                  <Route path={PAGE_PATH.FINANCIAL} element={<Financial />} />
                   <Route path={PAGE_PATH.SEARCH} element={<SearchUnified />} />
                   <Route
                     path={PAGE_PATH.SEARCH_POST}
@@ -79,6 +72,27 @@ function App() {
                     path={PAGE_PATH.SEARCH_USER}
                     element={<SearchUser />}
                   />
+                  <Route path={PAGE_PATH.POST(':id')} element={<Post />} />
+                  <Route
+                    path={PAGE_PATH.PROFILE(':id')}
+                    element={<Profile />}
+                  />
+
+                  <Route element={<PrivateRoute />}>
+                    <Route
+                      path={PAGE_PATH.PROFILE_EDIT}
+                      element={<ProfileEdit />}
+                    />
+                    <Route
+                      path={PAGE_PATH.POST_WRITE}
+                      element={<PostWrite />}
+                    />
+                    <Route
+                      path={PAGE_PATH.POST_EDIT(':id')}
+                      element={<PostEdit />}
+                    />
+                    <Route path={PAGE_PATH.FINANCIAL} element={<Financial />} />
+                  </Route>
                 </Routes>
               </Layout>
             </UserInformationProvider>
