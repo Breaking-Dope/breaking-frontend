@@ -14,13 +14,8 @@ const SocialLogin = () => {
     onError: () => {},
   });
 
-  const { Kakao } = window;
-
-  if (!Kakao.isInitialized()) {
-    Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
-  }
-
   const kakaoLoginClick = () => {
+    const { Kakao } = window;
     Kakao.Auth.authorize({
       redirectUri: KAKAO_PATH.REDIRECT_URL,
     });
