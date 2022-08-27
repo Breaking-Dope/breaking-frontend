@@ -92,8 +92,14 @@ export const API_PATH = {
     `/search/user?search=${content}&cursor=${cursor}&size=${size}`,
   SEARCH_HASHTAG: (content, size = 10, cursor) =>
     `/feed?hashtag=${content}&cursor=${cursor}&size=${size}`,
-  SEARCH: (content, size = 10, cursor) =>
-    `/feed?search=${content}&cursor=${cursor}&size=${size}`,
+  SEARCH: (
+    content,
+    size = 10,
+    cursor,
+    sort = 'chronological',
+    option = 'all'
+  ) =>
+    `/feed?search=${content}&cursor=${cursor}&size=${size}&sort=${sort}&sold-option=${option}`,
   BREAKING_MISSION: '/breaking-mission',
   BREAKING_SPOT: '/breaking-spot',
 };

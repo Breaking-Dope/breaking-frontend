@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import * as Style from 'pages/Search/SearchPost/SearchPost.styles';
 import SearchHeader from 'pages/Search/components/SearchHeader/SearchHeader';
 import Feed from 'components/Feed/Feed';
@@ -14,21 +14,30 @@ const SearchPost = () => {
   const { userId } = useContext(UserInformationContext);
   const currentQuery = useConvertURLQuery();
 
+  const [sort, setSort] = useState('chronological');
+  const [option, setOption] = useState('all');
+
   const {
     data: searchPostResult,
     isLoading: searchPostLoading,
     fetchNextPage: FetchNextSearchPost,
     isFetching: isFetchSearchPost,
-  } = useSearch(currentQuery, 10);
+  } = useSearch(currentQuery, 10, sort, option);
 
   const { targetRef } = useInfiniteScroll(
     searchPostResult,
     FetchNextSearchPost
   );
-
   return (
     <>
       <SearchHeader focusTab={1} />
+
+      <Style.PostFilter
+        setSort={setSort}
+        option={option}
+        setOption={setOption}
+        queryKey="search"
+      />
       {searchPostLoading && (
         <Style.PostResultList>
           <FeedSkeleton />

@@ -2,10 +2,10 @@ import { API_PATH } from 'constants/path';
 import api from 'api/api';
 
 export const getSearch = async ({ queryKey, pageParam = 0 }) => {
-  const [, content, size = 10] = queryKey;
+  const [, { content, size = 10, sort, option }] = queryKey;
   const { data } = await api({
     method: 'get',
-    url: API_PATH.SEARCH(content, size, pageParam),
+    url: API_PATH.SEARCH(content, size, pageParam, sort, option),
   });
   return {
     result: data,
