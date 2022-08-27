@@ -14,10 +14,10 @@ export const getSearch = async ({ queryKey, pageParam = 0 }) => {
 };
 
 export const getSearchHashtag = async ({ queryKey, pageParam = 0 }) => {
-  const [, content, size = 10] = queryKey;
+  const [, { content, size = 10, sort, option }] = queryKey;
   const { data } = await api({
     method: 'get',
-    url: API_PATH.SEARCH_HASHTAG(content, size, pageParam),
+    url: API_PATH.SEARCH_HASHTAG(content, size, pageParam, sort, option),
   });
   return {
     result: data,

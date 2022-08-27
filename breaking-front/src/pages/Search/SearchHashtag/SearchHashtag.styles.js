@@ -1,3 +1,4 @@
+import SearchFilter from 'components/SearchFilter/SearchFilter';
 import styled from 'styled-components';
 
 export const PostResultList = styled.div`
@@ -11,4 +12,8 @@ export const PostResultList = styled.div`
 export const NoDataContainer = styled.div`
   position: relative;
   height: 50vh;
+`;
+
+export const PostFilter = styled(SearchFilter)`
+  margin-top: 30px;
 `;
