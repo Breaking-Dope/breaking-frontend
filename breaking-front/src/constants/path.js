@@ -88,6 +88,12 @@ export const API_PATH = {
   POST_COMMENT_DELETE: (commentId) => `/post/comment/${commentId}`,
   POST_COMMENT_LIKE: (commentId) => `/post/comment/${commentId}/like`,
   POST_COMMENT_LIKE_DELETE: (commentId) => `/post/comment/${commentId}/like`,
+  SEARCH_USER: (content, size = 10, cursor) =>
+    `/search/user?search=${content}&cursor=${cursor}&size=${size}`,
+  SEARCH_HASHTAG: (content, size = 10, cursor) =>
+    `/feed?hashtag=${content}&cursor=${cursor}&size=${size}`,
+  SEARCH: (content, size = 10, cursor) =>
+    `/feed?search=${content}&cursor=${cursor}&size=${size}`,
   BREAKING_MISSION: '/breaking-mission',
   BREAKING_SPOT: '/breaking-spot',
 };

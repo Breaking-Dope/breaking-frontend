@@ -94,7 +94,7 @@ const Profile = () => {
               <FollowButton
                 userId={userId}
                 isFollowing={profileData.data.isFollowing}
-                isMyPage={isMyPage}
+                isMe={isMyPage}
                 useFollow={follow}
                 useUnFollow={unFollow}
               />

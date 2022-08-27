@@ -1,75 +1,100 @@
 import React from 'react';
-import SearchHeader from '../components/SearchHeader/SearchHeader';
+import SearchHeader from 'pages/Search/components/SearchHeader/SearchHeader';
 import * as Style from 'pages/Search/SearchUnified/SearchUnified.styles';
 import Feed from 'components/Feed/Feed';
 import { useContext } from 'react';
 import { UserInformationContext } from 'providers/UserInformationProvider';
-import {
-  FOLLOWING_USER,
-  NORMAL_USER,
-  NO_FOLLOW_USER,
-  NO_PROFILEIMGURL_USER,
-} from 'mocks/dummyData/users';
 import UserCard from 'pages/Search/SearchUnified/components/UserCard/UserCard';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PAGE_PATH } from 'constants/path';
-import {
-  EMPTY_PICTURE_CONTENT,
-  EXCLUSIVE_CONTENT,
-  NORMAL_CONTENT,
-  SOLDOUT_CONTENT,
-} from 'mocks/dummyData/contents';
+import useSearch from 'pages/Search/hooks/queries/useSearch';
+import useSearchUser from 'pages/Search/hooks/queries/useSearchUser';
+import { FeedSkeleton } from 'components/Skeleton/Skeleton';
+import UserCardSkeleton from 'pages/Search/SearchUnified/components/UserCardSkeleton/UserCardSkeleton';
+import useConvertURLQuery from 'pages/Search/hooks/useConvertURLQuery';
+import NoData from 'components/NoData/NoData';
 
 const SearchUnified = () => {
   const { userId } = useContext(UserInformationContext);
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
 
-  const FeedList = [
-    NORMAL_CONTENT,
-    EXCLUSIVE_CONTENT,
-    EMPTY_PICTURE_CONTENT,
-    SOLDOUT_CONTENT,
-  ];
+  const currentQuery = useConvertURLQuery();
 
-  const users = [
-    NORMAL_USER,
-    NO_PROFILEIMGURL_USER,
-    FOLLOWING_USER,
-    NO_PROFILEIMGURL_USER,
-    NO_FOLLOW_USER,
-  ];
+  const { data: searchPostResult, isLoading: searchPostLoading } = useSearch(
+    currentQuery,
+    4
+  );
+  const { data: searchUserResult, isLoading: searchUserLoading } =
+    useSearchUser(currentQuery, 5);
 
   const viewAllUserClick = () => {
-    navigate(PAGE_PATH.SEARCH_USER + `?query=${searchParams.get('query')}`);
+    navigate(PAGE_PATH.SEARCH_USER + `?query=${currentQuery}`);
   };
   const viewAllPostClick = () => {
-    navigate(PAGE_PATH.SEARCH_POST + `?query=${searchParams.get('query')}`);
+    navigate(PAGE_PATH.SEARCH_POST + `?query=${currentQuery}`);
   };
+
   return (
     <>
       <SearchHeader focusTab={0} />
       <Style.UserResultLayout>
         <Style.UserResultTitle>사람</Style.UserResultTitle>
-        <Style.UserInformationList>
-          {users.map((user) => (
-            <UserCard user={user} key={user.userId} />
-          ))}
-        </Style.UserInformationList>
-        <Style.ViewAllButton onClick={viewAllUserClick}>
-          모두 보기
-        </Style.ViewAllButton>
+        {searchPostLoading && (
+          <Style.UserInformationList>
+            <UserCardSkeleton />
+            <UserCardSkeleton />
+            <UserCardSkeleton />
+            <UserCardSkeleton />
+            <UserCardSkeleton />
+          </Style.UserInformationList>
+        )}
+        {searchUserResult?.pages[0].result.length === 0 ? (
+          <Style.NoDataContainer>
+            <NoData message="검색결과 없음" />
+          </Style.NoDataContainer>
+        ) : (
+          <>
+            <Style.UserInformationList>
+              {searchUserResult?.pages.map((page) =>
+                page.result.map((user) => (
+                  <UserCard user={user} key={user.userId} />
+                ))
+              )}
+            </Style.UserInformationList>
+            <Style.ViewAllButton onClick={viewAllUserClick}>
+              모두 보기
+            </Style.ViewAllButton>
+          </>
+        )}
       </Style.UserResultLayout>
       <Style.PostResultLayout>
         <Style.PostResultTitle>게시글</Style.PostResultTitle>
-        <Style.PostResultList>
-          {FeedList.map((feed) => (
-            <Feed feedData={feed} key={feed.postId} userId={userId} />
-          ))}
-        </Style.PostResultList>
-        <Style.ViewAllButton onClick={viewAllPostClick}>
-          모두 보기
-        </Style.ViewAllButton>
+        {searchUserLoading && (
+          <Style.PostResultList>
+            <FeedSkeleton />
+            <FeedSkeleton />
+            <FeedSkeleton />
+            <FeedSkeleton />
+          </Style.PostResultList>
+        )}
+        {searchPostResult?.pages[0].result.length === 0 ? (
+          <Style.NoDataContainer>
+            <NoData message="검색결과 없음" />
+          </Style.NoDataContainer>
+        ) : (
+          <>
+            <Style.PostResultList>
+              {searchPostResult?.pages.map((page) =>
+                page.result.map((feed) => (
+                  <Feed feedData={feed} key={feed.postId} userId={userId} />
+                ))
+              )}
+            </Style.PostResultList>
+            <Style.ViewAllButton onClick={viewAllPostClick}>
+              모두 보기
+            </Style.ViewAllButton>
+          </>
+        )}
       </Style.PostResultLayout>
     </>
   );

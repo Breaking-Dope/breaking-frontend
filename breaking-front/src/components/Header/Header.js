@@ -58,7 +58,7 @@ export default function Header() {
       const hashtagKeyWord = extractHashtag(searchText);
       navigate(PAGE_PATH.SEARCH_HASHTAG + `?query=${hashtagKeyWord[0]}`);
     } else {
-      navigate(PAGE_PATH.SEARCH + `?query=${searchText}`);
+      navigate(PAGE_PATH.SEARCH + `?query=${searchText.replaceAll(' ', '+')}`);
     }
   };
 
