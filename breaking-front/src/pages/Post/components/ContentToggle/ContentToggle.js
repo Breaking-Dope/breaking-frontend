@@ -16,17 +16,23 @@ import { ReactComponent as DeactivateIcon } from 'assets/svg/deactivate_purchase
 import { ReactComponent as BookmarkIcon } from 'assets/svg/small_bookmark.svg';
 import { ReactComponent as BookmarkedIcon } from 'assets/svg/small_bookmarked.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
+import ShareModal from 'components/ShareModal/ShareModal';
 
 const ContentToggle = ({ isOpen, postData, postId }) => {
   const navigate = useNavigate();
   const [isPurchasable, setIsPurchasable] = useState(postData.isPurchasable);
   const [isBookmarked, setIsBookmarked] = useState(postData.isBookmarked);
+  const [isOpenShareModal, setIsOpenShareModal] = useState(false);
 
   const { mutate: DeletePost } = useDeletePost();
   const { mutate: PostBookmark } = usePostBookmark();
   const { mutate: DeletePostBookmark } = useDeletePostBookmark();
   const { mutate: PostActivatePurchase } = usePostActivatePurchase();
   const { mutate: PostDeactivatePurchase } = usePostDeactivatePurchase();
+
+  const toggleShareModal = () => {
+    setIsOpenShareModal((pre) => !pre);
+  };
 
   const postEditClick = () => {
     navigate(PAGE_PATH.POST_EDIT(postId));
@@ -55,39 +61,51 @@ const ContentToggle = ({ isOpen, postData, postId }) => {
   }, [postData]);
 
   return (
-    <Style.ContentToggle onMouseDown={(event) => event.preventDefault()}>
-      {isOpen && (
-        <Toggle width="100px">
-          {postData.isMyPost && !postData.isSold && (
-            <>
+    <>
+      <ShareModal
+        isOpen={isOpenShareModal}
+        closeClick={toggleShareModal}
+        data={postData}
+        postId={postId}
+      />
+      <Style.ContentToggle onMouseDown={(event) => event.preventDefault()}>
+        {isOpen && (
+          <Toggle width="100px">
+            {postData.isMyPost && !postData.isSold && (
+              <>
+                <Toggle.LabelLink
+                  icon={<EditIcon />}
+                  label="수정"
+                  labelClick={postEditClick}
+                />
+                <Toggle.LabelLink
+                  icon={<RemoveIcon />}
+                  label="삭제"
+                  labelClick={postDeleteClick}
+                />
+              </>
+            )}
+            {postData.isMyPost && (
               <Toggle.LabelLink
-                icon={<EditIcon />}
-                label="수정"
-                labelClick={postEditClick}
+                icon={isPurchasable ? <ActivateIcon /> : <DeactivateIcon />}
+                label={isPurchasable ? '비활성화' : '활성화'}
+                labelClick={togglePurchasable}
               />
-              <Toggle.LabelLink
-                icon={<RemoveIcon />}
-                label="삭제"
-                labelClick={postDeleteClick}
-              />
-            </>
-          )}
-          {postData.isMyPost && (
+            )}
             <Toggle.LabelLink
-              icon={isPurchasable ? <ActivateIcon /> : <DeactivateIcon />}
-              label={isPurchasable ? '비활성화' : '활성화'}
-              labelClick={togglePurchasable}
+              icon={isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />}
+              label="북마크"
+              labelClick={toggleBookmarked}
             />
-          )}
-          <Toggle.LabelLink
-            icon={isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />}
-            label="북마크"
-            labelClick={toggleBookmarked}
-          />
-          <Toggle.LabelLink icon={<ShareIcon />} label="공유" />
-        </Toggle>
-      )}
-    </Style.ContentToggle>
+            <Toggle.LabelLink
+              icon={<ShareIcon />}
+              label="공유"
+              labelClick={toggleShareModal}
+            />
+          </Toggle>
+        )}
+      </Style.ContentToggle>
+    </>
   );
 };
 
