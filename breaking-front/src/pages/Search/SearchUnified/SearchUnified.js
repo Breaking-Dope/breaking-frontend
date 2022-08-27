@@ -15,7 +15,7 @@ import useConvertURLQuery from 'pages/Search/hooks/useConvertURLQuery';
 import NoData from 'components/NoData/NoData';
 
 const SearchUnified = () => {
-  const { userId } = useContext(UserInformationContext);
+  const { userId, isLogin } = useContext(UserInformationContext);
   const navigate = useNavigate();
 
   const currentQuery = useConvertURLQuery();
@@ -57,7 +57,7 @@ const SearchUnified = () => {
             <Style.UserInformationList>
               {searchUserResult?.pages.map((page) =>
                 page.result.map((user) => (
-                  <UserCard user={user} key={user.userId} />
+                  <UserCard user={user} key={user.userId} isLogin={isLogin} />
                 ))
               )}
             </Style.UserInformationList>
