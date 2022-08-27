@@ -7,7 +7,6 @@ import { PAGE_PATH } from 'constants/path';
 import { useEffect } from 'react';
 
 const useUserCard = (user) => {
-  console.log(user);
   const navigate = useNavigate();
   const [isFollowing, setIsFollowing] = useState(user.isFollowing);
   const follow = useFollow({
