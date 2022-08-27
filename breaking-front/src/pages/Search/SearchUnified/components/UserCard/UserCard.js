@@ -19,15 +19,16 @@ const UserCard = ({ user }) => {
       />
       <Style.UserName onClick={CardClick}>{user.nickname}</Style.UserName>
       <Style.UserStatusMsg>{user.statusMsg}</Style.UserStatusMsg>
-      {userData.userId !== user.userId && isFollowing ? (
-        <Button size="small" onClick={() => unFollow.mutate(user.userId)}>
-          언팔로우
-        </Button>
-      ) : (
-        <Button size="small" onClick={() => follow.mutate(user.userId)}>
-          팔로우
-        </Button>
-      )}
+      {userData.userId !== user.userId &&
+        (isFollowing ? (
+          <Button size="small" onClick={() => unFollow.mutate(user.userId)}>
+            언팔로우
+          </Button>
+        ) : (
+          <Button size="small" onClick={() => follow.mutate(user.userId)}>
+            팔로우
+          </Button>
+        ))}
     </Style.UserInformationContainer>
   );
 };
