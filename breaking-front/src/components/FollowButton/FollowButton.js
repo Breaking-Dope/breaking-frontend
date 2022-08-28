@@ -45,7 +45,7 @@ const FollowButton = ({
 };
 
 FollowButton.propTypes = {
-  userId: PropTypes.number,
+  userId: PropTypes.PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isFollowing: PropTypes.bool,
   isMe: PropTypes.bool,
   useUnFollow: PropTypes.object,
