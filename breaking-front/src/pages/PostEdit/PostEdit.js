@@ -1,19 +1,21 @@
 import React from 'react';
-import * as Style from 'pages/PostEdit/PostEdit.styles';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import useInputs from 'hooks/useInputs';
+import usePost from 'hooks/queries/usePost';
 import MESSAGE from 'constants/message';
 import PostWriteCommonForm, {
   PostSubmitButton,
 } from 'components/PostWriteCommonForm/PostWriteCommonForm';
 import usePostEditMutation from 'pages/PostEdit/hooks/usePostEditMutation';
 import extractHashtag from 'utils/extractHashtag';
-import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import usePost from 'hooks/queries/usePost';
+import * as Style from 'pages/PostEdit/PostEdit.styles';
 
 const PostEdit = () => {
   let { id: postId } = useParams();
+  const navigate = useNavigate();
+
   const { data: postData } = usePost(postId);
   const [postEditData, onChangePostEditData, setPostEditData] = useInputs();
   const { mutate: PostEditMutate, isLoading: isPostEditMutateLoading } =
@@ -46,7 +48,12 @@ const PostEdit = () => {
     });
   };
   useEffect(() => {
-    postData &&
+    if (postData) {
+      if (!postData.data.isMyPost || postData.data.isSold) {
+        alert('비정상적인 접근입니다.');
+        return navigate(-1);
+      }
+
       setPostEditData({
         location: postData.data.location,
         eventDate: dayjs(postData.data.eventDate).format('YYYY-MM-DDTHH:mm'),
@@ -56,31 +63,36 @@ const PostEdit = () => {
         postType: postData.data.postType,
         isAnonymous: postData.data.isAnonymous,
         thumbnailIndex: 0,
+        isSold: postData.data.isSold,
+        isMyPost: postData.data.isMyPost,
       });
+    }
   }, [postData]);
 
   return (
-    <Style.Container>
-      <Style.UploadTitle>사진/동영상 업로드</Style.UploadTitle>
-      <Style.UploadForm>
-        <Style.Message>
-          ※ 이미지 동영상 파일은 수정할 수 없습니다 ※
-        </Style.Message>
-      </Style.UploadForm>
+    <>
       {postEditData && (
-        <form onSubmit={postWriteSubmit}>
-          <PostWriteCommonForm
-            isMutateLoading={isPostEditMutateLoading}
-            onChangeData={onChangePostEditData}
-            data={postEditData}
-            setData={setPostEditData}
-          />
-          <PostSubmitButton isMutateLoading={isPostEditMutateLoading}>
-            수정하기
-          </PostSubmitButton>
-        </form>
+        <Style.Container>
+          <Style.UploadTitle>사진/동영상 업로드</Style.UploadTitle>
+          <Style.UploadForm>
+            <Style.Message>
+              ※ 이미지 동영상 파일은 수정할 수 없습니다 ※
+            </Style.Message>
+          </Style.UploadForm>
+          <form onSubmit={postWriteSubmit}>
+            <PostWriteCommonForm
+              isMutateLoading={isPostEditMutateLoading}
+              onChangeData={onChangePostEditData}
+              data={postEditData}
+              setData={setPostEditData}
+            />
+            <PostSubmitButton isMutateLoading={isPostEditMutateLoading}>
+              수정하기
+            </PostSubmitButton>
+          </form>
+        </Style.Container>
       )}
-    </Style.Container>
+    </>
   );
 };
 

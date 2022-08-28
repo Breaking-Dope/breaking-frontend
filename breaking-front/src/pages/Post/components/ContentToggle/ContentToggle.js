@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PAGE_PATH } from 'constants/path';
 import PropTypes from 'prop-types';
+import { UserInformationContext } from 'providers/UserInformationProvider';
 import useDeletePost from 'pages/Post/hooks/mutations/useDeletePost';
 import usePostBookmark from 'hooks/mutations/usePostBookmark';
 import useDeletePostBookmark from 'hooks/mutations/useDeletePostBookmark';
 import usePostActivatePurchase from 'pages/Post/hooks/mutations/usePostActivatePurchase';
 import usePostDeactivatePurchase from 'pages/Post/hooks/mutations/usePostDeactivatePurchase';
 import Toggle from 'components/Toggle/Toggle';
+import ShareModal from 'components/ShareModal/ShareModal';
 import * as Style from 'pages/Post/components/ContentToggle/ContentToggle.styles';
 import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
 import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
@@ -16,10 +18,11 @@ import { ReactComponent as DeactivateIcon } from 'assets/svg/deactivate_purchase
 import { ReactComponent as BookmarkIcon } from 'assets/svg/small_bookmark.svg';
 import { ReactComponent as BookmarkedIcon } from 'assets/svg/small_bookmarked.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
-import ShareModal from 'components/ShareModal/ShareModal';
 
 const ContentToggle = ({ isOpen, postData, postId }) => {
+  const { isLogin } = useContext(UserInformationContext);
   const navigate = useNavigate();
+
   const [isPurchasable, setIsPurchasable] = useState(postData.isPurchasable);
   const [isBookmarked, setIsBookmarked] = useState(postData.isBookmarked);
   const [isOpenShareModal, setIsOpenShareModal] = useState(false);
@@ -44,6 +47,11 @@ const ContentToggle = ({ isOpen, postData, postId }) => {
   };
 
   const toggleBookmarked = () => {
+    if (!isLogin) {
+      alert('로그인이 필요합니다.');
+      return navigate(PAGE_PATH.LOGIN);
+    }
+
     isBookmarked ? DeletePostBookmark(postId) : PostBookmark(postId);
     setIsBookmarked((pre) => !pre);
   };

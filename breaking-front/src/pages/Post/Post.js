@@ -28,11 +28,11 @@ import { ReactComponent as CommentIcon } from 'assets/svg/comment.svg';
 import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
 
 const Post = () => {
+  const navigate = useNavigate();
   let { id: postId } = useParams();
   postId = Number(postId);
 
-  const navigate = useNavigate();
-  const { userId } = useContext(UserInformationContext);
+  const { userId, isLogin } = useContext(UserInformationContext);
 
   const [isOpenContentToggle, setIsOpenContentToggle] = useState(false);
   const [isOpenLikeListModal, setIsOpenLikeListModal] = useState(false);
@@ -50,6 +50,11 @@ const Post = () => {
   };
 
   const toggleLiked = () => {
+    if (!isLogin) {
+      alert('로그인이 필요합니다.');
+      return navigate(PAGE_PATH.LOGIN);
+    }
+
     isLiked ? DeletePostLike(postId) : PostLike(postId);
     setLikeCount((pre) => (isLiked ? pre - 1 : pre + 1));
     setIsLiked((pre) => !pre);

@@ -24,11 +24,13 @@ import SearchUnified from 'pages/Search/SearchUnified/SearchUnified';
 import SearchPost from 'pages/Search/SearchPost/SearchPost';
 import SearchHashtag from 'pages/Search/SearchHashtag/SearchHashtag';
 import SearchUser from 'pages/Search/SearchUser/SearchUser';
+import NotFound from 'pages/NotFound/NotFound';
 import PrivateRoute from 'PrivateRoute';
+
 function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
-      queries: { refetchOnWindowFocus: false },
+      queries: { refetchOnWindowFocus: false, retry: 2 },
     },
   });
 
@@ -93,6 +95,8 @@ function App() {
                     />
                     <Route path={PAGE_PATH.FINANCIAL} element={<Financial />} />
                   </Route>
+
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </Layout>
             </UserInformationProvider>

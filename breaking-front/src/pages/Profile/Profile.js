@@ -34,7 +34,7 @@ const Profile = () => {
   });
 
   const isMyPage = useCheckMyPage(userId);
-  const { profileData, isLoading } = useProfile(userId);
+  const { data: profileData, isLoading } = useProfile(userId);
 
   const [writtenOption, setWrittenOption] = useState('all');
   const [boughtOption, setBoughtOption] = useState('all');
