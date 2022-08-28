@@ -66,6 +66,17 @@ export const getPostLikeList = async ({ queryKey, pageParam = 0 }) => {
   };
 };
 
+export const getPostDownloadAllMedia = ({ queryKey }) => {
+  const [, postId] = queryKey;
+  return api({
+    method: 'get',
+    'Content-type': 'application/zip',
+    'Content-Encoding': 'gzip',
+    responseType: 'arraybuffer',
+    url: API_PATH.POST_DOWNLOAD_ALL_MEDIA(postId),
+  });
+};
+
 export const deletePost = (postId) => {
   return api({
     method: 'delete',

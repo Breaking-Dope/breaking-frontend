@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import Button from 'components/Button/Button';
 import usePostBuy from 'pages/Post/hooks/mutations/usePostBuy';
 import PostBoughtListModal from 'pages/Post/components/PostBoughtListModal/PostBoughtListModal';
+import usePostDownload from 'pages/Post/hooks/queries/usePostDownload';
 
 const PurchaseButton = ({ postId, isMyPost, isPurchased, isPurchasable }) => {
   const [isOpenBoughtListModal, setIsOpenBoughtListModal] = useState(false);
+
+  const { refetch: PostDownloadRefetch } = usePostDownload(postId);
   const { mutate: PostBuy } = usePostBuy();
 
   const toggleBoughtListModal = () => {
@@ -30,7 +33,17 @@ const PurchaseButton = ({ postId, isMyPost, isPurchased, isPurchasable }) => {
         </Button>
       </>
     );
-  else if (isPurchased) return <Button color="primary">다운로드</Button>;
+  else if (isPurchased)
+    return (
+      <Button
+        color="primary"
+        onClick={() => {
+          PostDownloadRefetch();
+        }}
+      >
+        다운로드
+      </Button>
+    );
   else if (!isPurchasable)
     return (
       <Button color="secondary" disabled>

@@ -58,6 +58,11 @@ export const postHandlers = [
     return res(ctx.status(200), ctx.json(userList));
   }),
 
+  rest.get(API_PATH.POST_DOWNLOAD_ALL_MEDIA(':postId'), (req, res, ctx) => {
+    console.log('다운로드 완료');
+    return res(ctx.status(200));
+  }),
+
   rest.delete(API_PATH.POST_DELETE(':postId'), (req, res, ctx) => {
     console.log('게시글 삭제 성공');
     return res(ctx.status(200));
