@@ -18,7 +18,9 @@ export default function ShareModal({ data, postId, isOpen, closeClick }) {
         objectType: 'feed',
         content: {
           title: data.title,
-          imageUrl: `${ImageUrlConverter(data.ThumbnailImage)}`,
+          imageUrl: data?.mediaList
+            ? `${ImageUrlConverter(data.mediaList[0])}`
+            : `${ImageUrlConverter(data.thumbnailImgURL)}`,
           link: {
             mobileWebUrl: url,
             webUrl: url,

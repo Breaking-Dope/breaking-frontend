@@ -29,7 +29,7 @@ export default function Tag({ postType, isSold, isPurchasable }) {
 }
 
 Tag.propTypes = {
-  postType: PropTypes.oneOf('EXCLUSIVE', 'FREE', 'CHARGED').isRequired,
+  postType: PropTypes.oneOf(['EXCLUSIVE', 'FREE', 'CHARGED']).isRequired,
   isSold: PropTypes.bool.isRequired,
   isPurchasable: PropTypes.bool.isRequired,
 };
