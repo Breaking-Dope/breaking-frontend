@@ -12,7 +12,6 @@ const KakaoRedirect = () => {
 
   const SignInKakao = useMutation(postSignInWithKakao, {
     onSuccess: (res) => {
-      console.log(res);
       const jwtToken = res.headers.authorization;
       if (jwtToken) {
         localStorage.setItem('access_token', res.headers.authorization);
@@ -26,7 +25,6 @@ const KakaoRedirect = () => {
 
   const GetKakaoToken = useMutation(postAccessCode, {
     onSuccess: (res) => {
-      console.log(res);
       SignInKakao.mutate({
         accessToken: res.data.access_token,
       });
