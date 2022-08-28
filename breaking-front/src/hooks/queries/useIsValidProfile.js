@@ -10,7 +10,6 @@ const useIsValidProfile = (validType, profileData, setErrorMessage) =>
       retry: false,
 
       onSuccess: (data) => {
-        console.log(data);
         setErrorMessage('');
       },
 

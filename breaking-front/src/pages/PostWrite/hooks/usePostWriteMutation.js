@@ -10,10 +10,6 @@ const usePostWriteMutation = () => {
       alert('작성되었습니다.');
       navigate(PAGE_PATH.POST(res.data.postId));
     },
-    onError: (error) => {
-      console.log(error);
-      //에러처리
-    },
   });
 };
 

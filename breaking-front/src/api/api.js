@@ -41,7 +41,6 @@ api.interceptors.response.use(
   },
 
   async (error) => {
-    console.log(error);
     if (
       error?.response?.status === 401 &&
       error?.response?.data?.code === 'BSE002'

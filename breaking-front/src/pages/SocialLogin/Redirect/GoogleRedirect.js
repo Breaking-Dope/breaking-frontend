@@ -12,7 +12,6 @@ const GoogleRedirect = () => {
 
   const SignInGoogle = useMutation(postSignInWithGoogle, {
     onSuccess: (res) => {
-      console.log(res);
       const jwtToken = res.headers.authorization;
       if (jwtToken) {
         localStorage.setItem('access_token', res.headers.authorization);
@@ -26,7 +25,6 @@ const GoogleRedirect = () => {
 
   const GetGoogleToken = useMutation(postAccessCode, {
     onSuccess: (res) => {
-      console.log(res.data);
       SignInGoogle.mutate({
         accessToken: res.data.access_token,
         idToken: res.data.id_token,
