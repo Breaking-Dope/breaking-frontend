@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { UserInformationContext } from 'providers/UserInformationProvider';
+import { PAGE_PATH } from 'constants/path';
 import Button from 'components/Button/Button';
 import usePostBuy from 'pages/Post/hooks/mutations/usePostBuy';
 import PostBoughtListModal from 'pages/Post/components/PostBoughtListModal/PostBoughtListModal';
 import usePostDownload from 'pages/Post/hooks/queries/usePostDownload';
 
 const PurchaseButton = ({ postId, isMyPost, isPurchased, isPurchasable }) => {
+  const navigate = useNavigate();
+  const { isLogin } = useContext(UserInformationContext);
+
   const [isOpenBoughtListModal, setIsOpenBoughtListModal] = useState(false);
 
   const { refetch: PostDownloadRefetch } = usePostDownload(postId);
@@ -16,6 +22,11 @@ const PurchaseButton = ({ postId, isMyPost, isPurchased, isPurchasable }) => {
   };
 
   const postBuyClick = () => {
+    if (!isLogin) {
+      alert('로그인이 필요합니다.');
+      return navigate(PAGE_PATH.LOGIN);
+    }
+
     const postBuyConfirm = window.confirm('게시글을 구매하시겠습니까?');
     postBuyConfirm && PostBuy(postId);
   };

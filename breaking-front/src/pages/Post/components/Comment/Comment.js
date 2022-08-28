@@ -25,7 +25,7 @@ import { ReactComponent as DropDownIcon } from 'assets/svg/drop_down.svg';
 const Comment = ({ comment, type }) => {
   const navigate = useNavigate();
 
-  const { userId } = useContext(UserInformationContext);
+  const { userId, isLogin } = useContext(UserInformationContext);
   const [isOpenCommentToggle, setIsOpenCommentToggle] = useState(false);
   const [isOpenCommentFormToggle, setIsOpenCommentFormToggle] = useState(false);
   const [isOpenCommentEditToggle, setIsOpenCommentEditToggle] = useState(false);
@@ -56,6 +56,11 @@ const Comment = ({ comment, type }) => {
   };
 
   const toggleLiked = () => {
+    if (!isLogin) {
+      alert('로그인이 필요합니다.');
+      return navigate(PAGE_PATH.LOGIN);
+    }
+
     isLiked
       ? DeleteCommentLike(comment.commentId)
       : CommentLike(comment.commentId);

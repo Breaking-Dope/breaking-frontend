@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { PAGE_PATH } from 'constants/path';
@@ -20,9 +20,11 @@ import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as ThumbnailIcon } from 'assets/svg/default_thumbnail_image.svg';
 import usePostBookmark from 'hooks/mutations/usePostBookmark';
 import useDeletePostBookmark from 'hooks/mutations/useDeletePostBookmark';
+import { UserInformationContext } from 'providers/UserInformationProvider';
 
 export default function Feed({ feedData, ...props }) {
   const navigate = useNavigate();
+  const { isLogin } = useContext(UserInformationContext);
 
   const [isBookmarked, setIsBookmarked] = useState(feedData.isBookmarked);
   const [isOpenToggle, setIsOpenToggle] = useState(false);
@@ -36,6 +38,11 @@ export default function Feed({ feedData, ...props }) {
   };
 
   const toggleBookmarked = () => {
+    if (!isLogin) {
+      alert('로그인이 필요합니다.');
+      return navigate(PAGE_PATH.LOGIN);
+    }
+
     isBookmarked
       ? DeletePostBookmark(feedData.postId)
       : PostBookmark(feedData.postId);
