@@ -2,6 +2,8 @@ import React from 'react';
 import * as Style from 'components/FollowButton/FollowButton.styles';
 import PropTypes from 'prop-types';
 import { useTheme } from 'styled-components';
+import { useContext } from 'react';
+import { UserInformationContext } from 'providers/UserInformationProvider';
 
 const FollowButton = ({
   userId,
@@ -11,8 +13,9 @@ const FollowButton = ({
   useFollow,
 }) => {
   const theme = useTheme();
+  const { isLogin } = useContext(UserInformationContext);
 
-  if (isMe) {
+  if (isMe || !isLogin) {
     return <></>;
   } else if (isFollowing) {
     return (

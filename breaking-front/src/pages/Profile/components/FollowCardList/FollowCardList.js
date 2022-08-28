@@ -62,7 +62,7 @@ const FollowCardList = ({
               toggleModal();
               navigate(PAGE_PATH.PROFILE(item.userId));
             }}
-            isPermission={item.userId !== userData.userId}
+            isPermission={item.userId !== userData.userId && userData.isLogin}
             profileData={item}
             key={`follow-${item.userId}`}
             FollowMutation={FollowMutation}
