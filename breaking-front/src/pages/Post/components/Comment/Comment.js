@@ -81,19 +81,19 @@ const Comment = ({ comment, type }) => {
     setCommentId(comment.commentId);
   };
 
-  const handleCommentReplySubmit = ({ comment, hashtagList }) => {
+  const handleCommentReplySubmit = ({ commentContent, hashtagList }) => {
     CommentReplyWrite({
       commentId: comment.commentId,
-      content: comment,
+      content: commentContent,
       hashtagList: hashtagList,
     });
     setIsOpenCommentFormToggle(false);
   };
 
-  const handleCommentEditSubmit = ({ comment, hashtagList }) => {
+  const handleCommentEditSubmit = ({ commentContent, hashtagList }) => {
     CommentEdit({
       commentId: comment.commentId,
-      content: comment,
+      content: commentContent,
       hashtagList: hashtagList,
     });
     setIsOpenCommentEditToggle((pre) => !pre);
