@@ -86,7 +86,7 @@ export default function ShareModal({ data, postId, isOpen, closeClick }) {
 
 ShareModal.propTypes = {
   data: PropTypes.object,
-  postId: PropTypes.PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  postId: PropTypes.number,
   isOpen: PropTypes.bool,
   closeClick: PropTypes.func,
 };

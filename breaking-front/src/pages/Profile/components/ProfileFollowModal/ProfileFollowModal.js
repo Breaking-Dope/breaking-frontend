@@ -122,7 +122,7 @@ ProfileFollowModal.propTypes = {
   isFollowingModalOpen: PropTypes.bool,
   toggleFollowerModal: PropTypes.func,
   toggleFollowingModal: PropTypes.func,
-  userId: PropTypes.PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  userId: PropTypes.number,
 };
 
 export default ProfileFollowModal;
