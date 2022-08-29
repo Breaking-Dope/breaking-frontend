@@ -47,7 +47,7 @@ const Carousel = ({ mediaList }) => {
       <Style.CarouselContainer>
         <Style.SliderContainer ref={slideRef} mediaCount={mediaCount}>
           {mediaList.map((media, index) =>
-            /\.(?:jpg|gif|png)/g.test(media) ? (
+            /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(media) ? (
               <Style.Image
                 src={ImageUrlConverter(media)}
                 onClick={() => {
