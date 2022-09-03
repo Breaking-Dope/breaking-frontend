@@ -8,7 +8,14 @@ import usePostBuy from 'pages/Post/hooks/mutations/usePostBuy';
 import PostBoughtListModal from 'pages/Post/components/PostBoughtListModal/PostBoughtListModal';
 import usePostDownload from 'pages/Post/hooks/queries/usePostDownload';
 
-const PurchaseButton = ({ postId, isMyPost, isPurchased, isPurchasable }) => {
+const PurchaseButton = ({
+  postId,
+  isMyPost,
+  isPurchased,
+  isPurchasable,
+  isSold,
+  postType,
+}) => {
   const navigate = useNavigate();
   const { isLogin } = useContext(UserInformationContext);
 
@@ -61,6 +68,12 @@ const PurchaseButton = ({ postId, isMyPost, isPurchased, isPurchasable }) => {
         판매 중지
       </Button>
     );
+  else if (isSold && postType === 'EXCLUSIVE')
+    return (
+      <Button color="secondary" disabled>
+        판매 완료
+      </Button>
+    );
   else
     return (
       <Button color="primary" onClick={postBuyClick}>
@@ -74,6 +87,8 @@ PurchaseButton.propTypes = {
   isMyPost: PropTypes.bool,
   isPurchased: PropTypes.bool,
   isPurchasable: PropTypes.bool,
+  isSold: PropTypes.bool,
+  postType: PropTypes.string,
 };
 
 export default PurchaseButton;
