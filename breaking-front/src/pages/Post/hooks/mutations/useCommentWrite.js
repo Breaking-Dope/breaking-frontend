@@ -7,6 +7,7 @@ const useCommentWrite = () => {
   return useMutation(postPostCommentWrite, {
     onSuccess: () => {
       queryClient.invalidateQueries('postComment');
+      queryClient.invalidateQueries('post');
     },
   });
 };
