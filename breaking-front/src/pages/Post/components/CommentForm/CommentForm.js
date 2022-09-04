@@ -12,23 +12,23 @@ const CommentForm = ({ content, closeClick, onSubmit }) => {
   const navigate = useNavigate();
   const { profileImgURL, isLogin } = useContext(UserInformationContext);
   const textareaRef = useRef();
-  const [comment, setComment] = useState(content);
+  const [commentContent, setCommentContent] = useState(content);
 
   const handleChange = (event) => {
     textareaRef.current.style.height = '27px';
     textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
 
-    setComment(event.target.value);
+    setCommentContent(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!comment) return;
+    if (!commentContent) return;
 
-    const hashtagList = extractHashtag(comment);
-    onSubmit({ comment, hashtagList });
+    const hashtagList = extractHashtag(commentContent);
+    onSubmit({ commentContent, hashtagList });
 
-    setComment('');
+    setCommentContent('');
     textareaRef.current.style.height = '27px';
   };
 
@@ -50,7 +50,7 @@ const CommentForm = ({ content, closeClick, onSubmit }) => {
           <Style.CommentTextarea
             ref={textareaRef}
             placeholder="댓글 추가"
-            value={comment}
+            value={commentContent}
             onChange={handleChange}
             onFocus={() => {
               if (!isLogin) {

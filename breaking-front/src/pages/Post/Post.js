@@ -61,6 +61,11 @@ const Post = () => {
   };
 
   const toggleLikeListModal = () => {
+    if (!isLogin) {
+      alert('로그인이 필요합니다.');
+      return navigate(PAGE_PATH.LOGIN);
+    }
+
     setIsOpenLikeListModal((pre) => !pre);
   };
 
@@ -149,6 +154,8 @@ const Post = () => {
                   isMyPost={postData?.data.isMyPost}
                   isPurchased={postData?.data.isPurchased}
                   isPurchasable={postData?.data.isPurchasable}
+                  isSold={postData?.data.isSold}
+                  postType={postData?.data.postType}
                 />
                 <Style.ContentDetail>
                   누적 판매

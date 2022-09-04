@@ -6,6 +6,7 @@ const useCommentReplyWrite = () => {
 
   return useMutation(postPostReplyWrite, {
     onSuccess: () => {
+      queryClient.invalidateQueries('post');
       queryClient.invalidateQueries('postComment');
       queryClient.invalidateQueries('postReply');
     },

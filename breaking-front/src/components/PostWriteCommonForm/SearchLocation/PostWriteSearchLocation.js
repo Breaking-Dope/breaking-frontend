@@ -71,6 +71,7 @@ const PostWriteSearchLocation = ({ location, setData }) => {
         setIsModalOpen(true);
         SetCustomMarker(position.coords.latitude, position.coords.longitude);
       },
+      (error) => {},
       {
         enableHighAccuracy: false,
       }

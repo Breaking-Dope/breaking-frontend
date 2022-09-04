@@ -113,12 +113,12 @@ export const API_PATH = {
 };
 
 export const KAKAO_PATH = {
-  REDIRECT_URL: 'http://localhost:3000/login/kakao',
+  REDIRECT_URL: `${window.location.origin}/login/kakao`,
   OAUTH_TOKEN: 'https://kauth.kakao.com/oauth/token',
 };
 
 export const GOOGLE_PATH = {
-  REDIRECT_URL: 'http://localhost:3000/login/google',
+  REDIRECT_URL: `${window.location.origin}/login/google`,
   OAUTH_TOKEN: 'https://oauth2.googleapis.com/token',
 };
 

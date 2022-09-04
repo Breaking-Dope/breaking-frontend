@@ -22,6 +22,7 @@ export const postSignInWithKakao = (token) => {
     method: 'post',
     url: API_PATH.OAUTH2_SIGNIN_KAKAO,
     data: token,
+    withCredentials: true,
   });
 };
 
@@ -30,6 +31,7 @@ export const postSignInWithGoogle = (token) => {
     method: 'post',
     url: API_PATH.OAUTH2_SIGNIN_GOOGLE,
     data: token,
+    withCredentials: true,
   });
 };
 
