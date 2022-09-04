@@ -1,5 +1,5 @@
 import React from 'react';
-import MobileDownloadButton from 'components/MobileDownloadButton/MobileDownloadButton';
+import MobileDownloadButton from 'pages/Authentication/SignIn/components/MobileDownloadButton/MobileDownloadButton';
 
 export default {
   title: 'components/MobileDownloadButton',

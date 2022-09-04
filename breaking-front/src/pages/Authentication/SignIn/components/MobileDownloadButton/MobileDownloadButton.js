@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Style from 'components/MobileDownloadButton/MobileDownload.styles';
+import * as Style from 'pages/Authentication/SignIn/components/MobileDownloadButton/MobileDownload.styles';
 
 export default function MobileDownloadButton({ social, onClick }) {
   return <Style.MobileDownloadButton onClick={onClick} icon={social} />;

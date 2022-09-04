@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { PAGE_PATH } from 'constants/path';
 import ProfileSettingForm from 'components/ProfileSettingForm/ProfileSettingForm';
 import MESSAGE from 'constants/message';
-import useSignUp from 'pages/SignUp/hooks/mutations/useSignUp';
+import useSignUp from 'pages/Authentication/SignUp/hooks/mutations/useSignUp';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 
 const SignUp = () => {
