@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import Modal from 'components/Modal/Modal';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
-import usePostBoughtList from 'pages/Post/hooks/queries/usePostBoughtList';
+import usePostBoughtList from 'pages/Post/Post/hooks/queries/usePostBoughtList';
 import FollowCard from 'components/FollowCard/FollowCard';
 import { useNavigate } from 'react-router-dom';
 import { PAGE_PATH } from 'constants/path';
 import { FollowCardSkeleton } from 'components/Skeleton/Skeleton';
-import * as Style from 'pages/Post/components/PostBoughtListModal/PostBoughtListModal.styles';
+import * as Style from 'pages/Post/Post/components/PostBoughtListModal/PostBoughtListModal.styles';
 
 const PostBoughtListModal = ({ postId, isOpen, closeClick }) => {
   const navigate = useNavigate();

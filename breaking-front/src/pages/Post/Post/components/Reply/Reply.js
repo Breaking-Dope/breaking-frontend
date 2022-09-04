@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import usePostReply from 'pages/Post/hooks/queries/usePostReply';
-import Comment from 'pages/Post/components/Comment/Comment';
+import usePostReply from 'pages/Post/Post/hooks/queries/usePostReply';
+import Comment from 'pages/Post/Post/components/Comment/Comment';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
-import * as Style from 'pages/Post/components/Reply/Reply.styles';
+import * as Style from 'pages/Post/Post/components/Reply/Reply.styles';
 import { ReactComponent as MoreIcon } from 'assets/svg/more_arrow.svg';
 
 const Reply = ({ isOpen, commentId }) => {

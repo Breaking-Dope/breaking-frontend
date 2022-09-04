@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import { PAGE_PATH } from 'constants/path';
 import Button from 'components/Button/Button';
-import usePostBuy from 'pages/Post/hooks/mutations/usePostBuy';
-import PostBoughtListModal from 'pages/Post/components/PostBoughtListModal/PostBoughtListModal';
-import usePostDownload from 'pages/Post/hooks/queries/usePostDownload';
+import usePostBuy from 'pages/Post/Post/hooks/mutations/usePostBuy';
+import PostBoughtListModal from 'pages/Post/Post/components/PostBoughtListModal/PostBoughtListModal';
+import usePostDownload from 'pages/Post/Post/hooks/queries/usePostDownload';
 
 const PurchaseButton = ({
   postId,

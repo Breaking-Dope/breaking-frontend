@@ -6,7 +6,7 @@ import { PAGE_PATH } from 'constants/path';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
 import extractHashtag from 'utils/extractHashtag';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import * as Style from 'pages/Post/components/CommentForm/CommentForm.styles';
+import * as Style from 'pages/Post/Post/components/CommentForm/CommentForm.styles';
 
 const CommentForm = ({ content, closeClick, onSubmit }) => {
   const navigate = useNavigate();

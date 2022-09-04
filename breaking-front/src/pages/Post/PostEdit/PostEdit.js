@@ -8,9 +8,9 @@ import MESSAGE from 'constants/message';
 import PostWriteCommonForm, {
   PostSubmitButton,
 } from 'components/PostWriteCommonForm/PostWriteCommonForm';
-import usePostEditMutation from 'pages/PostEdit/hooks/usePostEditMutation';
+import usePostEditMutation from 'pages/Post/PostEdit/hooks/usePostEditMutation';
 import extractHashtag from 'utils/extractHashtag';
-import * as Style from 'pages/PostEdit/PostEdit.styles';
+import * as Style from 'pages/Post/PostEdit/PostEdit.styles';
 
 const PostEdit = () => {
   let { id: postId } = useParams();

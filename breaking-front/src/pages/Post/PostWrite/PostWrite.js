@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import * as Style from 'pages/PostWrite/PostWrite.styles';
-import PostUploadMediaForm from 'pages/PostWrite/components/PostWriteUploadMediaForm';
+import * as Style from 'pages/Post/PostWrite/PostWrite.styles';
+import PostUploadMediaForm from 'pages/Post/PostWrite/components/PostWriteUploadMediaForm';
 import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
 import useInputs from 'hooks/useInputs';
@@ -8,7 +8,7 @@ import MESSAGE from 'constants/message';
 import PostWriteCommonForm, {
   PostSubmitButton,
 } from 'components/PostWriteCommonForm/PostWriteCommonForm';
-import usePostWriteMutation from 'pages/PostWrite/hooks/usePostWriteMutation';
+import usePostWriteMutation from 'pages/Post/PostWrite/hooks/usePostWriteMutation';
 import extractHashtag from 'utils/extractHashtag';
 
 const PostWrite = () => {

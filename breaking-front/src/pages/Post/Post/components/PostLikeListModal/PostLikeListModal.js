@@ -6,11 +6,11 @@ import useUnFollow from 'hooks/mutations/useUnFollow';
 import Modal from 'components/Modal/Modal';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
 import { FollowCardSkeleton } from 'components/Skeleton/Skeleton';
-import usePostLikeList from 'pages/Post/hooks/queries/usePostLikeList';
+import usePostLikeList from 'pages/Post/Post/hooks/queries/usePostLikeList';
 import FollowCard from 'components/FollowCard/FollowCard';
 import { PAGE_PATH } from 'constants/path';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
-import * as Style from 'pages/Post/components/PostLikeListModal/PostLikeListModal.styles';
+import * as Style from 'pages/Post/Post/components/PostLikeListModal/PostLikeListModal.styles';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 
 const PostLikeListModal = ({ postId, isOpen, closeClick }) => {

@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
-import useCommentWrite from 'pages/Post/hooks/mutations/useCommentWrite';
-import usePostComment from 'pages/Post/hooks/queries/usePostComment';
-import CommentForm from 'pages/Post/components/CommentForm/CommentForm';
-import Comment from 'pages/Post/components/Comment/Comment';
-import * as Style from 'pages/Post/components/CommentList/CommentList.styles';
+import useCommentWrite from 'pages/Post/Post/hooks/mutations/useCommentWrite';
+import usePostComment from 'pages/Post/Post/hooks/queries/usePostComment';
+import CommentForm from 'pages/Post/Post/components/CommentForm/CommentForm';
+import Comment from 'pages/Post/Post/components/Comment/Comment';
+import * as Style from 'pages/Post/Post/components/CommentList/CommentList.styles';
 
 const CommentList = ({ postId }) => {
   const {

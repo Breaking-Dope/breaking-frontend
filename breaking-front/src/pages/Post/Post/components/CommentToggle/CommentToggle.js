@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Toggle from 'components/Toggle/Toggle';
-import * as Style from 'pages/Post/components/CommentToggle/CommentToggle.styles';
+import * as Style from 'pages/Post/Post/components/CommentToggle/CommentToggle.styles';
 import { ReactComponent as EditIcon } from 'assets/svg/edit.svg';
 import { ReactComponent as RemoveIcon } from 'assets/svg/remove.svg';
 import { ReactComponent as ChatIcon } from 'assets/svg/chat.svg';
