@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import ProfileSettingForm from 'components/ProfileSettingForm/ProfileSettingForm';
-import useProfileDetailData from 'pages/ProfileEdit/hooks/queries/useProfileDetailData';
-import useProfileEdit from 'pages/ProfileEdit/hooks/mutations/useProfileEdit';
-import useProfileWithdrawal from 'pages/ProfileEdit/hooks/mutations/useProfileWithdrawal';
+import useProfileDetailData from 'pages/Profile/ProfileEdit/hooks/queries/useProfileDetailData';
+import useProfileEdit from 'pages/Profile/ProfileEdit/hooks/mutations/useProfileEdit';
+import useProfileWithdrawal from 'pages/Profile/ProfileEdit/hooks/mutations/useProfileWithdrawal';
 import Line from 'components/Line/Line';
 import Modal from 'components/Modal/Modal';
 import Button from 'components/Button/Button';
-import * as Style from 'pages/ProfileEdit/ProfileEdit.styles';
+import * as Style from 'pages/Profile/ProfileEdit/ProfileEdit.styles';
 
 const ProfileEdit = () => {
   const { userId } = useContext(UserInformationContext);

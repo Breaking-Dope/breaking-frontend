@@ -1,13 +1,13 @@
 import Modal from 'components/Modal/Modal';
-import useFollowerList from 'pages/Profile/hooks/queries/useFollowerList';
-import useFollowingList from 'pages/Profile/hooks/queries/useFollowingList';
+import useFollowerList from 'pages/Profile/Profile/hooks/queries/useFollowerList';
+import useFollowingList from 'pages/Profile/Profile/hooks/queries/useFollowingList';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
-import * as Style from 'pages/Profile/components/ProfileFollowModal/ProfileFollowModal.styles';
+import * as Style from 'pages/Profile/Profile/components/ProfileFollowModal/ProfileFollowModal.styles';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
-import FollowCardList from 'pages/Profile/components/FollowCardList/FollowCardList';
+import FollowCardList from 'pages/Profile/Profile/components/FollowCardList/FollowCardList';
 
 const ProfileFollowModal = ({
   isFollowerModalOpen,

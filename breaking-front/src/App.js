@@ -7,7 +7,7 @@ import { ThemeProvider } from 'styled-components';
 import UserInformationProvider from 'providers/UserInformationProvider';
 import { PAGE_PATH } from 'constants/path';
 import Layout from 'components/Layout/Layout';
-import SocialLogin from 'pages/Authentication/SignIn/SocialLogin';
+import SignIn from 'pages/Authentication/SignIn/SignIn';
 import KakaoRedirect from 'pages/Authentication/SignIn/Redirect/KakaoRedirect';
 import GoogleRedirect from 'pages/Authentication/SignIn/Redirect/GoogleRedirect';
 import SignUp from 'pages/Authentication/SignUp/SignUp';
@@ -48,7 +48,7 @@ function App() {
                     path={PAGE_PATH.LOGIN}
                     element={
                       <PrivateRoute redirectPath={PAGE_PATH.HOME} restricted>
-                        <SocialLogin />
+                        <SignIn />
                       </PrivateRoute>
                     }
                   />
