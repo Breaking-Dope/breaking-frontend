@@ -62,16 +62,16 @@ const PurchaseButton = ({
         다운로드
       </Button>
     );
-  else if (!isPurchasable)
-    return (
-      <Button color="secondary" disabled>
-        판매 중지
-      </Button>
-    );
   else if (isSold && postType === 'EXCLUSIVE')
     return (
       <Button color="secondary" disabled>
         판매 완료
+      </Button>
+    );
+  else if (!isPurchasable)
+    return (
+      <Button color="secondary" disabled>
+        판매 중지
       </Button>
     );
   else
