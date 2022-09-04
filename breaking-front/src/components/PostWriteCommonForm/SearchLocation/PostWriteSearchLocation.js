@@ -5,7 +5,7 @@ import * as Style from 'components/PostWriteCommonForm/SearchLocation/PostWriteS
 import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
 import PostWriteModal from 'components/PostWriteCommonForm/SearchLocation/PostWriteModal';
 import PropTypes from 'prop-types';
-import parseAddressName from 'utils/parseAddressName';
+import ParseAddressName from 'utils/ParseAddressName';
 
 const PostWriteSearchLocation = ({ location, setData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -106,7 +106,7 @@ const PostWriteSearchLocation = ({ location, setData }) => {
       location: {
         latitude: markerInformation.lat,
         longitude: markerInformation.lng,
-        ...parseAddressName(markerInformation.addressName),
+        ...ParseAddressName(markerInformation.addressName),
         address: markerInformation.addressName,
       },
     }));

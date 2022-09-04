@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import { PAGE_PATH } from 'constants/path';
-import timeFormatter from 'utils/timeFormatter';
+import TimeFormatter from 'utils/TimeFormatter';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
 import ContentHashtag from 'components/ContentHashtag/ContentHashtag';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
@@ -119,7 +119,7 @@ const Comment = ({ comment, type }) => {
         <Style.ContentContainer>
           <Style.Nickname>{comment.user?.nickname}</Style.Nickname>
           <Style.CreatedDate>
-            {timeFormatter(new Date(comment.createdDate))}
+            {TimeFormatter(new Date(comment.createdDate))}
           </Style.CreatedDate>
           <Style.Content>
             <ContentHashtag content={comment.content} />

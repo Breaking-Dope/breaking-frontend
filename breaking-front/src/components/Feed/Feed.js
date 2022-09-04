@@ -7,8 +7,8 @@ import Toggle from 'components/Toggle/Toggle';
 import Tag from 'components/Tag/Tag';
 import ShareModal from 'components/ShareModal/ShareModal';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
-import numberFormatter from 'utils/numberFormatter';
-import timeFormatter from 'utils/timeFormatter';
+import NumberFormatter from 'utils/NumberFormatter';
+import TimeFormatter from 'utils/TimeFormatter';
 import * as Style from 'components/Feed/Feed.styles';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import { ReactComponent as LikeIcon } from 'assets/svg/like.svg';
@@ -137,16 +137,16 @@ export default function Feed({ feedData, ...props }) {
           <Style.FeedContentFooter>
             <div>
               <Style.ViewCount>
-                조회수 {numberFormatter(feedData.viewCount)}회
+                조회수 {NumberFormatter(feedData.viewCount)}회
               </Style.ViewCount>
               <Style.CreatedDate>
-                {timeFormatter(new Date(feedData.createdDate))}
+                {TimeFormatter(new Date(feedData.createdDate))}
               </Style.CreatedDate>
             </div>
             <div>
               <Style.LikeCount>
                 <LikeIcon />
-                {numberFormatter(feedData.likeCount)}
+                {NumberFormatter(feedData.likeCount)}
               </Style.LikeCount>
               <Style.CommentCount>
                 <CommentIcon />

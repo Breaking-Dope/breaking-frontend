@@ -14,7 +14,7 @@ import ImageUrlConverter from 'utils/ImageUrlConverter';
 import FollowButton from 'components/FollowButton/FollowButton';
 import ProfileFollowModal from 'pages/Profile/Profile/components/ProfileFollowModal/ProfileFollowModal';
 import ProfileTabPanel from 'pages/Profile/Profile/components/ProfileTabPanel/ProfileTabPanel';
-import numberFormatter from 'utils/numberFormatter';
+import NumberFormatter from 'utils/NumberFormatter';
 import useFollow from 'hooks/mutations/useFollow';
 import useUnFollow from 'hooks/mutations/useUnFollow';
 import { useQueryClient } from 'react-query';
@@ -103,12 +103,12 @@ const Profile = () => {
               {profileData.data.statusMsg}
             </Style.StatusMessage>
             <Style.Information>
-              <div>작성제보 {numberFormatter(profileData?.data.postCount)}</div>
+              <div>작성제보 {NumberFormatter(profileData?.data.postCount)}</div>
               <div onClick={toggleFollowerModal}>
-                팔로워 {numberFormatter(profileData?.data.followerCount)}
+                팔로워 {NumberFormatter(profileData?.data.followerCount)}
               </div>
               <div onClick={toggleFollowingModal}>
-                팔로잉 {numberFormatter(profileData?.data.followingCount)}
+                팔로잉 {NumberFormatter(profileData?.data.followingCount)}
               </div>
             </Style.Information>
           </Style.UserInformation>

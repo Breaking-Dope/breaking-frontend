@@ -2,7 +2,7 @@ import ProfileImage from 'components/ProfileImage/ProfileImage';
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import * as Style from 'pages/Search/SearchUser/components/SearchUserResultCard/SearchUserResultCard.styles';
-import numberFormatter from 'utils/numberFormatter';
+import NumberFormatter from 'utils/NumberFormatter';
 import FollowButton from 'components/FollowButton/FollowButton';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
@@ -26,7 +26,7 @@ const SearchUserResultCard = ({ user }) => {
           <Style.UserEmail>{user.email}</Style.UserEmail>
         </Style.UserTitleContainer>
         <Style.UserFollowers>
-          팔로워 {numberFormatter(user.followerCount)}명
+          팔로워 {NumberFormatter(user.followerCount)}명
         </Style.UserFollowers>
         <Style.UserStatusMSG>{user.statusMsg}</Style.UserStatusMSG>
       </Style.UserInformationContainer>
