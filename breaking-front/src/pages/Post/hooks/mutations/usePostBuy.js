@@ -11,6 +11,8 @@ const usePostBuy = () => {
     },
     onError: (error) => {
       if (error.response.data.code === 'BSE601') alert('금액이 부족합니다.');
+      if (error.response.data.code === 'BSE461')
+        alert('이미 판매 된 단독제보입니다.');
     },
   });
 };
