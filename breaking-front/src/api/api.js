@@ -54,6 +54,7 @@ api.interceptors.response.use(
           headers: {
             authorization: `Bearer ${accessToken}`,
           },
+          withCredentials: true,
         });
         if (token) {
           localStorage.setItem('access_token', token.headers.authorization);

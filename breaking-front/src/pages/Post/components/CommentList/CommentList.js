@@ -21,10 +21,10 @@ const CommentList = ({ postId }) => {
     FetchNextPostComment
   );
 
-  const handleSubmit = ({ comment, hashtagList }) => {
+  const handleSubmit = ({ commentContent, hashtagList }) => {
     CommentWrite({
       postId: postId,
-      content: comment,
+      content: commentContent,
       hashtagList: hashtagList,
     });
   };
