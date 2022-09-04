@@ -7,19 +7,19 @@ import { ThemeProvider } from 'styled-components';
 import UserInformationProvider from 'providers/UserInformationProvider';
 import { PAGE_PATH } from 'constants/path';
 import Layout from 'components/Layout/Layout';
-import SocialLogin from 'pages/SocialLogin/SocialLogin';
-import KakaoRedirect from 'pages/SocialLogin/Redirect/KakaoRedirect';
-import GoogleRedirect from 'pages/SocialLogin/Redirect/GoogleRedirect';
-import SignUp from 'pages/SignUp/SignUp';
-import Profile from 'pages/Profile/Profile';
-import ProfileEdit from 'pages/ProfileEdit/ProfileEdit';
+import SignIn from 'pages/Authentication/SignIn/SignIn';
+import KakaoRedirect from 'pages/Authentication/SignIn/Redirect/KakaoRedirect';
+import GoogleRedirect from 'pages/Authentication/SignIn/Redirect/GoogleRedirect';
+import SignUp from 'pages/Authentication/SignUp/SignUp';
+import Profile from 'pages/Profile/Profile/Profile';
+import ProfileEdit from 'pages/Profile/ProfileEdit/ProfileEdit';
 import MainFeed from 'pages/MainFeed/MainFeed';
-import Post from 'pages/Post/Post';
-import PostWrite from 'pages/PostWrite/PostWrite';
+import Post from 'pages/Post/Post/Post';
+import PostWrite from 'pages/Post/PostWrite/PostWrite';
 import Financial from 'pages/Financial/Financial';
 import theme from 'styles/theme';
 import GlobalStyle from 'styles/GlobalStyle';
-import PostEdit from 'pages/PostEdit/PostEdit';
+import PostEdit from 'pages/Post/PostEdit/PostEdit';
 import SearchUnified from 'pages/Search/SearchUnified/SearchUnified';
 import SearchPost from 'pages/Search/SearchPost/SearchPost';
 import SearchHashtag from 'pages/Search/SearchHashtag/SearchHashtag';
@@ -48,7 +48,7 @@ function App() {
                     path={PAGE_PATH.LOGIN}
                     element={
                       <PrivateRoute redirectPath={PAGE_PATH.HOME} restricted>
-                        <SocialLogin />
+                        <SignIn />
                       </PrivateRoute>
                     }
                   />
