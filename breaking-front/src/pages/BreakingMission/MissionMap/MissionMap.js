@@ -19,7 +19,7 @@ const MissionMap = () => {
         borderRadius: '0px 0px 10px 10px',
         overflow: 'auto',
       }}
-      level={13} // 지도의 확대 레벨
+      level={12} // 지도의 확대 레벨
     >
       <MarkerClusterer averageCenter={true} minLevel={8}>
         {mapDummyInformation.map((mapInformation) => (
