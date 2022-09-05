@@ -26,7 +26,7 @@ import SearchHashtag from 'pages/Search/SearchHashtag/SearchHashtag';
 import SearchUser from 'pages/Search/SearchUser/SearchUser';
 import NotFound from 'pages/NotFound/NotFound';
 import PrivateRoute from 'PrivateRoute';
-import MissionMap from 'pages/BreakingMisson/MissionMap/MissionMap';
+import MissionMap from 'pages/BreakingMission/MissionMap/MissionMap';
 
 function App() {
   const queryClient = new QueryClient({

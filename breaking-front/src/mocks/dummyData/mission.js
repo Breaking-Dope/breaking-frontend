@@ -1,4 +1,4 @@
-export const mapList = [
+export const mapDummyInformation = [
   {
     missionId: 1,
     latitude: 37.57026135470516,
