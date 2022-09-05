@@ -7,9 +7,9 @@ import ProfileImage from 'components/ProfileImage/ProfileImage';
 import Skeleton from 'components/Skeleton/Skeleton';
 import useIsValidProfile from 'hooks/queries/useIsValidProfile';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
+import MediaFileToUrl from 'utils/MediaFileToUrl';
 import MESSAGE from 'constants/message';
 import useInputs from 'hooks/useInputs';
-import fileToBase64 from 'utils/fileToBase64';
 import * as Style from 'components/ProfileSettingForm/ProfileSettingForm.styles';
 import { ReactComponent as XMark } from 'assets/svg/x_mark.svg';
 
@@ -60,9 +60,11 @@ export default function ProfileSettingForm({
 
   const handleImageUploadPreview = (imageFile) => {
     if (!imageFile) return;
+    const mediaFile = MediaFileToUrl(imageFile);
+    if (mediaFile.type === 'video') return alert('이미지 형식만 가능합니다.');
 
     setForm((form) => ({ ...form, profileImgURL: imageFile }));
-    fileToBase64(imageFile, setImageSrc);
+    setImageSrc(mediaFile.url);
   };
 
   const imageUploadClick = (event) => {
@@ -71,6 +73,7 @@ export default function ProfileSettingForm({
   };
 
   const imageDeleteClick = () => {
+    URL.revokeObjectURL(imageSrc);
     setImageSrc('');
     setForm((form) => ({ ...form, profileImgURL: '' }));
   };

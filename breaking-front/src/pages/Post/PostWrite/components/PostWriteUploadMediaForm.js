@@ -1,22 +1,23 @@
 import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
+import MediaFileToUrl from 'utils/MediaFileToUrl';
 import * as Style from 'pages/Post/PostWrite/components/PostWriteUploadMediaForm.styles';
 import { ReactComponent as PlusIcon } from 'assets/svg/Plus.svg';
 import { ReactComponent as LeftArrowIcon } from 'assets/svg/left_arrow_line.svg';
 import { ReactComponent as RightArrowIcon } from 'assets/svg/right_arrow_line.svg';
 import { ReactComponent as XMarkIcon } from 'assets/svg/x_mark.svg';
-import PropTypes from 'prop-types';
 
 const PostUploadMediaForm = ({ setMediaList }) => {
-  const caruselRef = useRef();
-  const LeftCaruselClick = () => {
-    caruselRef.current.scrollTo({
-      left: caruselRef.current.scrollLeft - 500,
+  const carouselRef = useRef();
+  const LeftCarouselClick = () => {
+    carouselRef.current.scrollTo({
+      left: carouselRef.current.scrollLeft - 500,
       behavior: 'smooth',
     });
   };
-  const RightCaruselClick = () => {
-    caruselRef.current.scrollTo({
-      left: caruselRef.current.scrollLeft + 500,
+  const RightCarouselClick = () => {
+    carouselRef.current.scrollTo({
+      left: carouselRef.current.scrollLeft + 500,
       behavior: 'smooth',
     });
   };
@@ -34,18 +35,9 @@ const PostUploadMediaForm = ({ setMediaList }) => {
       alert('업로드 개수를 초과하였습니다');
     } else {
       setMediaList((pre) => [...pre, ...fileLists]);
-      let fileList = [...filesThumbnail];
       for (let i = 0; i < fileLists.length; i++) {
-        const currentFileUrl = URL.createObjectURL(fileLists[i]);
-        if (fileLists[i].type.match(/image\//g)) {
-          fileList.push({ url: currentFileUrl, type: 'image' });
-        } else if (fileLists[i].type.match(/video\//g)) {
-          fileList.push({ url: currentFileUrl, type: 'video' });
-        } else {
-          alert('이미지, 동영상 파일을 업로드해 주세요');
-        }
+        setFilesThumbnail((pre) => [...pre, MediaFileToUrl(fileLists[i])]);
       }
-      setFilesThumbnail(fileList);
     }
   };
 
@@ -80,9 +72,9 @@ const PostUploadMediaForm = ({ setMediaList }) => {
 
         <Style.UploadPreviewLayout>
           <Style.ArrowIconContainer>
-            <LeftArrowIcon onClick={LeftCaruselClick} />
+            <LeftArrowIcon onClick={LeftCarouselClick} />
           </Style.ArrowIconContainer>
-          <Style.Carousel ref={caruselRef}>
+          <Style.Carousel ref={carouselRef}>
             {filesThumbnail &&
               filesThumbnail.map((file, index) => (
                 <Style.PreviewImageContainer key={`file-${index}`}>
@@ -98,7 +90,7 @@ const PostUploadMediaForm = ({ setMediaList }) => {
               ))}
           </Style.Carousel>
           <Style.ArrowIconContainer>
-            <RightArrowIcon onClick={RightCaruselClick} />
+            <RightArrowIcon onClick={RightCarouselClick} />
           </Style.ArrowIconContainer>
         </Style.UploadPreviewLayout>
       </Style.UploadForm>
