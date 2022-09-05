@@ -9,7 +9,7 @@ import PostWriteCommonForm, {
   PostSubmitButton,
 } from 'components/PostWriteCommonForm/PostWriteCommonForm';
 import usePostEditMutation from 'pages/Post/PostEdit/hooks/usePostEditMutation';
-import extractHashtag from 'utils/extractHashtag';
+import ExtractHashtag from 'utils/ExtractHashtag';
 import * as Style from 'pages/Post/PostEdit/PostEdit.styles';
 
 const PostEdit = () => {
@@ -35,7 +35,7 @@ const PostEdit = () => {
       return;
     }
 
-    const hashtagList = extractHashtag(postEditData.content);
+    const hashtagList = ExtractHashtag(postEditData.content);
 
     PostEditMutate({
       data: {

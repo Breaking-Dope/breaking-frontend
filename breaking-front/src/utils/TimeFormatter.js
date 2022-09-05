@@ -1,4 +1,4 @@
-const timeFormatter = (date) => {
+const TimeFormatter = (date) => {
   let seconds = Math.floor((new Date() - date) / 1000);
 
   let interval = seconds / 31536000;
@@ -25,4 +25,4 @@ const timeFormatter = (date) => {
   return Math.floor(seconds) + '초 전';
 };
 
-export default timeFormatter;
+export default TimeFormatter;

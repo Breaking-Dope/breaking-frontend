@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserInformationContext } from 'providers/UserInformationProvider';
 import { PAGE_PATH } from 'constants/path';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
-import extractHashtag from 'utils/extractHashtag';
+import ExtractHashtag from 'utils/ExtractHashtag';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import * as Style from 'pages/Post/Post/components/CommentForm/CommentForm.styles';
 
@@ -25,7 +25,7 @@ const CommentForm = ({ content, closeClick, onSubmit }) => {
     event.preventDefault();
     if (!commentContent) return;
 
-    const hashtagList = extractHashtag(commentContent);
+    const hashtagList = ExtractHashtag(commentContent);
     onSubmit({ commentContent, hashtagList });
 
     setCommentContent('');

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { PAGE_PATH } from 'constants/path';
-import extractHashtag from 'utils/extractHashtag';
+import ExtractHashtag from 'utils/ExtractHashtag';
 import * as Style from 'components/ContentHashtag/ContentHashtag.styles';
 
 export default function ContentHashtag({ content }) {
@@ -14,7 +14,7 @@ export default function ContentHashtag({ content }) {
               key={`hashtag-${index}`}
               to={
                 PAGE_PATH.SEARCH_HASHTAG +
-                `?query=${extractHashtag(contentSlice)}`
+                `?query=${ExtractHashtag(contentSlice)}`
               }
             >
               {contentSlice}

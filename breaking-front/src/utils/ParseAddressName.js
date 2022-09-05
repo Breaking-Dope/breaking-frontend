@@ -1,4 +1,4 @@
-const parseAddressName = (address) => {
+const ParseAddressName = (address) => {
   const splitted = address.split(' ');
   return {
     region_1depth_name: splitted[0],
@@ -6,4 +6,4 @@ const parseAddressName = (address) => {
   };
 };
 
-export default parseAddressName;
+export default ParseAddressName;

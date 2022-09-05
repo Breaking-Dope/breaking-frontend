@@ -1,4 +1,4 @@
-const numberFormatter = (number) => {
+const NumberFormatter = (number) => {
   let result;
   if (number < 1e3) return number;
 
@@ -21,4 +21,4 @@ const numberFormatter = (number) => {
   }
 };
 
-export default numberFormatter;
+export default NumberFormatter;
