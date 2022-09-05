@@ -61,7 +61,11 @@ export default function ProfileSettingForm({
   const handleImageUploadPreview = (imageFile) => {
     if (!imageFile) return;
     const mediaFile = MediaFileToUrl(imageFile);
-    if (mediaFile.type === 'video') return alert('이미지 형식만 가능합니다.');
+    if (mediaFile.type !== 'image') {
+      alert('이미지 형식만 가능합니다.');
+      URL.revokeObjectURL(mediaFile.url);
+      return;
+    }
 
     setForm((form) => ({ ...form, profileImgURL: imageFile }));
     setImageSrc(mediaFile.url);
