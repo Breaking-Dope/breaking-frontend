@@ -1,5 +1,5 @@
 const MediaFileToUrl = (file) => {
-  const currentFileUrl = window.URL.createObjectURL(file);
+  const currentFileUrl = URL.createObjectURL(file);
   if (file.type.match(/image\//g)) {
     return { url: currentFileUrl, type: 'image' };
   } else if (file.type.match(/video\//g)) {

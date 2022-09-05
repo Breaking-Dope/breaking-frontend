@@ -25,7 +25,7 @@ const PostUploadMediaForm = ({ setMediaList }) => {
   const [filesThumbnail, setFilesThumbnail] = useState([]);
 
   const deleteFile = (target) => {
-    URL.revokeObjectURL(filesThumbnail[target]);
+    URL.revokeObjectURL(filesThumbnail[target].url);
     setFilesThumbnail((pre) => pre.filter((item, index) => index !== target));
     setMediaList((pre) => pre.filter((item, index) => index !== target));
   };
