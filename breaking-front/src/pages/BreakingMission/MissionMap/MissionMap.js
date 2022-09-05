@@ -1,7 +1,7 @@
 import { mapDummyInformation } from 'mocks/dummyData/mission';
 import React, { useState } from 'react';
 import { Map, MarkerClusterer } from 'react-kakao-maps-sdk';
-import MissionMapMarker from './components/MissionMapMarker';
+import MissionMapMarker from 'pages/BreakingMission/MissionMap/components/MissionMapMarker';
 
 const MissionMap = () => {
   const [selectedMissionId, setSelectedMissionId] = useState(1);
