@@ -14,7 +14,7 @@ export const PAGE_PATH = {
   SEARCH_POST: `/search/post`,
   SEARCH_HASHTAG: `/search/hashtag`,
   SEARCH_USER: `/search/user`,
-  BREAKING_MISSION_MAP: 'breaking_mission/map',
+  BREAKING_MISSION_MAP: 'breaking-mission/map',
   ERROR: `/not_found`,
 };
 
