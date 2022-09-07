@@ -1,3 +1,5 @@
+import { NO_POSTCOUNT_USER } from 'mocks/dummyData/users';
+
 export const mapDummyInformation = [
   {
     missionId: 1,
@@ -30,3 +32,15 @@ export const mapDummyInformation = [
     longitude: 126.92926237742505,
   },
 ];
+
+export const MISSION_FEED = {
+  missionId: 1,
+  title:
+    '제보를 받습니다. 제보를 받습니다. 제보를 받습니다. 제보를 받습니다. 제보를 받습니다. 제보를 받습니다. 제보를 받습니다. 제보를 받습니다.',
+  viewCount: 111,
+  startDate: new Date(),
+  endDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
+  createdDate: new Date(),
+  user: NO_POSTCOUNT_USER,
+  isMyMission: false,
+};

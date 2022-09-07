@@ -115,7 +115,13 @@ export const SOLDOUT_CONTENT = {
 export const FREE_CONTENT = {
   postId: 5,
   title: '공짜글',
-  region: '경기도',
+  location: {
+    address: '서울 종로구 세종로 1',
+    longitude: 37.58652596366754,
+    latitude: 126.97492168266787,
+    region_1depth_name: '서울',
+    region_2depth_name: '종로구',
+  },
   thumbnailImgURL:
     'https://cdn.pixabay.com/photo/2022/06/02/00/04/dog-7236774_960_720.jpg',
   likeCount: 0,
