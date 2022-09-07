@@ -119,6 +119,7 @@ const Post = () => {
                   postType={postData?.data.postType}
                   isSold={postData?.data.isSold}
                   isPurchasable={postData?.data.isPurchasable}
+                  isHidden={postData?.data.isHidden}
                 />
                 <Style.ContentTitle>{postData?.data.title}</Style.ContentTitle>
                 <Style.ContentLocationContainer>
