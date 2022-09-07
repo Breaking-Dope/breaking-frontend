@@ -11,11 +11,11 @@ export const postSignUp = (userData) => {
 };
 
 export const getProfileValidation = ({ queryKey }) => {
-  const [, query] = queryKey;
+  const [, { validType, profileData }] = queryKey;
 
   return api({
     method: 'get',
-    url: API_PATH.OAUTH2_SIGNUP_VALIDATE(query.validType, query.profileData),
+    url: API_PATH.OAUTH2_SIGNUP_VALIDATE(validType, profileData),
   });
 };
 

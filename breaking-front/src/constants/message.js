@@ -1,5 +1,5 @@
 const MESSAGE = {
-  SIGNUP: {
+  PROFILE_SETTING: {
     BLANK: '필수로 입력해야합니다.',
     SUBMIT_INVALID_NICKNAME: '닉네임을 올바르게 기입해주시기 바랍니다.',
     SUBMIT_INVALID_PHONENUMBER: '전화번호를 올바르게 기입해주시기 바랍니다.',

@@ -1,7 +1,7 @@
 import { getProfileValidation } from 'api/signUp';
 import { useQuery } from 'react-query';
 
-const useIsValidProfile = (validType, profileData, setErrorMessage) =>
+const useIsValidProfile = ({ validType, profileData, setErrorMessage }) =>
   useQuery(
     ['validProfileData', { validType, profileData }],
     getProfileValidation,
