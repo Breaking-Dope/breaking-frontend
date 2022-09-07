@@ -41,21 +41,24 @@ export default function ProfileSettingForm({
   const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState('');
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
 
-  const { refetch: NicknameReFetch } = useIsValidProfile({
-    validType: 'nickname',
-    profileData: nickname,
-    setErrorMessage: setNicknameErrorMessage,
-  });
-  const { refetch: PhoneNumberReFetch } = useIsValidProfile({
-    validType: 'phone-number',
-    profileData: phoneNumber,
-    setErrorMessage: setPhoneNumberErrorMessage,
-  });
-  const { refetch: EmailReFetch } = useIsValidProfile({
-    validType: 'email',
-    profileData: email,
-    setErrorMessage: setEmailErrorMessage,
-  });
+  const { isSuccess: isNicknameSuccess, refetch: NicknameReFetch } =
+    useIsValidProfile({
+      validType: 'nickname',
+      profileData: nickname,
+      setErrorMessage: setNicknameErrorMessage,
+    });
+  const { isSuccess: isPhoneNumberSuccess, refetch: PhoneNumberReFetch } =
+    useIsValidProfile({
+      validType: 'phone-number',
+      profileData: phoneNumber,
+      setErrorMessage: setPhoneNumberErrorMessage,
+    });
+  const { isSuccess: isEmailSuccess, refetch: EmailReFetch } =
+    useIsValidProfile({
+      validType: 'email',
+      profileData: email,
+      setErrorMessage: setEmailErrorMessage,
+    });
 
   const handleImageUploadPreview = (imageFile) => {
     if (!imageFile) return;
@@ -197,6 +200,7 @@ export default function ProfileSettingForm({
           name="nickname"
           placeholder="닉네임"
           label="닉네임"
+          isSuccess={isNicknameSuccess}
           errorMessage={nicknameErrorMessage}
           value={nickname}
           onChange={handleChange}
@@ -212,6 +216,7 @@ export default function ProfileSettingForm({
           name="phoneNumber"
           placeholder="전화번호"
           label="전화번호"
+          isSuccess={isPhoneNumberSuccess}
           errorMessage={phoneNumberErrorMessage}
           value={phoneNumber}
           onChange={handlePhoneNumberChange}
@@ -228,6 +233,7 @@ export default function ProfileSettingForm({
           name="email"
           label="이메일"
           placeholder="이메일"
+          isSuccess={isEmailSuccess}
           errorMessage={emailErrorMessage}
           value={email}
           onChange={handleChange}
