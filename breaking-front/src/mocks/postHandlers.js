@@ -94,12 +94,22 @@ export const postHandlers = [
   }),
 
   rest.post(API_PATH.POST_ACTIVATE_PURCHASE(':postId'), (req, res, ctx) => {
-    console.log('게시글 활성화');
+    console.log('게시글 판매재개');
     return res(ctx.status(200));
   }),
 
-  rest.post(API_PATH.POST_DEACTIVATE_PURCHASE(':postId'), (req, res, ctx) => {
-    console.log('게시글 비활성화');
+  rest.delete(API_PATH.POST_DEACTIVATE_PURCHASE(':postId'), (req, res, ctx) => {
+    console.log('게시글 판매중지');
+    return res(ctx.status(200));
+  }),
+
+  rest.post(API_PATH.POST_HIDE(':postId'), (req, res, ctx) => {
+    console.log('게시글 숨김');
+    return res(ctx.status(200));
+  }),
+
+  rest.delete(API_PATH.POST_SHOW(':postId'), (req, res, ctx) => {
+    console.log('게시글 숨김중지');
     return res(ctx.status(200));
   }),
 
