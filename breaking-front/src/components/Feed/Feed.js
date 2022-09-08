@@ -123,6 +123,7 @@ export default function Feed({ feedData, ...props }) {
               postType={feedData.postType}
               isSold={feedData.isSold}
               isPurchasable={feedData.isPurchasable}
+              isHidden={feedData.isHidden}
             />
             <Style.Bookmark onClick={toggleBookmarked}>
               {isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />}

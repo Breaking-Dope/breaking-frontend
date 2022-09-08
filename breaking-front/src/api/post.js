@@ -119,10 +119,24 @@ export const postPostActivatePurchase = (postId) => {
   });
 };
 
-export const postPostDeactivatePurchase = (postId) => {
+export const deletePostDeactivatePurchase = (postId) => {
+  return api({
+    method: 'delete',
+    url: API_PATH.POST_DEACTIVATE_PURCHASE(postId),
+  });
+};
+
+export const postPostHide = (postId) => {
   return api({
     method: 'post',
-    url: API_PATH.POST_DEACTIVATE_PURCHASE(postId),
+    url: API_PATH.POST_HIDE(postId),
+  });
+};
+
+export const deletePostShow = (postId) => {
+  return api({
+    method: 'delete',
+    url: API_PATH.POST_SHOW(postId),
   });
 };
 
