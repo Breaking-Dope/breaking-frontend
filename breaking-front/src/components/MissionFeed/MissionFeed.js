@@ -1,22 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import ShareModal from 'components/ShareModal/ShareModal';
-import usePostBookmark from 'hooks/mutations/usePostBookmark';
-import useDeletePostBookmark from 'hooks/mutations/useDeletePostBookmark';
 import { useNavigate } from 'react-router-dom';
 import { UserInformationContext } from 'providers/UserInformationProvider';
+import usePostBookmark from 'hooks/mutations/usePostBookmark';
 import { PAGE_PATH } from 'constants/path';
-import * as Style from 'components/MissionFeed/MissionFeed.styles';
+import useDeletePostBookmark from 'hooks/mutations/useDeletePostBookmark';
+import ShareModal from 'components/ShareModal/ShareModal';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import ImageUrlConverter from 'utils/ImageUrlConverter';
 import Toggle from 'components/Toggle/Toggle';
+import ImageUrlConverter from 'utils/ImageUrlConverter';
+import NumberFormatter from 'utils/NumberFormatter';
+import TimeFormatter from 'utils/TimeFormatter';
+import MissionTime from 'utils/MissionTime';
+import * as Style from 'components/MissionFeed/MissionFeed.styles';
 import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as BookmarkIcon } from 'assets/svg/bookmark.svg';
 import { ReactComponent as BookmarkedIcon } from 'assets/svg/bookmarked.svg';
-import NumberFormatter from 'utils/NumberFormatter';
-import TimeFormatter from 'utils/TimeFormatter';
-import MissionTime from 'utils/MissionTime';
+import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 
 function MissionFeed({ feedData, ...props }) {
   const navigate = useNavigate();
@@ -74,7 +75,19 @@ function MissionFeed({ feedData, ...props }) {
             profileClick={handleProfileClick}
             title={feedData.user?.nickname}
           />
-          <Style.WriterNickname>{feedData.user.nickname}</Style.WriterNickname>
+          <Style.Profile>
+            <Style.WriterNickname>
+              {feedData.isAnonymous ? '익명' : feedData.user?.nickname}
+            </Style.WriterNickname>
+            <Style.Location>
+              <LocationIcon />
+              {feedData.location
+                ? feedData.location.region_1depth_name +
+                  ' ' +
+                  feedData.location.region_2depth_name
+                : '전체'}
+            </Style.Location>
+          </Style.Profile>
           <ETCIcon
             onClick={toggleETC}
             tabIndex="0"

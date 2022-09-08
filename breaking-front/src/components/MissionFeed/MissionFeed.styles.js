@@ -23,10 +23,24 @@ export const Header = styled.div`
   }
 `;
 
-export const WriterNickname = styled.p`
+export const Profile = styled.div`
   margin-left: 5px;
-  font-size: 14px;
   flex-grow: 1;
+`;
+
+export const WriterNickname = styled.p`
+  margin-bottom: 3px;
+  font-size: 14px;
+`;
+
+export const Location = styled.div`
+  display: flex;
+  color: ${({ theme }) => theme.gray[800]};
+  font-size: 12px;
+  align-items: center;
+  svg {
+    margin-right: 2px;
+  }
 `;
 
 export const MissionFeedToggle = styled.div`
@@ -98,4 +112,5 @@ export const TimeBox = styled.div`
 
 export const MissionTime = styled.p`
   color: ${({ theme }) => theme.red[500]};
+  font-weight: bold;
 `;
