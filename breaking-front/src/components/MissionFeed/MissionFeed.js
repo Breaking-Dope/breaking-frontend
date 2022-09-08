@@ -85,7 +85,7 @@ function MissionFeed({ feedData, ...props }) {
                 ? feedData.location.region_1depth_name +
                   ' ' +
                   feedData.location.region_2depth_name
-                : '전 지역'}
+                : '전국'}
             </Style.Location>
           </Style.Profile>
           <ETCIcon
