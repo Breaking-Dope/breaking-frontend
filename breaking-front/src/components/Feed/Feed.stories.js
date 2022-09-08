@@ -12,11 +12,7 @@ const Template = (args) => {
 };
 
 export const ItIsMyFeed = Template.bind({});
-ItIsMyFeed.args = {
-  userId: 123,
-};
+ItIsMyFeed.args = {};
 
 export const ItIsNotMyFeed = Template.bind({});
-ItIsNotMyFeed.args = {
-  userId: 124,
-};
+ItIsNotMyFeed.args = {};
