@@ -78,11 +78,5 @@ export const CLOSED_MISSION_FEED = {
   createdDate: new Date(Date.now() - 24 * 60 * 60 * 1000),
   user: NO_POSTCOUNT_USER,
   isMyMission: false,
-  location: {
-    address: '서울 종로구 세종로 1',
-    longitude: 37.58652596366754,
-    latitude: 126.97492168266787,
-    region_1depth_name: '서울',
-    region_2depth_name: '종로구',
-  },
+  location: null,
 };
