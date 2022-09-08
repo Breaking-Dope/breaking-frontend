@@ -2,6 +2,7 @@ import React from 'react';
 import Skeleton, {
   FeedSkeleton,
   FollowCardSkeleton,
+  MissionFeedSkeleton,
   PostSkeleton,
   ProfileSkeleton,
 } from 'components/Skeleton/Skeleton';
@@ -13,6 +14,10 @@ export default {
 
 export const FeedSkeletonUI = (args) => {
   return <FeedSkeleton />;
+};
+
+export const MissionFeedSkeletonUI = (args) => {
+  return <MissionFeedSkeleton />;
 };
 
 export const FollowCardSkeletonUI = (args) => {
