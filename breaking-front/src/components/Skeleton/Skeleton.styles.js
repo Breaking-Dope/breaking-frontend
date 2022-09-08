@@ -71,6 +71,43 @@ export const FeedViewCount = styled(Skeleton)``;
 
 export const FeedStatus = styled(Skeleton)``;
 
+export const MissionFeedSkeleton = styled.div`
+  display: flex;
+  width: 400px;
+  height: 200px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.white};
+  flex-direction: column;
+  filter: drop-shadow(0px 0px 5px ${({ theme }) => theme.gray[300]});
+`;
+
+export const MissionFeedHeader = styled.div`
+  display: flex;
+  padding: 7px 10px;
+  border-bottom: 1px solid ${({ theme }) => theme.gray[500]};
+  justify-content: center;
+  align-items: center;
+`;
+
+export const MissionFeedContent = styled.div`
+  flex-grow: 1;
+`;
+
+export const MissionFeedTitle = styled(FeedTitle)`
+  margin: 0 auto;
+  margin-top: 35px;
+`;
+
+export const MissionFeedContentFooter = styled(FeedContentFooter)`
+  padding: 10px;
+`;
+
+export const MissionFeedStatus = styled(FeedViewCount)`
+  margin-top: auto;
+`;
+
+export const TimeBox = styled(Skeleton)``;
+
 export const FollowCardSkeleton = styled.div`
   display: flex;
   width: 400px;

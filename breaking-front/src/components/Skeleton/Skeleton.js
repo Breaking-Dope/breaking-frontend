@@ -33,6 +33,27 @@ export function FeedSkeleton() {
   );
 }
 
+export function MissionFeedSkeleton() {
+  return (
+    <Style.MissionFeedSkeleton>
+      <Style.MissionFeedHeader>
+        <Style.FeedProfileImage width="40px" height="40px" radius="50%" />
+        <Style.FeedProfile>
+          <Style.WriterNickname width="40px" height="14px" />
+          <Style.FeedLocation width="80px" height="12px" />
+        </Style.FeedProfile>
+      </Style.MissionFeedHeader>
+      <Style.MissionFeedContent>
+        <Style.MissionFeedTitle width="300px" height="30px" />
+      </Style.MissionFeedContent>
+      <Style.MissionFeedContentFooter>
+        <Style.MissionFeedStatus width="120px" height="12px" />
+        <Style.TimeBox width="100px" height="40px" />
+      </Style.MissionFeedContentFooter>
+    </Style.MissionFeedSkeleton>
+  );
+}
+
 export function FollowCardSkeleton() {
   return (
     <Style.FollowCardSkeleton>
