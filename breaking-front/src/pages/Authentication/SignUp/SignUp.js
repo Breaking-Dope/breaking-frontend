@@ -13,6 +13,15 @@ const SignUp = () => {
 
   const { mutate: SignUpMutate, isLoading: isSignUpLoading } = useSignUp();
 
+  const handleSubmit = ({ userData, profileImg }) => {
+    const formData = new FormData();
+    userData.username = location.state.username;
+    formData.append('profileImg', profileImg);
+    formData.append('signUpRequest', JSON.stringify(userData));
+
+    SignUpMutate(formData);
+  };
+
   useEffect(() => {
     if (!location.state) {
       if (isLogin) navigate(PAGE_PATH.HOME);
@@ -27,11 +36,11 @@ const SignUp = () => {
     <>
       {location.state && (
         <ProfileSettingForm
-          pageType="signUp"
-          username={location.state.username}
+          onSubmit={handleSubmit}
           isProfileMutateLoading={isSignUpLoading}
-          mutate={SignUpMutate}
-        />
+        >
+          회원가입
+        </ProfileSettingForm>
       )}
     </>
   );

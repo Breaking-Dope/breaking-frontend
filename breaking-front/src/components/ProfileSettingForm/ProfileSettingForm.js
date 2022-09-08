@@ -14,12 +14,11 @@ import * as Style from 'components/ProfileSettingForm/ProfileSettingForm.styles'
 import { ReactComponent as XMark } from 'assets/svg/x_mark.svg';
 
 export default function ProfileSettingForm({
-  pageType,
-  username,
   isProfileDataLoading,
   isProfileMutateLoading,
   userDefaultData,
-  mutate,
+  onSubmit,
+  children,
 }) {
   const imageRef = useRef();
   const theme = useTheme();
@@ -42,21 +41,24 @@ export default function ProfileSettingForm({
   const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState('');
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
 
-  const { refetch: NicknameReFetch } = useIsValidProfile(
-    'nickname',
-    nickname,
-    setNicknameErrorMessage
-  );
-  const { refetch: PhoneNumberReFetch } = useIsValidProfile(
-    'phone-number',
-    phoneNumber,
-    setPhoneNumberErrorMessage
-  );
-  const { refetch: EmailReFetch } = useIsValidProfile(
-    'email',
-    email,
-    setEmailErrorMessage
-  );
+  const { isSuccess: isNicknameSuccess, refetch: NicknameReFetch } =
+    useIsValidProfile({
+      validType: 'nickname',
+      profileData: nickname,
+      setErrorMessage: setNicknameErrorMessage,
+    });
+  const { isSuccess: isPhoneNumberSuccess, refetch: PhoneNumberReFetch } =
+    useIsValidProfile({
+      validType: 'phone-number',
+      profileData: phoneNumber,
+      setErrorMessage: setPhoneNumberErrorMessage,
+    });
+  const { isSuccess: isEmailSuccess, refetch: EmailReFetch } =
+    useIsValidProfile({
+      validType: 'email',
+      profileData: email,
+      setErrorMessage: setEmailErrorMessage,
+    });
 
   const handleImageUploadPreview = (imageFile) => {
     if (!imageFile) return;
@@ -115,13 +117,11 @@ export default function ProfileSettingForm({
     event.preventDefault();
 
     if (nicknameErrorMessage)
-      return alert(MESSAGE.SIGNUP.SUBMIT_INVALID_NICKNAME);
+      return alert(MESSAGE.PROFILE_SETTING.SUBMIT_INVALID_NICKNAME);
     else if (phoneNumberErrorMessage)
-      return alert(MESSAGE.SIGNUP.SUBMIT_INVALID_PHONENUMBER);
+      return alert(MESSAGE.PROFILE_SETTING.SUBMIT_INVALID_PHONENUMBER);
     else if (emailErrorMessage)
-      return alert(MESSAGE.SIGNUP.SUBMIT_INVALID_EMAIL);
-
-    const formData = new FormData();
+      return alert(MESSAGE.PROFILE_SETTING.SUBMIT_INVALID_EMAIL);
 
     const userData = {
       realName,
@@ -132,30 +132,14 @@ export default function ProfileSettingForm({
       role,
     };
 
-    if (pageType === 'profileEdit') {
-      userData.isProfileImgChanged =
-        profileImg !== userDefaultData.profileImgURL;
-
-      formData.append(
-        'profileImg',
-        userData.isProfileImgChanged ? profileImg : null
-      );
-      formData.append('updateRequest', JSON.stringify(userData));
-    } else if (pageType === 'signUp') {
-      userData.username = username;
-
-      formData.append('profileImg', profileImg);
-      formData.append('signUpRequest', JSON.stringify(userData));
-    }
-
-    mutate(formData);
+    onSubmit({ userData, profileImg });
   };
 
   useEffect(() => {
     setForm(userDefaultData);
     userDefaultData.profileImgURL &&
       setImageSrc(ImageUrlConverter(userDefaultData.profileImgURL));
-  }, [userDefaultData, pageType, setForm]);
+  }, [userDefaultData, setForm]);
 
   return (
     <>
@@ -206,10 +190,9 @@ export default function ProfileSettingForm({
           onChange={handleChange}
           onBlur={() => {
             realName === ''
-              ? setRealNameErrorMessage(MESSAGE.SIGNUP.BLANK)
+              ? setRealNameErrorMessage(MESSAGE.PROFILE_SETTING.BLANK)
               : setRealNameErrorMessage('');
           }}
-          autoFocus
           required
         />
         <ProfileSettingInput
@@ -217,12 +200,13 @@ export default function ProfileSettingForm({
           name="nickname"
           placeholder="닉네임"
           label="닉네임"
+          isSuccess={isNicknameSuccess}
           errorMessage={nicknameErrorMessage}
           value={nickname}
           onChange={handleChange}
           onBlur={() => {
             nickname === ''
-              ? setNicknameErrorMessage(MESSAGE.SIGNUP.BLANK)
+              ? setNicknameErrorMessage(MESSAGE.PROFILE_SETTING.BLANK)
               : NicknameReFetch();
           }}
           required
@@ -232,13 +216,14 @@ export default function ProfileSettingForm({
           name="phoneNumber"
           placeholder="전화번호"
           label="전화번호"
+          isSuccess={isPhoneNumberSuccess}
           errorMessage={phoneNumberErrorMessage}
           value={phoneNumber}
           onChange={handlePhoneNumberChange}
           maxLength="11"
           onBlur={() => {
             phoneNumber === ''
-              ? setPhoneNumberErrorMessage(MESSAGE.SIGNUP.BLANK)
+              ? setPhoneNumberErrorMessage(MESSAGE.PROFILE_SETTING.BLANK)
               : PhoneNumberReFetch();
           }}
           required
@@ -248,12 +233,13 @@ export default function ProfileSettingForm({
           name="email"
           label="이메일"
           placeholder="이메일"
+          isSuccess={isEmailSuccess}
           errorMessage={emailErrorMessage}
           value={email}
           onChange={handleChange}
           onBlur={() => {
             email === ''
-              ? setEmailErrorMessage(MESSAGE.SIGNUP.BLANK)
+              ? setEmailErrorMessage(MESSAGE.PROFILE_SETTING.BLANK)
               : EmailReFetch();
           }}
           required
@@ -292,7 +278,7 @@ export default function ProfileSettingForm({
           <Style.Loading type="bars" color={theme.blue[900]} />
         ) : (
           <Style.SubmitButton type="submit" size="large">
-            {pageType === 'signUp' ? '회원가입' : '프로필 수정'}
+            {children}
           </Style.SubmitButton>
         )}
       </Style.Form>
@@ -301,12 +287,11 @@ export default function ProfileSettingForm({
 }
 
 ProfileSettingForm.propTypes = {
-  pageType: PropTypes.oneOf(['signUp', 'profileEdit']).isRequired,
-  username: PropTypes.string,
   userDefaultData: PropTypes.object,
-  mutate: PropTypes.func.isRequired,
   isProfileDataLoading: PropTypes.bool,
   isProfileMutateLoading: PropTypes.bool,
+  onSubmit: PropTypes.func,
+  children: PropTypes.node,
 };
 
 ProfileSettingForm.defaultProps = {
@@ -320,5 +305,4 @@ ProfileSettingForm.defaultProps = {
     role: 'USER',
   },
   isProfileDataLoading: false,
-  isProfileMutateLoading: false,
 };

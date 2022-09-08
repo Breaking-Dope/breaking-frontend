@@ -15,9 +15,13 @@ export const ProfileSettingInput = styled.input`
   height: 56px;
   margin-top: 15px;
   padding: 10px 15px;
-  border: none;
+  border: ${({ theme, isSuccess, isError }) =>
+    isSuccess
+      ? `2px solid ${theme.blue[900]}`
+      : isError
+      ? `2px solid ${theme.red[900]}`
+      : `1px solid ${theme.gray[500]}`};
   border-radius: 10px;
-  background-color: ${({ theme }) => theme.gray[200]};
   font-size: 12px;
   outline: none;
 `;
