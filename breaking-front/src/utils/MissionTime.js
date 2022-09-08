@@ -1,15 +1,16 @@
 import TimeFormatter from 'utils/TimeFormatter';
 
 const MissionTime = (startDate, endDate) => {
-  const currentDate = new Date();
+  const currentTime = new Date();
 
-  if (currentDate < startDate) return ['미션 시작 전'];
-  else if (currentDate > startDate && currentDate < endDate) {
+  if (currentTime < startDate) return ['미션 시작 전'];
+  else if (currentTime > startDate && currentTime < endDate) {
     const remainTime = TimeFormatter(
-      new Date(currentDate - (endDate - currentDate))
+      new Date(currentTime - (endDate - currentTime))
     );
     return ['미션 종료까지', remainTime];
-  } else if (currentDate > endDate) return ['미션 종료'];
+  } else if (currentTime > endDate) return ['미션 종료'];
+  else return;
 };
 
 export default MissionTime;
