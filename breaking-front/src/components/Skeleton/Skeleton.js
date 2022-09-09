@@ -48,7 +48,7 @@ export function MissionFeedSkeleton() {
       </Style.MissionFeedContent>
       <Style.MissionFeedContentFooter>
         <Style.MissionFeedStatus width="120px" height="12px" />
-        <Style.TimeBox width="100px" height="40px" />
+        <Style.TimeBox width="80px" height="40px" />
       </Style.MissionFeedContentFooter>
     </Style.MissionFeedSkeleton>
   );

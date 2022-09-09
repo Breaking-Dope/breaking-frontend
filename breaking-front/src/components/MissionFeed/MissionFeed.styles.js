@@ -103,14 +103,18 @@ export const CreatedDate = styled(ViewCount)`
 
 export const TimeBox = styled.div`
   padding: 10px;
-  border: 1px solid ${({ theme }) => theme.gray[500]};
+  border: 2px solid
+    ${({ theme, time }) => (time ? theme.blue[900] : theme.gray[800])};
   border-radius: 10px;
+  color: ${({ theme, time }) => (time ? theme.black : theme.gray[800])};
   font-size: 12px;
+  font-weight: bold;
   text-align: center;
   white-space: pre-wrap;
 `;
 
+export const MissionText = styled.p``;
+
 export const MissionTime = styled.p`
   color: ${({ theme }) => theme.red[500]};
-  font-weight: bold;
 `;
