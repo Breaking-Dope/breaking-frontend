@@ -22,7 +22,10 @@ import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 function MissionFeed({ feedData, ...props }) {
   const navigate = useNavigate();
   const { isLogin } = useContext(UserInformationContext);
-  const timeBoxText = MissionTime(feedData.startDate, feedData.endDate);
+  const timeBoxText = MissionTime(
+    new Date(feedData.startDate),
+    new Date(feedData.endDate)
+  );
 
   const [isOpenShareModal, setIsOpenShareModal] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(feedData.isBookmarked);
@@ -65,7 +68,7 @@ function MissionFeed({ feedData, ...props }) {
         isOpen={isOpenShareModal}
         closeClick={toggleShareModal}
         data={feedData}
-        postId={feedData.postId}
+        path={PAGE_PATH.BREAKING_MISSION_POST(feedData.missionId)}
       />
       <Style.MissionFeed {...props}>
         <Style.Header>
@@ -122,8 +125,8 @@ function MissionFeed({ feedData, ...props }) {
               {TimeFormatter(new Date(feedData.createdDate))}
             </Style.CreatedDate>
           </Style.Status>
-          <Style.TimeBox>
-            <p>{timeBoxText[0]}</p>
+          <Style.TimeBox time={timeBoxText[1]}>
+            <Style.MissionText>{timeBoxText[0]}</Style.MissionText>
             <Style.MissionTime>{timeBoxText[1]}</Style.MissionTime>
           </Style.TimeBox>
         </Style.ContentFooter>

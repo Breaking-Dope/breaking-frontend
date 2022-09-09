@@ -67,7 +67,7 @@ export default function Feed({ feedData, ...props }) {
         isOpen={isOpenShareModal}
         closeClick={toggleShareModal}
         data={feedData}
-        postId={feedData.postId}
+        path={PAGE_PATH.POST(feedData.postId)}
       />
       <Style.Feed {...props}>
         <Style.FeedHeader>

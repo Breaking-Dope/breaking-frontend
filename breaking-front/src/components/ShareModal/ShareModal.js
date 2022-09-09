@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal/Modal';
-import { PAGE_PATH } from 'constants/path';
 import ImageUrlConverter from 'utils/ImageUrlConverter';
 import facebookImage from 'assets/img/facebook.png';
 import twitterImage from 'assets/img/twitter.png';
 import * as Style from 'components/ShareModal/ShareModal.styles';
 
-export default function ShareModal({ data, postId, isOpen, closeClick }) {
-  const url = window.location.origin + PAGE_PATH.POST(postId);
+export default function ShareModal({ data, path, isOpen, closeClick }) {
+  const url = window.location.origin + path;
 
   const kakaoShareClick = () => {
     if (window.Kakao) {
@@ -86,7 +85,7 @@ export default function ShareModal({ data, postId, isOpen, closeClick }) {
 
 ShareModal.propTypes = {
   data: PropTypes.object,
-  postId: PropTypes.number,
+  path: PropTypes.string,
   isOpen: PropTypes.bool,
   closeClick: PropTypes.func,
 };
