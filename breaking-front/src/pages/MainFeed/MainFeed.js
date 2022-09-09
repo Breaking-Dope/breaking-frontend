@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserInformationContext } from 'providers/UserInformationProvider';
-import useMainFeedOption from 'hooks/queries/useMainFeedOption';
+import useMainFeedOption from 'pages/MainFeed/hooks/queries/useMainFeedOption';
 import { PAGE_PATH } from 'constants/path';
 import Feed from 'components/Feed/Feed';
 import * as Style from 'pages/MainFeed/MainFeed.styles';
@@ -14,7 +13,6 @@ import SearchFilter from 'components/SearchFilter/SearchFilter';
 
 const MainFeed = () => {
   const navigate = useNavigate();
-  const { userId } = useContext(UserInformationContext);
 
   const [sort, setSort] = useState('chronological');
   const [option, setOption] = useState('all');
@@ -49,9 +47,7 @@ const MainFeed = () => {
       </Style.NavBar>
       <Style.Feeds>
         {mainFeedData?.pages.map((page) =>
-          page.result.map((feed) => (
-            <Feed feedData={feed} key={feed.postId} userId={userId} />
-          ))
+          page.result.map((feed) => <Feed feedData={feed} key={feed.postId} />)
         )}
         {isMainFeedLoading && (
           <>
