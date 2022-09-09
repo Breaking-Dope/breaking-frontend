@@ -27,6 +27,7 @@ import SearchUser from 'pages/Search/SearchUser/SearchUser';
 import NotFound from 'pages/NotFound/NotFound';
 import PrivateRoute from 'PrivateRoute';
 import MissionMap from 'pages/BreakingMission/MissionMap/MissionMap';
+import MissionMainFeed from 'pages/BreakingMission/MissionMainFeed/MissionMainFeed';
 
 function App() {
   const queryClient = new QueryClient({
@@ -96,6 +97,10 @@ function App() {
                     />
                     <Route path={PAGE_PATH.FINANCIAL} element={<Financial />} />
                   </Route>
+                  <Route
+                    path={PAGE_PATH.BREAKING_MISSION_HOME}
+                    element={<MissionMainFeed />}
+                  />
                   <Route
                     path={PAGE_PATH.BREAKING_MISSION_MAP}
                     element={<MissionMap />}
