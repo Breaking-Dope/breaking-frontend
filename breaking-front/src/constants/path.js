@@ -14,7 +14,9 @@ export const PAGE_PATH = {
   SEARCH_POST: `/search/post`,
   SEARCH_HASHTAG: `/search/hashtag`,
   SEARCH_USER: `/search/user`,
-  BREAKING_MISSION_MAP: 'breaking-mission/map',
+  BREAKING_MISSION_HOME: '/breaking-mission',
+  BREAKING_MISSION_POST: (missionId) => `/breaking-mission/post/${missionId}`,
+  BREAKING_MISSION_MAP: '/breaking-mission/map',
   ERROR: `/not_found`,
 };
 
@@ -113,6 +115,10 @@ export const API_PATH = {
     `/feed?search=${content}&cursor=${cursor}&size=${size}&sort=${sort}&sold-option=${option}`,
   BREAKING_MISSION: '/breaking-mission',
   BREAKING_SPOT: '/breaking-spot',
+  BREAKING_MISSION_FEEDS: (cursor, size = 20) =>
+    `/breaking-mission/feed?cursor=${cursor}&size=${size}`,
+  BREAKING_MISSION_RELATION_FEEDS: (missionId, cursor, size = 10) =>
+    `/breaking-mission/${missionId}/feed?cursor=${cursor}&size=${size}`,
 };
 
 export const KAKAO_PATH = {

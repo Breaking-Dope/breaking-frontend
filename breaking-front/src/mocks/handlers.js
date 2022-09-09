@@ -8,6 +8,7 @@ import { postHandlers } from 'mocks/postHandlers';
 import { postWriteHandlers } from 'mocks/postWriteHandlers';
 import { postEditHandlers } from 'mocks/postEditHandlers';
 import { searchHandlers } from 'mocks/searchHandlers';
+import { breakingMissionHandlers } from './breakingMissionHandlers';
 
 export const handlers = [
   ...profileSettingHandlers,
@@ -20,4 +21,5 @@ export const handlers = [
   ...postWriteHandlers,
   ...postEditHandlers,
   ...searchHandlers,
+  ...breakingMissionHandlers,
 ];
