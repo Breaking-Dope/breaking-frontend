@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const MissionFeed = styled.div`
@@ -31,6 +32,7 @@ export const Profile = styled.div`
 export const WriterNickname = styled.p`
   margin-bottom: 3px;
   font-size: 14px;
+  cursor: pointer;
 `;
 
 export const Location = styled.div`
@@ -47,6 +49,12 @@ export const MissionFeedToggle = styled.div`
   position: absolute;
   right: -60px;
   bottom: 45px;
+`;
+
+export const ContentContainer = styled(Link)`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 `;
 
 export const Content = styled.div`
