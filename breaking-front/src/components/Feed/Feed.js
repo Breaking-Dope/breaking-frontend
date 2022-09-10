@@ -79,7 +79,7 @@ export default function Feed({ feedData, ...props }) {
             isAnonymous={feedData.isAnonymous}
           />
           <Style.FeedProfile>
-            <Style.WriterNickname>
+            <Style.WriterNickname onClick={handleProfileClick}>
               {feedData.isAnonymous ? '익명' : feedData.user?.nickname}
             </Style.WriterNickname>
             <Style.Location>
