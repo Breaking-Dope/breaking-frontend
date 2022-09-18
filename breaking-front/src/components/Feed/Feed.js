@@ -67,7 +67,7 @@ export default function Feed({ feedData, ...props }) {
         isOpen={isOpenShareModal}
         closeClick={toggleShareModal}
         data={feedData}
-        postId={feedData.postId}
+        path={PAGE_PATH.POST(feedData.postId)}
       />
       <Style.Feed {...props}>
         <Style.FeedHeader>
@@ -79,7 +79,7 @@ export default function Feed({ feedData, ...props }) {
             isAnonymous={feedData.isAnonymous}
           />
           <Style.FeedProfile>
-            <Style.WriterNickname>
+            <Style.WriterNickname onClick={handleProfileClick}>
               {feedData.isAnonymous ? '익명' : feedData.user?.nickname}
             </Style.WriterNickname>
             <Style.Location>

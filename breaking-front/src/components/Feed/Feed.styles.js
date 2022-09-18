@@ -33,6 +33,7 @@ export const FeedProfile = styled.div`
 export const WriterNickname = styled.p`
   margin-bottom: 3px;
   font-size: 14px;
+  cursor: pointer;
 `;
 
 export const Location = styled.div`

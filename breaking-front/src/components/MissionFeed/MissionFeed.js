@@ -22,7 +22,10 @@ import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 function MissionFeed({ feedData, ...props }) {
   const navigate = useNavigate();
   const { isLogin } = useContext(UserInformationContext);
-  const timeBoxText = MissionTime(feedData.startDate, feedData.endDate);
+  const timeBoxText = MissionTime(
+    new Date(feedData.startDate),
+    new Date(feedData.endDate)
+  );
 
   const [isOpenShareModal, setIsOpenShareModal] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(feedData.isBookmarked);
@@ -65,7 +68,7 @@ function MissionFeed({ feedData, ...props }) {
         isOpen={isOpenShareModal}
         closeClick={toggleShareModal}
         data={feedData}
-        postId={feedData.postId}
+        path={PAGE_PATH.BREAKING_MISSION_POST(feedData.missionId)}
       />
       <Style.MissionFeed {...props}>
         <Style.Header>
@@ -76,7 +79,7 @@ function MissionFeed({ feedData, ...props }) {
             title={feedData.user?.nickname}
           />
           <Style.Profile>
-            <Style.WriterNickname>
+            <Style.WriterNickname onClick={handleProfileClick}>
               {feedData.isAnonymous ? '익명' : feedData.user?.nickname}
             </Style.WriterNickname>
             <Style.Location>
@@ -107,26 +110,30 @@ function MissionFeed({ feedData, ...props }) {
             )}
           </Style.MissionFeedToggle>
         </Style.Header>
-        <Style.Content>
-          <Style.Bookmark onClick={toggleBookmarked}>
-            {isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />}
-          </Style.Bookmark>
-          <Style.Title>{feedData.title}</Style.Title>
-        </Style.Content>
-        <Style.ContentFooter>
-          <Style.Status>
-            <Style.ViewCount>
-              조회수 {NumberFormatter(feedData.viewCount)}회
-            </Style.ViewCount>
-            <Style.CreatedDate>
-              {TimeFormatter(new Date(feedData.createdDate))}
-            </Style.CreatedDate>
-          </Style.Status>
-          <Style.TimeBox>
-            <p>{timeBoxText[0]}</p>
-            <Style.MissionTime>{timeBoxText[1]}</Style.MissionTime>
-          </Style.TimeBox>
-        </Style.ContentFooter>
+        <Style.ContentContainer
+          to={PAGE_PATH.BREAKING_MISSION_POST(feedData.missionId)}
+        >
+          <Style.Content>
+            <Style.Bookmark onClick={toggleBookmarked}>
+              {isBookmarked ? <BookmarkedIcon /> : <BookmarkIcon />}
+            </Style.Bookmark>
+            <Style.Title>{feedData.title}</Style.Title>
+          </Style.Content>
+          <Style.ContentFooter>
+            <Style.Status>
+              <Style.ViewCount>
+                조회수 {NumberFormatter(feedData.viewCount)}회
+              </Style.ViewCount>
+              <Style.CreatedDate>
+                {TimeFormatter(new Date(feedData.createdDate))}
+              </Style.CreatedDate>
+            </Style.Status>
+            <Style.TimeBox time={timeBoxText[1]}>
+              <Style.MissionText>{timeBoxText[0]}</Style.MissionText>
+              <Style.MissionTime>{timeBoxText[1]}</Style.MissionTime>
+            </Style.TimeBox>
+          </Style.ContentFooter>
+        </Style.ContentContainer>
       </Style.MissionFeed>
     </>
   );

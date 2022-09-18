@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const MainFeed = styled.div`
+export const MissionMainFeed = styled.div`
   padding: 40px 30px 60px;
 `;
 
@@ -10,7 +10,7 @@ export const NavBar = styled.nav`
   margin-bottom: 40px;
 `;
 
-export const FeedUploadButton = styled.button`
+export const MissionFeedUploadButton = styled.button`
   display: flex;
   padding: 5px;
   border: 1px solid ${({ theme }) => theme.gray[500]};
@@ -24,7 +24,7 @@ export const FeedUploadButton = styled.button`
   }
 `;
 
-export const Feeds = styled.div`
+export const MissionFeeds = styled.div`
   display: grid;
   min-height: 50vh;
   grid-template-columns: 400px 400px;
