@@ -69,7 +69,7 @@ const Post = () => {
     setIsOpenLikeListModal((pre) => !pre);
   };
 
-  const toggleComment = () => {
+  const toggleContent = () => {
     setIsOpenContentToggle((pre) => !pre);
   };
 
@@ -192,7 +192,7 @@ const Post = () => {
                   </div>
                 </Style.ContentStatus>
                 <ETCIcon
-                  onClick={toggleComment}
+                  onClick={toggleContent}
                   tabIndex="0"
                   onBlur={() => setIsOpenContentToggle(false)}
                 />

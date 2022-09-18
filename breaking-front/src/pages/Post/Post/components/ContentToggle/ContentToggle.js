@@ -87,7 +87,7 @@ const ContentToggle = ({ isOpen, postData, postId }) => {
         isOpen={isOpenShareModal}
         closeClick={toggleShareModal}
         data={postData}
-        postId={postId}
+        path={PAGE_PATH.POST(postId)}
       />
       <Style.ContentToggle onMouseDown={(event) => event.preventDefault()}>
         {isOpen && (
