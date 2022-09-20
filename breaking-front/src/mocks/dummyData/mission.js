@@ -80,3 +80,25 @@ export const CLOSED_MISSION_FEED = {
   isMyMission: false,
   location: null,
 };
+
+export const MISSION_POST = {
+  title: '테스트 미션',
+  content: '테스트 미션입니다.',
+  viewCount: 0,
+  startDate: new Date(Date.now() - 24 * 60 * 60 * 1000),
+  endDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
+  createdDate: new Date(Date.now() - 24 * 60 * 60 * 1000),
+  isMyMission: true,
+  location: {
+    address: '서울특별시 강남구 테헤란로 427',
+    latitude: 37.4979,
+    longitude: 127.02761,
+    region_1depth_name: '서울특별시',
+    region_2depth_name: '강남구',
+  },
+  user: {
+    userId: 1,
+    nickname: '테스트',
+    profileImgURL: 'https://i.imgur.com/0y0y0y0.jpg',
+  },
+};
