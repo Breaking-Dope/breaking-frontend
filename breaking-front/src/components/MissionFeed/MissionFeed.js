@@ -80,7 +80,7 @@ function MissionFeed({ feedData, ...props }) {
           />
           <Style.Profile>
             <Style.WriterNickname onClick={handleProfileClick}>
-              {feedData.isAnonymous ? '익명' : feedData.user?.nickname}
+              {feedData.user?.nickname}
             </Style.WriterNickname>
             <Style.Location>
               <LocationIcon />
