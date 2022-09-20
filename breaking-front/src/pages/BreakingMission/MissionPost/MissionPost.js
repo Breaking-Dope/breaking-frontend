@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { PAGE_PATH } from 'constants/path';
@@ -15,42 +15,41 @@ import * as Style from 'pages/BreakingMission/MissionPost/MissionPost.styles';
 import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
+import useMissionPost from 'pages/BreakingMission/MissionPost/hooks/queries/useMissionPost';
 
 const MissionPost = () => {
   const navigate = useNavigate();
   let { id: missionId } = useParams();
   missionId = Number(missionId);
 
-  const missionData = {
-    data: {
-      title: '테스트 미션',
-      content: '테스트 미션입니다.',
-      viewCount: 0,
-      startDate: new Date(Date.now() - 24 * 60 * 60 * 1000),
-      endDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      createdDate: new Date(Date.now() - 24 * 60 * 60 * 1000),
-      isMyMission: true,
-      location: {
-        address: '서울특별시 강남구 테헤란로 427',
-        latitude: 37.4979,
-        longitude: 127.02761,
-        region_1depth_name: '서울특별시',
-        region_2depth_name: '강남구',
-      },
-      user: {
-        userId: 1,
-        nickname: '테스트',
-        profileImgURL: 'https://i.imgur.com/0y0y0y0.jpg',
-      },
-    },
-  };
-  const timeBoxText = MissionTime(
-    new Date(missionData.data.startDate),
-    new Date(missionData.data.endDate)
-  );
+  // const missionData = {
+  //   data: {
+  //     title: '테스트 미션',
+  //     content: '테스트 미션입니다.',
+  //     viewCount: 0,
+  //     startDate: new Date(Date.now() - 24 * 60 * 60 * 1000),
+  //     endDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
+  //     createdDate: new Date(Date.now() - 24 * 60 * 60 * 1000),
+  //     isMyMission: true,
+  //     location: {
+  //       address: '서울특별시 강남구 테헤란로 427',
+  //       latitude: 37.4979,
+  //       longitude: 127.02761,
+  //       region_1depth_name: '서울특별시',
+  //       region_2depth_name: '강남구',
+  //     },
+  //     user: {
+  //       userId: 1,
+  //       nickname: '테스트',
+  //       profileImgURL: 'https://i.imgur.com/0y0y0y0.jpg',
+  //     },
+  //   },
+  // };
 
   const [isOpenContentToggle, setIsOpenContentToggle] = useState(false);
   const [isOpenShareModal, setIsOpenShareModal] = useState(false);
+  const [timeBoxText, setTimeBoxText] = useState([]);
+  const { data: missionData } = useMissionPost(missionId);
 
   const toggleShareModal = () => {
     setIsOpenShareModal((pre) => !pre);
@@ -61,15 +60,24 @@ const MissionPost = () => {
   };
 
   const profileClick = () => {
-    navigate(PAGE_PATH.PROFILE(missionData?.user?.userId));
+    navigate(PAGE_PATH.PROFILE(missionData?.data.user?.userId));
   };
+
+  useEffect(() => {
+    setTimeBoxText(
+      MissionTime(
+        new Date(missionData?.data.startDate),
+        new Date(missionData?.data.endDate)
+      )
+    );
+  }, []);
 
   return (
     <>
       <ShareModal
         isOpen={isOpenShareModal}
         closeClick={toggleShareModal}
-        data={missionData.data}
+        data={missionData?.data}
         path={PAGE_PATH.BREAKING_MISSION_POST(missionId)}
       />
       <Style.MissionPost>
@@ -90,7 +98,6 @@ const MissionPost = () => {
               size="large"
               src={ImageUrlConverter(missionData?.data.user?.profileImgURL)}
               profileClick={profileClick}
-              isAnonymous={missionData.data.isAnonymous}
             />
             <Style.ContentWriterName
               length={missionData?.data.user?.nickname.length}
@@ -103,9 +110,11 @@ const MissionPost = () => {
             <Style.ContentLocationContainer>
               <Style.ContentLocation>
                 <LocationIcon />
-                {missionData?.data.location.region_1depth_name +
-                  ' ' +
-                  missionData?.data.location.region_2depth_name}
+                {missionData?.data.location
+                  ? missionData.data.location.region_1depth_name +
+                    ' ' +
+                    missionData.data.location.region_2depth_name
+                  : '전국'}
               </Style.ContentLocation>
               <Style.Dot />
               <Style.ContentViewCount>
