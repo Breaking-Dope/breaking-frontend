@@ -16,40 +16,19 @@ import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
 import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import useMissionPost from 'pages/BreakingMission/MissionPost/hooks/queries/useMissionPost';
+import Skeleton from 'components/Skeleton/Skeleton';
 
 const MissionPost = () => {
   const navigate = useNavigate();
   let { id: missionId } = useParams();
   missionId = Number(missionId);
 
-  // const missionData = {
-  //   data: {
-  //     title: '테스트 미션',
-  //     content: '테스트 미션입니다.',
-  //     viewCount: 0,
-  //     startDate: new Date(Date.now() - 24 * 60 * 60 * 1000),
-  //     endDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
-  //     createdDate: new Date(Date.now() - 24 * 60 * 60 * 1000),
-  //     isMyMission: true,
-  //     location: {
-  //       address: '서울특별시 강남구 테헤란로 427',
-  //       latitude: 37.4979,
-  //       longitude: 127.02761,
-  //       region_1depth_name: '서울특별시',
-  //       region_2depth_name: '강남구',
-  //     },
-  //     user: {
-  //       userId: 1,
-  //       nickname: '테스트',
-  //       profileImgURL: 'https://i.imgur.com/0y0y0y0.jpg',
-  //     },
-  //   },
-  // };
-
   const [isOpenContentToggle, setIsOpenContentToggle] = useState(false);
   const [isOpenShareModal, setIsOpenShareModal] = useState(false);
   const [timeBoxText, setTimeBoxText] = useState([]);
-  const { data: missionData } = useMissionPost(missionId);
+
+  const { data: missionData, isLoading: isMissionDataLoading } =
+    useMissionPost(missionId);
 
   const toggleShareModal = () => {
     setIsOpenShareModal((pre) => !pre);
@@ -70,7 +49,7 @@ const MissionPost = () => {
         new Date(missionData?.data.endDate)
       )
     );
-  }, []);
+  }, [missionData]);
 
   return (
     <>
@@ -81,10 +60,10 @@ const MissionPost = () => {
         path={PAGE_PATH.BREAKING_MISSION_POST(missionId)}
       />
       <Style.MissionPost>
-        <Style.TimeBox time={timeBoxText[1]}>
+        <Style.TimeBox time={timeBoxText?.[1]}>
           <Style.MissionText>
-            {timeBoxText[0]}&nbsp;
-            <Style.MissionTime>{timeBoxText[1]}</Style.MissionTime>
+            {timeBoxText?.[0]}&nbsp;
+            <Style.MissionTime>{timeBoxText?.[1]}</Style.MissionTime>
           </Style.MissionText>
           <Style.MissionDate>
             {dayjs(missionData?.data.startDate).format('YYYY.MM.DD. HH:mm')}
@@ -94,11 +73,18 @@ const MissionPost = () => {
         </Style.TimeBox>
         <Style.ContentHeader>
           <Style.ContentWriter>
-            <ProfileImage
-              size="large"
-              src={ImageUrlConverter(missionData?.data.user?.profileImgURL)}
-              profileClick={profileClick}
-            />
+            {isMissionDataLoading ? (
+              <>
+                <Skeleton width="100px" height="100px" radius="50%" />
+                <Skeleton width="100px" height="14px" radius="10px" />
+              </>
+            ) : (
+              <ProfileImage
+                size="large"
+                src={ImageUrlConverter(missionData?.data.user?.profileImgURL)}
+                profileClick={profileClick}
+              />
+            )}
             <Style.ContentWriterName
               length={missionData?.data.user?.nickname.length}
             >
@@ -129,10 +115,13 @@ const MissionPost = () => {
           </Style.Context>
           <SubmitButton />
         </Style.ContentHeader>
+
         <Line width="900px" />
         <Style.ContentContainer>
           <Style.Content>
-            <ContentHashtag content={missionData?.data.content} />
+            {missionData?.data.content && (
+              <ContentHashtag content={missionData?.data.content} />
+            )}
           </Style.Content>
           <Style.ContentFooter>
             <ETCIcon
@@ -157,7 +146,7 @@ const MissionPost = () => {
         </Style.ContentContainer>
         <Line width="900px" />
       </Style.MissionPost>
-      <MissionPostFeed />
+      <MissionPostFeed missionId={missionId} />
     </>
   );
 };

@@ -1,8 +1,8 @@
 import { getMissionPostFeeds } from 'api/breakingMission';
 import { useInfiniteQuery } from 'react-query';
 
-const useMissionPostFeed = () => {
-  return useInfiniteQuery('missionPostFeed', getMissionPostFeeds, {
+const useMissionPostFeed = (missionId) => {
+  return useInfiniteQuery(['missionPostFeed', missionId], getMissionPostFeeds, {
     getNextPageParam: (lastPage) => {
       return lastPage.cursor;
     },

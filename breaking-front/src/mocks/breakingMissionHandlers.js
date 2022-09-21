@@ -23,7 +23,7 @@ export const breakingMissionHandlers = [
   }),
 
   rest.get(
-    API_PATH.BREAKING_MISSION_RELATION_FEEDS('*', '*'),
+    API_PATH.BREAKING_MISSION_RELATION_FEEDS(':missionId', '*', '*'),
     (req, res, ctx) => {
       return res(
         ctx.status(200),

@@ -20,13 +20,14 @@ export const getMissionFeeds = async ({ pageParam = 0 }) => {
   };
 };
 
-export const getMissionPostFeeds = async ({ pageParam = 0 }) => {
+export const getMissionPostFeeds = async ({ queryKey, pageParam = 0 }) => {
+  const [, missionId] = queryKey;
   const { data } = await api({
     method: 'get',
-    url: API_PATH.BREAKING_MISSION_RELATION_FEEDS(pageParam),
+    url: API_PATH.BREAKING_MISSION_RELATION_FEEDS(missionId, pageParam),
   });
   return {
     result: data,
-    cursor: data[data.length - 1]?.missionId,
+    cursor: data[data.length - 1]?.postId,
   };
 };
