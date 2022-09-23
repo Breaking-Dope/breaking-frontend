@@ -121,35 +121,35 @@ const Post = () => {
                   isPurchasable={postData?.data.isPurchasable}
                   isHidden={postData?.data.isHidden}
                 />
-                <Style.ContentTitle>{postData?.data.title}</Style.ContentTitle>
-                <Style.ContentLocationContainer>
-                  <Style.ContentLocation>
+                <Style.ContextTitle>{postData?.data.title}</Style.ContextTitle>
+                <Style.ContextLocationContainer>
+                  <Style.ContextLocation>
                     <LocationIcon />
                     {postData?.data.location.region_1depth_name +
                       ' ' +
                       postData?.data.location.region_2depth_name}
-                  </Style.ContentLocation>
+                  </Style.ContextLocation>
                   <Style.Dot />
-                  <Style.ContentViewCount>
+                  <Style.ContextViewCount>
                     조회수&nbsp;
                     {postData?.data.viewCount.toLocaleString('ko-KR')}회
-                  </Style.ContentViewCount>
-                </Style.ContentLocationContainer>
-                <Style.ContentDetail>
+                  </Style.ContextViewCount>
+                </Style.ContextLocationContainer>
+                <Style.ContextDetail>
                   발생시간&nbsp;
                   {dayjs(postData?.data.eventDate).format('YYYY.MM.DD. HH:mm')}
-                </Style.ContentDetail>
-                <Style.ContentCreatedDate>
+                </Style.ContextDetail>
+                <Style.ContextCreatedDate>
                   작성시간&nbsp;
                   {dayjs(postData?.data.createdDate).format(
                     'YYYY.MM.DD. HH:mm'
                   )}
-                </Style.ContentCreatedDate>
+                </Style.ContextCreatedDate>
               </Style.Context>
               <Style.ContentPriceContainer>
-                <Style.ContentPrice>
+                <Style.ContextPrice>
                   {postData?.data.price.toLocaleString('ko-KR')}&nbsp;원
-                </Style.ContentPrice>
+                </Style.ContextPrice>
                 <PurchaseButton
                   postId={postId}
                   isMyPost={postData?.data.isMyPost}
@@ -158,12 +158,12 @@ const Post = () => {
                   isSold={postData?.data.isSold}
                   postType={postData?.data.postType}
                 />
-                <Style.ContentDetail>
+                <Style.ContextDetail>
                   누적 판매
                   <Style.ContentSoldCount>
                     {postData?.data.soldCount.toLocaleString('ko-KR')}
                   </Style.ContentSoldCount>
-                </Style.ContentDetail>
+                </Style.ContextDetail>
               </Style.ContentPriceContainer>
             </Style.ContentHeader>
             <Line width="800px" />

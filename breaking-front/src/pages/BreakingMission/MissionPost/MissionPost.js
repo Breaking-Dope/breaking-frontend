@@ -7,16 +7,14 @@ import MissionTime from 'utils/MissionTime';
 import Line from 'components/Line/Line';
 import ContentHashtag from 'components/ContentHashtag/ContentHashtag';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import Toggle from 'components/Toggle/Toggle';
-import ShareModal from 'components/ShareModal/ShareModal';
 import SubmitButton from 'pages/BreakingMission/MissionPost/components/SubmitButton/SubmitButton';
 import MissionPostFeed from 'pages/BreakingMission/MissionPost/components/MissionPostFeed/MissionPostFeed';
 import * as Style from 'pages/BreakingMission/MissionPost/MissionPost.styles';
 import { ReactComponent as ETCIcon } from 'assets/svg/etc.svg';
-import { ReactComponent as ShareIcon } from 'assets/svg/share.svg';
 import { ReactComponent as LocationIcon } from 'assets/svg/location.svg';
 import useMissionPost from 'pages/BreakingMission/MissionPost/hooks/queries/useMissionPost';
 import Skeleton from 'components/Skeleton/Skeleton';
+import MissionToggle from 'pages/BreakingMission/MissionPost/components/MissionToggle/MissionToggle';
 
 const MissionPost = () => {
   const navigate = useNavigate();
@@ -24,15 +22,10 @@ const MissionPost = () => {
   missionId = Number(missionId);
 
   const [isOpenContentToggle, setIsOpenContentToggle] = useState(false);
-  const [isOpenShareModal, setIsOpenShareModal] = useState(false);
   const [timeBoxText, setTimeBoxText] = useState([]);
 
   const { data: missionData, isLoading: isMissionDataLoading } =
     useMissionPost(missionId);
-
-  const toggleShareModal = () => {
-    setIsOpenShareModal((pre) => !pre);
-  };
 
   const toggleContent = () => {
     setIsOpenContentToggle((pre) => !pre);
@@ -53,12 +46,6 @@ const MissionPost = () => {
 
   return (
     <>
-      <ShareModal
-        isOpen={isOpenShareModal}
-        closeClick={toggleShareModal}
-        data={missionData?.data}
-        path={PAGE_PATH.BREAKING_MISSION_POST(missionId)}
-      />
       <Style.MissionPost>
         <Style.TimeBox time={timeBoxText?.[1]}>
           <Style.MissionText>
@@ -92,26 +79,26 @@ const MissionPost = () => {
             </Style.ContentWriterName>
           </Style.ContentWriter>
           <Style.Context>
-            <Style.ContentTitle>{missionData?.data.title}</Style.ContentTitle>
-            <Style.ContentLocationContainer>
-              <Style.ContentLocation>
+            <Style.ContextTitle>{missionData?.data.title}</Style.ContextTitle>
+            <Style.ContextLocationContainer>
+              <Style.ContextLocation>
                 <LocationIcon />
                 {missionData?.data.location
                   ? missionData.data.location.region_1depth_name +
                     ' ' +
                     missionData.data.location.region_2depth_name
                   : '전국'}
-              </Style.ContentLocation>
+              </Style.ContextLocation>
               <Style.Dot />
-              <Style.ContentViewCount>
+              <Style.ContextViewCount>
                 조회수&nbsp;
                 {missionData?.data.viewCount.toLocaleString('ko-KR')}회
-              </Style.ContentViewCount>
-            </Style.ContentLocationContainer>
-            <Style.ContentCreatedDate>
+              </Style.ContextViewCount>
+            </Style.ContextLocationContainer>
+            <Style.ContextCreatedDate>
               작성시간&nbsp;
               {dayjs(missionData?.data.createdDate).format('YYYY.MM.DD. HH:mm')}
-            </Style.ContentCreatedDate>
+            </Style.ContextCreatedDate>
           </Style.Context>
           <SubmitButton />
         </Style.ContentHeader>
@@ -129,19 +116,11 @@ const MissionPost = () => {
               tabIndex="0"
               onBlur={() => setIsOpenContentToggle(false)}
             />
-            <Style.ContentToggle
-              onMouseDown={(event) => event.preventDefault()}
-            >
-              {isOpenContentToggle && (
-                <Toggle width="100px">
-                  <Toggle.LabelLink
-                    icon={<ShareIcon />}
-                    label="공유"
-                    labelClick={toggleShareModal}
-                  />
-                </Toggle>
-              )}
-            </Style.ContentToggle>
+            <MissionToggle
+              isOpen={isOpenContentToggle}
+              missionData={missionData?.data}
+              missionId={missionId}
+            />
           </Style.ContentFooter>
         </Style.ContentContainer>
         <Line width="900px" />

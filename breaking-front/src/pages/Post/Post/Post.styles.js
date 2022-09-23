@@ -48,12 +48,12 @@ export const ContentWriterName = styled.p`
   font-size: ${({ length }) => (length < 8 ? '16px' : '14px')};
 `;
 
-export const ContentTitle = styled.h1`
+export const ContextTitle = styled.h1`
   margin-bottom: 20px;
   font-size: 24px;
 `;
 
-export const ContentPrice = styled.h1`
+export const ContextPrice = styled.h1`
   margin-bottom: 15px;
   font-weight: 700;
   font-size: 24px;
@@ -64,20 +64,20 @@ export const ContentSoldCount = styled.span`
   font-weight: 700;
 `;
 
-export const ContentDetail = styled.div`
+export const ContextDetail = styled.div`
   margin-top: 10px;
   color: ${({ theme }) => theme.gray[800]};
   font-size: 12px;
 `;
 
-export const ContentLocationContainer = styled.div`
+export const ContextLocationContainer = styled.div`
   display: flex;
   color: ${({ theme }) => theme.gray[800]};
   font-size: 12px;
   align-items: center;
 `;
 
-export const ContentLocation = styled.div`
+export const ContextLocation = styled.div`
   display: inline-flex;
   align-items: center;
 `;
@@ -89,11 +89,11 @@ export const Dot = styled.span`
   }
 `;
 
-export const ContentCreatedDate = styled(ContentDetail)`
+export const ContextCreatedDate = styled(ContextDetail)`
   margin-top: 0;
 `;
 
-export const ContentViewCount = styled.span``;
+export const ContextViewCount = styled.span``;
 
 export const ContentPriceContainer = styled.div`
   display: flex;

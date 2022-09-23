@@ -55,19 +55,19 @@ export const Context = styled.div`
   }
 `;
 
-export const ContentTitle = styled.h1`
+export const ContextTitle = styled.h1`
   margin-bottom: 20px;
   font-size: 24px;
 `;
 
-export const ContentLocationContainer = styled.div`
+export const ContextLocationContainer = styled.div`
   display: flex;
   color: ${({ theme }) => theme.gray[800]};
   font-size: 12px;
   align-items: center;
 `;
 
-export const ContentLocation = styled.div`
+export const ContextLocation = styled.div`
   display: inline-flex;
   align-items: center;
 `;
@@ -79,15 +79,13 @@ export const Dot = styled.span`
   }
 `;
 
-export const ContentViewCount = styled.span``;
+export const ContextViewCount = styled.span``;
 
-export const ContentDetail = styled.div`
+export const ContextCreatedDate = styled.div`
   margin-top: 10px;
   color: ${({ theme }) => theme.gray[800]};
   font-size: 12px;
 `;
-
-export const ContentCreatedDate = styled(ContentDetail)``;
 
 export const ContentContainer = styled.div`
   margin-top: 20px;
@@ -108,10 +106,4 @@ export const ContentFooter = styled.div`
     outline: none;
     cursor: pointer;
   }
-`;
-
-export const ContentToggle = styled.div`
-  position: absolute;
-  right: -60px;
-  bottom: 30px;
 `;
