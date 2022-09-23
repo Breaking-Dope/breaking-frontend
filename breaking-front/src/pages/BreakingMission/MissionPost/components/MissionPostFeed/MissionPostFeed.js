@@ -1,11 +1,11 @@
 import React from 'react';
-import Feed from 'components/Feed/Feed';
-import * as Style from 'pages/BreakingMission/MissionPost/components/MissionPostFeed/MissionPostFeed.styles';
-import useMissionPostFeed from '../../hooks/queries/useMissionPostFeed';
+import PropTypes from 'prop-types';
+import useMissionPostFeed from 'pages/BreakingMission/MissionPost/hooks/queries/useMissionPostFeed';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
+import Feed from 'components/Feed/Feed';
 import InfiniteTargetDiv from 'components/InfiniteTargetDiv/InfiniteTargetDiv';
 import { FeedSkeleton } from 'components/Skeleton/Skeleton';
-import PropTypes from 'prop-types';
+import * as Style from 'pages/BreakingMission/MissionPost/components/MissionPostFeed/MissionPostFeed.styles';
 
 const MissionPostFeed = ({ missionId }) => {
   const {
