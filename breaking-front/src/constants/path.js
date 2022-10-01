@@ -16,6 +16,7 @@ export const PAGE_PATH = {
   SEARCH_USER: `/search/user`,
   BREAKING_MISSION_HOME: '/breaking-mission',
   BREAKING_MISSION_POST: (missionId) => `/breaking-mission/post/${missionId}`,
+  BREAKING_MISSION_POST_WRITE: `/breaking-mission/post/write`,
   BREAKING_MISSION_MAP: '/breaking-mission/map',
   ERROR: `/not_found`,
 };
