@@ -121,6 +121,7 @@ export const API_PATH = {
   BREAKING_MISSION_RELATION_FEEDS: (missionId, cursor, size = 10) =>
     `/breaking-mission/${missionId}/feed?cursor=${cursor}&size=${size}`,
   BREAKING_MISSION_POST: (missionId) => `/breaking-mission/${missionId}`,
+  BREAKING_MISSION_POST_WRITE: `/breaking-mission`,
 };
 
 export const KAKAO_PATH = {

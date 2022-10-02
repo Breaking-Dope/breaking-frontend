@@ -41,4 +41,8 @@ export const breakingMissionHandlers = [
   rest.get(API_PATH.BREAKING_MISSION_POST(':missionId'), (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(MISSION_POST));
   }),
+
+  rest.post(API_PATH.BREAKING_MISSION_POST_WRITE, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({ missionId: 3 }));
+  }),
 ];
