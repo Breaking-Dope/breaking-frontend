@@ -8,6 +8,9 @@ export const ResultCard = styled.div`
   border-radius: 10px;
   background-color: ${({ theme }) => theme.blue[50]};
   align-items: center;
+  > button {
+    margin-left: 20px;
+  }
 `;
 
 export const UserInformationContainer = styled.div`
