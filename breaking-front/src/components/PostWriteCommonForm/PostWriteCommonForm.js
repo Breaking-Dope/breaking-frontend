@@ -28,6 +28,16 @@ const PostWriteCommonForm = ({ onChangeData, data, setData }) => {
     setIsShowPriceInput((pre) => !pre);
   };
 
+  const nextInputFocus = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      event.target.blur();
+      const form = event.target.form;
+      const index = Array.prototype.indexOf.call(form, event.target);
+      form.elements[index + 1].focus();
+    }
+  };
+
   return (
     <>
       <Style.OccurTimeLayout>
@@ -51,6 +61,7 @@ const PostWriteCommonForm = ({ onChangeData, data, setData }) => {
           value={data.title}
           onChange={onChangeData}
           name="title"
+          onKeyDown={nextInputFocus}
         />
         <Style.ContextBodyTextArea
           placeholder="상황을 최대한 상세하게 기록해 주세요&#13;(상황, 시간, 사건 전개과정, 경과상태 등)&#13;&#10;최대 2000자"
@@ -104,12 +115,7 @@ const PostWriteCommonForm = ({ onChangeData, data, setData }) => {
           onChange={handlePrice}
           onBlur={toggleShowPriceInput}
           onFocus={toggleShowPriceInput}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              event.preventDefault();
-              event.target.blur();
-            }
-          }}
+          onKeyDown={nextInputFocus}
         />
       </Style.PriceLayout>
 
