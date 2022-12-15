@@ -12,6 +12,12 @@ const MESSAGE = {
     TITLE_BLANK: '제목을 입력해 주시기 바랍니다.',
     CONTENT_BLANK: '본문을 입력해 주시기 바랍니다.',
   },
+
+  MISSION_POST_WRITE: {
+    LOCATION_BLANK: '미션을 수행할 위치를 입력해 주시기 바랍니다.',
+    TITLE_BLANK: '미션 제목을 입력해 주시기 바랍니다.',
+    CONTENT_BLANK: '미션 본문을 입력해 주시기 바랍니다.',
+  },
 };
 
 export default MESSAGE;

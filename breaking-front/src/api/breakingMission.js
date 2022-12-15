@@ -31,3 +31,11 @@ export const getMissionPostFeeds = async ({ queryKey, pageParam = 0 }) => {
     cursor: data[data.length - 1]?.postId,
   };
 };
+
+export const postMissionPostWrite = (data) => {
+  return api({
+    method: 'post',
+    url: API_PATH.BREAKING_MISSION_POST_WRITE,
+    data: data,
+  });
+};

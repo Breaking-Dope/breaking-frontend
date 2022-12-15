@@ -29,6 +29,7 @@ import PrivateRoute from 'PrivateRoute';
 import MissionMap from 'pages/BreakingMission/MissionMap/MissionMap';
 import MissionMainFeed from 'pages/BreakingMission/MissionMainFeed/MissionMainFeed';
 import MissionPost from 'pages/BreakingMission/MissionPost/MissionPost';
+import MissionPostWrite from 'pages/BreakingMission/MissionPostWrite/MissionPostWrite';
 
 function App() {
   const queryClient = new QueryClient({
@@ -109,6 +110,10 @@ function App() {
                   <Route
                     path={PAGE_PATH.BREAKING_MISSION_POST(':id')}
                     element={<MissionPost />}
+                  />
+                  <Route
+                    path={PAGE_PATH.BREAKING_MISSION_POST_WRITE}
+                    element={<MissionPostWrite />}
                   />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
