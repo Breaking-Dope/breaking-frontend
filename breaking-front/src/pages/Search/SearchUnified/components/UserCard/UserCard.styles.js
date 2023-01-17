@@ -21,6 +21,7 @@ export const UserName = styled.div`
 `;
 export const UserStatusMsg = styled.div`
   width: 100%;
+  height: 12px;
   font-size: 10px;
   color: ${({ theme }) => theme.gray[700]};
   white-space: nowrap;
